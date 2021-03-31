@@ -113,8 +113,7 @@
 <li><p><code>home</code>、<code>categories</code>、<code>archives</code>等操作也是相同的</p>
 </li>
 </ol>
-<p>###添加搜索功能</p>
-<ol>
+<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><ol>
 <li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
 <p>安装成功：</p>
