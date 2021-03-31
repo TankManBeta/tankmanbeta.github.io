@@ -39,7 +39,7 @@
 </li>
 <li><p>本地启动博客</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<a href="http://localhost:4000，可以看到搭建成功">http://localhost:4000，可以看到搭建成功</a></p>
+<li><p>浏览器访问<a href="http://localhost:4000/">http://localhost:4000</a> ，可以看到搭建成功</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_4.png" alt="pic_4"></p>
 </li>
 </ol>
@@ -51,13 +51,11 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
 </li>
 <li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000/">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">  hexo cl</span><br><span class="line">  hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
-<p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
+<p>  <strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
 <h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
 <li><p>新建<code>GitHub</code>仓库</p>
 <p>注：一定要以<code>username.github.io</code>创建。假如我没有用<code>tankmanbeta.github.io</code>而是用了<code>jeeby.github.io</code>，那么当我浏览器访问博客的时候会出现404错误。这里并不是没有部署成功，而是把它部署在了这里:<code>http://tankmanbeta.github.io/jeeby.github.io</code>。所以，如果想直接<code>tankmanbeta.github.io</code>访问，那么就需要和用户名保持一致。</p>
