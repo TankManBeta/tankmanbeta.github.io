@@ -61,7 +61,7 @@
 <p><img src="http://qqtlfntvc.hd-bkt.clouddn.com/pic_7.png" alt="pic_7"></p>
 </li>
 <li><p>修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>，在最后添加如下代码</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">	<span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">	<span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">	<span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">    <span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
 <p>注：2020年10月1日起，<code>GitHub</code>把<code>master</code>分支换成<code>main</code>分支，据说与种族歧视有关。</p>
 </li>
 <li><p>安装<code>Git</code>部署的插件：</p>
