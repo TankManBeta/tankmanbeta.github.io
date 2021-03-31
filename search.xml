@@ -50,10 +50,11 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_5.png" alt="pic_5"></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
 </li>
-<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000，可以看到新建的文章已经上传">http://localhost:4000，可以看到新建的文章已经上传</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
+<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000/">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">   hexo cl</span><br><span class="line">   hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+
+</li>
 </ol>
 <p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
 <h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
