@@ -151,15 +151,16 @@
 </ol>
 <h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
 <li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time </span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
 
 </li>
 <li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">   </span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span> <span class="comment"># 文章字数</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span> <span class="comment"># 阅读时长</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">true</span> <span class="comment"># 所有文章总字数</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">true</span> <span class="comment"># 所有文章阅读中时长</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br></pre></td></tr></table></figure>
 
 </li>
 <li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">   </span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"> <span class="attr">symbols_count_time:</span></span><br><span class="line">   <span class="attr">separated_meta:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">item_text_total:</span> <span class="literal">false</span></span><br><span class="line">   <span class="attr">item_text_post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li><p>重新部署，步骤同上</p>
 </li>
 </ol>
 ]]></content>
