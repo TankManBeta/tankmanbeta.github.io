@@ -54,7 +54,6 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">  hexo cl</span><br><span class="line">  hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 
 
-
 </li>
 </ol>
 <p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
