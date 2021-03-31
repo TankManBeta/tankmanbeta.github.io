@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
-  </entry>
-  <entry>
     <title>搭建个人博客</title>
     <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
@@ -159,6 +153,21 @@
 <li><p>重新部署，步骤同上</p>
 </li>
 </ol>
+<h3 id="使用PicGo上传图片至图床"><a href="#使用PicGo上传图片至图床" class="headerlink" title="使用PicGo上传图片至图床"></a>使用PicGo上传图片至图床</h3><ol>
+<li><p>下载PicGo，下载地址<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases </a> </p>
+</li>
+<li><p>腾讯云新建密钥：[访问密钥]–&gt;[API密钥管理]–&gt;[新建密钥]</p>
+</li>
+<li><p>打开安装完成后的PicGo，进行图床设置，设置后的结果为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_15.png" alt="pic_15"></p>
+</li>
+<li><p>点击确定并设置为默认图床，拖动本地图片上传，即可成功</p>
+</li>
+<li><p>文章中可以直接使用刚刚产生的外链</p>
+</li>
+<li><p>重新部署，步骤同上</p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>hexo</category>
@@ -167,5 +176,11 @@
         <tag>hexo</tag>
         <tag>博客</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
   </entry>
 </search>
