@@ -127,6 +127,26 @@
 <li><p>重新部署，步骤同上</p>
 </li>
 </ol>
+<h3 id="使用外链图片"><a href="#使用外链图片" class="headerlink" title="使用外链图片"></a>使用外链图片</h3><ol>
+<li><p>注册腾讯云账号，选择对象存储</p>
+</li>
+<li><p>创建存储桶</p>
+</li>
+<li><p>创建成功之后上传文件</p>
+</li>
+<li><p>修改安全管理中的防盗链设置</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_13.png" alt="pic_13"></p>
+</li>
+<li><p>修改权限管理中的存储桶访问权限</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_14.png" alt="pic_14"></p>
+</li>
+<li><p>上传图片至存储桶，复制详情中的对象地址</p>
+</li>
+<li><p>在文章中使用外链</p>
+</li>
+<li><p>重新部署，步骤同上</p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>hexo</category>
