@@ -51,7 +51,7 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
 </li>
 <li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000/">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">  hexo g</span><br><span class="line">  hexo s</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">  hexo cl </span><br><span class="line">  hexo g </span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 
 
 
@@ -147,6 +147,19 @@
 <li><p>在文章中使用外链</p>
 </li>
 <li><p>重新部署，步骤同上</p>
+</li>
+</ol>
+<h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
+<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time </span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">   </span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">   </span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 ]]></content>
