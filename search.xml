@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
+  </entry>
+  <entry>
     <title>搭建个人博客</title>
     <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
@@ -178,12 +184,6 @@
       </tags>
   </entry>
   <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
-  </entry>
-  <entry>
     <title>毕设知识点总结</title>
     <url>/2021/04/06/%E6%AF%95%E8%AE%BE%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>毕设的项目也算是做完了，总结一下项目过程中遇见的一些问题和解决方案，避免以后再次踩坑。</p>
@@ -239,6 +239,10 @@
 </ol>
 <h2 id="爬虫"><a href="#爬虫" class="headerlink" title="爬虫"></a>爬虫</h2><p>选取了request和selenium（自动化测试常用库，但用于爬虫简单易上手）</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不显式打开浏览器以及不使用GPU加速</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_argument(<span class="string">&#x27;--headless&#x27;</span>)</span><br><span class="line">options.add_argument(<span class="string">&#x27;--disable-gpu&#x27;</span>)</span><br><span class="line">browser = webdriver.Chrome(self.executable_path, options=options)</span><br><span class="line"><span class="comment"># 使用xpath获取元素</span></span><br><span class="line">keywords = browser.find_element_by_xpath(<span class="string">&quot;//span[text()=&#x27;关键词：&#x27;]/following-sibling::p&quot;</span>).text</span><br><span class="line">keywords = browser.find_element_by_xpath(<span class="string">&quot;//span[contains(text(),&#x27;关键词：&#x27;)]&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="打包成exe报毒"><a href="#打包成exe报毒" class="headerlink" title="打包成exe报毒"></a>打包成exe报毒</h2><p>下面的方法可以完全不报毒，但是原理未知。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyinstaller 你的文件名.py --onefile</span><br></pre></td></tr></table></figure>
 
 
 
