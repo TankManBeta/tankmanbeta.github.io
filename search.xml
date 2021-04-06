@@ -241,7 +241,7 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不显式打开浏览器以及不使用GPU加速</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_argument(<span class="string">&#x27;--headless&#x27;</span>)</span><br><span class="line">options.add_argument(<span class="string">&#x27;--disable-gpu&#x27;</span>)</span><br><span class="line">browser = webdriver.Chrome(self.executable_path, options=options)</span><br><span class="line"><span class="comment"># 使用xpath获取元素</span></span><br><span class="line">keywords = browser.find_element_by_xpath(<span class="string">&quot;//span[text()=&#x27;关键词：&#x27;]/following-sibling::p&quot;</span>).text</span><br><span class="line">keywords = browser.find_element_by_xpath(<span class="string">&quot;//span[contains(text(),&#x27;关键词：&#x27;)]&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="打包成exe报毒"><a href="#打包成exe报毒" class="headerlink" title="打包成exe报毒"></a>打包成exe报毒</h2><p>下面的方法可以完全不报毒，但是原理未知。</p>
+<h2 id="pyinstaller打包成exe报毒"><a href="#pyinstaller打包成exe报毒" class="headerlink" title="pyinstaller打包成exe报毒"></a>pyinstaller打包成exe报毒</h2><p>下面的方法可以完全不报毒，但是原理未知。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyinstaller 你的文件名.py --onefile</span><br></pre></td></tr></table></figure>
 
 
