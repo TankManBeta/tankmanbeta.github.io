@@ -242,7 +242,7 @@
 
 
 <h2 id="pyinstaller打包成exe报毒"><a href="#pyinstaller打包成exe报毒" class="headerlink" title="pyinstaller打包成exe报毒"></a>pyinstaller打包成exe报毒</h2><p>下面的方法可以完全不报毒，但是原理未知。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyinstaller 你的文件名.py --onefile</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyinstaller -w 你的文件名.py --onefile</span><br></pre></td></tr></table></figure>
 
 
 
