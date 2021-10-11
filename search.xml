@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
-  </entry>
-  <entry>
     <title>搭建个人博客</title>
     <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
@@ -251,6 +245,12 @@
       </tags>
   </entry>
   <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
+  </entry>
+  <entry>
     <title>毕设知识点总结</title>
     <url>/2021/04/06/%E6%AF%95%E8%AE%BE%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>毕设的项目也算是做完了，总结一下项目过程中遇见的一些问题和解决方案，避免以后再次踩坑。</p>
@@ -332,7 +332,8 @@
 <li>解压：<code>tar Jxvf  Python-3.7.0.tar.xz</code></li>
 <li>创建一个文件夹存放<code>python3.7.0</code>程序：<code>mkdir /usr/lib/Python3.7.0</code></li>
 <li>设置配置文件：<code>./configure --prefix=/usr/lib/python3.7.0</code></li>
-<li>编译安装<code>make</code> &amp;&amp;<code>make install</code></li>
+<li>编译安装：<code>make &amp;&amp; make install</code></li>
+<li>建立软连接，使用已安装的<code>python3.7.0</code>：<code>ln -sb /usr/lib/python3.7.0/bin/python3.7 /usr/bin/python3</code></li>
 </ol>
 <p>报错：<code>zipimport.ZipImportError: can’t decompress data; zlib not available make: *** [install] Error 1</code></p>
 <p>解决方案：<code>yum -y install zlib*</code></p>
