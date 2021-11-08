@@ -59,12 +59,6 @@
       </tags>
   </entry>
   <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
-  </entry>
-  <entry>
     <title>Python知识点</title>
     <url>/2021/11/07/Python%E6%8B%BE%E9%81%97/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下一些python的知识点</p>
@@ -72,7 +66,7 @@
 <h1 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h1><p>参考链接：</p>
 <ol>
 <li><a href="https://zhuanlan.zhihu.com/p/83251959">Python垃圾回收机制！非常实用</a></li>
-<li><a href="https://www.cnblogs.com/fat-girl-spring/p/15094805.html">[Python垃圾回收机制]</a></li>
+<li><a href="https://www.cnblogs.com/fat-girl-spring/p/15094805.html">Python垃圾回收机制</a></li>
 </ol>
 <p>python采用的是引用计数机制为主，标记-清除和分代收集两种机制为辅的策略</p>
 <h2 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h2><p>在Python中每一个对象的核心就是一个结构体PyObject，它的内部有一个引用计数器（ob_refcnt）。程序在运行的过程中会实时的更新ob_refcnt的值，来反映引用当前对象的名称数量。当某对象的引用计数值为0,那么它的内存就会被立即释放掉。</p>
@@ -125,6 +119,12 @@
 <p>该阈值可以通过下面两个函数查看和调整:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">gc.get_threshold() <span class="comment"># (threshold0, threshold1, threshold2).</span></span><br><span class="line">gc.set_threshold(threshold0[, threshold1[, threshold2]])</span><br></pre></td></tr></table></figure>
 <p>下面对set_threshold()中的三个参数threshold0, threshold1, threshold2进行介绍。gc会记录自从上次收集以来新分配的对象数量与释放的对象数量，当两者之差超过threshold0的值时，gc的扫描就会启动，初始的时候只有世代0被检查。如果自从世代1最近一次被检查以来，世代0被检查超过threshold1次，那么对世代1的检查将被触发。相同的，如果自从世代2最近一次被检查以来，世代1被检查超过threshold2次，那么对世代2的检查将被触发。get_threshold()是获取三者的值，默认值为(700,10,10).</p>
+<h1 id="整数缓存问题"><a href="#整数缓存问题" class="headerlink" title="整数缓存问题"></a>整数缓存问题</h1><p>Python仅仅对比较小的整数对象进行缓存（范围为[-5,256]），而并非所有的整数对象。需要注意的是，这仅仅是在<strong>命令行</strong>中执行，而在Pycharm或保存为文件执行，结果是不一样的，因为解释器做了一部分优化（范围变成了[-5, 任意正整数]）（注：自己在Pycharm中实践发现小于-5的好像也可）。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1000</span></span><br><span class="line">b = <span class="number">1000</span></span><br><span class="line">a <span class="keyword">is</span> b <span class="comment"># False</span></span><br><span class="line"></span><br><span class="line">a = <span class="number">100</span></span><br><span class="line">b = <span class="number">100</span></span><br><span class="line">a <span class="keyword">is</span> b <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><ol>
+<li>字符串拼接尽量使用<code>join()</code>而不是<code>+=</code>，因为<code>+=</code>每次会创建新对象</li>
+<li><strong>字符串驻留</strong>：仅保存一份相同且不可变的字符串的方法，不同的值被存放在字符串驻留池中。Python支持字符串驻留机制，对于符合标识规则的字符串（仅包含下划线<code>_</code>，字母和数字）会启用字符串驻留机制。（似乎Pycharm不满足）</li>
+</ol>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -133,6 +133,12 @@
         <tag>总结</tag>
         <tag>Python</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
   </entry>
   <entry>
     <title>搭建个人博客</title>
