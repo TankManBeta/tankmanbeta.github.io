@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195040.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104203300.png">
 <meta property="article:published_time" content="2021-11-02T13:40:57.000Z">
-<meta property="article:modified_time" content="2021-11-04T12:58:22.461Z">
+<meta property="article:modified_time" content="2021-11-08T12:32:06.621Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="论文">
@@ -95,11 +95,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -209,7 +205,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -222,7 +218,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -292,7 +288,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-04 20:58:22" itemprop="dateModified" datetime="2021-11-04T20:58:22+08:00">2021-11-04</time>
+        <time title="修改时间：2021-11-08 20:32:06" itemprop="dateModified" datetime="2021-11-08T20:32:06+08:00">2021-11-08</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -312,7 +308,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>917</span>
+      <span>921</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -337,7 +333,7 @@
 <ul>
 <li>初始化<ul>
 <li>选定 $n$ 个点—-&gt; $\Omega^{n}_{temp}$</li>
-<li>创建训练数据—-&gt; $D<em>{temp}$ （选定 $n$ 个点都取 $T</em>{\omega}$ 时长的数据）</li>
+<li>创建训练数据—-&gt; $D_{temp}$ （选定 $n$ 个点都取 $T_{\omega}$ 时长的数据）</li>
 </ul>
 </li>
 <li>训练<ul>
@@ -345,7 +341,7 @@
 <li>train <code>ST-PCNN</code> &lt;—- $\lambda$</li>
 <li>predict $[\hat{s}]$ &lt;—- at all locations</li>
 <li>$\Omega_{Kriging}^{n}$ &lt;—- $n$ 个：largest estimate error</li>
-<li>$D<em>{Kriging}$ &lt;—- 上一步新选出的 $n$ 个，选取 $T</em>{\omega}$ 时长数据</li>
+<li>$D_{Kriging}$ &lt;—- 上一步新选出的 $n$ 个，选取 $T_{\omega}$ 时长数据</li>
 <li>更新 $D$</li>
 </ul>
 </li>
@@ -398,6 +394,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/11/07/Python%E6%8B%BE%E9%81%97/" rel="next" title="Python知识点">
+                  Python知识点 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -467,7 +466,38 @@
 
 
 
-  
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
 
 
 </body>
