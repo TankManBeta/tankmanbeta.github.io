@@ -123,7 +123,7 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1000</span></span><br><span class="line">b = <span class="number">1000</span></span><br><span class="line">a <span class="keyword">is</span> b <span class="comment"># False</span></span><br><span class="line"></span><br><span class="line">a = <span class="number">100</span></span><br><span class="line">b = <span class="number">100</span></span><br><span class="line">a <span class="keyword">is</span> b <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
 <h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><ol>
 <li>字符串拼接尽量使用<code>join()</code>而不是<code>+=</code>，因为<code>+=</code>每次会创建新对象</li>
-<li><strong>字符串驻留</strong>：仅保存一份相同且不可变的字符串的方法，不同的值被存放在字符串驻留池中。Python支持字符串驻留机制，对于符合标识规则的字符串（仅包含下划线<code>_</code>，字母和数字）会启用字符串驻留机制。（似乎Pycharm不满足）</li>
+<li><strong>字符串驻留</strong>：仅保存一份相同且不可变的字符串的方法，不同的值被存放在字符串驻留池中。Python支持字符串驻留机制，对于符合标识规则的字符串（仅包含下划线<code>_</code>，字母和数字）会启用字符串驻留机制。（似乎Pycharm中不需要满足命名规则）</li>
 </ol>
 ]]></content>
       <categories>
