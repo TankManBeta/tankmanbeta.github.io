@@ -9,16 +9,16 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195040.png" alt="FN-PN"></p>
 <ul>
 <li>初始化<ul>
-<li>选定 $n$ 个点—-&gt; $\Omega^{n}_{temp}$</li>
-<li>创建训练数据—-&gt; $D_{temp}$ （选定 $n$ 个点都取 $T_{\omega}$ 时长的数据）</li>
+<li>选定 $n$ 个点 $\longrightarrow$ $\Omega^{n}_{temp}$</li>
+<li>创建训练数据 $\longrightarrow$ $D_{temp}$ （选定 $n$ 个点都取 $T_{\omega}$ 时长的数据）</li>
 </ul>
 </li>
 <li>训练<ul>
-<li>learn $\lambda$ &lt;—- 最小化 $E_{q}$ ，偏微分方程</li>
-<li>train <code>ST-PCNN</code> &lt;—- $\lambda$</li>
-<li>predict $[\hat{s}]$ &lt;—- at all locations</li>
-<li>$\Omega_{Kriging}^{n}$ &lt;—- $n$ 个：largest estimate error</li>
-<li>$D_{Kriging}$ &lt;—- 上一步新选出的 $n$ 个，选取 $T_{\omega}$ 时长数据</li>
+<li>learn $\lambda$ $\longleftarrow$ 最小化 $E_{q}$ ，偏微分方程</li>
+<li>train ST-PCNN $\longleftarrow$ $\lambda$</li>
+<li>predict $[\hat{s}]$ $\longleftarrow$ at all locations</li>
+<li>$\Omega_{Kriging}^{n}$ $\longleftarrow$ $n$ 个：largest estimate error</li>
+<li>$D_{Kriging}$ $\longleftarrow$ 上一步新选出的 $n$ 个，选取 $T_{\omega}$ 时长数据</li>
 <li>更新 $D$</li>
 </ul>
 </li>
@@ -28,7 +28,7 @@
 <p>AL: adding the most uncertain points</p>
 <ul>
 <li><p>Initialize:</p>
-<p>random choose $n_{init}$ train 50 epochs —-&gt; $\widetilde{t^{0}}(p)$</p>
+<p>random choose $n_{init}$ train 50 epochs $\longrightarrow$ $\widetilde{t^{0}}(p)$</p>
 </li>
 <li><p>Do T times:</p>
 <ul>
@@ -38,16 +38,28 @@
 </ul>
 </li>
 </ul>
-<h1 id="Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows"><a href="#Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows" class="headerlink" title="Swin Transformer: Hierarchical Vision Transformer using Shifted Windows"></a>Swin Transformer: Hierarchical Vision Transformer using Shifted Windows</h1><p>language —-&gt; vision</p>
-<p>challenges:</p>
+<h1 id="Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows"><a href="#Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows" class="headerlink" title="Swin Transformer: Hierarchical Vision Transformer using Shifted Windows"></a>Swin Transformer: Hierarchical Vision Transformer using Shifted Windows</h1><p>Application：language $\longrightarrow$ vision</p>
+<p>Challenges:</p>
 <ul>
 <li>scale(language Transformer: word tokens)</li>
 <li>high resolution of pixels(计算复杂度： $n^{2}$ )</li>
 </ul>
 <p>Key point:</p>
 <ul>
-<li>小批量开始 —-&gt; 逐渐合并邻居</li>
-<li>如何实现线性复杂度：在无重叠窗口计算自注意力</li>
+<li>小批量开始 $\longrightarrow$ 逐渐合并邻居</li>
+<li>如何实现线性复杂度：在无重叠窗口计算自注意力<ul>
+<li>standard transformer architecture: global self-attention $\longrightarrow$ quadratic complexity</li>
+<li>Swin Transformer: local self-attention $\longrightarrow$ linear complexity</li>
+</ul>
+</li>
+</ul>
+<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><ul>
+<li><p>Overall Framework</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_1.png" alt=""></p>
+</li>
+<li><p>Two Successive Swin Transformer Blocks  </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_2.png" alt=""></p>
+</li>
 </ul>
 ]]></content>
       <categories>
@@ -125,6 +137,21 @@
 <li>字符串拼接尽量使用<code>join()</code>而不是<code>+=</code>，因为<code>+=</code>每次会创建新对象</li>
 <li><strong>字符串驻留</strong>：仅保存一份相同且不可变的字符串的方法，不同的值被存放在字符串驻留池中。Python支持字符串驻留机制，对于符合标识规则的字符串（仅包含下划线<code>_</code>，字母和数字）会启用字符串驻留机制。（似乎Pycharm中不需要满足命名规则）</li>
 </ol>
+<h1 id="字典核心底层原理"><a href="#字典核心底层原理" class="headerlink" title="字典核心底层原理"></a>字典核心底层原理</h1><p>字典对象核心是散列表。散列表是一个稀疏数组（总有空白元素的数组），数组的每个单元叫做bucket。每个bucket有两个部分：一是键对象的引用，一个是值对象的引用。可以通过偏移量来读取指定的bucket。</p>
+<p>键值对放进字典的底层过程：</p>
+<ol>
+<li>计算见的散列值，python中通过<code>hash()</code>来计算。</li>
+<li>查看偏移量对应的bucket是否为空，如果为空，则放入。如果不为空，则取新的偏移量，查看新偏移量对应的bucket是否为空，直到找到空的bucket存放。</li>
+<li>如果数组2/3已经满了，自动扩容，已存放的自动复制</li>
+</ol>
+<p>根据键查找键值对的底层过程：</p>
+<ol>
+<li>算散列值</li>
+<li>根据散列值找bucket，bucket为空，返回None；bucket不为空则取出键，并计算新散列值，比较第一步的散列值和当前散列值是否相同。相同返回，不同则继续取新的散列值。</li>
+</ol>
+<h1 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h1><ul>
+<li><code>if not A</code> 和 <code>if A is None</code> 看起来都是在判断<code>A</code>是否为<strong>空</strong>，实际上这两者是不同的：<br>（1）<code>if not A</code> 判断的是<code>A</code>是否为<strong>空</strong>，也就是说里面有东西没？<br>（2） <code>if A is None</code>则判断的是<code>A</code>是否<strong>声明并定义</strong>了？</li>
+</ul>
 ]]></content>
       <categories>
         <category>总结</category>
