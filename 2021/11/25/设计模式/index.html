@@ -23,28 +23,22 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="前言记录一下读过论文的idea">
+<meta name="description" content="前言设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Paper Ideas">
-<meta property="og:url" content="http://example.com/2021/11/02/Paper-Ideas/index.html">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http://example.com/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="木霈玖的博客">
-<meta property="og:description" content="前言记录一下读过论文的idea">
+<meta property="og:description" content="前言设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195000.png">
-<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195040.png">
-<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104203300.png">
-<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_1.png">
-<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_2.png">
-<meta property="article:published_time" content="2021-11-02T13:40:57.000Z">
-<meta property="article:modified_time" content="2021-11-10T08:51:11.345Z">
+<meta property="article:published_time" content="2021-11-25T04:47:55.000Z">
+<meta property="article:modified_time" content="2021-11-25T06:44:34.925Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
-<meta property="article:tag" content="论文">
+<meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195000.png">
 
 
-<link rel="canonical" href="http://example.com/2021/11/02/Paper-Ideas/">
+<link rel="canonical" href="http://example.com/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
 
 
 <script class="page-configurations">
@@ -56,7 +50,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>Paper Ideas | 木霈玖的博客</title>
+<title>设计模式 | 木霈玖的博客</title>
   
 
 
@@ -193,7 +187,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Physics-Coupled-Spatio-Temporal-Active-Learning-for-Dynamical-Systems"><span class="nav-number">2.</span> <span class="nav-text">Physics-Coupled Spatio-Temporal Active Learning for Dynamical Systems</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ACTIVE-LEARNING-OF-DEEP-SURROGATES-FOR-PDES"><span class="nav-number">3.</span> <span class="nav-text">ACTIVE LEARNING OF DEEP SURROGATES FOR PDES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows"><span class="nav-number">4.</span> <span class="nav-text">Swin Transformer: Hierarchical Vision Transformer using Shifted Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Architecture"><span class="nav-number">4.1.</span> <span class="nav-text">Architecture</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">单例模式</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -259,7 +253,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/02/Paper-Ideas/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -272,7 +266,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Paper Ideas
+          设计模式
         </h1>
 
         <div class="post-meta-container">
@@ -282,16 +276,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-11-02 21:40:57" itemprop="dateCreated datePublished" datetime="2021-11-02T21:40:57+08:00">2021-11-02</time>
+      <time title="创建时间：2021-11-25 12:47:55 / 修改时间：14:44:34" itemprop="dateCreated datePublished" datetime="2021-11-25T12:47:55+08:00">2021-11-25</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-10 16:51:11" itemprop="dateModified" datetime="2021-11-10T16:51:11+08:00">2021-11-10</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -328,64 +316,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下读过论文的idea</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
 <a id="more"></a>
-<h1 id="Physics-Coupled-Spatio-Temporal-Active-Learning-for-Dynamical-Systems"><a href="#Physics-Coupled-Spatio-Temporal-Active-Learning-for-Dynamical-Systems" class="headerlink" title="Physics-Coupled Spatio-Temporal Active Learning for Dynamical Systems"></a>Physics-Coupled Spatio-Temporal Active Learning for Dynamical Systems</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195000.png" alt="framework"></p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195040.png" alt="FN-PN"></p>
-<ul>
-<li>初始化<ul>
-<li>选定 $n$ 个点 $\longrightarrow$ $\Omega^{n}_{temp}$</li>
-<li>创建训练数据 $\longrightarrow$ $D_{temp}$ （选定 $n$ 个点都取 $T_{\omega}$ 时长的数据）</li>
-</ul>
-</li>
-<li>训练<ul>
-<li>learn $\lambda$ $\longleftarrow$ 最小化 $E_{q}$ ，偏微分方程</li>
-<li>train ST-PCNN $\longleftarrow$ $\lambda$</li>
-<li>predict $[\hat{s}]$ $\longleftarrow$ at all locations</li>
-<li>$\Omega_{Kriging}^{n}$ $\longleftarrow$ $n$ 个：largest estimate error</li>
-<li>$D_{Kriging}$ $\longleftarrow$ 上一步新选出的 $n$ 个，选取 $T_{\omega}$ 时长数据</li>
-<li>更新 $D$</li>
-</ul>
-</li>
-</ul>
-<h1 id="ACTIVE-LEARNING-OF-DEEP-SURROGATES-FOR-PDES"><a href="#ACTIVE-LEARNING-OF-DEEP-SURROGATES-FOR-PDES" class="headerlink" title="ACTIVE LEARNING OF DEEP SURROGATES FOR PDES"></a>ACTIVE LEARNING OF DEEP SURROGATES FOR PDES</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104203300.png" alt="model"></p>
-<p>algorithm: reduce number of training points(selected based on error measure)</p>
-<p>AL: adding the most uncertain points</p>
-<ul>
-<li><p>Initialize:</p>
-<p>random choose $n_{init}$ train 50 epochs $\longrightarrow$ $\widetilde{t^{0}}(p)$</p>
-</li>
-<li><p>Do T times:</p>
-<ul>
-<li>evaluate $\widetilde{t^{i}}(p)$ at $M×K$ points</li>
-<li>choose $K$ points(largest $\sigma_{*}^{2}$ )</li>
-<li>put the $K$ points into training set</li>
-</ul>
-</li>
-</ul>
-<h1 id="Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows"><a href="#Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows" class="headerlink" title="Swin Transformer: Hierarchical Vision Transformer using Shifted Windows"></a>Swin Transformer: Hierarchical Vision Transformer using Shifted Windows</h1><p>Application：language $\longrightarrow$ vision</p>
-<p>Challenges:</p>
-<ul>
-<li>scale(language Transformer: word tokens)</li>
-<li>high resolution of pixels(计算复杂度： $n^{2}$ )</li>
-</ul>
-<p>Key point:</p>
-<ul>
-<li>小批量开始 $\longrightarrow$ 逐渐合并邻居</li>
-<li>如何实现线性复杂度：在无重叠窗口计算自注意力<ul>
-<li>standard transformer architecture: global self-attention $\longrightarrow$ quadratic complexity</li>
-<li>Swin Transformer: local self-attention $\longrightarrow$ linear complexity</li>
-</ul>
-</li>
-</ul>
-<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><ul>
-<li><p>Overall Framework</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_1.png" alt=""></p>
-</li>
-<li><p>Two Successive Swin Transformer Blocks  </p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_2.png" alt=""></p>
-</li>
-</ul>
+<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式（Factory Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 13:07</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">manufacture</span>(<span class="params">self, brand</span>):</span></span><br><span class="line">        <span class="keyword">if</span> brand == <span class="string">&quot;Benz&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Benz()</span><br><span class="line">        <span class="keyword">elif</span> brand == <span class="string">&quot;Ferrari&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Ferrari()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Benz</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Benz&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ferrari</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Ferrari&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factory = Factory()</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Benz&quot;</span>)</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Ferrari&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式（Singleton Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 14:08</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySingleton</span>:</span></span><br><span class="line">    __obj = <span class="literal">None</span></span><br><span class="line">    __init_flag = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> cls.__obj <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            cls.__obj = <span class="built_in">object</span>.__new__(cls)</span><br><span class="line">        <span class="keyword">return</span> cls.__obj</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> MySingleton.__init_flag:</span><br><span class="line">            print(<span class="string">&quot;init.....&quot;</span>)</span><br><span class="line">            self.name = name</span><br><span class="line">            MySingleton.__init_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    a = MySingleton(<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">    b = MySingleton(<span class="string">&quot;bb&quot;</span>)</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -396,21 +334,18 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E6%80%BB%E7%BB%93/" rel="tag"># 总结</a>
-              <a href="/tags/%E8%AE%BA%E6%96%87/" rel="tag"># 论文</a>
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/10/09/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E6%80%BB%E7%BB%93/" rel="prev" title="项目部署总结">
-                  <i class="fa fa-chevron-left"></i> 项目部署总结
+                <a href="/2021/11/07/Python%E6%8B%BE%E9%81%97/" rel="prev" title="Python知识点">
+                  <i class="fa fa-chevron-left"></i> Python知识点
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/11/07/Python%E6%8B%BE%E9%81%97/" rel="next" title="Python知识点">
-                  Python知识点 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
