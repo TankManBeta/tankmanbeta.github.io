@@ -61,6 +61,32 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_2.png" alt=""></p>
 </li>
 </ul>
+<h1 id="Adversarial-Sampling-for-Solving-Differential-Equations-with-Neural-Networks"><a href="#Adversarial-Sampling-for-Solving-Differential-Equations-with-Neural-Networks" class="headerlink" title="Adversarial Sampling for Solving Differential Equations with Neural Networks"></a>Adversarial Sampling for Solving Differential Equations with Neural Networks</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>sample points adversarially to maximize the loss of the current solution estimate  </p>
+<p>Advantages on using neural networks:</p>
+<ul>
+<li>instead of obtaining solution values at discretized points, we get a closed and differentiable solution function</li>
+<li>it is more effective in solving high dimensional PDEs by faring better against the “curse of dimensionality” </li>
+<li>numerical errors are not accumulated in each iteration</li>
+<li>initial and boundary conditions are satisfied by construction</li>
+</ul>
+<p>Drawbacks  of using a predefined sampling scheme: agnostic to the equation being solved as well as our current estimate $\hat{y}$</p>
+<h2 id="Key-Idea"><a href="#Key-Idea" class="headerlink" title="Key Idea"></a>Key Idea</h2><p>present a sampling scheme that is dependent on the current estimate $\hat{y}$, using a neural network to represent a variable sampling distribution.</p>
+<p>In each iteration, the sampler is trained to <strong>produce points which maximize the loss of the solver (and a secondary loss). </strong></p>
+<p>Thus, it competes with the solver whose weights are updated to minimize the loss at these very points.  </p>
+<h2 id="Architecture-1"><a href="#Architecture-1" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/image-20211128164821263.png" alt=""></p>
+<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>It is observed that if the sampler is purely optimized with the objective of maximizing $\hat{L}(\hat{y}; x)$(residual loss corresponding to the $DE$ at samples $x$), it tends to collapse all samples to one single point of high loss. </p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>Therefore, use <strong>an additional loss term $D_{k}$,</strong>Given points$\begin{Bmatrix}x_{1},x_{2},\dots,x_{n}\end{Bmatrix}$, we define $d_{k}(x_{i})$ to be the sum of distances of $x_{i}$ from its $k$ nearest neighbors.</p>
+<h1 id="Machine-Learning-of-Linear-Differential-Equations-using-Gaussian-Processes"><a href="#Machine-Learning-of-Linear-Differential-Equations-using-Gaussian-Processes" class="headerlink" title="Machine Learning of Linear Differential Equations using Gaussian Processes"></a>Machine Learning of Linear Differential Equations using Gaussian Processes</h1><p>Gaussian process priors are modified according to the particular form of such operators and are employed to infer parameters of the linear equations from scarce and possibly noisy observations.  </p>
+<p>optimal model parameters and hyper-parameters are all learned directly from the data by maximizing the joint marginal log-likelihood of the probabilistic model instead of being guessed or tuned manually by the user.  </p>
+<h2 id="Priors"><a href="#Priors" class="headerlink" title="Priors"></a>Priors</h2><p>place the $GP$ prior on $u(x)$ instead of $f(x)$ </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/image-20211128222044474.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222142.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222208.png" alt=""></p>
+<h2 id="Kernels"><a href="#Kernels" class="headerlink" title="Kernels"></a>Kernels</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222342.png" alt=""></p>
+<h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><p>employing a $Quasi-Newton$ optimizer $L-BFGS$ to minimize the negative log marginal likelihood</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222510.png" alt=""></p>
+<h2 id="Predictions"><a href="#Predictions" class="headerlink" title="Predictions"></a>Predictions</h2><p>one can predict the values $u(x)$ and $f(x)$ at a new test point $x$ by writing the posterior distributions</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222753.png" alt=""></p>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -505,6 +531,26 @@
       </tags>
   </entry>
   <entry>
+    <title>设计模式</title>
+    <url>/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
+<a id="more"></a>
+<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式（Factory Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 13:07</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">manufacture</span>(<span class="params">self, brand</span>):</span></span><br><span class="line">        <span class="keyword">if</span> brand == <span class="string">&quot;Benz&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Benz()</span><br><span class="line">        <span class="keyword">elif</span> brand == <span class="string">&quot;Ferrari&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Ferrari()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Benz</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Benz&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ferrari</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Ferrari&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factory = Factory()</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Benz&quot;</span>)</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Ferrari&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式（Singleton Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 14:08</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySingleton</span>:</span></span><br><span class="line">    __obj = <span class="literal">None</span></span><br><span class="line">    __init_flag = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> cls.__obj <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            cls.__obj = <span class="built_in">object</span>.__new__(cls)</span><br><span class="line">        <span class="keyword">return</span> cls.__obj</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> MySingleton.__init_flag:</span><br><span class="line">            print(<span class="string">&quot;init.....&quot;</span>)</span><br><span class="line">            self.name = name</span><br><span class="line">            MySingleton.__init_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    a = MySingleton(<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">    b = MySingleton(<span class="string">&quot;bb&quot;</span>)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>项目部署总结</title>
     <url>/2021/10/09/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下毕设项目部署上线遇见的一些问题</p>
@@ -623,26 +669,6 @@
       </categories>
       <tags>
         <tag>总结</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式</title>
-    <url>/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
-<a id="more"></a>
-<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式（Factory Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 13:07</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">manufacture</span>(<span class="params">self, brand</span>):</span></span><br><span class="line">        <span class="keyword">if</span> brand == <span class="string">&quot;Benz&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Benz()</span><br><span class="line">        <span class="keyword">elif</span> brand == <span class="string">&quot;Ferrari&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Ferrari()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Benz</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Benz&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ferrari</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Ferrari&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factory = Factory()</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Benz&quot;</span>)</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Ferrari&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式（Singleton Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 14:08</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySingleton</span>:</span></span><br><span class="line">    __obj = <span class="literal">None</span></span><br><span class="line">    __init_flag = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> cls.__obj <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            cls.__obj = <span class="built_in">object</span>.__new__(cls)</span><br><span class="line">        <span class="keyword">return</span> cls.__obj</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> MySingleton.__init_flag:</span><br><span class="line">            print(<span class="string">&quot;init.....&quot;</span>)</span><br><span class="line">            self.name = name</span><br><span class="line">            MySingleton.__init_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    a = MySingleton(<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">    b = MySingleton(<span class="string">&quot;bb&quot;</span>)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>设计模式</tag>
       </tags>
   </entry>
 </search>
