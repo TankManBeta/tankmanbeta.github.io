@@ -97,6 +97,12 @@
       </tags>
   </entry>
   <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Python知识点</title>
     <url>/2021/11/07/Python%E6%8B%BE%E9%81%97/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下一些python的知识点</p>
@@ -206,6 +212,17 @@
 <p>deSerialization反序列化，将文件的一个个字节到内存中。</p>
 <p>序列化保存到文件就是持久化。</p>
 <p>可将数据序列化后持久化，或者网络传输，也可以将文件中或者网络接受到的字节序列反序列化。</p>
+<h1 id="sys-path和模块路径搜索"><a href="#sys-path和模块路径搜索" class="headerlink" title="sys.path和模块路径搜索"></a>sys.path和模块路径搜索</h1><p>当我们导入某个模块文件时，<code>Python</code>解释器一般按照以下路径寻找模块文件（按照顺序寻找，找到即停不继续往下寻找）：</p>
+<ol>
+<li>内置模块</li>
+<li>当前目录</li>
+<li>程序的主目录</li>
+<li><code>pythonpath</code>目录（如果已经设置了<code>pythonpath</code>环境变量）</li>
+<li>标准链接库目录</li>
+<li>第三方库目录（<code>site-packages</code>目录）</li>
+<li><code>.pth</code>文件的内容（如果存在的话）</li>
+<li><code>sys.path.append()</code>临时添加的目录</li>
+</ol>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -214,12 +231,6 @@
         <tag>总结</tag>
         <tag>Python</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
   </entry>
   <entry>
     <title>搭建个人博客</title>
