@@ -1,108 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Paper Ideas</title>
-    <url>/2021/11/02/Paper-Ideas/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下读过论文的idea</p>
-<a id="more"></a>
-<h1 id="Physics-Coupled-Spatio-Temporal-Active-Learning-for-Dynamical-Systems"><a href="#Physics-Coupled-Spatio-Temporal-Active-Learning-for-Dynamical-Systems" class="headerlink" title="Physics-Coupled Spatio-Temporal Active Learning for Dynamical Systems"></a>Physics-Coupled Spatio-Temporal Active Learning for Dynamical Systems</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195000.png" alt="framework"></p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195040.png" alt="FN-PN"></p>
-<ul>
-<li>初始化<ul>
-<li>选定 $n$ 个点 $\longrightarrow$ $\Omega^{n}_{temp}$</li>
-<li>创建训练数据 $\longrightarrow$ $D_{temp}$ （选定 $n$ 个点都取 $T_{\omega}$ 时长的数据）</li>
-</ul>
-</li>
-<li>训练<ul>
-<li>learn $\lambda$ $\longleftarrow$ 最小化 $E_{q}$ ，偏微分方程</li>
-<li>train ST-PCNN $\longleftarrow$ $\lambda$</li>
-<li>predict $[\hat{s}]$ $\longleftarrow$ at all locations</li>
-<li>$\Omega_{Kriging}^{n}$ $\longleftarrow$ $n$ 个：largest estimate error</li>
-<li>$D_{Kriging}$ $\longleftarrow$ 上一步新选出的 $n$ 个，选取 $T_{\omega}$ 时长数据</li>
-<li>更新 $D$</li>
-</ul>
-</li>
-</ul>
-<h1 id="ACTIVE-LEARNING-OF-DEEP-SURROGATES-FOR-PDES"><a href="#ACTIVE-LEARNING-OF-DEEP-SURROGATES-FOR-PDES" class="headerlink" title="ACTIVE LEARNING OF DEEP SURROGATES FOR PDES"></a>ACTIVE LEARNING OF DEEP SURROGATES FOR PDES</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104203300.png" alt="model"></p>
-<p>algorithm: reduce number of training points(selected based on error measure)</p>
-<p>AL: adding the most uncertain points</p>
-<ul>
-<li><p>Initialize:</p>
-<p>random choose $n_{init}$ train 50 epochs $\longrightarrow$ $\widetilde{t^{0}}(p)$</p>
-</li>
-<li><p>Do T times:</p>
-<ul>
-<li>evaluate $\widetilde{t^{i}}(p)$ at $M×K$ points</li>
-<li>choose $K$ points(largest $\sigma_{*}^{2}$ )</li>
-<li>put the $K$ points into training set</li>
-</ul>
-</li>
-</ul>
-<h1 id="Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows"><a href="#Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows" class="headerlink" title="Swin Transformer: Hierarchical Vision Transformer using Shifted Windows"></a>Swin Transformer: Hierarchical Vision Transformer using Shifted Windows</h1><p>Application：language $\longrightarrow$ vision</p>
-<p>Challenges:</p>
-<ul>
-<li>scale(language Transformer: word tokens)</li>
-<li>high resolution of pixels(计算复杂度： $n^{2}$ )</li>
-</ul>
-<p>Key point:</p>
-<ul>
-<li>小批量开始 $\longrightarrow$ 逐渐合并邻居</li>
-<li>如何实现线性复杂度：在无重叠窗口计算自注意力<ul>
-<li>standard transformer architecture: global self-attention $\longrightarrow$ quadratic complexity</li>
-<li>Swin Transformer: local self-attention $\longrightarrow$ linear complexity</li>
-</ul>
-</li>
-</ul>
-<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><ul>
-<li><p>Overall Framework</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_1.png" alt=""></p>
-</li>
-<li><p>Two Successive Swin Transformer Blocks  </p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_2.png" alt=""></p>
-</li>
-</ul>
-<h1 id="Adversarial-Sampling-for-Solving-Differential-Equations-with-Neural-Networks"><a href="#Adversarial-Sampling-for-Solving-Differential-Equations-with-Neural-Networks" class="headerlink" title="Adversarial Sampling for Solving Differential Equations with Neural Networks"></a>Adversarial Sampling for Solving Differential Equations with Neural Networks</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>sample points adversarially to maximize the loss of the current solution estimate  </p>
-<p>Advantages on using neural networks:</p>
-<ul>
-<li>instead of obtaining solution values at discretized points, we get a closed and differentiable solution function</li>
-<li>it is more effective in solving high dimensional PDEs by faring better against the “curse of dimensionality” </li>
-<li>numerical errors are not accumulated in each iteration</li>
-<li>initial and boundary conditions are satisfied by construction</li>
-</ul>
-<p>Drawbacks  of using a predefined sampling scheme: agnostic to the equation being solved as well as our current estimate $\hat{y}$</p>
-<h2 id="Key-Idea"><a href="#Key-Idea" class="headerlink" title="Key Idea"></a>Key Idea</h2><p>present a sampling scheme that is dependent on the current estimate $\hat{y}$, using a neural network to represent a variable sampling distribution.</p>
-<p>In each iteration, the sampler is trained to <strong>produce points which maximize the loss of the solver (and a secondary loss). </strong></p>
-<p>Thus, it competes with the solver whose weights are updated to minimize the loss at these very points.  </p>
-<h2 id="Architecture-1"><a href="#Architecture-1" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/image-20211128164821263.png" alt=""></p>
-<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>It is observed that if the sampler is purely optimized with the objective of maximizing $\hat{L}(\hat{y}; x)$(residual loss corresponding to the $DE$ at samples $x$), it tends to collapse all samples to one single point of high loss. </p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>Therefore, use <strong>an additional loss term $D_{k}$,</strong>Given points$\begin{Bmatrix}x_{1},x_{2},\dots,x_{n}\end{Bmatrix}$, we define $d_{k}(x_{i})$ to be the sum of distances of $x_{i}$ from its $k$ nearest neighbors.</p>
-<h1 id="Machine-Learning-of-Linear-Differential-Equations-using-Gaussian-Processes"><a href="#Machine-Learning-of-Linear-Differential-Equations-using-Gaussian-Processes" class="headerlink" title="Machine Learning of Linear Differential Equations using Gaussian Processes"></a>Machine Learning of Linear Differential Equations using Gaussian Processes</h1><p>Gaussian process priors are modified according to the particular form of such operators and are employed to infer parameters of the linear equations from scarce and possibly noisy observations.  </p>
-<p>optimal model parameters and hyper-parameters are all learned directly from the data by maximizing the joint marginal log-likelihood of the probabilistic model instead of being guessed or tuned manually by the user.  </p>
-<h2 id="Priors"><a href="#Priors" class="headerlink" title="Priors"></a>Priors</h2><p>place the $GP$ prior on $u(x)$ instead of $f(x)$ </p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/image-20211128222044474.png" alt=""></p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222142.png" alt=""></p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222208.png" alt=""></p>
-<h2 id="Kernels"><a href="#Kernels" class="headerlink" title="Kernels"></a>Kernels</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222342.png" alt=""></p>
-<h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><p>employing a $Quasi-Newton$ optimizer $L-BFGS$ to minimize the negative log marginal likelihood</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222510.png" alt=""></p>
-<h2 id="Predictions"><a href="#Predictions" class="headerlink" title="Predictions"></a>Predictions</h2><p>one can predict the values $u(x)$ and $f(x)$ at a new test point $x$ by writing the posterior distributions</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222753.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>论文</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
-  </entry>
-  <entry>
     <title>Python知识点</title>
     <url>/2021/11/07/Python%E6%8B%BE%E9%81%97/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下一些python的知识点</p>
@@ -230,6 +128,136 @@
       <tags>
         <tag>总结</tag>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Paper Ideas</title>
+    <url>/2021/11/02/Paper-Ideas/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下读过论文的idea</p>
+<a id="more"></a>
+<h1 id="Physics-Coupled-Spatio-Temporal-Active-Learning-for-Dynamical-Systems"><a href="#Physics-Coupled-Spatio-Temporal-Active-Learning-for-Dynamical-Systems" class="headerlink" title="Physics-Coupled Spatio-Temporal Active Learning for Dynamical Systems"></a>Physics-Coupled Spatio-Temporal Active Learning for Dynamical Systems</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195000.png" alt="framework"></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104195040.png" alt="FN-PN"></p>
+<ul>
+<li>初始化<ul>
+<li>选定 $n$ 个点 $\longrightarrow$ $\Omega^{n}_{temp}$</li>
+<li>创建训练数据 $\longrightarrow$ $D_{temp}$ （选定 $n$ 个点都取 $T_{\omega}$ 时长的数据）</li>
+</ul>
+</li>
+<li>训练<ul>
+<li>learn $\lambda$ $\longleftarrow$ 最小化 $E_{q}$ ，偏微分方程</li>
+<li>train ST-PCNN $\longleftarrow$ $\lambda$</li>
+<li>predict $[\hat{s}]$ $\longleftarrow$ at all locations</li>
+<li>$\Omega_{Kriging}^{n}$ $\longleftarrow$ $n$ 个：largest estimate error</li>
+<li>$D_{Kriging}$ $\longleftarrow$ 上一步新选出的 $n$ 个，选取 $T_{\omega}$ 时长数据</li>
+<li>更新 $D$</li>
+</ul>
+</li>
+</ul>
+<h1 id="ACTIVE-LEARNING-OF-DEEP-SURROGATES-FOR-PDES"><a href="#ACTIVE-LEARNING-OF-DEEP-SURROGATES-FOR-PDES" class="headerlink" title="ACTIVE LEARNING OF DEEP SURROGATES FOR PDES"></a>ACTIVE LEARNING OF DEEP SURROGATES FOR PDES</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211104203300.png" alt="model"></p>
+<p>algorithm: reduce number of training points(selected based on error measure)</p>
+<p>AL: adding the most uncertain points</p>
+<ul>
+<li><p>Initialize:</p>
+<p>random choose $n_{init}$ train 50 epochs $\longrightarrow$ $\widetilde{t^{0}}(p)$</p>
+</li>
+<li><p>Do T times:</p>
+<ul>
+<li>evaluate $\widetilde{t^{i}}(p)$ at $M×K$ points</li>
+<li>choose $K$ points(largest $\sigma_{*}^{2}$ )</li>
+<li>put the $K$ points into training set</li>
+</ul>
+</li>
+</ul>
+<h1 id="Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows"><a href="#Swin-Transformer-Hierarchical-Vision-Transformer-using-Shifted-Windows" class="headerlink" title="Swin Transformer: Hierarchical Vision Transformer using Shifted Windows"></a>Swin Transformer: Hierarchical Vision Transformer using Shifted Windows</h1><p>Application：language $\longrightarrow$ vision</p>
+<p>Challenges:</p>
+<ul>
+<li>scale(language Transformer: word tokens)</li>
+<li>high resolution of pixels(计算复杂度： $n^{2}$ )</li>
+</ul>
+<p>Key point:</p>
+<ul>
+<li>小批量开始 $\longrightarrow$ 逐渐合并邻居</li>
+<li>如何实现线性复杂度：在无重叠窗口计算自注意力<ul>
+<li>standard transformer architecture: global self-attention $\longrightarrow$ quadratic complexity</li>
+<li>Swin Transformer: local self-attention $\longrightarrow$ linear complexity</li>
+</ul>
+</li>
+</ul>
+<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><ul>
+<li><p>Overall Framework</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_1.png" alt=""></p>
+</li>
+<li><p>Two Successive Swin Transformer Blocks  </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/swin_2.png" alt=""></p>
+</li>
+</ul>
+<h1 id="Adversarial-Sampling-for-Solving-Differential-Equations-with-Neural-Networks"><a href="#Adversarial-Sampling-for-Solving-Differential-Equations-with-Neural-Networks" class="headerlink" title="Adversarial Sampling for Solving Differential Equations with Neural Networks"></a>Adversarial Sampling for Solving Differential Equations with Neural Networks</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>sample points adversarially to maximize the loss of the current solution estimate  </p>
+<p>Advantages on using neural networks:</p>
+<ul>
+<li>instead of obtaining solution values at discretized points, we get a closed and differentiable solution function</li>
+<li>it is more effective in solving high dimensional PDEs by faring better against the “curse of dimensionality” </li>
+<li>numerical errors are not accumulated in each iteration</li>
+<li>initial and boundary conditions are satisfied by construction</li>
+</ul>
+<p>Drawbacks  of using a predefined sampling scheme: agnostic to the equation being solved as well as our current estimate $\hat{y}$</p>
+<h2 id="Key-Idea"><a href="#Key-Idea" class="headerlink" title="Key Idea"></a>Key Idea</h2><p>present a sampling scheme that is dependent on the current estimate $\hat{y}$, using a neural network to represent a variable sampling distribution.</p>
+<p>In each iteration, the sampler is trained to <strong>produce points which maximize the loss of the solver (and a secondary loss). </strong></p>
+<p>Thus, it competes with the solver whose weights are updated to minimize the loss at these very points.  </p>
+<h2 id="Architecture-1"><a href="#Architecture-1" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/image-20211128164821263.png" alt=""></p>
+<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>It is observed that if the sampler is purely optimized with the objective of maximizing $\hat{L}(\hat{y}; x)$(residual loss corresponding to the $DE$ at samples $x$), it tends to collapse all samples to one single point of high loss. </p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>Therefore, use <strong>an additional loss term $D_{k}$,</strong>Given points$\begin{Bmatrix}x_{1},x_{2},\dots,x_{n}\end{Bmatrix}$, we define $d_{k}(x_{i})$ to be the sum of distances of $x_{i}$ from its $k$ nearest neighbors.</p>
+<h1 id="Machine-Learning-of-Linear-Differential-Equations-using-Gaussian-Processes"><a href="#Machine-Learning-of-Linear-Differential-Equations-using-Gaussian-Processes" class="headerlink" title="Machine Learning of Linear Differential Equations using Gaussian Processes"></a>Machine Learning of Linear Differential Equations using Gaussian Processes</h1><p>Gaussian process priors are modified according to the particular form of such operators and are employed to infer parameters of the linear equations from scarce and possibly noisy observations.  </p>
+<p>optimal model parameters and hyper-parameters are all learned directly from the data by maximizing the joint marginal log-likelihood of the probabilistic model instead of being guessed or tuned manually by the user.  </p>
+<h2 id="Priors"><a href="#Priors" class="headerlink" title="Priors"></a>Priors</h2><p>place the $GP$ prior on $u(x)$ instead of $f(x)$ </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/image-20211128222044474.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222142.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222208.png" alt=""></p>
+<h2 id="Kernels"><a href="#Kernels" class="headerlink" title="Kernels"></a>Kernels</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222342.png" alt=""></p>
+<h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><p>employing a $Quasi-Newton$ optimizer $L-BFGS$ to minimize the negative log marginal likelihood</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222510.png" alt=""></p>
+<h2 id="Predictions"><a href="#Predictions" class="headerlink" title="Predictions"></a>Predictions</h2><p>one can predict the values $u(x)$ and $f(x)$ at a new test point $x$ by writing the posterior distributions</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20211128222753.png" alt=""></p>
+<h1 id="Learning-Physics-Informed-Neural-Networks-without-Stacked-Back-propagation"><a href="#Learning-Physics-Informed-Neural-Networks-without-Stacked-Back-propagation" class="headerlink" title="Learning Physics-Informed Neural Networks without Stacked Back-propagation"></a>Learning Physics-Informed Neural Networks without Stacked Back-propagation</h1><h2 id="Problems"><a href="#Problems" class="headerlink" title="Problems"></a>Problems</h2><p>PINN training suffers from a significant scalability issue</p>
+<h2 id="Contribution"><a href="#Contribution" class="headerlink" title="Contribution"></a>Contribution</h2><ul>
+<li>developing a novel approach to train the model without stacked back-propagation</li>
+<li>parameterize the PDE solution $u(x; θ)$ as a Gaussian smoothed model, $u(x;\theta)=E_{\delta\thicksim\mathcal{N}(0,\sigma^{2}\mathbf{I})}f(x+\delta,\theta)$, where $u$ transforms arbitrary base network $f$ by injecting Gaussian noise into input $x$. This transformation gives rise to a key property for $u$ where its derivatives to the input can be efficiently calculated <em>without back-propagation</em>.<ul>
+<li>Such property is derived from the well-known Stein’s Identity that essentially tells that the derivatives of any Gaussian smoothed function $u$ can be reformulated as some expectation terms of the output of its base $f$, which can be estimated using Monte Carlo methods. </li>
+</ul>
+</li>
+<li>given any PDE problem, we can replace the derivative terms in the PDE with Stein’s<br>derivative estimators.</li>
+</ul>
+<h2 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h2><ol>
+<li>no longer need stacked back-propagation to compute the loss</li>
+<li>parallelize the computation into distributed machines to further accelerate the training </li>
+</ol>
+<h2 id="Notice"><a href="#Notice" class="headerlink" title="Notice"></a>Notice</h2><p>for large $\sigma$, the induced Gaussian smoothed models may not be expressive enough to approximate functions (i.e., learn solutions) with a large Lipschitz constant. Therefore, using a small value of $\sigma$ is usually a better choice in practice. However, a small σ will lead to high-variance Stein’s derivative estimation, which inevitably causes unstable training.  </p>
+<h2 id="Two-Sources-of-Inefficiency-In-Computing-the-PINN-Loss"><a href="#Two-Sources-of-Inefficiency-In-Computing-the-PINN-Loss" class="headerlink" title="Two Sources of Inefficiency In Computing the PINN Loss"></a>Two Sources of Inefficiency In Computing the PINN Loss</h2><ol>
+<li>different orders of derivatives can only be calculated sequentially  </li>
+<li>the dimension-level inefficiency </li>
+</ol>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><h3 id="4-1-Back-propagation-free-Derivative-Estimators"><a href="#4-1-Back-propagation-free-Derivative-Estimators" class="headerlink" title="4.1 Back-propagation-free Derivative Estimators"></a>4.1 Back-propagation-free Derivative Estimators</h3><p>define $u(x)=E_{\delta\thicksim\mathcal{N}(0,\sigma^{2}\mathbf{I})}f(x+\delta,\theta)$, then we have $\bigtriangledown_{x}u=E_{\delta\thicksim\mathcal{N}(0,\sigma^{2}\mathbf{I})}[\frac{\delta}{\sigma^{2}}f(x+\delta)]$</p>
+<h4 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220221_1.png" alt=""></p>
+<p>From the above theorem, we can see that the first-order derivative rxu can be reformulated as an expectation term $E_{\delta\thicksim\mathcal{N}(0,\sigma^{2}\mathbf{I})}[\frac{\delta}{\sigma^{2}}f(x+\delta)]$, To calculate the value of the expectation, we can use Monte Carlo method to obtain an unbiased estimation from K.  </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220221_2.png" alt=""></p>
+<h3 id="4-2-Model-Capacity"><a href="#4-2-Model-Capacity" class="headerlink" title="4.2 Model Capacity"></a>4.2 Model Capacity</h3><p>For any measurable function $f : R^{d}\rightarrow R$, define $u(x)=E_{\delta\thicksim\mathcal{N}(0,\sigma^{2}\mathbf{I})}f(x+\delta,\theta)$, then<br>$u(x) $is $\frac{F}{\sigma}\sqrt{\frac{2}{\pi}}$-Lipschitz with respect to $l_{2}$-norm, where $F=sup_{x\in R^{d}}|f(x)|$.  </p>
+<h4 id="Proof-1"><a href="#Proof-1" class="headerlink" title="Proof"></a>Proof</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220221_3.png" alt=""></p>
+<h3 id="4-3-Variance-Reduced-Stein’s-Derivative-Estimators"><a href="#4-3-Variance-Reduced-Stein’s-Derivative-Estimators" class="headerlink" title="4.3 Variance-Reduced Stein’s Derivative Estimators"></a>4.3 Variance-Reduced Stein’s Derivative Estimators</h3><h4 id="The-control-variate-method"><a href="#The-control-variate-method" class="headerlink" title="The control variate method"></a>The control variate method</h4><p>One generic approach to reducing the variance of Monte Carlo estimates of integrals is to use an additive control variate, which is known as baseline.  </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220221_4.png" alt=""></p>
+<h4 id="Further-improvement-using-the-antithetic-variable-method"><a href="#Further-improvement-using-the-antithetic-variable-method" class="headerlink" title="Further improvement using the antithetic variable method"></a>Further improvement using the antithetic variable method</h4><p>The antithetic variable method is yet another powerful technique for variance reduction.  </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220221_5.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>论文</tag>
       </tags>
   </entry>
   <entry>
@@ -477,6 +505,26 @@
       </tags>
   </entry>
   <entry>
+    <title>设计模式</title>
+    <url>/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
+<a id="more"></a>
+<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式（Factory Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 13:07</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">manufacture</span>(<span class="params">self, brand</span>):</span></span><br><span class="line">        <span class="keyword">if</span> brand == <span class="string">&quot;Benz&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Benz()</span><br><span class="line">        <span class="keyword">elif</span> brand == <span class="string">&quot;Ferrari&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Ferrari()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Benz</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Benz&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ferrari</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Ferrari&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factory = Factory()</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Benz&quot;</span>)</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Ferrari&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式（Singleton Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 14:08</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySingleton</span>:</span></span><br><span class="line">    __obj = <span class="literal">None</span></span><br><span class="line">    __init_flag = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> cls.__obj <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            cls.__obj = <span class="built_in">object</span>.__new__(cls)</span><br><span class="line">        <span class="keyword">return</span> cls.__obj</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> MySingleton.__init_flag:</span><br><span class="line">            print(<span class="string">&quot;init.....&quot;</span>)</span><br><span class="line">            self.name = name</span><br><span class="line">            MySingleton.__init_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    a = MySingleton(<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">    b = MySingleton(<span class="string">&quot;bb&quot;</span>)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>毕设知识点总结</title>
     <url>/2021/04/06/%E6%AF%95%E8%AE%BE%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>毕设的项目也算是做完了，总结一下项目过程中遇见的一些问题和解决方案，避免以后再次踩坑。</p>
@@ -543,26 +591,6 @@
       </categories>
       <tags>
         <tag>总结</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式</title>
-    <url>/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
-<a id="more"></a>
-<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式（Factory Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 13:07</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">manufacture</span>(<span class="params">self, brand</span>):</span></span><br><span class="line">        <span class="keyword">if</span> brand == <span class="string">&quot;Benz&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Benz()</span><br><span class="line">        <span class="keyword">elif</span> brand == <span class="string">&quot;Ferrari&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Ferrari()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Benz</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Benz&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ferrari</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Ferrari&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factory = Factory()</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Benz&quot;</span>)</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Ferrari&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式（Singleton Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 14:08</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySingleton</span>:</span></span><br><span class="line">    __obj = <span class="literal">None</span></span><br><span class="line">    __init_flag = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> cls.__obj <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            cls.__obj = <span class="built_in">object</span>.__new__(cls)</span><br><span class="line">        <span class="keyword">return</span> cls.__obj</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> MySingleton.__init_flag:</span><br><span class="line">            print(<span class="string">&quot;init.....&quot;</span>)</span><br><span class="line">            self.name = name</span><br><span class="line">            MySingleton.__init_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    a = MySingleton(<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">    b = MySingleton(<span class="string">&quot;bb&quot;</span>)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
