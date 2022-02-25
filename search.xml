@@ -1,80 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Git使用总结</title>
-    <url>/2022/02/25/Git%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Git</code>过程中遇到的问题</p>
-<a id="more"></a>
-<h1 id="提交项目至GitHub仓库"><a href="#提交项目至GitHub仓库" class="headerlink" title="提交项目至GitHub仓库"></a>提交项目至GitHub仓库</h1><ol>
-<li><p>新建仓库，会出现仓库地址，例如：<a href="https://github.com/TankManBeta/git-practice.git">https://github.com/TankManBeta/git-practice.git</a></p>
-</li>
-<li><p>本地项目文件夹，打开根目录命令行窗口，输入以下命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建说明文档</span></span><br><span class="line">git touch README.md</span><br><span class="line"><span class="meta">#</span><span class="bash"> 初始化本地仓库</span></span><br><span class="line">git init</span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加全部已修改的文件，效果等同于git add -A</span></span><br><span class="line">git add .</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改后为文件提交到本地仓库</span></span><br><span class="line">git commit -m &quot;first commit&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 强制修改分支名</span></span><br><span class="line">git branch -M main</span><br><span class="line"><span class="meta">#</span><span class="bash"> 连接到远程仓库并为该仓库创建别名，别名为origin；远程仓库地址就是新建的仓库的地址</span></span><br><span class="line">git remote add origin https://github.com/TankManBeta/git-practice.git</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建一个upSrtream，并将本地代码通过这个upStream推送到别名为origin的仓库中的main分支上</span></span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure></li>
-<li>本地项目上传至<code>GitHub</code>仓库成功</li>
-</ol>
-<h1 id="克隆项目"><a href="#克隆项目" class="headerlink" title="克隆项目"></a>克隆项目</h1><ol>
-<li>新建一个文件夹</li>
-<li>打开<code>CMD</code>或者右键<code>Git Bash Here</code></li>
-<li>命令行中输入<code>git init</code>，此时刚创建的文件夹中出现一个<code>.git</code>文件夹</li>
-<li>先在<code>GitHub</code>中复制<code>URL</code>，然后命令行窗口中输入<code>git clone [URL] [需要新建的文件夹名]</code>，回车，等待下载完成即可</li>
-</ol>
-<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><h2 id="每次上传需要登陆"><a href="#每次上传需要登陆" class="headerlink" title="每次上传需要登陆"></a>每次上传需要登陆</h2><p><code>git</code>使用<code>https</code>协议，每次<code>pull</code>, <code>push</code>都要输入密码。使用<code>git</code>协议，然后使用<code>SSH</code>密钥，可以不用每次都输密码。</p>
-<ol>
-<li><p>生成<code>SSH</code></p>
-<ol>
-<li><p>打开<code>Git</code>，输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure></li>
-<li><p>设定保存<code>key</code>的文件名</p>
-</li>
-<li><p>设定密码</p>
-</li>
-</ol>
-</li>
-<li><p><code>GitHub</code>主页添加<code>SSH</code>： <code>Settings</code> —&gt; <code>SSH and GPG keys</code> —&gt; <code>New SSH key</code> —&gt; 输入自定义标题和刚刚生成的pub文件 —&gt; <code>Add SSH key</code></p>
-</li>
-<li><p>本地登陆<code>SSH</code></p>
-<ol>
-<li><p>添加<code>Key</code>到<code>ssh</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-add  ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-add  ~/.ssh/你的私钥名</span><br></pre></td></tr></table></figure></li>
-<li><p><code>Git</code>输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T -i 你的私钥名 git@github.com</span><br></pre></td></tr></table></figure>
-<p><strong>注：设置了自定义名字的SSH密钥后，还需要再设置一下<code>SSH</code>的配置文件（见另一篇），否则会导致拒绝连接。</strong></p>
-</li>
-</ol>
-</li>
-<li><p>移除旧的提交方式：</p>
-<ol>
-<li><p>查看项目采用的提交方式：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure></li>
-<li><p>删除旧的提交方式：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote rm origin</span><br></pre></td></tr></table></figure></li>
-<li><p>修改提交方式</p>
-<ol>
-<li><p><code>GitHub</code>仓库 —&gt; <code>Clone or download</code> —&gt; <code>User SSH</code>，获取<code>SSH</code>链接</p>
-</li>
-<li><p>添加新的<code>SSH</code>提交方式</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote add origin git@github.com:TankManBeta/git-practice.git</span><br></pre></td></tr></table></figure></li>
-</ol>
-</li>
-</ol>
-</li>
-<li>提交新代码，不再需要输入账号密码</li>
-</ol>
-<h2 id="多人协作开发"><a href="#多人协作开发" class="headerlink" title="多人协作开发"></a>多人协作开发</h2><p>如果是多人协作开发的话，一定要先<code>pull</code>，将最新版本的代码拉取到本地</p>
-<h2 id="多个远程仓库或多个分支"><a href="#多个远程仓库或多个分支" class="headerlink" title="多个远程仓库或多个分支"></a>多个远程仓库或多个分支</h2><p>如果有多个远程仓库或者多个分支，并且需要将代码推送到指定仓库的指定分支上，那么在<code>pull</code>或<code>push</code>的时候，就需要按照下面的格式书写：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git pull 仓库别名 仓库分支名</span><br><span class="line">git push 仓库别名 仓库分支名</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Paper Ideas</title>
     <url>/2021/11/02/Paper-Ideas/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下读过论文的idea</p>
@@ -196,6 +122,80 @@
       <tags>
         <tag>总结</tag>
         <tag>论文</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git使用总结</title>
+    <url>/2022/02/25/Git%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Git</code>过程中遇到的问题</p>
+<a id="more"></a>
+<h1 id="提交项目至GitHub仓库"><a href="#提交项目至GitHub仓库" class="headerlink" title="提交项目至GitHub仓库"></a>提交项目至GitHub仓库</h1><ol>
+<li><p>新建仓库，会出现仓库地址，例如：<a href="https://github.com/TankManBeta/xxx.git">https://github.com/TankManBeta/xxx.git</a></p>
+</li>
+<li><p>本地项目文件夹，打开根目录命令行窗口，输入以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建说明文档</span></span><br><span class="line">git touch README.md</span><br><span class="line"><span class="meta">#</span><span class="bash"> 初始化本地仓库</span></span><br><span class="line">git init</span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加全部已修改的文件，效果等同于git add -A</span></span><br><span class="line">git add .</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改后为文件提交到本地仓库</span></span><br><span class="line">git commit -m &quot;first commit&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 强制修改分支名</span></span><br><span class="line">git branch -M main</span><br><span class="line"><span class="meta">#</span><span class="bash"> 连接到远程仓库并为该仓库创建别名，别名为origin；远程仓库地址就是新建的仓库的地址</span></span><br><span class="line">git remote add origin https://github.com/TankManBeta/xxx.git</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建一个upSrtream，并将本地代码通过这个upStream推送到别名为origin的仓库中的main分支上</span></span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure></li>
+<li>本地项目上传至<code>GitHub</code>仓库成功</li>
+</ol>
+<h1 id="克隆项目"><a href="#克隆项目" class="headerlink" title="克隆项目"></a>克隆项目</h1><ol>
+<li>新建一个文件夹</li>
+<li>打开<code>CMD</code>或者右键<code>Git Bash Here</code></li>
+<li>命令行中输入<code>git init</code>，此时刚创建的文件夹中出现一个<code>.git</code>文件夹</li>
+<li>先在<code>GitHub</code>中复制<code>URL</code>，然后命令行窗口中输入<code>git clone [URL] [需要新建的文件夹名]</code>，回车，等待下载完成即可</li>
+</ol>
+<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><h2 id="每次上传需要登陆"><a href="#每次上传需要登陆" class="headerlink" title="每次上传需要登陆"></a>每次上传需要登陆</h2><p><code>git</code>使用<code>https</code>协议，每次<code>pull</code>, <code>push</code>都要输入密码。使用<code>git</code>协议，然后使用<code>SSH</code>密钥，可以不用每次都输密码。</p>
+<ol>
+<li><p>生成<code>SSH</code></p>
+<ol>
+<li><p>打开<code>Git</code>，输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure></li>
+<li><p>设定保存<code>key</code>的文件名</p>
+</li>
+<li><p>设定密码</p>
+</li>
+</ol>
+</li>
+<li><p><code>GitHub</code>主页添加<code>SSH</code>： <code>Settings</code> —&gt; <code>SSH and GPG keys</code> —&gt; <code>New SSH key</code> —&gt; 输入自定义标题和刚刚生成的pub文件 —&gt; <code>Add SSH key</code></p>
+</li>
+<li><p>本地登陆<code>SSH</code></p>
+<ol>
+<li><p>添加<code>Key</code>到<code>ssh</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-add  ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-add  ~/.ssh/你的私钥名</span><br></pre></td></tr></table></figure></li>
+<li><p><code>Git</code>输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T -i 你的私钥名 git@github.com</span><br></pre></td></tr></table></figure>
+<p><strong>注：设置了自定义名字的SSH密钥后，还需要再设置一下<code>SSH</code>的配置文件（见另一篇），否则会导致拒绝连接。</strong></p>
+</li>
+</ol>
+</li>
+<li><p>移除旧的提交方式：</p>
+<ol>
+<li><p>查看项目采用的提交方式：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure></li>
+<li><p>删除旧的提交方式：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote rm origin</span><br></pre></td></tr></table></figure></li>
+<li><p>修改提交方式</p>
+<ol>
+<li><p><code>GitHub</code>仓库 —&gt; <code>Clone or download</code> —&gt; <code>User SSH</code>，获取<code>SSH</code>链接</p>
+</li>
+<li><p>添加新的<code>SSH</code>提交方式</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote add origin git@github.com:TankManBeta/xxx.git</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>提交新代码，不再需要输入账号密码</li>
+</ol>
+<h2 id="多人协作开发"><a href="#多人协作开发" class="headerlink" title="多人协作开发"></a>多人协作开发</h2><p>如果是多人协作开发的话，一定要先<code>pull</code>，将最新版本的代码拉取到本地</p>
+<h2 id="多个远程仓库或多个分支"><a href="#多个远程仓库或多个分支" class="headerlink" title="多个远程仓库或多个分支"></a>多个远程仓库或多个分支</h2><p>如果有多个远程仓库或者多个分支，并且需要将代码推送到指定仓库的指定分支上，那么在<code>pull</code>或<code>push</code>的时候，就需要按照下面的格式书写：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git pull 仓库别名 仓库分支名</span><br><span class="line">git push 仓库别名 仓库分支名</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -337,6 +337,78 @@
     <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
     <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>机器学习总结</title>
+    <url>/2021/04/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>小白上路啦！</p>
+<a id="more"></a>
+<h1 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h1><h2 id="学习方式分类"><a href="#学习方式分类" class="headerlink" title="学习方式分类"></a>学习方式分类</h2><ul>
+<li>监督学习</li>
+<li>无监督学习</li>
+<li>半监督学习</li>
+<li>强化学习</li>
+</ul>
+<h2 id="学习结果分类"><a href="#学习结果分类" class="headerlink" title="学习结果分类"></a>学习结果分类</h2><ul>
+<li>回归</li>
+<li>分类</li>
+</ul>
+<h1 id="模型学习"><a href="#模型学习" class="headerlink" title="模型学习"></a>模型学习</h1><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><h3 id="线性回归模型特点"><a href="#线性回归模型特点" class="headerlink" title="线性回归模型特点"></a>线性回归模型特点</h3><ul>
+<li>线性回归时一种回归算法</li>
+<li>模型简单、计算量较小</li>
+<li>对误差敏感</li>
+<li>对数据预处理要求较高</li>
+</ul>
+<h3 id="线性回归模型主要思想"><a href="#线性回归模型主要思想" class="headerlink" title="线性回归模型主要思想"></a>线性回归模型主要思想</h3><p>通过运用该简单的线性函数，可模拟<code>x</code>和<code>y</code>之间的关系。关键在于该函数不仅与输入变量x成线性关系，而且与参数<code>a</code>、<code>b</code>成线性关系。当前目标是确定最符合训练数据的参数<code>a</code>和<code>b</code>的值。</p>
+<p>这可通过测量每个输入x的实际目标值<code>y</code>和模型<script type="math/tex">f(x)</script>之间的失配来实现，并将失配最小化。这种失配（最小值）被称为误差函数。</p>
+<p>有多种误差函数可供选择，但其中最简单的要数<code>RSS</code>，即每个数据点x对应的模型<script type="math/tex">f(x)</script>与目标值y的误差平方和。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_16.png" alt=""></p>
+<p>对于<code>w</code>,<code>b​</code>作为自变量，取何值时，<code>RSS</code>最小？转化为求极值问题，极值点偏导为0。</p>
+<p>避免过拟合，引入正则化技术（将参数作为项加入损失函数）</p>
+<p>L1正则化（LASSO回归）：具有稀疏作用</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_17.png" alt=""></p>
+<p>L2正则化（Ridge回归）：收敛更快</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_18.png" alt=""></p>
+<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><ul>
+<li>评估是否准确：查看在训练集上的准确率</li>
+<li>评估泛化性能：查看在测试集（<code>K</code>折）上的准确率</li>
+</ul>
+<h3 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h3><ul>
+<li>更新规则（多个$\theta$同时更新）：</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_19.png" alt=""></p>
+<ul>
+<li>$\alpha$太小，$J(\theta)$收敛太慢；$\alpha$太大，$J(\theta)$也许每次迭代不会减少或者不会收敛</li>
+<li>注意特征缩放，使得特征在相似的范围</li>
+</ul>
+<h3 id="正规方程法"><a href="#正规方程法" class="headerlink" title="正规方程法"></a>正规方程法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_20.png" alt=""></p>
+<h2 id="logistic回归模型"><a href="#logistic回归模型" class="headerlink" title="logistic回归模型"></a>logistic回归模型</h2><h3 id="logistic回归模型特点"><a href="#logistic回归模型特点" class="headerlink" title="logistic回归模型特点"></a>logistic回归模型特点</h3><ul>
+<li>logistic回归是一种分类算法</li>
+<li>模型简单、计算量较小</li>
+<li>对异常数据点并不敏感</li>
+<li>对数据预处理要求较高</li>
+</ul>
+<h3 id="logistic回归模型主要思想"><a href="#logistic回归模型主要思想" class="headerlink" title="logistic回归模型主要思想"></a>logistic回归模型主要思想</h3><h4 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h4><p>sigmoid函数的数学形式是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_21.png" alt=""></p>
+<p>对应的函数曲线如下图：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/sigmoid.png" alt="sigmod.png"></p>
+<h4 id="决策函数"><a href="#决策函数" class="headerlink" title="决策函数"></a>决策函数</h4><p>一个机器学习的模型，实际上是把决策函数限定在某一组条件下，这组限定条件就决定了模型的假设空间。当然，我们还希望这组限定条件简单而合理。而逻辑回归模型所做的假设是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_22.png" alt=""></p>
+<p>这里的 <script type="math/tex">g(h)</script> 是上边提到的<code>sigmoid</code>函数，相应的决策函数为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_23.png" alt=""></p>
+<p>选择<code>0.5</code>作为阈值是一个一般的做法，实际应用时特定的情况可以选择不同阈值，如果对正例的判别准确性要求高，可以选择阈值大一些，对正例的召回要求高，则可以选择阈值小一些。（根据<code>sigmod</code>函数，即$\theta^{T}x&gt;0$）</p>
+<h4 id="参数求解"><a href="#参数求解" class="headerlink" title="参数求解"></a>参数求解</h4><p>模型的数学形式确定后，剩下就是如何去求解模型中的参数。统计学中常用的一种方法是最大似然估计，即找到一组参数，使得在这组参数下，我们的数据的似然度（概率）越大。在逻辑回归模型中，似然度可表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_24.png" alt=""></p>
+<p>取对数可以得到对数似然度：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_25.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>机器学习</tag>
+      </tags>
   </entry>
   <entry>
     <title>搭建个人博客</title>
@@ -509,78 +581,6 @@
         <tag>总结</tag>
         <tag>hexo</tag>
         <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习总结</title>
-    <url>/2021/04/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>小白上路啦！</p>
-<a id="more"></a>
-<h1 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h1><h2 id="学习方式分类"><a href="#学习方式分类" class="headerlink" title="学习方式分类"></a>学习方式分类</h2><ul>
-<li>监督学习</li>
-<li>无监督学习</li>
-<li>半监督学习</li>
-<li>强化学习</li>
-</ul>
-<h2 id="学习结果分类"><a href="#学习结果分类" class="headerlink" title="学习结果分类"></a>学习结果分类</h2><ul>
-<li>回归</li>
-<li>分类</li>
-</ul>
-<h1 id="模型学习"><a href="#模型学习" class="headerlink" title="模型学习"></a>模型学习</h1><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><h3 id="线性回归模型特点"><a href="#线性回归模型特点" class="headerlink" title="线性回归模型特点"></a>线性回归模型特点</h3><ul>
-<li>线性回归时一种回归算法</li>
-<li>模型简单、计算量较小</li>
-<li>对误差敏感</li>
-<li>对数据预处理要求较高</li>
-</ul>
-<h3 id="线性回归模型主要思想"><a href="#线性回归模型主要思想" class="headerlink" title="线性回归模型主要思想"></a>线性回归模型主要思想</h3><p>通过运用该简单的线性函数，可模拟<code>x</code>和<code>y</code>之间的关系。关键在于该函数不仅与输入变量x成线性关系，而且与参数<code>a</code>、<code>b</code>成线性关系。当前目标是确定最符合训练数据的参数<code>a</code>和<code>b</code>的值。</p>
-<p>这可通过测量每个输入x的实际目标值<code>y</code>和模型<script type="math/tex">f(x)</script>之间的失配来实现，并将失配最小化。这种失配（最小值）被称为误差函数。</p>
-<p>有多种误差函数可供选择，但其中最简单的要数<code>RSS</code>，即每个数据点x对应的模型<script type="math/tex">f(x)</script>与目标值y的误差平方和。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_16.png" alt=""></p>
-<p>对于<code>w</code>,<code>b​</code>作为自变量，取何值时，<code>RSS</code>最小？转化为求极值问题，极值点偏导为0。</p>
-<p>避免过拟合，引入正则化技术（将参数作为项加入损失函数）</p>
-<p>L1正则化（LASSO回归）：具有稀疏作用</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_17.png" alt=""></p>
-<p>L2正则化（Ridge回归）：收敛更快</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_18.png" alt=""></p>
-<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><ul>
-<li>评估是否准确：查看在训练集上的准确率</li>
-<li>评估泛化性能：查看在测试集（<code>K</code>折）上的准确率</li>
-</ul>
-<h3 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h3><ul>
-<li>更新规则（多个$\theta$同时更新）：</li>
-</ul>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_19.png" alt=""></p>
-<ul>
-<li>$\alpha$太小，$J(\theta)$收敛太慢；$\alpha$太大，$J(\theta)$也许每次迭代不会减少或者不会收敛</li>
-<li>注意特征缩放，使得特征在相似的范围</li>
-</ul>
-<h3 id="正规方程法"><a href="#正规方程法" class="headerlink" title="正规方程法"></a>正规方程法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_20.png" alt=""></p>
-<h2 id="logistic回归模型"><a href="#logistic回归模型" class="headerlink" title="logistic回归模型"></a>logistic回归模型</h2><h3 id="logistic回归模型特点"><a href="#logistic回归模型特点" class="headerlink" title="logistic回归模型特点"></a>logistic回归模型特点</h3><ul>
-<li>logistic回归是一种分类算法</li>
-<li>模型简单、计算量较小</li>
-<li>对异常数据点并不敏感</li>
-<li>对数据预处理要求较高</li>
-</ul>
-<h3 id="logistic回归模型主要思想"><a href="#logistic回归模型主要思想" class="headerlink" title="logistic回归模型主要思想"></a>logistic回归模型主要思想</h3><h4 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h4><p>sigmoid函数的数学形式是：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_21.png" alt=""></p>
-<p>对应的函数曲线如下图：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/sigmoid.png" alt="sigmod.png"></p>
-<h4 id="决策函数"><a href="#决策函数" class="headerlink" title="决策函数"></a>决策函数</h4><p>一个机器学习的模型，实际上是把决策函数限定在某一组条件下，这组限定条件就决定了模型的假设空间。当然，我们还希望这组限定条件简单而合理。而逻辑回归模型所做的假设是：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_22.png" alt=""></p>
-<p>这里的 <script type="math/tex">g(h)</script> 是上边提到的<code>sigmoid</code>函数，相应的决策函数为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_23.png" alt=""></p>
-<p>选择<code>0.5</code>作为阈值是一个一般的做法，实际应用时特定的情况可以选择不同阈值，如果对正例的判别准确性要求高，可以选择阈值大一些，对正例的召回要求高，则可以选择阈值小一些。（根据<code>sigmod</code>函数，即$\theta^{T}x&gt;0$）</p>
-<h4 id="参数求解"><a href="#参数求解" class="headerlink" title="参数求解"></a>参数求解</h4><p>模型的数学形式确定后，剩下就是如何去求解模型中的参数。统计学中常用的一种方法是最大似然估计，即找到一组参数，使得在这组参数下，我们的数据的似然度（概率）越大。在逻辑回归模型中，似然度可表示为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_24.png" alt=""></p>
-<p>取对数可以得到对数似然度：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_25.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
