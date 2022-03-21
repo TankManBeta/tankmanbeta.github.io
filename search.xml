@@ -465,7 +465,8 @@
 </ol>
 </li>
 </ol>
-<h1 id="B-索引和hash索引"><a href="#B-索引和hash索引" class="headerlink" title="B+索引和hash索引"></a>B+索引和hash索引</h1><p>在MySQL中，只有HEAP/MEMORY引擎表才能显式支持哈希索引（NDB也支持，但这个不常用），InnoDB引擎的自适应哈希索引（adaptive hash index）不在此列，因为这不是创建索引时可指定的。</p>
+<h1 id="B-索引和hash索引"><a href="#B-索引和hash索引" class="headerlink" title="B+索引和hash索引"></a>B+索引和hash索引</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20181107184452575.png" alt=""></p>
+<p>在MySQL中，只有HEAP/MEMORY引擎表才能显式支持哈希索引（NDB也支持，但这个不常用），InnoDB引擎的自适应哈希索引（adaptive hash index）不在此列，因为这不是创建索引时可指定的。</p>
 <ul>
 <li>如果是等值查询，那么哈希索引明显有绝对优势，因为只需要经过一次算法即可找到相应的键值；当然了，这个前提是，键值都是唯一的。如果键值不是唯一的，就需要先找到该键所在位置，然后再根据链表往后扫描，直到找到相应的数据；</li>
 <li>如果是范围查询检索，这时候哈希索引就毫无用武之地了 ，因为原先是有序的键值，经过哈希算法后，有可能变成不连续的了，就没办法再利用索引完成范围查询检索；</li>
@@ -473,6 +474,100 @@
 <li>哈希索引也不支持多列联合索引的最左匹配规则；</li>
 <li>B+树索引的关键字检索效率比较平均，不像B树那样波动幅度大， 在有大量重复键值情况下，哈希索引的效率也是极低的，因为存在所谓的哈希碰撞问题 。</li>
 </ul>
+<h1 id="索引的优缺点，什么时候使用索引，什么时候不能使用索引"><a href="#索引的优缺点，什么时候使用索引，什么时候不能使用索引" class="headerlink" title="索引的优缺点，什么时候使用索引，什么时候不能使用索引"></a>索引的优缺点，什么时候使用索引，什么时候不能使用索引</h1><ul>
+<li>索引最大的好处是提高查询速度</li>
+<li>缺点是更新数据时效率低，因为要同时更新索引</li>
+<li>对数据进行频繁查询进建立索引，如果要频繁更改数据不建议使用索引</li>
+</ul>
+<h1 id="InnoDB索引和MyISAM索引的区别"><a href="#InnoDB索引和MyISAM索引的区别" class="headerlink" title="InnoDB索引和MyISAM索引的区别"></a><strong>InnoDB索引</strong>和<strong>MyISAM索引</strong>的区别</h1><p>InnoDB的数据文件本身就是主索引文件。而MyISAM的主索引和数据是分开的。</p>
+<p>InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别。</p>
+<h1 id="索引的底层实现（B-树，为何不采用红黑树，B树）重点"><a href="#索引的底层实现（B-树，为何不采用红黑树，B树）重点" class="headerlink" title="索引的底层实现（B+树，为何不采用红黑树，B树）重点"></a>索引的底层实现（B+树，为何不采用红黑树，B树）重点</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">树</th>
+<th style="text-align:center">区别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">红黑树</td>
+<td style="text-align:center">增加，删除，红黑树会进行频繁的调整，来保证红黑树的性质，浪费时间</td>
+</tr>
+<tr>
+<td style="text-align:center">B树也就是B-树</td>
+<td style="text-align:center">B树，查询性能不稳定，查询结果高度不致，每个结点保存指向真实数据的指针，相比B+树每一层每屋存储的元素更多，显得更高一点。</td>
+</tr>
+<tr>
+<td style="text-align:center">B+树</td>
+<td style="text-align:center">B+树相比较于另外两种树,显得更矮更宽，查询层次更浅</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="为什么使用B-树"><a href="#为什么使用B-树" class="headerlink" title="为什么使用B+树"></a>为什么使用B+树</h1><ol>
+<li>B+树是多路平衡查找树（B-Tree）的变种（Plus版本），多路绝对平衡查找树，他拥有B-树的优势</li>
+<li>B+树的扫库扫表能力更强。</li>
+<li>B+树的磁盘读写能力更强。</li>
+<li>B+树的排序能力更强。</li>
+<li>B+树的查询效率更加稳定（仁者见仁，智者见智）</li>
+</ol>
+<h1 id="Sql的优化"><a href="#Sql的优化" class="headerlink" title="Sql的优化"></a>Sql的优化</h1><ol>
+<li>sql尽量使用索引，而且查询要走索引</li>
+<li>对sql语句优化<ul>
+<li>子查询变成left join</li>
+<li>limit 分布优化，先利用ID定位，再分页</li>
+<li>or条件优化，多个or条件可以用union all对结果进行合并（union all结果可能重复）</li>
+<li>不必要的排序</li>
+<li>where代替having,having 检索完所有记录，才进行过滤</li>
+<li>避免嵌套查询</li>
+<li>对多个字段进行等值查询时，联合索引</li>
+</ul>
+</li>
+</ol>
+<h1 id="索引最左前缀问题"><a href="#索引最左前缀问题" class="headerlink" title="索引最左前缀问题"></a>索引最左前缀问题</h1><p>假设你在表的state、city和zip数据列上建立了复合索引。索引中的数据行按照state/city/zip次序排列，因此它们也会自动地按照state/city/zip次序排列。这意味着，即使你在查询中只指定了state值，或者指定state和city值，MySQL也可以使用这个索引。因此，这个索引可以被用于搜索如下所示的数据列组合：state/city/zip；state/city；state。</p>
+<p>MySQL不能利用这个索引来搜索没有包含在最左前缀的内容。例如，如果你按照city或zip来搜索，<br>就不会使用到这个索引。如果你搜索给定的state和具体的ZIP代码（索引的1和3列），该索引也是不能用于这种组合值的，尽管MySQL可以利用索引来查找匹配的state从而缩小搜索的范围。</p>
+<p>explain命令的结果需要考虑属性type：ref就是使用了索引，index是对所有索引树进行扫描，而all是对整个磁盘的数据进行全表扫描。</p>
+<h1 id="索引分类及索引失效条件"><a href="#索引分类及索引失效条件" class="headerlink" title="索引分类及索引失效条件"></a>索引分类及索引失效条件</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">索引类型</th>
+<th style="text-align:center">概念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">普通索引</td>
+<td style="text-align:center">最基本的索引，没有任何限制</td>
+</tr>
+<tr>
+<td style="text-align:center">唯一索引</td>
+<td style="text-align:center">与”普通索引”类似，不同的就是：索引列的值必须唯一，但允许有空值。</td>
+</tr>
+<tr>
+<td style="text-align:center">主键索引</td>
+<td style="text-align:center">它是一种特殊的唯一索引，不允许有空值。</td>
+</tr>
+<tr>
+<td style="text-align:center">全文索引</td>
+<td style="text-align:center">针对较大的数据，生成全文索引很耗时间空间。</td>
+</tr>
+<tr>
+<td style="text-align:center">组合索引</td>
+<td style="text-align:center">为了更多的提高mysql效率可建立组合索引，遵循”最左前缀“原则</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>失效条件：</p>
+<ol>
+<li>如果条件中有or，即使其中有条件带索引也不会使用</li>
+<li>对于多列索引，不是使用的第一部分，则不会使用索引</li>
+<li>like查询是以%开头</li>
+<li>如果列类型是字符串，那一定要在条件中将数据使用引号引用起来,否则不使用索引</li>
+<li>如果mysql估计使用全表扫描要比使用索引快,则不使用索引</li>
+</ol>
 ]]></content>
       <categories>
         <category>总结</category>
