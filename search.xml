@@ -18,7 +18,7 @@
 <li>命令行中输入<code>git init</code>，此时刚创建的文件夹中出现一个<code>.git</code>文件夹</li>
 <li>先在<code>GitHub</code>中复制<code>URL</code>，然后命令行窗口中输入<code>git clone [URL] [需要新建的文件夹名]</code>，回车，等待下载完成即可</li>
 </ol>
-<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><h2 id="每次上传需要登陆"><a href="#每次上传需要登陆" class="headerlink" title="每次上传需要登陆"></a>每次上传需要登陆</h2><p><code>git</code>使用<code>https</code>协议，每次<code>pull</code>, <code>push</code>都要输入密码。使用<code>git</code>协议，然后使用<code>SSH</code>密钥，可以不用每次都输密码。</p>
+<h1 id="每次上传需要登陆"><a href="#每次上传需要登陆" class="headerlink" title="每次上传需要登陆"></a>每次上传需要登陆</h1><p><code>git</code>使用<code>https</code>协议，每次<code>pull</code>, <code>push</code>都要输入密码。使用<code>git</code>协议，然后使用<code>SSH</code>密钥，可以不用每次都输密码。</p>
 <ol>
 <li><p>生成<code>SSH</code></p>
 <ol>
@@ -62,9 +62,17 @@
 </li>
 <li>提交新代码，不再需要输入账号密码</li>
 </ol>
-<h2 id="多人协作开发"><a href="#多人协作开发" class="headerlink" title="多人协作开发"></a>多人协作开发</h2><p>如果是多人协作开发的话，一定要先<code>pull</code>，将最新版本的代码拉取到本地</p>
-<h2 id="多个远程仓库或多个分支"><a href="#多个远程仓库或多个分支" class="headerlink" title="多个远程仓库或多个分支"></a>多个远程仓库或多个分支</h2><p>如果有多个远程仓库或者多个分支，并且需要将代码推送到指定仓库的指定分支上，那么在<code>pull</code>或<code>push</code>的时候，就需要按照下面的格式书写：</p>
+<h1 id="多人协作开发"><a href="#多人协作开发" class="headerlink" title="多人协作开发"></a>多人协作开发</h1><p>如果是多人协作开发的话，一定要先<code>pull</code>，将最新版本的代码拉取到本地</p>
+<h1 id="多个远程仓库或多个分支"><a href="#多个远程仓库或多个分支" class="headerlink" title="多个远程仓库或多个分支"></a>多个远程仓库或多个分支</h1><p>如果有多个远程仓库或者多个分支，并且需要将代码推送到指定仓库的指定分支上，那么在<code>pull</code>或<code>push</code>的时候，就需要按照下面的格式书写：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git pull 仓库别名 仓库分支名</span><br><span class="line">git push 仓库别名 仓库分支名</span><br></pre></td></tr></table></figure>
+<h1 id="关于-idea文件夹"><a href="#关于-idea文件夹" class="headerlink" title="关于.idea文件夹"></a>关于<code>.idea</code>文件夹</h1><p><code>.idea</code>文件夹是<code>Pycharm</code>等<code>IDE</code>生成的项目配置文件。</p>
+<ol>
+<li><p>如果<code>.idea</code>文件夹为提交至仓库，则在项目中添加<code>.gitignore</code>文件，在其中设置需要忽略的文件或文件夹，然后再<code>push</code>即可</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">.idea/</span><br></pre></td></tr></table></figure></li>
+<li><p>如果已经把<code>.idea</code>已经提交了，则需要先将远端的文件给删掉，然后再同第一步进行相同的设置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git rm -r --cached .idea</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -73,12 +81,6 @@
         <tag>总结</tag>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
   </entry>
   <entry>
     <title>Python知识点</title>
@@ -388,199 +390,10 @@
       </tags>
   </entry>
   <entry>
-    <title>机器学习总结</title>
-    <url>/2021/04/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>小白上路啦！</p>
-<p>主要参考吴恩达的《机器学习》</p>
-<a id="more"></a>
-<h1 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h1><h2 id="学习方式分类"><a href="#学习方式分类" class="headerlink" title="学习方式分类"></a>学习方式分类</h2><ul>
-<li>监督学习</li>
-<li>无监督学习</li>
-<li>半监督学习</li>
-<li>强化学习</li>
-</ul>
-<h2 id="学习结果分类"><a href="#学习结果分类" class="headerlink" title="学习结果分类"></a>学习结果分类</h2><ul>
-<li>回归</li>
-<li>分类</li>
-</ul>
-<h1 id="模型学习"><a href="#模型学习" class="headerlink" title="模型学习"></a>模型学习</h1><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><h3 id="线性回归模型特点"><a href="#线性回归模型特点" class="headerlink" title="线性回归模型特点"></a>线性回归模型特点</h3><ul>
-<li>线性回归时一种回归算法</li>
-<li>模型简单、计算量较小</li>
-<li>对误差敏感</li>
-<li>对数据预处理要求较高</li>
-</ul>
-<h3 id="线性回归模型主要思想"><a href="#线性回归模型主要思想" class="headerlink" title="线性回归模型主要思想"></a>线性回归模型主要思想</h3><p>通过运用该简单的线性函数，可模拟<code>x</code>和<code>y</code>之间的关系。关键在于该函数不仅与输入变量x成线性关系，而且与参数<code>a</code>、<code>b</code>成线性关系。当前目标是确定最符合训练数据的参数<code>a</code>和<code>b</code>的值。</p>
-<p>这可通过测量每个输入x的实际目标值<code>y</code>和模型<script type="math/tex">f(x)</script>之间的失配来实现，并将失配最小化。这种失配（最小值）被称为误差函数。</p>
-<p>有多种误差函数可供选择，但其中最简单的要数<code>RSS</code>，即每个数据点x对应的模型<script type="math/tex">f(x)</script>与目标值y的误差平方和。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_16.png" alt=""></p>
-<p>对于<code>w</code>,<code>b​</code>作为自变量，取何值时，<code>RSS</code>最小？转化为求极值问题，极值点偏导为0。</p>
-<p>避免过拟合，引入正则化技术（将参数作为项加入损失函数）</p>
-<p>L1正则化（LASSO回归）：具有稀疏作用</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_17.png" alt=""></p>
-<p>L2正则化（Ridge回归）：收敛更快</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_18.png" alt=""></p>
-<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><ul>
-<li>评估是否准确：查看在训练集上的准确率</li>
-<li>评估泛化性能：查看在测试集（<code>K</code>折）上的准确率</li>
-</ul>
-<h3 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h3><ul>
-<li>更新规则（多个$\theta$同时更新）：</li>
-</ul>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_19.png" alt=""></p>
-<ul>
-<li>$\alpha$太小，$J(\theta)$收敛太慢；$\alpha$太大，$J(\theta)$也许每次迭代不会减少或者不会收敛</li>
-<li>注意特征缩放，使得特征在相似的范围</li>
-</ul>
-<h3 id="随机梯度下降法"><a href="#随机梯度下降法" class="headerlink" title="随机梯度下降法"></a>随机梯度下降法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_45.png" alt=""></p>
-<p>具体步骤：对参数进行细微的修改，使其对第一个数据拟合得非常好，以此类推</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_46.png" alt=""></p>
-<p>如何确定算法已经收敛：每次使用一个训练样本更新$\theta$之前计算$cost(\theta,(x^{(i)},y^{(i)}))$；每1000次迭代计算一下$cost(\theta,(x^{(i)},y^{(i)}))$的均值</p>
-<h3 id="Mini-batch-梯度下降法"><a href="#Mini-batch-梯度下降法" class="headerlink" title="Mini-batch 梯度下降法"></a>Mini-batch 梯度下降法</h3><p>主要思想：每次迭代使用b个样本（向量化的时候更好）</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_47.png" alt=""></p>
-<h3 id="正规方程法"><a href="#正规方程法" class="headerlink" title="正规方程法"></a>正规方程法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_20.png" alt=""></p>
-<h2 id="logistic回归模型"><a href="#logistic回归模型" class="headerlink" title="logistic回归模型"></a>logistic回归模型</h2><h3 id="logistic回归模型特点"><a href="#logistic回归模型特点" class="headerlink" title="logistic回归模型特点"></a>logistic回归模型特点</h3><ul>
-<li>logistic回归是一种分类算法</li>
-<li>模型简单、计算量较小</li>
-<li>对异常数据点并不敏感</li>
-<li>对数据预处理要求较高</li>
-</ul>
-<h3 id="logistic回归模型主要思想"><a href="#logistic回归模型主要思想" class="headerlink" title="logistic回归模型主要思想"></a>logistic回归模型主要思想</h3><h4 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h4><p>sigmoid函数的数学形式是：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_21.png" alt=""></p>
-<p>对应的函数曲线如下图：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/sigmoid.png" alt="sigmod.png"></p>
-<h4 id="决策函数"><a href="#决策函数" class="headerlink" title="决策函数"></a>决策函数</h4><p>一个机器学习的模型，实际上是把决策函数限定在某一组条件下，这组限定条件就决定了模型的假设空间。当然，我们还希望这组限定条件简单而合理。而逻辑回归模型所做的假设是：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_22.png" alt=""></p>
-<p>这里的 <script type="math/tex">g(h)</script> 是上边提到的<code>sigmoid</code>函数，相应的决策函数为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_23.png" alt=""></p>
-<p>选择<code>0.5</code>作为阈值是一个一般的做法，实际应用时特定的情况可以选择不同阈值，如果对正例的判别准确性要求高，可以选择阈值大一些，对正例的召回要求高，则可以选择阈值小一些。（根据<code>sigmod</code>函数，即$\theta^{T}x&gt;0$）</p>
-<h4 id="参数求解"><a href="#参数求解" class="headerlink" title="参数求解"></a>参数求解</h4><p>模型的数学形式确定后，剩下就是如何去求解模型中的参数。统计学中常用的一种方法是最大似然估计，即找到一组参数，使得在这组参数下，我们的数据的似然度（概率）越大。在逻辑回归模型中，似然度可表示为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_24.png" alt=""></p>
-<p>取对数可以得到对数似然度：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_25.png" alt=""></p>
-<h2 id="决策树算法"><a href="#决策树算法" class="headerlink" title="决策树算法"></a>决策树算法</h2><h3 id="决策树算法特点"><a href="#决策树算法特点" class="headerlink" title="决策树算法特点"></a>决策树算法特点</h3><ul>
-<li>决策树能用来做回归，也可以用来做分类，是一类算法的总称</li>
-<li>决策树是一种弱分类器</li>
-<li>决策树是一类具有可解释性、泛化性能较好的模型</li>
-<li>精度高、无需特征归一化，能够处理缺失值，共线性特征</li>
-<li>适合于低维稠密数据，不适合高维稀疏数据</li>
-<li>决策树类算法兼具特征选择能力</li>
-</ul>
-<h3 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h3><p>信息熵<code>S</code>表征了信息不确定性的程度，分类属性应当以最高熵减为标准进行：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_48.png" alt=""></p>
-<h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p><code>C4.5</code>算法过程跟<code>ID3</code>算法一样，只是选择特征的方法由信息增益改成信息增益比。</p>
-<p>特征<code>A</code>对训练数据集<code>D</code>的信息增益比<script type="math/tex">GainRatio(D,A)</script>定义为其信息增益<script type="math/tex">Gain(D,A)</script>与训练数据集D的经验熵<script type="math/tex">H(D)</script>之比</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_49.png" alt=""></p>
-<h2 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h2><h3 id="随机森林算法主要思想"><a href="#随机森林算法主要思想" class="headerlink" title="随机森林算法主要思想"></a>随机森林算法主要思想</h3><ol>
-<li><code>bootstrap</code>采样</li>
-<li>随机选择特征，选择最佳属性建立决策树</li>
-<li>形成随机森林，通过投票得到结果</li>
-</ol>
-<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><h3 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_26.png" alt=""></p>
-<h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><p>输入层、输出层、隐藏层、偏置单元</p>
-<p>如果第<code>i</code>层有$s_{i}$个，第<code>i+1</code>层有$s_{i+1}$个，则$\theta$规模为$s_{i+1}*(s_{i}+1)$</p>
-<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_27.png" alt=""></p>
-<h3 id="反向传播算法"><a href="#反向传播算法" class="headerlink" title="反向传播算法"></a>反向传播算法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_28.png" alt=""></p>
-<h4 id="检测方法"><a href="#检测方法" class="headerlink" title="检测方法"></a>检测方法</h4><p>双侧差分：$\frac{J(\theta+\varepsilon)-J(\theta-\varepsilon)}{2\varepsilon}\approx\frac{\partial}{\partial z_{j}^{l}}cost(i)$</p>
-<p>训练集（60%）、验证集（20%）、测试集（20%）</p>
-<p>$J_{train}(\theta)$和$J_{cv}(\theta)$都高时，欠拟合；$J_{train}(\theta)$低$J_{cv}(\theta)$高时，过拟合</p>
-<p>随多项式次数增长的关系</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_29.png" alt=""></p>
-<p>随$\lambda$增长的关系</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_30.png" alt=""></p>
-<p>bias：偏差（underfit）；variance：方差（overfit）</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_31.png" alt=""></p>
-<p>Precision：$\frac{true}{predicted}$ ；Recall：$\frac{true}{actual}$；F：$2\frac{PR}{P+R}$</p>
-<h2 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_32.png" alt=""></p>
-<p>$y^{(i)}=1$时，$\theta^{T}x\geq1$，即$p^{(i)}||\theta||\geq1$；$y^{(i)}=0$时，$\theta^{T}x\leq-1$，即$p^{(i)}||\theta||\leq-1$，$\theta$垂直于边界函数</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_33.png" alt=""></p>
-<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_34.png" alt=""></p>
-<p>$x\approx l^{(1)}:f_{1}\approx exp(-\frac{0^{2}}{2\sigma^{2}})\approx 1;else:f_{1}=exp(-\frac{large^{2}}{2\sigma^{2}})\approx 0$</p>
-<p>给定$(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),(x^{(3)},y^{(3)}),(x^{(4)},y^{(4)})$，</p>
-<p>选定$l^{(1)}=x^{(1)},l^{(2)}=x^{(2)},l^{(3)}=x^{(3)},l^{(4)}=x^{(4)}$；</p>
-<p>对于给定的训练集$(x^{(i)},y^{(i)})$：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_35.png" alt=""></p>
-<h2 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_36.png" alt=""></p>
-<ol>
-<li>初始化k个中心</li>
-<li>根据数据离中心的长短进行划分</li>
-<li>重新计算k个簇的中心</li>
-<li>继续迭代直到达到某个条件</li>
-</ol>
-<h3 id="初始化K"><a href="#初始化K" class="headerlink" title="初始化K"></a>初始化K</h3><ol>
-<li>K&lt;m</li>
-<li>多次随机初始化</li>
-</ol>
-<h3 id="K聚类数量的选取"><a href="#K聚类数量的选取" class="headerlink" title="K聚类数量的选取"></a>K聚类数量的选取</h3><ol>
-<li>Elbow method：可以参考</li>
-<li>人工、手动、经验</li>
-</ol>
-<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><ol>
-<li>预处理：数据标准化$x_{j}^{(i)}=x_{j}-\mu_{j}$</li>
-<li>计算协方差矩阵$\Sigma=\frac{1}{m}\sum\limits_{i=1}^{n}(x^{(i)})(x^{(i)})^{T}$</li>
-<li>计算$\Sigma$的特征矩阵</li>
-<li>取前k列，计算出$(U_{reduce})^{T}x^{(i)}$，$k×n×n×1=k×1$</li>
-</ol>
-<h3 id="PCA维度的选取"><a href="#PCA维度的选取" class="headerlink" title="PCA维度的选取"></a>PCA维度的选取</h3><p>计算$U_{reduce},z^{(1)},z^{(2)},z^{(3)},\cdots,z^{(m),x_{approx}^{(1)},\cdots,x_{approx}^{(m)}}$，判断$\frac{\frac{1}{m}\sum\limits_{i=1}^{m}||x^{(i)}-x_{approx}^{(i)}||^{2}}{\frac{1}{m}\sum\limits_{i=1}^{m}||x^{(i)}||^{2}}\leq0.01?$</p>
-<p>简便方法：使用特征值矩阵，计算$1-\frac{\sum\limits_{i=1}^{k}S_{ii}}{\sum\limits_{i=1}^{n}S_{ii}}\leq0.01?$</p>
-<h3 id="PCA压缩重现"><a href="#PCA压缩重现" class="headerlink" title="PCA压缩重现"></a>PCA压缩重现</h3><p>$x_{approx}=U_{reduce}·z$</p>
-<h2 id="异常检测算法"><a href="#异常检测算法" class="headerlink" title="异常检测算法"></a>异常检测算法</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_37.png" alt=""></p>
-<h3 id="评估"><a href="#评估" class="headerlink" title="评估"></a>评估</h3><p>Precision/Recall；$F_{1}$-score</p>
-<h3 id="异常检测vs监督学习"><a href="#异常检测vs监督学习" class="headerlink" title="异常检测vs监督学习"></a>异常检测vs监督学习</h3><ol>
-<li>很少的正例</li>
-<li>大量负例</li>
-<li>多种异常</li>
-<li>未来可能以前没有的异常</li>
-</ol>
-<h3 id="如何选择特征"><a href="#如何选择特征" class="headerlink" title="如何选择特征"></a>如何选择特征</h3><p>如果数据没有呈现出高斯分布的形状，对数据进行一些处理，例如：$log(x),x^{\frac{1}{2}}$。</p>
-<p>选择既不特别大也不特别小的特征。</p>
-<h2 id="多元高斯分布"><a href="#多元高斯分布" class="headerlink" title="多元高斯分布"></a>多元高斯分布</h2><p>多元高斯分布和异常检测算法有相似之处</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_38.png" alt=""></p>
-<h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><h3 id="基于内容的推荐算法"><a href="#基于内容的推荐算法" class="headerlink" title="基于内容的推荐算法"></a>基于内容的推荐算法</h3><p>特定用户：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_39.png" alt=""></p>
-<p>整体用户：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_40.png" alt=""></p>
-<h3 id="协同过滤算法"><a href="#协同过滤算法" class="headerlink" title="协同过滤算法"></a>协同过滤算法</h3><p>单部影片的特征：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_41.png" alt=""></p>
-<p>所有影片的特征：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_42.png" alt=""></p>
-<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_43.png" alt=""></p>
-<p>归一化：每一行减去均值$\mu_{i}$，预测变为$(\theta^{(i)})^{T}(x^{(i)})+\mu_{i}$</p>
-<h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_44.png" alt=""></p>
-<h1 id="性能度量指标"><a href="#性能度量指标" class="headerlink" title="性能度量指标"></a>性能度量指标</h1><h2 id="线性回归决定系数-R-2-（判定系数，拟合优度）"><a href="#线性回归决定系数-R-2-（判定系数，拟合优度）" class="headerlink" title="线性回归决定系数$R^{2}$ （判定系数，拟合优度）"></a>线性回归决定系数$R^{2}$ （判定系数，拟合优度）</h2><p>相关系数 $R$ 就是决定系数的开发</p>
-<p>决定系数 $R^{2}$ 是衡量回归的好坏，，也就是回归拟合的曲线的拟合优度，也就是得分。</p>
-<p>决定系数是表征回归方程在多大程度上解释了因变量的变化，或者说方程对观测值的拟合程度如何。</p>
-<p>计算公式为：</p>
-<p>设 $y$ 为待拟合数值，其均值为 $\overline{y}$ ，拟合值为 $\widehat{y}$ ，记：</p>
-<ul>
-<li>总平方和（$SST$）： $\sum\limits_{i=1}\limits^{N}(y_{i}-\overline{y})^{2}$</li>
-<li>回归平方和（$SSR$ ）：$\sum\limits_{i=1}\limits^{N}(\hat{y_{i}}-\overline{y})^{2}$</li>
-<li>残差平方和（$SSE$）：$\sum\limits_{i=1}\limits^{N}(y_{i}-\hat{y_{i}})^{2}$</li>
-</ul>
-<p>则有：$SST=SSR+SSE$</p>
-<p>决定系数：$R^{2}=\frac{SSR}{SST}=\frac{\sum\limits_{i=1}\limits^{N}(\hat{y_{i}}-\overline{y})^{2}}{\sum\limits_{i=1}\limits^{N}(y_{i}-\hat{y_{i}})^{2}}=1-\frac{SSE}{SST}$</p>
-<p>决定系数越大表明拟合优度越好！</p>
-<h2 id="分类问题中的评判标准"><a href="#分类问题中的评判标准" class="headerlink" title="分类问题中的评判标准"></a>分类问题中的评判标准</h2><p>以二分类为例，分类结果的混淆矩阵如下图所示：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_50.png" alt=""></p>
-<p>精确率、准确率：$accuracy=\frac{TP+TN}{TP+TN+FP+FN}$</p>
-<p>精准率、查准率：$precision=\frac{TP}{TP+FP}$</p>
-<p>召回率、查全率：$recall=\frac{TP}{TP+FN}$</p>
-<p>调和平均数：$F_{1}=2 \cdot \frac{precision \cdot recall}{precision+reacall}$</p>
-<h3 id="P-R​曲线"><a href="#P-R​曲线" class="headerlink" title="P-R​曲线"></a>P-R​曲线</h3><p>我们希望模型预测结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只预测出了一个正样本的结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_51.png" alt=""></p>
-<p>P-R图直观的显示出学习器在样本总体上的查全率和查准率，在进行比较时，若一个学习器的PR曲线被另一个学习器的PR曲线完全包住，则可以断言后者的性能优于前者（如图中A优于C）。如果两个学习器发生了交叉，则难以断言孰优孰劣，只能在具体的查准率或查全率条件下进行比较（如图中A和B）。如果一定要比较A和B孰优孰劣，一个合理的比较依据是比较PR曲线下面积的大小。在一定程度上表征了学习器在查准率和查全率上取得“双高”的比例，但这个值不太容易估算。所以设计了一些综合考虑查准率和查全率的性能度量。比如“平衡点”（Break-Even Point，BEP），是“查准率=查全率”时的取值。例如学习器C的BEP是0.64,，基于BEP比较，可认为学习器A优于B。</p>
-<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p>ROC的全称是Receiver Operating Characteristic Curve，中文名字叫“受试者工作特征曲线”，顾名思义，其主要的分析方法就是画这条特征曲线。如果在模型中我们没有定好阈值，而是将模型预测结果从高到低排序，将每次概率值依次作为阈值，那么就可以得到多个混淆矩阵。对于每个混淆矩阵，我们计算两个指标TPR和FPR,以FPR为x轴，TPR为y轴画图，就得到了ROC曲线。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_52.png" alt=""></p>
-<h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p>按照定义，AUC即ROC曲线下的面积，而ROC曲线的横轴是FPRate，纵轴是TPRate，当二者相等时，即y=x，表明分类器对于正例和负例毫无区分能力。而我们希望分类器达到的效果是：对于真实类别为1的样本，分类器预测为1的概率（即TPRate），要大于真实类别为0而预测类别为1的概率（即FPRate），即y＞x，因此大部分的ROC曲线长成下面这个样子：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_53.png" alt=""></p>
-<p>最理想的情况下，即没有真实类别为1而错分为0的样本（TPRate一直为1），也没有真实类别为0而错分为1的样本（FPRate一直为0），AUC为1，这便是AUC的极大值。</p>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
 ]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>机器学习</tag>
-      </tags>
   </entry>
   <entry>
     <title>数据库面试题总结</title>
@@ -774,6 +587,201 @@
       <tags>
         <tag>总结</tag>
         <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习总结</title>
+    <url>/2021/04/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>小白上路啦！</p>
+<p>主要参考吴恩达的《机器学习》</p>
+<a id="more"></a>
+<h1 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h1><h2 id="学习方式分类"><a href="#学习方式分类" class="headerlink" title="学习方式分类"></a>学习方式分类</h2><ul>
+<li>监督学习</li>
+<li>无监督学习</li>
+<li>半监督学习</li>
+<li>强化学习</li>
+</ul>
+<h2 id="学习结果分类"><a href="#学习结果分类" class="headerlink" title="学习结果分类"></a>学习结果分类</h2><ul>
+<li>回归</li>
+<li>分类</li>
+</ul>
+<h1 id="模型学习"><a href="#模型学习" class="headerlink" title="模型学习"></a>模型学习</h1><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><h3 id="线性回归模型特点"><a href="#线性回归模型特点" class="headerlink" title="线性回归模型特点"></a>线性回归模型特点</h3><ul>
+<li>线性回归时一种回归算法</li>
+<li>模型简单、计算量较小</li>
+<li>对误差敏感</li>
+<li>对数据预处理要求较高</li>
+</ul>
+<h3 id="线性回归模型主要思想"><a href="#线性回归模型主要思想" class="headerlink" title="线性回归模型主要思想"></a>线性回归模型主要思想</h3><p>通过运用该简单的线性函数，可模拟<code>x</code>和<code>y</code>之间的关系。关键在于该函数不仅与输入变量x成线性关系，而且与参数<code>a</code>、<code>b</code>成线性关系。当前目标是确定最符合训练数据的参数<code>a</code>和<code>b</code>的值。</p>
+<p>这可通过测量每个输入x的实际目标值<code>y</code>和模型<script type="math/tex">f(x)</script>之间的失配来实现，并将失配最小化。这种失配（最小值）被称为误差函数。</p>
+<p>有多种误差函数可供选择，但其中最简单的要数<code>RSS</code>，即每个数据点x对应的模型<script type="math/tex">f(x)</script>与目标值y的误差平方和。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_16.png" alt=""></p>
+<p>对于<code>w</code>,<code>b​</code>作为自变量，取何值时，<code>RSS</code>最小？转化为求极值问题，极值点偏导为0。</p>
+<p>避免过拟合，引入正则化技术（将参数作为项加入损失函数）</p>
+<p>L1正则化（LASSO回归）：具有稀疏作用</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_17.png" alt=""></p>
+<p>L2正则化（Ridge回归）：收敛更快</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_18.png" alt=""></p>
+<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><ul>
+<li>评估是否准确：查看在训练集上的准确率</li>
+<li>评估泛化性能：查看在测试集（<code>K</code>折）上的准确率</li>
+</ul>
+<h3 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h3><ul>
+<li>更新规则（多个$\theta$同时更新）：</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_19.png" alt=""></p>
+<ul>
+<li>$\alpha$太小，$J(\theta)$收敛太慢；$\alpha$太大，$J(\theta)$也许每次迭代不会减少或者不会收敛</li>
+<li>注意特征缩放，使得特征在相似的范围</li>
+</ul>
+<h3 id="随机梯度下降法"><a href="#随机梯度下降法" class="headerlink" title="随机梯度下降法"></a>随机梯度下降法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_45.png" alt=""></p>
+<p>具体步骤：对参数进行细微的修改，使其对第一个数据拟合得非常好，以此类推</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_46.png" alt=""></p>
+<p>如何确定算法已经收敛：每次使用一个训练样本更新$\theta$之前计算$cost(\theta,(x^{(i)},y^{(i)}))$；每1000次迭代计算一下$cost(\theta,(x^{(i)},y^{(i)}))$的均值</p>
+<h3 id="Mini-batch-梯度下降法"><a href="#Mini-batch-梯度下降法" class="headerlink" title="Mini-batch 梯度下降法"></a>Mini-batch 梯度下降法</h3><p>主要思想：每次迭代使用b个样本（向量化的时候更好）</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_47.png" alt=""></p>
+<h3 id="正规方程法"><a href="#正规方程法" class="headerlink" title="正规方程法"></a>正规方程法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_20.png" alt=""></p>
+<h2 id="logistic回归模型"><a href="#logistic回归模型" class="headerlink" title="logistic回归模型"></a>logistic回归模型</h2><h3 id="logistic回归模型特点"><a href="#logistic回归模型特点" class="headerlink" title="logistic回归模型特点"></a>logistic回归模型特点</h3><ul>
+<li>logistic回归是一种分类算法</li>
+<li>模型简单、计算量较小</li>
+<li>对异常数据点并不敏感</li>
+<li>对数据预处理要求较高</li>
+</ul>
+<h3 id="logistic回归模型主要思想"><a href="#logistic回归模型主要思想" class="headerlink" title="logistic回归模型主要思想"></a>logistic回归模型主要思想</h3><h4 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h4><p>sigmoid函数的数学形式是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_21.png" alt=""></p>
+<p>对应的函数曲线如下图：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/sigmoid.png" alt="sigmod.png"></p>
+<h4 id="决策函数"><a href="#决策函数" class="headerlink" title="决策函数"></a>决策函数</h4><p>一个机器学习的模型，实际上是把决策函数限定在某一组条件下，这组限定条件就决定了模型的假设空间。当然，我们还希望这组限定条件简单而合理。而逻辑回归模型所做的假设是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_22.png" alt=""></p>
+<p>这里的 <script type="math/tex">g(h)</script> 是上边提到的<code>sigmoid</code>函数，相应的决策函数为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_23.png" alt=""></p>
+<p>选择<code>0.5</code>作为阈值是一个一般的做法，实际应用时特定的情况可以选择不同阈值，如果对正例的判别准确性要求高，可以选择阈值大一些，对正例的召回要求高，则可以选择阈值小一些。（根据<code>sigmod</code>函数，即$\theta^{T}x&gt;0$）</p>
+<h4 id="参数求解"><a href="#参数求解" class="headerlink" title="参数求解"></a>参数求解</h4><p>模型的数学形式确定后，剩下就是如何去求解模型中的参数。统计学中常用的一种方法是最大似然估计，即找到一组参数，使得在这组参数下，我们的数据的似然度（概率）越大。在逻辑回归模型中，似然度可表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_24.png" alt=""></p>
+<p>取对数可以得到对数似然度：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_25.png" alt=""></p>
+<h2 id="决策树算法"><a href="#决策树算法" class="headerlink" title="决策树算法"></a>决策树算法</h2><h3 id="决策树算法特点"><a href="#决策树算法特点" class="headerlink" title="决策树算法特点"></a>决策树算法特点</h3><ul>
+<li>决策树能用来做回归，也可以用来做分类，是一类算法的总称</li>
+<li>决策树是一种弱分类器</li>
+<li>决策树是一类具有可解释性、泛化性能较好的模型</li>
+<li>精度高、无需特征归一化，能够处理缺失值，共线性特征</li>
+<li>适合于低维稠密数据，不适合高维稀疏数据</li>
+<li>决策树类算法兼具特征选择能力</li>
+</ul>
+<h3 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h3><p>信息熵<code>S</code>表征了信息不确定性的程度，分类属性应当以最高熵减为标准进行：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_48.png" alt=""></p>
+<h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p><code>C4.5</code>算法过程跟<code>ID3</code>算法一样，只是选择特征的方法由信息增益改成信息增益比。</p>
+<p>特征<code>A</code>对训练数据集<code>D</code>的信息增益比<script type="math/tex">GainRatio(D,A)</script>定义为其信息增益<script type="math/tex">Gain(D,A)</script>与训练数据集D的经验熵<script type="math/tex">H(D)</script>之比</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_49.png" alt=""></p>
+<h2 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h2><h3 id="随机森林算法主要思想"><a href="#随机森林算法主要思想" class="headerlink" title="随机森林算法主要思想"></a>随机森林算法主要思想</h3><ol>
+<li><code>bootstrap</code>采样</li>
+<li>随机选择特征，选择最佳属性建立决策树</li>
+<li>形成随机森林，通过投票得到结果</li>
+</ol>
+<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><h3 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_26.png" alt=""></p>
+<h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><p>输入层、输出层、隐藏层、偏置单元</p>
+<p>如果第<code>i</code>层有$s_{i}$个，第<code>i+1</code>层有$s_{i+1}$个，则$\theta$规模为$s_{i+1}*(s_{i}+1)$</p>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_27.png" alt=""></p>
+<h3 id="反向传播算法"><a href="#反向传播算法" class="headerlink" title="反向传播算法"></a>反向传播算法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_28.png" alt=""></p>
+<h4 id="检测方法"><a href="#检测方法" class="headerlink" title="检测方法"></a>检测方法</h4><p>双侧差分：$\frac{J(\theta+\varepsilon)-J(\theta-\varepsilon)}{2\varepsilon}\approx\frac{\partial}{\partial z_{j}^{l}}cost(i)$</p>
+<p>训练集（60%）、验证集（20%）、测试集（20%）</p>
+<p>$J_{train}(\theta)$和$J_{cv}(\theta)$都高时，欠拟合；$J_{train}(\theta)$低$J_{cv}(\theta)$高时，过拟合</p>
+<p>随多项式次数增长的关系</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_29.png" alt=""></p>
+<p>随$\lambda$增长的关系</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_30.png" alt=""></p>
+<p>bias：偏差（underfit）；variance：方差（overfit）</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_31.png" alt=""></p>
+<p>Precision：$\frac{true}{predicted}$ ；Recall：$\frac{true}{actual}$；F：$2\frac{PR}{P+R}$</p>
+<h2 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_32.png" alt=""></p>
+<p>$y^{(i)}=1$时，$\theta^{T}x\geq1$，即$p^{(i)}||\theta||\geq1$；$y^{(i)}=0$时，$\theta^{T}x\leq-1$，即$p^{(i)}||\theta||\leq-1$，$\theta$垂直于边界函数</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_33.png" alt=""></p>
+<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_34.png" alt=""></p>
+<p>$x\approx l^{(1)}:f_{1}\approx exp(-\frac{0^{2}}{2\sigma^{2}})\approx 1;else:f_{1}=exp(-\frac{large^{2}}{2\sigma^{2}})\approx 0$</p>
+<p>给定$(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),(x^{(3)},y^{(3)}),(x^{(4)},y^{(4)})$，</p>
+<p>选定$l^{(1)}=x^{(1)},l^{(2)}=x^{(2)},l^{(3)}=x^{(3)},l^{(4)}=x^{(4)}$；</p>
+<p>对于给定的训练集$(x^{(i)},y^{(i)})$：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_35.png" alt=""></p>
+<h2 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_36.png" alt=""></p>
+<ol>
+<li>初始化k个中心</li>
+<li>根据数据离中心的长短进行划分</li>
+<li>重新计算k个簇的中心</li>
+<li>继续迭代直到达到某个条件</li>
+</ol>
+<h3 id="初始化K"><a href="#初始化K" class="headerlink" title="初始化K"></a>初始化K</h3><ol>
+<li>K&lt;m</li>
+<li>多次随机初始化</li>
+</ol>
+<h3 id="K聚类数量的选取"><a href="#K聚类数量的选取" class="headerlink" title="K聚类数量的选取"></a>K聚类数量的选取</h3><ol>
+<li>Elbow method：可以参考</li>
+<li>人工、手动、经验</li>
+</ol>
+<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><ol>
+<li>预处理：数据标准化$x_{j}^{(i)}=x_{j}-\mu_{j}$</li>
+<li>计算协方差矩阵$\Sigma=\frac{1}{m}\sum\limits_{i=1}^{n}(x^{(i)})(x^{(i)})^{T}$</li>
+<li>计算$\Sigma$的特征矩阵</li>
+<li>取前k列，计算出$(U_{reduce})^{T}x^{(i)}$，$k×n×n×1=k×1$</li>
+</ol>
+<h3 id="PCA维度的选取"><a href="#PCA维度的选取" class="headerlink" title="PCA维度的选取"></a>PCA维度的选取</h3><p>计算$U_{reduce},z^{(1)},z^{(2)},z^{(3)},\cdots,z^{(m),x_{approx}^{(1)},\cdots,x_{approx}^{(m)}}$，判断$\frac{\frac{1}{m}\sum\limits_{i=1}^{m}||x^{(i)}-x_{approx}^{(i)}||^{2}}{\frac{1}{m}\sum\limits_{i=1}^{m}||x^{(i)}||^{2}}\leq0.01?$</p>
+<p>简便方法：使用特征值矩阵，计算$1-\frac{\sum\limits_{i=1}^{k}S_{ii}}{\sum\limits_{i=1}^{n}S_{ii}}\leq0.01?$</p>
+<h3 id="PCA压缩重现"><a href="#PCA压缩重现" class="headerlink" title="PCA压缩重现"></a>PCA压缩重现</h3><p>$x_{approx}=U_{reduce}·z$</p>
+<h2 id="异常检测算法"><a href="#异常检测算法" class="headerlink" title="异常检测算法"></a>异常检测算法</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_37.png" alt=""></p>
+<h3 id="评估"><a href="#评估" class="headerlink" title="评估"></a>评估</h3><p>Precision/Recall；$F_{1}$-score</p>
+<h3 id="异常检测vs监督学习"><a href="#异常检测vs监督学习" class="headerlink" title="异常检测vs监督学习"></a>异常检测vs监督学习</h3><ol>
+<li>很少的正例</li>
+<li>大量负例</li>
+<li>多种异常</li>
+<li>未来可能以前没有的异常</li>
+</ol>
+<h3 id="如何选择特征"><a href="#如何选择特征" class="headerlink" title="如何选择特征"></a>如何选择特征</h3><p>如果数据没有呈现出高斯分布的形状，对数据进行一些处理，例如：$log(x),x^{\frac{1}{2}}$。</p>
+<p>选择既不特别大也不特别小的特征。</p>
+<h2 id="多元高斯分布"><a href="#多元高斯分布" class="headerlink" title="多元高斯分布"></a>多元高斯分布</h2><p>多元高斯分布和异常检测算法有相似之处</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_38.png" alt=""></p>
+<h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><h3 id="基于内容的推荐算法"><a href="#基于内容的推荐算法" class="headerlink" title="基于内容的推荐算法"></a>基于内容的推荐算法</h3><p>特定用户：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_39.png" alt=""></p>
+<p>整体用户：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_40.png" alt=""></p>
+<h3 id="协同过滤算法"><a href="#协同过滤算法" class="headerlink" title="协同过滤算法"></a>协同过滤算法</h3><p>单部影片的特征：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_41.png" alt=""></p>
+<p>所有影片的特征：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_42.png" alt=""></p>
+<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_43.png" alt=""></p>
+<p>归一化：每一行减去均值$\mu_{i}$，预测变为$(\theta^{(i)})^{T}(x^{(i)})+\mu_{i}$</p>
+<h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_44.png" alt=""></p>
+<h1 id="性能度量指标"><a href="#性能度量指标" class="headerlink" title="性能度量指标"></a>性能度量指标</h1><h2 id="线性回归决定系数-R-2-（判定系数，拟合优度）"><a href="#线性回归决定系数-R-2-（判定系数，拟合优度）" class="headerlink" title="线性回归决定系数$R^{2}$ （判定系数，拟合优度）"></a>线性回归决定系数$R^{2}$ （判定系数，拟合优度）</h2><p>相关系数 $R$ 就是决定系数的开发</p>
+<p>决定系数 $R^{2}$ 是衡量回归的好坏，，也就是回归拟合的曲线的拟合优度，也就是得分。</p>
+<p>决定系数是表征回归方程在多大程度上解释了因变量的变化，或者说方程对观测值的拟合程度如何。</p>
+<p>计算公式为：</p>
+<p>设 $y$ 为待拟合数值，其均值为 $\overline{y}$ ，拟合值为 $\widehat{y}$ ，记：</p>
+<ul>
+<li>总平方和（$SST$）： $\sum\limits_{i=1}\limits^{N}(y_{i}-\overline{y})^{2}$</li>
+<li>回归平方和（$SSR$ ）：$\sum\limits_{i=1}\limits^{N}(\hat{y_{i}}-\overline{y})^{2}$</li>
+<li>残差平方和（$SSE$）：$\sum\limits_{i=1}\limits^{N}(y_{i}-\hat{y_{i}})^{2}$</li>
+</ul>
+<p>则有：$SST=SSR+SSE$</p>
+<p>决定系数：$R^{2}=\frac{SSR}{SST}=\frac{\sum\limits_{i=1}\limits^{N}(\hat{y_{i}}-\overline{y})^{2}}{\sum\limits_{i=1}\limits^{N}(y_{i}-\hat{y_{i}})^{2}}=1-\frac{SSE}{SST}$</p>
+<p>决定系数越大表明拟合优度越好！</p>
+<h2 id="分类问题中的评判标准"><a href="#分类问题中的评判标准" class="headerlink" title="分类问题中的评判标准"></a>分类问题中的评判标准</h2><p>以二分类为例，分类结果的混淆矩阵如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_50.png" alt=""></p>
+<p>精确率、准确率：$accuracy=\frac{TP+TN}{TP+TN+FP+FN}$</p>
+<p>精准率、查准率：$precision=\frac{TP}{TP+FP}$</p>
+<p>召回率、查全率：$recall=\frac{TP}{TP+FN}$</p>
+<p>调和平均数：$F_{1}=2 \cdot \frac{precision \cdot recall}{precision+reacall}$</p>
+<h3 id="P-R​曲线"><a href="#P-R​曲线" class="headerlink" title="P-R​曲线"></a>P-R​曲线</h3><p>我们希望模型预测结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只预测出了一个正样本的结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_51.png" alt=""></p>
+<p>P-R图直观的显示出学习器在样本总体上的查全率和查准率，在进行比较时，若一个学习器的PR曲线被另一个学习器的PR曲线完全包住，则可以断言后者的性能优于前者（如图中A优于C）。如果两个学习器发生了交叉，则难以断言孰优孰劣，只能在具体的查准率或查全率条件下进行比较（如图中A和B）。如果一定要比较A和B孰优孰劣，一个合理的比较依据是比较PR曲线下面积的大小。在一定程度上表征了学习器在查准率和查全率上取得“双高”的比例，但这个值不太容易估算。所以设计了一些综合考虑查准率和查全率的性能度量。比如“平衡点”（Break-Even Point，BEP），是“查准率=查全率”时的取值。例如学习器C的BEP是0.64,，基于BEP比较，可认为学习器A优于B。</p>
+<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p>ROC的全称是Receiver Operating Characteristic Curve，中文名字叫“受试者工作特征曲线”，顾名思义，其主要的分析方法就是画这条特征曲线。如果在模型中我们没有定好阈值，而是将模型预测结果从高到低排序，将每次概率值依次作为阈值，那么就可以得到多个混淆矩阵。对于每个混淆矩阵，我们计算两个指标TPR和FPR,以FPR为x轴，TPR为y轴画图，就得到了ROC曲线。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_52.png" alt=""></p>
+<h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p>按照定义，AUC即ROC曲线下的面积，而ROC曲线的横轴是FPRate，纵轴是TPRate，当二者相等时，即y=x，表明分类器对于正例和负例毫无区分能力。而我们希望分类器达到的效果是：对于真实类别为1的样本，分类器预测为1的概率（即TPRate），要大于真实类别为0而预测类别为1的概率（即FPRate），即y＞x，因此大部分的ROC曲线长成下面这个样子：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_53.png" alt=""></p>
+<p>最理想的情况下，即没有真实类别为1而错分为0的样本（TPRate一直为1），也没有真实类别为0而错分为1的样本（FPRate一直为0），AUC为1，这便是AUC的极大值。</p>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
