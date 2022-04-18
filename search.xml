@@ -225,12 +225,6 @@
       </tags>
   </entry>
   <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
-  </entry>
-  <entry>
     <title>搭建个人博客</title>
     <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
@@ -402,6 +396,12 @@
         <tag>hexo</tag>
         <tag>博客</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
   </entry>
   <entry>
     <title>数据库面试题总结</title>
@@ -595,26 +595,6 @@
       <tags>
         <tag>总结</tag>
         <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式</title>
-    <url>/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
-<a id="more"></a>
-<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式（Factory Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 13:07</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">manufacture</span>(<span class="params">self, brand</span>):</span></span><br><span class="line">        <span class="keyword">if</span> brand == <span class="string">&quot;Benz&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Benz()</span><br><span class="line">        <span class="keyword">elif</span> brand == <span class="string">&quot;Ferrari&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Ferrari()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Benz</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Benz&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ferrari</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Ferrari&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factory = Factory()</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Benz&quot;</span>)</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Ferrari&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式（Singleton Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 14:08</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySingleton</span>:</span></span><br><span class="line">    __obj = <span class="literal">None</span></span><br><span class="line">    __init_flag = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> cls.__obj <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            cls.__obj = <span class="built_in">object</span>.__new__(cls)</span><br><span class="line">        <span class="keyword">return</span> cls.__obj</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> MySingleton.__init_flag:</span><br><span class="line">            print(<span class="string">&quot;init.....&quot;</span>)</span><br><span class="line">            self.name = name</span><br><span class="line">            MySingleton.__init_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    a = MySingleton(<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">    b = MySingleton(<span class="string">&quot;bb&quot;</span>)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -880,6 +860,26 @@
       <tags>
         <tag>总结</tag>
         <tag>毕设</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式</title>
+    <url>/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
+<a id="more"></a>
+<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式（Factory Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 13:07</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">manufacture</span>(<span class="params">self, brand</span>):</span></span><br><span class="line">        <span class="keyword">if</span> brand == <span class="string">&quot;Benz&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Benz()</span><br><span class="line">        <span class="keyword">elif</span> brand == <span class="string">&quot;Ferrari&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Ferrari()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Benz</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Benz&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ferrari</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Ferrari&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factory = Factory()</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Benz&quot;</span>)</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Ferrari&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式（Singleton Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 14:08</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySingleton</span>:</span></span><br><span class="line">    __obj = <span class="literal">None</span></span><br><span class="line">    __init_flag = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> cls.__obj <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            cls.__obj = <span class="built_in">object</span>.__new__(cls)</span><br><span class="line">        <span class="keyword">return</span> cls.__obj</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> MySingleton.__init_flag:</span><br><span class="line">            print(<span class="string">&quot;init.....&quot;</span>)</span><br><span class="line">            self.name = name</span><br><span class="line">            MySingleton.__init_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    a = MySingleton(<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">    b = MySingleton(<span class="string">&quot;bb&quot;</span>)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1256,7 +1256,7 @@
 <h3 id="Surface-reconstruction-from-point-clouds"><a href="#Surface-reconstruction-from-point-clouds" class="headerlink" title="Surface reconstruction from point clouds"></a>Surface reconstruction from point clouds</h3><p>表面重建技术已经研究了几十年。其中，利用全局或局部平滑先验对点云进行高质量重建的方法包括：多层分割的单位云(MPU)、泊松重建、径向基函数和移动最小二乘曲面(MLS) 广泛用于点集曲面建模和绘制。</p>
 <p>由于MLS的快速和局部评价特性，我们选择MLS表面作为我们的深层3D表示。MLS曲面可以分为两种类型：投影MLS曲面和隐式MLS曲面(IMLS)。前者通过迭代投影定义一组平稳点，后者直接定义隐函数。我们使用基于IMLS的带符号的距离监控，实现了快速的功能评估。</p>
 <h2 id="Method-1"><a href="#Method-1" class="headerlink" title="Method"></a>Method</h2><h3 id="IMLS-surface"><a href="#IMLS-surface" class="headerlink" title="IMLS surface"></a>IMLS surface</h3><p>隐式MLS曲面定义如下: 表示 $\mathcal{P}=\{p_{i} \in \mathbb{R}^{3} \}_{i=1}^{N}$ 为三维点集，每个点都具有单位法向 $n_{i} \in \mathbb{R}^{3}$，控制半径 $r_{i} \in \mathbb{R}^{+}$ 。为了方便起见，我们称这些点为MLS点。</p>
-<p>对于每个MLS点 $p_{i}$ 到其切平面的有符号距离函数定义为 $<x-p_{i},n_{i}>$ ，其中 $&lt;\cdot,\cdot&gt;$ 是内积。通过加权平均所有逐点带符号的距离函数，我们得到了一个隐函数 $F(x)$ 的零水平集定义了隐式曲面 $\mathcal{S}$ :</p>
+<p>对于每个MLS点 $p_{i}$ 到其切平面的有符号距离函数定义为 $＜x-p_{i},n_{i}＞$ ，其中 $＜\cdot,\cdot＞$ 是内积。通过加权平均所有逐点带符号的距离函数，我们得到了一个隐函数 $F(x)$ 的零水平集定义了隐式曲面 $\mathcal{S}$ :</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220409163226.png" alt=""></p>
 <p>这里我们设权函数 $\theta(d,r)=exp(-d^{2}/r^{2})$ 。Kolluri证明了在均匀采样条件下IMLS曲面 $\mathcal{S}$ 是对 $\mathcal{P}$ 进行采样的原始曲面的几何和拓扑正确的近似，而IMLS函数 $F$ 是对原始曲面的有符号距离函数的紧密近似。</p>
 <p>由于当 $x$ 远离 $p_{i}$ 时，权函数衰减，因此只考虑附近的MLS点可以加速 $F(x)$ 的求值。Eq.(1)可以修改为:</p>
