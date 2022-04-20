@@ -1378,6 +1378,33 @@
 <p>其中 $\mathcal{T}_{x}^{\lambda}$ 是一个一般的微分算子，可以是线性的，也可以是非线性的。下标表示操作符 $\mathcal{T}$ 作用的空间位置 $x$ 。上标表示只能部分知道的参数 $\lambda$ 。 $\Omega$ 是 $\mathbb{R}^{d}$ 的一个子集，$\Gamma$ 是 $\Omega$ 的边界。例如，考虑一维热方程： $u_{t}-\lambda u_{xx}=0$ 。这里，微分算子是 $\mathcal{T}_{x}^{\lambda}=\lambda \frac{\partial^{2}}{\partial x^{2}}$ 并且 $\lambda$ 是位置参数。在这种情况下我们考虑的正问题是找出解 $u(x,t)$ 给定特定边界条件 $g(x,t)$ ，初始条件 $h(x)$ 和系数 $\lambda$ ，而反问题是在偏微分方程中恢复未知系数 $\lambda$ 。注意，对于这两种类型的问题，偏微分方程的边界和初始条件也可以用可能被噪声污染的观测值来代替。</p>
 <h3 id="Gaussian-process-regression"><a href="#Gaussian-process-regression" class="headerlink" title="Gaussian process regression"></a>Gaussian process regression</h3><p>略</p>
 <h3 id="Derivatives-of-Gaussian-process-regression"><a href="#Derivatives-of-Gaussian-process-regression" class="headerlink" title="Derivatives of Gaussian process regression"></a>Derivatives of Gaussian process regression</h3><p>略</p>
+<h3 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h3><p>连续模型、离散模型、混合模型</p>
+<h3 id="Active-Learning"><a href="#Active-Learning" class="headerlink" title="Active Learning"></a>Active Learning</h3><p>假设训练数据集D由N个样本组成。这代表了知识的当前状态，给定PDE域中信息量最大的样本是通过最大化获取函数 $a_{N}(x)$ 来选择的</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419144543.png" alt=""></p>
+<p>获取功能实际上量化了我们可以获得多少信息来评估或在这个数据站点上执行一个昂贵的实验。然后 $(x_{N+1},y_{N+1})$ 加到原始训练数据集D中，此时如果达到了预先设定的条件，则停止处理。否则，该过程重复迭代，直到满足停止条件或达到最大迭代次数。在我们的PAGP模型中，采集函数被选择为后验分布的方差:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419144750.png" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>这篇文章主要就是在训练GPR时通过对不同问题模型的设定设置不同的损失函数，然后在新一轮选点时采用后验方差大的点。</p>
+<h1 id="Breaking-the-Dilemma-of-Medical-Image-to-image-Translation"><a href="#Breaking-the-Dilemma-of-Medical-Image-to-image-Translation" class="headerlink" title="Breaking the Dilemma of Medical Image-to-image Translation"></a>Breaking the Dilemma of Medical Image-to-image Translation</h1><h2 id="Abstract-4"><a href="#Abstract-4" class="headerlink" title="Abstract"></a>Abstract</h2><p>有监督的Pix2Pix和无监督的Cycle-consistency两种模式在医学图像到图像的转换中占主导地位。然而，这两种模式都不是理想的。Pix2Pix模式具有出色的性能。但它需要成对和像素对齐的图像，这可能不总是可以实现，因为在获得成对图像期间，呼吸运动或解剖变化。循环一致性模式对训练数据不太严格，对未配对或错位的图像也能很好地工作。但它的性能可能不是最优的。为了打破现有模式的困境，我们提出了一种新的无监督模式RegGAN用于医学图像到图像的转换。它基于“损失校正”理论。在RegGAN算法中，将失调的目标图像作为噪声标签，利用附加的配准网络对生成器进行训练，自适应地拟合失调的噪声分布。目标是搜索图像之间的转换和配准任务的共同最优解。我们将RegGAN合并到一些最先进的图像到图像的转换方法中，并证明RegGAN可以很容易地与这些方法结合起来，以提高它们的性能。例如，在我们的模式中，简单的CycleGAN超过了最新的NICEGAN，即使使用更少的网络参数。根据我们的结果，RegGAN在对齐数据上优于Pix2Pix，在未对齐或未配对的数据上优于Cycle-consistency。RegGAN对噪声不敏感，这使得它在很多情况下都是更好的选择，特别是在无法获得像素级对齐数据的医学图像到图像转换任务中。</p>
+<h2 id="Introduction-7"><a href="#Introduction-7" class="headerlink" title="Introduction"></a>Introduction</h2><p>生成对抗网络(GANs)是一个通过对抗过程同时训练生成器G和鉴别器D的框架。该生成器用于将源域图像X的分布转换为目标域图像Y的分布。判别器用于确定目标域图像可能来自生成器还是来自真实数据。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419210104.png" alt=""></p>
+<p>Pix2Pix更新生成器 $(G:X \rightarrow Y)$ ，使源图像x和目标图像Y之间的像素级L1损失最小。因此，它要求对齐良好的成对图像，其中每个像素都有对应的标签。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419210302.png" alt=""></p>
+<p>然而，在现实场景中，对齐良好的成对图像并不总是可用的。为了解决图像不对齐所带来的挑战，我们开发了循环一致性算法，该算法基于这样的假设:从源域X到目标域Y $(G:X \rightarrow Y)$ 是生成器F从Y到X的反向 $(F:Y \rightarrow X)$ .与Pix2Pix模式相比，循环一致性模式在不对齐或未配对的图像上工作得更好。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419210602.png" alt=""></p>
+<p>然而，Cycle-consistency模式有其局限性。在医学图像到图像的转换中，不仅需要图像域之间的风格转换，还需要特定图像对之间的转换。最佳解决方案应该是唯一的。例如，翻译后的图像应尽可能保持原图像的解剖特征。众所周知，Cycle-consistency模式可能会产生多个解，这意味着训练过程可能比较混乱，结果可能不准确。Pix2Pix模式也不理想。即使它有唯一的解决方案，也很难满足成对图像对齐的要求。对于错位的图像，误差通过Pix2Pix模式，可能导致最终的平移图像不合理的位移。</p>
+<p>到目前为止，还没有一种图像到图像的转换模式可以在对齐数据上优于Pix2Pix模式，在未对齐或未配对数据上优于Cycle-consistency模式。受[6-10]的启发，我们将失调的目标图像视为有噪声的标签，这意味着我们将存在的问题视为带噪声标签的监督学习。</p>
+<h2 id="Methodology-1"><a href="#Methodology-1" class="headerlink" title="Methodology"></a>Methodology</h2><h3 id="Theoretical-Motivation"><a href="#Theoretical-Motivation" class="headerlink" title="Theoretical Motivation"></a>Theoretical Motivation</h3><p>如果我们将失调的目标图像视为有噪声的标签，那么图像到图像的翻译训练就变成了一个有噪声标签的监督学习过程。给定一个训练数据集 $\{ (x_{n},\widetilde{y}_{n}) \}_{n=1}^{N}$ ，有n个噪声标签，其中 $x_{n}$, $\widetilde{y}_{n}$ 是来自两种模式的图像，假设 $y_{n}$ 是 $x_{n}$ 的正确标签，但在现实场景中是未知的。我们的目标是使用数据集 $\{ (x_{n},\widetilde{y}_{n}) \}_{n=1}^{N}$ 带噪声的标签，其性能相当于在干净数据集 $\{ (x_{n},y_{n}) \}_{n=1}^{N}$ 尽可能多。基于方程4的直接优化通常是无效的，并且会导致不好的结果，因为发生器不能挤出噪声的影响。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419212746.png" alt=""></p>
+<p>为了解决噪声问题，我们提出了一个基于“损耗校正”的解决方案，如方程5所示。我们的解决方案通过建模噪声转移 $\phi$ 来匹配噪声分布来校正生成器 $G(x_{n})$ 的输出。之前，Patrini et al从数学上证明了用噪声标签训练的模型可以等价于用干净标签训练的模型，只要噪声发生转移 $\phi$ 匹配噪声分布。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419213250.png" alt=""></p>
+<p>为此，Goldberger等提出将正确的标签视为潜在的随机变量，并将标签噪声显式建模为网络结构的一部分，记为 $R$ 。方程5可以改写为对数似然的形式，将对数似然作为神经网络训练的损失函数。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419213846.png" alt=""></p>
+<h3 id="RegGAN"><a href="#RegGAN" class="headerlink" title="RegGAN"></a>RegGAN</h3><p>与现有的使用的求解方程6的方法例如最大化期望，全连通层、锚点估计和Drichlet分布比较。在我们的问题中，噪声分布的类型更清楚，它可以表示为位移误差: $\widetilde{y}=y\circ T$ 。这里T表示为一个随机变形场，它为每个像素产生随机位移。因此，我们采用生成器G后的配准网络R作为标签噪声模型对结果进行校正。修正损失如式7所示</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419214445.png" alt=""></p>
+<p>式中 $R(G(x), \widetilde{y})$ 为变形场， $\circ$ 代表重采样操作。注册网络基于U-Net。在式8中定义了平滑损失来评价变形场的平滑性，使变形场的梯度最小。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419214930.png" alt=""></p>
+<p>最后，将产生器与鉴别器之间的平均损耗相加(式1)，总损耗如式9所示</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220419215013.png" alt=""></p>
 ]]></content>
       <categories>
         <category>总结</category>
