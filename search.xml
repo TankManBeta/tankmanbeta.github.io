@@ -215,6 +215,44 @@
 <li><code>.pth</code>文件的内容（如果存在的话）</li>
 <li><code>sys.path.append()</code>临时添加的目录</li>
 </ol>
+<h1 id="进程和线程区别"><a href="#进程和线程区别" class="headerlink" title="进程和线程区别"></a>进程和线程区别</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>区别</th>
+<th>进程</th>
+<th>线程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>根本区别</td>
+<td>作为资源分配的单位</td>
+<td>调度和执行的单位</td>
+</tr>
+<tr>
+<td>开销</td>
+<td>每个进程都有独立的代码和数据空间，进程间的切换会有较大的开销</td>
+<td>线程可以看成是轻量级的进程，多个线程共享内存，线程切换的开销小</td>
+</tr>
+<tr>
+<td>所处环境</td>
+<td>在操作系统中，同时运行的多个任务</td>
+<td>在程序中多个顺序流同时执行</td>
+</tr>
+<tr>
+<td>分配内存</td>
+<td>系统在运行的时候为每一个进程分配不同的内存区域</td>
+<td>线程使用的资源是他所属进程的资源</td>
+</tr>
+<tr>
+<td>包含关系</td>
+<td>一个进程可以拥有多个线程</td>
+<td>线程是进程的一部分，所有线程有时候称为是轻量级的进程</td>
+</tr>
+</tbody>
+</table>
+</div>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -223,6 +261,12 @@
         <tag>总结</tag>
         <tag>Python</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
   </entry>
   <entry>
     <title>搭建个人博客</title>
@@ -396,12 +440,6 @@
         <tag>hexo</tag>
         <tag>博客</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
   </entry>
   <entry>
     <title>数据库面试题总结</title>
@@ -1437,6 +1475,7 @@
 <p>其中 $\{\mu_{\hat{\theta}_{j}}(x)\}_{j=1}^{M}$ 是样本 $\{\hat{\theta}_{j} \}_{j=1}^{M}$ 对应的NN预测集。求 $(u|x,\mathcal{D})$ ，将式(4)的高斯似然值代入式(8)，得到高斯混合协方差矩阵的对角线部分由下式给出</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220506195407.png" alt=""></p>
 <p>待阅读</p>
+<h1 id="Multi-Objective-Loss-Balancing-for-Physics-Informed-Deep-Learning"><a href="#Multi-Objective-Loss-Balancing-for-Physics-Informed-Deep-Learning" class="headerlink" title="Multi-Objective Loss Balancing for Physics-Informed Deep Learning"></a>Multi-Objective Loss Balancing for Physics-Informed Deep Learning</h1><p>文章采用相对变化速率对PINN的损失函数进行加权</p>
 ]]></content>
       <categories>
         <category>总结</category>
