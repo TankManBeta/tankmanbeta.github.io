@@ -674,34 +674,6 @@
       </tags>
   </entry>
   <entry>
-    <title>算法Tricks</title>
-    <url>/2022/11/22/%E7%AE%97%E6%B3%95Tricks/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在刷题过程中遇到的一些常用的算法，便于后续复习。</p>
-<a id="more"></a>
-<h1 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h1><h2 id="短除法"><a href="#短除法" class="headerlink" title="短除法"></a>短除法</h2><p>思路：逐步找出两个数的所有公约数，再将这些公约数累乘起来，就能得到最大公约数。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    t = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">while</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            t *= i</span><br><span class="line">            m /= i</span><br><span class="line">            n /= i</span><br><span class="line">    <span class="keyword">return</span> t</span><br></pre></td></tr></table></figure>
-<h2 id="欧几里得算法（辗转相除法）"><a href="#欧几里得算法（辗转相除法）" class="headerlink" title="欧几里得算法（辗转相除法）"></a>欧几里得算法（辗转相除法）</h2><p>思路：以除数和余数反复做除法运算，当余数为 0 时，取当前算式除数为最大公约数。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 非递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">while</span> n:</span><br><span class="line">        m, n = n, m % n</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> m</span><br><span class="line">    <span class="keyword">return</span> gcd(n, m % n)</span><br></pre></td></tr></table></figure>
-<h2 id="更相减损术"><a href="#更相减损术" class="headerlink" title="更相减损术"></a>更相减损术</h2><p>思路：任意给定两个正整数；判断它们是否都是偶数。若是，则用2约简。以较大的数减较小的数，接着把所得的差与较小的数比较，并以大数减小数。继续这个操作，直到所得的减数和差相等为止。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        m //= <span class="number">2</span></span><br><span class="line">        n //= <span class="number">2</span></span><br><span class="line">    r = m-n</span><br><span class="line">    <span class="keyword">while</span> r != n:</span><br><span class="line">        m = <span class="built_in">max</span>(r, n)</span><br><span class="line">        n = <span class="built_in">min</span>(r, n)</span><br><span class="line">        r = m - n</span><br><span class="line">    <span class="keyword">return</span> n * <span class="number">2</span>**count</span><br></pre></td></tr></table></figure>
-<h2 id="穷举法"><a href="#穷举法" class="headerlink" title="穷举法"></a>穷举法</h2><p>思路：最大公约数肯定在1~两者之间最小数之间，只需要从大到小穷举即可。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h2 id="Stein算法"><a href="#Stein算法" class="headerlink" title="Stein算法"></a>Stein算法</h2><p>思路：</p>
-<p>代码实现：</p>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>刷题</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>毕设知识点总结</title>
     <url>/2021/04/06/%E6%AF%95%E8%AE%BE%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>毕设的项目也算是做完了，总结一下项目过程中遇见的一些问题和解决方案，避免以后再次踩坑。</p>
@@ -769,6 +741,34 @@
       <tags>
         <tag>总结</tag>
         <tag>毕设</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法Tricks</title>
+    <url>/2022/11/22/%E7%AE%97%E6%B3%95Tricks/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在刷题过程中遇到的一些常用的算法，便于后续复习。</p>
+<a id="more"></a>
+<h1 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h1><h2 id="短除法"><a href="#短除法" class="headerlink" title="短除法"></a>短除法</h2><p>思路：逐步找出两个数的所有公约数，再将这些公约数累乘起来，就能得到最大公约数。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    t = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">while</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            t *= i</span><br><span class="line">            m /= i</span><br><span class="line">            n /= i</span><br><span class="line">    <span class="keyword">return</span> t</span><br></pre></td></tr></table></figure>
+<h2 id="欧几里得算法（辗转相除法）"><a href="#欧几里得算法（辗转相除法）" class="headerlink" title="欧几里得算法（辗转相除法）"></a>欧几里得算法（辗转相除法）</h2><p>思路：以除数和余数反复做除法运算，当余数为 0 时，取当前算式除数为最大公约数。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 非递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">while</span> n:</span><br><span class="line">        m, n = n, m % n</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> m</span><br><span class="line">    <span class="keyword">return</span> gcd(n, m % n)</span><br></pre></td></tr></table></figure>
+<h2 id="更相减损术"><a href="#更相减损术" class="headerlink" title="更相减损术"></a>更相减损术</h2><p>思路：任意给定两个正整数；判断它们是否都是偶数。若是，则用2约简。以较大的数减较小的数，接着把所得的差与较小的数比较，并以大数减小数。继续这个操作，直到所得的减数和差相等为止。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        m //= <span class="number">2</span></span><br><span class="line">        n //= <span class="number">2</span></span><br><span class="line">    r = m-n</span><br><span class="line">    <span class="keyword">while</span> r != n:</span><br><span class="line">        m = <span class="built_in">max</span>(r, n)</span><br><span class="line">        n = <span class="built_in">min</span>(r, n)</span><br><span class="line">        r = m - n</span><br><span class="line">    <span class="keyword">return</span> n * <span class="number">2</span>**count</span><br></pre></td></tr></table></figure>
+<h2 id="穷举法"><a href="#穷举法" class="headerlink" title="穷举法"></a>穷举法</h2><p>思路：最大公约数肯定在1~两者之间最小数之间，只需要从大到小穷举即可。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="Stein算法"><a href="#Stein算法" class="headerlink" title="Stein算法"></a>Stein算法</h2><p>思路：</p>
+<p>代码实现：</p>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>刷题</tag>
       </tags>
   </entry>
   <entry>
