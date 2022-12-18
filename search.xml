@@ -263,6 +263,12 @@
       </tags>
   </entry>
   <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
+  </entry>
+  <entry>
     <title>搭建个人博客</title>
     <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
@@ -434,12 +440,6 @@
         <tag>hexo</tag>
         <tag>博客</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
   </entry>
   <entry>
     <title>数据库面试题总结</title>
@@ -744,6 +744,26 @@
       </tags>
   </entry>
   <entry>
+    <title>设计模式</title>
+    <url>/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
+<a id="more"></a>
+<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式（Factory Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 13:07</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">manufacture</span>(<span class="params">self, brand</span>):</span></span><br><span class="line">        <span class="keyword">if</span> brand == <span class="string">&quot;Benz&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Benz()</span><br><span class="line">        <span class="keyword">elif</span> brand == <span class="string">&quot;Ferrari&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Ferrari()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Benz</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Benz&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ferrari</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Ferrari&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factory = Factory()</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Benz&quot;</span>)</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Ferrari&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式（Singleton Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 14:08</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySingleton</span>:</span></span><br><span class="line">    __obj = <span class="literal">None</span></span><br><span class="line">    __init_flag = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> cls.__obj <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            cls.__obj = <span class="built_in">object</span>.__new__(cls)</span><br><span class="line">        <span class="keyword">return</span> cls.__obj</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> MySingleton.__init_flag:</span><br><span class="line">            print(<span class="string">&quot;init.....&quot;</span>)</span><br><span class="line">            self.name = name</span><br><span class="line">            MySingleton.__init_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    a = MySingleton(<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">    b = MySingleton(<span class="string">&quot;bb&quot;</span>)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>算法Tricks</title>
     <url>/2022/11/22/%E7%AE%97%E6%B3%95Tricks/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在刷题过程中遇到的一些常用的算法，便于后续复习。</p>
@@ -795,26 +815,6 @@
       <tags>
         <tag>总结</tag>
         <tag>刷题</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式</title>
-    <url>/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
-<a id="more"></a>
-<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式（Factory Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 13:07</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">manufacture</span>(<span class="params">self, brand</span>):</span></span><br><span class="line">        <span class="keyword">if</span> brand == <span class="string">&quot;Benz&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Benz()</span><br><span class="line">        <span class="keyword">elif</span> brand == <span class="string">&quot;Ferrari&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> Ferrari()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Benz</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Benz&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ferrari</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;I am Ferrari&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factory = Factory()</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Benz&quot;</span>)</span><br><span class="line">    factory.manufacture(<span class="string">&quot;Ferrari&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>单例模式（Singleton Pattern）的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2021/11/25 14:08</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySingleton</span>:</span></span><br><span class="line">    __obj = <span class="literal">None</span></span><br><span class="line">    __init_flag = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> cls.__obj <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            cls.__obj = <span class="built_in">object</span>.__new__(cls)</span><br><span class="line">        <span class="keyword">return</span> cls.__obj</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> MySingleton.__init_flag:</span><br><span class="line">            print(<span class="string">&quot;init.....&quot;</span>)</span><br><span class="line">            self.name = name</span><br><span class="line">            MySingleton.__init_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    a = MySingleton(<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">    b = MySingleton(<span class="string">&quot;bb&quot;</span>)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1773,6 +1773,34 @@
 <li>类似于空间模块中PDE损耗的实现，空间模块的PDE损失也是实现在输出和跨输出。</li>
 <li>由于我们在初始时间步长和最终时间步长( $t$ 和 $t+\Delta t$ )重构了输出，因此我们在这些输入和输出之间增加了约束损失，这有助于更快地收敛模块。</li>
 </ul>
+<h1 id="Error-Aware-B-PINNs-Improving-Uncertainty-Quantification-in-Bayesian-Physics-Informed-Neural-Networks"><a href="#Error-Aware-B-PINNs-Improving-Uncertainty-Quantification-in-Bayesian-Physics-Informed-Neural-Networks" class="headerlink" title="Error-Aware B-PINNs: Improving Uncertainty Quantification in Bayesian Physics-Informed Neural Networks"></a>Error-Aware B-PINNs: Improving Uncertainty Quantification in Bayesian Physics-Informed Neural Networks</h1><h2 id="Abstract-13"><a href="#Abstract-13" class="headerlink" title="Abstract"></a>Abstract</h2><p>基于物理的神经网络(PINN)作为求解微分方程的一种方法正越来越受欢迎。虽然在某些情况下比经典的数值技术更可行，PINN仍然缺乏可信度。在不确定性量化(UQ)中可以找到一种补救方法，它刚刚开始出现在PINN的背景下。评估训练好的PINN是否符合强加微分方程是解决不确定性问题的关键，但目前还缺乏全面的方法。我们提出了一个贝叶斯PINN (B-PINN)中UQ的框架，它包含了B-PINN解和未知真解之间的差异。我们利用线性动力系统上PINN的误差界的最新结果，证明了一类线性ODE的预测不确定性。</p>
+<h2 id="Introduction-16"><a href="#Introduction-16" class="headerlink" title="Introduction"></a>Introduction</h2><p>物理神经网络(PINN)是深度神经网络(DNN)，能够将微分方程(PDEs)编码为神经网络本身的一个组成部分。Lagaris等的早期结果首次提出使用神经网络求解微分方程，随后近年来关于PINN的出版物迅速增长。与传统数值求解器相比，PINN具有许多优点，例如，它们提供封闭形式的解，是无网格的。例如，在培训后支持按需解决方案计算，可以通过利用迁移学习快速发现新的解决方案，等等。</p>
+<p>然而，为了真正蓬勃发展并部署在安全关键应用中，像PINN这样的深度学习技术需要是可靠的，即赋予高质量的不确定性量化(UQ)方法。在PINN的背景下，UQ方法仍然很少被使用，也没有公认的黄金标准。最近，基于物理的高斯过程(PIGP)和贝叶斯PINNs (B-PINNs)已被提出作为经典贝叶斯概率机器学习技术的对应物。另一个研究方向考虑了生成对抗网络的使用，其中贝叶斯推理在潜在空间而不是参数空间中执行。</p>
+<p>由于存在多种不确定性来源，从噪声数据到模型架构相关问题，B-PINN中的UQ可以被视为比传统数值求解器中的UQ更具挑战性。还有一个黑盒不确定性，与网络实际上如何被告知控制物理方程有关。它源于PINN的无监督性质，但由于考虑到有噪声的测量数据，它经常被掩盖。作为一项规则，所有前面提到的不确定性来源都是使用一个“一概而论”的术语来建模的。在这项工作中，我们的目标是解开这些不确定性，并展示如何用有用的误差估计在总不确定性中增加单独的项，从而提高UQ方法的预测质量。</p>
+<h2 id="Background-2"><a href="#Background-2" class="headerlink" title="Background"></a>Background</h2><h3 id="Problem-Formulation"><a href="#Problem-Formulation" class="headerlink" title="Problem Formulation"></a>Problem Formulation</h3><p>PINN可以解最一般形式的微分方程，如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221218200105.png" alt=""></p>
+<h3 id="Physics-Informed-Neural-Networks-1"><a href="#Physics-Informed-Neural-Networks-1" class="headerlink" title="Physics-Informed Neural Networks"></a>Physics-Informed Neural Networks</h3><p>软约束：边界/初值条件作为损失项加入loss当中</p>
+<p>硬约束： $\widetilde{u}_{\theta}(x)=u_{0}+(1 - e^{-(x-x_{0})})u_{\theta}(x)$</p>
+<h3 id="Uncertainty-Quantification-in-Bayesian-Neural-Networks"><a href="#Uncertainty-Quantification-in-Bayesian-Neural-Networks" class="headerlink" title="Uncertainty Quantification in Bayesian Neural Networks"></a>Uncertainty Quantification in Bayesian Neural Networks</h3><p>假设我们有一个有限的观测集合 $O$ ，在一个有界的区域 $\Omega_{O} \subset \Omega$ 。假设观测值是独立同分布的，并且是从分布 $p(O|\theta)$ 中得出的。这种分布被称为似然函数并且通常是由一个可分解的高斯分布建模的。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221218202953.png" alt=""></p>
+<p>均值 $y_{\theta}$ 是由相关神经网络给出的并且 $\Sigma_{O} = \sigma^{2}_{O}I$ 。因此，假设观测结果 $O$ 是由数据生成过程产生的，该过程包含由 $y_{\theta}$ 建模的确定性部分以及一些附加噪声。此噪声表示不可约或任意的不确定性，其协方差矩阵 $\Sigma_{O}$ 可能是已知的或假设的，也可能是从数据中推断出来的。</p>
+<p>标准的神经网络训练以频率论的方式进行，不考虑不确定性。模型参数 $\theta$ 通过最大化似然来推断为点估计，假设似然是高斯的，则等于均方误差最小化。请注意，在无监督PINN的情况下，为了推导MSE损失，我们假设虚拟“观测值”总是等于零，而均值由剩余网络 $r_{\theta}$ 给出， $\sigma^{2}_{O}$ 可以是任意的。</p>
+<p>与频率论推理相反，贝叶斯推理不仅在观测值 $O$ 上放置分布，而且在参数 $\theta$ 上也放置分布，从而形成贝叶斯神经网络(BNNs)。贝叶斯框架中参数的概率性导致了认知的不确定性。</p>
+<p>参数 $θ$ 的后验分布，即基于观测值 $O$ 的“合理”参数值的分布，由贝叶斯定理给出，</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221218205354.png" alt=""></p>
+<p>其中 $p(\theta)$ 是参数的先验分布， $p(O)$ 是证据。通过(5)精确地获得后验值通常在计算和分析上是难以解决的。</p>
+<p>UQ的目标是估计预测分布 $p(y |x,O)$ 。其中,  $\hat{y}$ 表示在 $x$ 预测并且在给定的观测 $O$ 上具有条件分布。它可以通过对模型参数 $\theta$ 积分得到，或者，如果难以计算，可以用蒙特卡罗估计进行近似，</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221218210144.png" alt=""></p>
+<p>其中 $θ^{∗}_{i} \thicksim p(\theta|O)$ 为后验样本。</p>
+<p>预测分布的均值可近似计算为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221218212706.png" alt=""></p>
+<p>预测分布的方差也可以近似计算。利用总方差定律，并假设分布 $p(y|x,\theta)$ 具有与(4)相同的均值和方差，我们有</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221218212838.png" alt=""></p>
+<p>(8)中的第一个和第二个总和分别表示总不确定性的任意部分和认识部分。</p>
+<h4 id="Methods-for-Finding-the-Posterior-Distribution"><a href="#Methods-for-Finding-the-Posterior-Distribution" class="headerlink" title="Methods for Finding the Posterior Distribution"></a>Methods for Finding the Posterior Distribution</h4><p>最流行的后验逼近方法可分为两大类:抽样法和变分法。对于简化后的BNN，还有一种有效的封闭解，即丢弃隐层中的参数分布，只保留最后一层中的参数分布。我们将其称为神经线性模型(NLM)。</p>
+<p>抽样方法。马尔可夫链蒙特卡罗方法利用 $p(\theta|O)$ 为平稳分布的马尔可夫链从后验中抽取参数样本。广泛使用的方法是哈密顿蒙特卡罗和朗之万动力学。这种方法的缺点是计算成本高。在本文中我们将不考虑它们。</p>
+<p>变分方法。变分推理(VI)方法通过使用变分分布 $q_{w}(θ)$ 来近似 $p(\theta|O)$ ，该分布通过最大化证据下界来优化 $w$ 。流行的方法是反向传播贝叶斯(利用因式高斯变分分布)和蒙特卡洛Dropout (通过对每个样本随机降低固定百分比的参数来抽取样本)。</p>
+<p>确切的方法。NLM 代表了可处理性和表达性之间的妥协。可以将NLM解释为学习到的特征基 $\Phi_{w} =[\phi_{w}(x_{1}),\cdots,\phi_{w}(x_{M})]^{T}$对其进行贝叶斯线性回归执行 $\Phi_{w}\theta$ 。我们将用 $r_{\theta}^{NLM}$ 表示用NLM训练的残差网络，以便与标准BNN区分开来。</p>
 ]]></content>
       <categories>
         <category>总结</category>
