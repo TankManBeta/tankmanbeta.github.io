@@ -275,6 +275,200 @@
 ]]></content>
   </entry>
   <entry>
+    <title>数据库面试题总结</title>
+    <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
+<a id="more"></a>
+<h1 id="事务四大特性"><a href="#事务四大特性" class="headerlink" title="事务四大特性"></a>事务四大特性</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">原子性，要么执行，要么不执行  </span><br><span class="line">隔离性，所有操作全部执行完以前其它会话不能看到过程</span><br><span class="line">一致性，事务前后，数据总额一致</span><br><span class="line">持久性，一旦事务提交，对数据的改变就是永久的</span><br></pre></td></tr></table></figure>
+<h1 id="数据库隔离级别"><a href="#数据库隔离级别" class="headerlink" title="数据库隔离级别"></a>数据库隔离级别</h1><p>数据库事务的隔离级别有4个，由低到高依次为Read uncommitted、Read committed、Repeatable read、Serializable，这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">脏读</th>
+<th style="text-align:center">不可重复读</th>
+<th style="text-align:center">幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Read uncommitted</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td style="text-align:center">Read committed（Sql Server，Oracle）</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td style="text-align:center">Repeatable read（Mysql）</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td style="text-align:center">Serializable</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>脏读：事务 B 去查询了事务 A 修改过的数据，但是此时事务 A 还没提交，所以事务 A 随时会回滚导致事务 B 再次查询就读不到刚才事务 A 修改的数据了，这就是脏读。</p>
+<p>不可重复读：假设一个前提是事务 A 只能在事务 B 提交之后读取到它修改的数据，所以此时必然是不会发生脏读的。事务A事先读取了数据，事务B紧接了更新了数据，并提交了事务，而事务A再次读取该数据时，数据已经发生了改变。</p>
+<p>不可重复读和脏读的区别是，脏读读取到的是一个未提交的数据，而不可重复读读取到的是前一个事务提交的数据。</p>
+<p>幻读：幻读就是你一个事务用一样的 SQL 多次查询，结果每次查询都会发现查到一些之前没看到过的数据。注意，幻读特指的是你查询到了之前查询没看到过的数据。此时说明你是幻读了。</p>
+<p>幻读和不可重复读所不同的是不可重复读查询的都是同一个数据项，而幻读针对的是一批数据整体（比如数据的个数）。</p>
+<h1 id="Mysql的存储引擎以及区别"><a href="#Mysql的存储引擎以及区别" class="headerlink" title="Mysql的存储引擎以及区别"></a>Mysql的存储引擎以及区别</h1><p>Mysql默认支持九种存储引擎（数据用各种不同的技术存储在文件或内存中。这些技术中的每一种技术都使用不同的存储机制、索引技巧、锁定水平并且最终提供广泛的不同的功能和能力。通过选择不同的技术，你能够获得额外的速度或者功能，从而改善你的应用的整体功能。）</p>
+<ol>
+<li>MyISAM：适合读密集的表<ol>
+<li>不支持行锁(MyISAM只有表锁)，读取时对需要读到的所有表加锁，写入时则对表加排他锁；MyISAM表进行读操作时，它不会阻塞其他用户对同一表的读请求，但会阻塞对同一表的写操作；而对MyISAM表的写操作，则会阻塞其他用户对同一表的读和写操作。</li>
+<li>不支持事务</li>
+<li>不支持外键</li>
+<li>不支持崩溃后的安全恢复</li>
+<li>在表有读取查询的同时，支持往表中插入新记录</li>
+<li>支持BLOB和TEXT的前500个字符索引，支持全文索引和空间索引</li>
+<li>支持延迟更新索引，极大地提升了写入性能</li>
+<li>对于不会进行修改的表，支持压缩表，极大地减少了磁盘空间的占用</li>
+<li>存储表的总行数，执行select count(*) from table时只要简单的读出保存好的行数即可</li>
+<li>采用非聚集索引，索引文件的数据域存储指向数据文件的指针。</li>
+</ol>
+</li>
+<li>InnoDB：InnoDB是MySQL的默认数据库引擎（5.5版之后），适合写密集的表<ol>
+<li>支持行锁，采用MVCC来支持高并发，有可能死锁</li>
+<li>支持事务</li>
+<li>支持外键</li>
+<li>支持崩溃后的安全恢复</li>
+<li>不支持全文索引</li>
+<li>不存储表的总行数，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行。注意的是，当count(*)语句包含 where条件时，两种表的操作是一样的</li>
+<li>主键索引采用聚集索引（索引的数据域存储数据文件本身），辅索引的数据域存储主键的值；因此从辅索引查找数据，需要先通过辅索引找到主键值，再访问主键索引；最好使用自增主键，防止插入数据时，为维持B+树结构，文件的大调整。</li>
+<li>DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除</li>
+<li>对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引更好和更快的auto_increment处理</li>
+</ol>
+</li>
+</ol>
+<h1 id="B-索引和hash索引"><a href="#B-索引和hash索引" class="headerlink" title="B+索引和hash索引"></a>B+索引和hash索引</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20181107184452575.png" alt=""></p>
+<p>在MySQL中，只有HEAP/MEMORY引擎表才能显式支持哈希索引（NDB也支持，但这个不常用），InnoDB引擎的自适应哈希索引（adaptive hash index）不在此列，因为这不是创建索引时可指定的。</p>
+<ul>
+<li>如果是等值查询，那么哈希索引明显有绝对优势，因为只需要经过一次算法即可找到相应的键值；当然了，这个前提是，键值都是唯一的。如果键值不是唯一的，就需要先找到该键所在位置，然后再根据链表往后扫描，直到找到相应的数据；</li>
+<li>如果是范围查询检索，这时候哈希索引就毫无用武之地了 ，因为原先是有序的键值，经过哈希算法后，有可能变成不连续的了，就没办法再利用索引完成范围查询检索；</li>
+<li>同理， 哈希索引也没办法利用索引完成排序，以及like ‘xxx%’ 这样的部分模糊查询（这种部分模糊查询，其实本质上也是范围查询）；</li>
+<li>哈希索引也不支持多列联合索引的最左匹配规则；</li>
+<li>B+树索引的关键字检索效率比较平均，不像B树那样波动幅度大， 在有大量重复键值情况下，哈希索引的效率也是极低的，因为存在所谓的哈希碰撞问题 。</li>
+</ul>
+<h1 id="索引的优缺点，什么时候使用索引，什么时候不能使用索引"><a href="#索引的优缺点，什么时候使用索引，什么时候不能使用索引" class="headerlink" title="索引的优缺点，什么时候使用索引，什么时候不能使用索引"></a>索引的优缺点，什么时候使用索引，什么时候不能使用索引</h1><ul>
+<li>索引最大的好处是提高查询速度</li>
+<li>缺点是更新数据时效率低，因为要同时更新索引</li>
+<li>对数据进行频繁查询进建立索引，如果要频繁更改数据不建议使用索引</li>
+</ul>
+<h1 id="InnoDB索引和MyISAM索引的区别"><a href="#InnoDB索引和MyISAM索引的区别" class="headerlink" title="InnoDB索引和MyISAM索引的区别"></a><strong>InnoDB索引</strong>和<strong>MyISAM索引</strong>的区别</h1><p>InnoDB的数据文件本身就是主索引文件。而MyISAM的主索引和数据是分开的。</p>
+<p>InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别。</p>
+<h1 id="索引的底层实现（B-树，为何不采用红黑树，B树）重点"><a href="#索引的底层实现（B-树，为何不采用红黑树，B树）重点" class="headerlink" title="索引的底层实现（B+树，为何不采用红黑树，B树）重点"></a>索引的底层实现（B+树，为何不采用红黑树，B树）重点</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">树</th>
+<th style="text-align:center">区别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">红黑树</td>
+<td style="text-align:center">增加，删除，红黑树会进行频繁的调整，来保证红黑树的性质，浪费时间</td>
+</tr>
+<tr>
+<td style="text-align:center">B树也就是B-树</td>
+<td style="text-align:center">B树，查询性能不稳定，查询结果高度不致，每个结点保存指向真实数据的指针，相比B+树每一层每屋存储的元素更多，显得更高一点。</td>
+</tr>
+<tr>
+<td style="text-align:center">B+树</td>
+<td style="text-align:center">B+树相比较于另外两种树,显得更矮更宽，查询层次更浅</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="为什么使用B-树"><a href="#为什么使用B-树" class="headerlink" title="为什么使用B+树"></a>为什么使用B+树</h1><ol>
+<li>B+树是多路平衡查找树（B-Tree）的变种（Plus版本），多路绝对平衡查找树，他拥有B-树的优势</li>
+<li>B+树的扫库扫表能力更强。</li>
+<li>B+树的磁盘读写能力更强。</li>
+<li>B+树的排序能力更强。</li>
+<li>B+树的查询效率更加稳定（仁者见仁，智者见智）</li>
+</ol>
+<h1 id="Sql的优化"><a href="#Sql的优化" class="headerlink" title="Sql的优化"></a>Sql的优化</h1><ol>
+<li>sql尽量使用索引，而且查询要走索引</li>
+<li>对sql语句优化<ul>
+<li>子查询变成left join</li>
+<li>limit 分布优化，先利用ID定位，再分页</li>
+<li>or条件优化，多个or条件可以用union all对结果进行合并（union all结果可能重复）</li>
+<li>不必要的排序</li>
+<li>where代替having,having 检索完所有记录，才进行过滤</li>
+<li>避免嵌套查询</li>
+<li>对多个字段进行等值查询时，联合索引</li>
+</ul>
+</li>
+</ol>
+<h1 id="索引最左前缀问题"><a href="#索引最左前缀问题" class="headerlink" title="索引最左前缀问题"></a>索引最左前缀问题</h1><p>假设你在表的state、city和zip数据列上建立了复合索引。索引中的数据行按照state/city/zip次序排列，因此它们也会自动地按照state/city/zip次序排列。这意味着，即使你在查询中只指定了state值，或者指定state和city值，MySQL也可以使用这个索引。因此，这个索引可以被用于搜索如下所示的数据列组合：state/city/zip；state/city；state。</p>
+<p>MySQL不能利用这个索引来搜索没有包含在最左前缀的内容。例如，如果你按照city或zip来搜索，<br>就不会使用到这个索引。如果你搜索给定的state和具体的ZIP代码（索引的1和3列），该索引也是不能用于这种组合值的，尽管MySQL可以利用索引来查找匹配的state从而缩小搜索的范围。</p>
+<p>explain命令的结果需要考虑属性type：ref就是使用了索引，index是对所有索引树进行扫描，而all是对整个磁盘的数据进行全表扫描。</p>
+<h1 id="索引分类及索引失效条件"><a href="#索引分类及索引失效条件" class="headerlink" title="索引分类及索引失效条件"></a>索引分类及索引失效条件</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">索引类型</th>
+<th style="text-align:center">概念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">普通索引</td>
+<td style="text-align:center">最基本的索引，没有任何限制</td>
+</tr>
+<tr>
+<td style="text-align:center">唯一索引</td>
+<td style="text-align:center">与”普通索引”类似，不同的就是：索引列的值必须唯一，但允许有空值。</td>
+</tr>
+<tr>
+<td style="text-align:center">主键索引</td>
+<td style="text-align:center">它是一种特殊的唯一索引，不允许有空值。</td>
+</tr>
+<tr>
+<td style="text-align:center">全文索引</td>
+<td style="text-align:center">针对较大的数据，生成全文索引很耗时间空间。</td>
+</tr>
+<tr>
+<td style="text-align:center">组合索引</td>
+<td style="text-align:center">为了更多的提高mysql效率可建立组合索引，遵循”最左前缀“原则</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>失效条件：</p>
+<ol>
+<li>如果条件中有or，即使其中有条件带索引也不会使用</li>
+<li>对于多列索引，不是使用的第一部分，则不会使用索引</li>
+<li>like查询是以%开头</li>
+<li>如果列类型是字符串，那一定要在条件中将数据使用引号引用起来,否则不使用索引</li>
+<li>如果mysql估计使用全表扫描要比使用索引快,则不使用索引</li>
+<li>where中索引列有运算</li>
+<li>where中索引列使用了函数（+，-，*，/，! ）</li>
+<li>当变量采用的是times变量，而表的字段采用的是date变量时</li>
+<li>隐式类型转换导致索引失效</li>
+</ol>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>机器学习Tricks</title>
     <url>/2022/10/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0Tricks/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在机器学习应用过程中遇到的一些问题，包括理论、代码实践等方面。</p>
@@ -502,254 +696,6 @@
       </tags>
   </entry>
   <entry>
-    <title>数据库面试题总结</title>
-    <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
-<a id="more"></a>
-<h1 id="事务四大特性"><a href="#事务四大特性" class="headerlink" title="事务四大特性"></a>事务四大特性</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">原子性，要么执行，要么不执行  </span><br><span class="line">隔离性，所有操作全部执行完以前其它会话不能看到过程</span><br><span class="line">一致性，事务前后，数据总额一致</span><br><span class="line">持久性，一旦事务提交，对数据的改变就是永久的</span><br></pre></td></tr></table></figure>
-<h1 id="数据库隔离级别"><a href="#数据库隔离级别" class="headerlink" title="数据库隔离级别"></a>数据库隔离级别</h1><p>数据库事务的隔离级别有4个，由低到高依次为Read uncommitted、Read committed、Repeatable read、Serializable，这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">脏读</th>
-<th style="text-align:center">不可重复读</th>
-<th style="text-align:center">幻读</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Read uncommitted</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td style="text-align:center">Read committed（Sql Server，Oracle）</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td style="text-align:center">Repeatable read（Mysql）</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td style="text-align:center">Serializable</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>脏读：事务 B 去查询了事务 A 修改过的数据，但是此时事务 A 还没提交，所以事务 A 随时会回滚导致事务 B 再次查询就读不到刚才事务 A 修改的数据了，这就是脏读。</p>
-<p>不可重复读：假设一个前提是事务 A 只能在事务 B 提交之后读取到它修改的数据，所以此时必然是不会发生脏读的。事务A事先读取了数据，事务B紧接了更新了数据，并提交了事务，而事务A再次读取该数据时，数据已经发生了改变。</p>
-<p>不可重复读和脏读的区别是，脏读读取到的是一个未提交的数据，而不可重复读读取到的是前一个事务提交的数据。</p>
-<p>幻读：幻读就是你一个事务用一样的 SQL 多次查询，结果每次查询都会发现查到一些之前没看到过的数据。注意，幻读特指的是你查询到了之前查询没看到过的数据。此时说明你是幻读了。</p>
-<p>幻读和不可重复读所不同的是不可重复读查询的都是同一个数据项，而幻读针对的是一批数据整体（比如数据的个数）。</p>
-<h1 id="Mysql的存储引擎以及区别"><a href="#Mysql的存储引擎以及区别" class="headerlink" title="Mysql的存储引擎以及区别"></a>Mysql的存储引擎以及区别</h1><p>Mysql默认支持九种存储引擎（数据用各种不同的技术存储在文件或内存中。这些技术中的每一种技术都使用不同的存储机制、索引技巧、锁定水平并且最终提供广泛的不同的功能和能力。通过选择不同的技术，你能够获得额外的速度或者功能，从而改善你的应用的整体功能。）</p>
-<ol>
-<li>MyISAM：适合读密集的表<ol>
-<li>不支持行锁(MyISAM只有表锁)，读取时对需要读到的所有表加锁，写入时则对表加排他锁；MyISAM表进行读操作时，它不会阻塞其他用户对同一表的读请求，但会阻塞对同一表的写操作；而对MyISAM表的写操作，则会阻塞其他用户对同一表的读和写操作。</li>
-<li>不支持事务</li>
-<li>不支持外键</li>
-<li>不支持崩溃后的安全恢复</li>
-<li>在表有读取查询的同时，支持往表中插入新记录</li>
-<li>支持BLOB和TEXT的前500个字符索引，支持全文索引和空间索引</li>
-<li>支持延迟更新索引，极大地提升了写入性能</li>
-<li>对于不会进行修改的表，支持压缩表，极大地减少了磁盘空间的占用</li>
-<li>存储表的总行数，执行select count(*) from table时只要简单的读出保存好的行数即可</li>
-<li>采用非聚集索引，索引文件的数据域存储指向数据文件的指针。</li>
-</ol>
-</li>
-<li>InnoDB：InnoDB是MySQL的默认数据库引擎（5.5版之后），适合写密集的表<ol>
-<li>支持行锁，采用MVCC来支持高并发，有可能死锁</li>
-<li>支持事务</li>
-<li>支持外键</li>
-<li>支持崩溃后的安全恢复</li>
-<li>不支持全文索引</li>
-<li>不存储表的总行数，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行。注意的是，当count(*)语句包含 where条件时，两种表的操作是一样的</li>
-<li>主键索引采用聚集索引（索引的数据域存储数据文件本身），辅索引的数据域存储主键的值；因此从辅索引查找数据，需要先通过辅索引找到主键值，再访问主键索引；最好使用自增主键，防止插入数据时，为维持B+树结构，文件的大调整。</li>
-<li>DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除</li>
-<li>对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引更好和更快的auto_increment处理</li>
-</ol>
-</li>
-</ol>
-<h1 id="B-索引和hash索引"><a href="#B-索引和hash索引" class="headerlink" title="B+索引和hash索引"></a>B+索引和hash索引</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20181107184452575.png" alt=""></p>
-<p>在MySQL中，只有HEAP/MEMORY引擎表才能显式支持哈希索引（NDB也支持，但这个不常用），InnoDB引擎的自适应哈希索引（adaptive hash index）不在此列，因为这不是创建索引时可指定的。</p>
-<ul>
-<li>如果是等值查询，那么哈希索引明显有绝对优势，因为只需要经过一次算法即可找到相应的键值；当然了，这个前提是，键值都是唯一的。如果键值不是唯一的，就需要先找到该键所在位置，然后再根据链表往后扫描，直到找到相应的数据；</li>
-<li>如果是范围查询检索，这时候哈希索引就毫无用武之地了 ，因为原先是有序的键值，经过哈希算法后，有可能变成不连续的了，就没办法再利用索引完成范围查询检索；</li>
-<li>同理， 哈希索引也没办法利用索引完成排序，以及like ‘xxx%’ 这样的部分模糊查询（这种部分模糊查询，其实本质上也是范围查询）；</li>
-<li>哈希索引也不支持多列联合索引的最左匹配规则；</li>
-<li>B+树索引的关键字检索效率比较平均，不像B树那样波动幅度大， 在有大量重复键值情况下，哈希索引的效率也是极低的，因为存在所谓的哈希碰撞问题 。</li>
-</ul>
-<h1 id="索引的优缺点，什么时候使用索引，什么时候不能使用索引"><a href="#索引的优缺点，什么时候使用索引，什么时候不能使用索引" class="headerlink" title="索引的优缺点，什么时候使用索引，什么时候不能使用索引"></a>索引的优缺点，什么时候使用索引，什么时候不能使用索引</h1><ul>
-<li>索引最大的好处是提高查询速度</li>
-<li>缺点是更新数据时效率低，因为要同时更新索引</li>
-<li>对数据进行频繁查询进建立索引，如果要频繁更改数据不建议使用索引</li>
-</ul>
-<h1 id="InnoDB索引和MyISAM索引的区别"><a href="#InnoDB索引和MyISAM索引的区别" class="headerlink" title="InnoDB索引和MyISAM索引的区别"></a><strong>InnoDB索引</strong>和<strong>MyISAM索引</strong>的区别</h1><p>InnoDB的数据文件本身就是主索引文件。而MyISAM的主索引和数据是分开的。</p>
-<p>InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别。</p>
-<h1 id="索引的底层实现（B-树，为何不采用红黑树，B树）重点"><a href="#索引的底层实现（B-树，为何不采用红黑树，B树）重点" class="headerlink" title="索引的底层实现（B+树，为何不采用红黑树，B树）重点"></a>索引的底层实现（B+树，为何不采用红黑树，B树）重点</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">树</th>
-<th style="text-align:center">区别</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">红黑树</td>
-<td style="text-align:center">增加，删除，红黑树会进行频繁的调整，来保证红黑树的性质，浪费时间</td>
-</tr>
-<tr>
-<td style="text-align:center">B树也就是B-树</td>
-<td style="text-align:center">B树，查询性能不稳定，查询结果高度不致，每个结点保存指向真实数据的指针，相比B+树每一层每屋存储的元素更多，显得更高一点。</td>
-</tr>
-<tr>
-<td style="text-align:center">B+树</td>
-<td style="text-align:center">B+树相比较于另外两种树,显得更矮更宽，查询层次更浅</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h1 id="为什么使用B-树"><a href="#为什么使用B-树" class="headerlink" title="为什么使用B+树"></a>为什么使用B+树</h1><ol>
-<li>B+树是多路平衡查找树（B-Tree）的变种（Plus版本），多路绝对平衡查找树，他拥有B-树的优势</li>
-<li>B+树的扫库扫表能力更强。</li>
-<li>B+树的磁盘读写能力更强。</li>
-<li>B+树的排序能力更强。</li>
-<li>B+树的查询效率更加稳定（仁者见仁，智者见智）</li>
-</ol>
-<h1 id="Sql的优化"><a href="#Sql的优化" class="headerlink" title="Sql的优化"></a>Sql的优化</h1><ol>
-<li>sql尽量使用索引，而且查询要走索引</li>
-<li>对sql语句优化<ul>
-<li>子查询变成left join</li>
-<li>limit 分布优化，先利用ID定位，再分页</li>
-<li>or条件优化，多个or条件可以用union all对结果进行合并（union all结果可能重复）</li>
-<li>不必要的排序</li>
-<li>where代替having,having 检索完所有记录，才进行过滤</li>
-<li>避免嵌套查询</li>
-<li>对多个字段进行等值查询时，联合索引</li>
-</ul>
-</li>
-</ol>
-<h1 id="索引最左前缀问题"><a href="#索引最左前缀问题" class="headerlink" title="索引最左前缀问题"></a>索引最左前缀问题</h1><p>假设你在表的state、city和zip数据列上建立了复合索引。索引中的数据行按照state/city/zip次序排列，因此它们也会自动地按照state/city/zip次序排列。这意味着，即使你在查询中只指定了state值，或者指定state和city值，MySQL也可以使用这个索引。因此，这个索引可以被用于搜索如下所示的数据列组合：state/city/zip；state/city；state。</p>
-<p>MySQL不能利用这个索引来搜索没有包含在最左前缀的内容。例如，如果你按照city或zip来搜索，<br>就不会使用到这个索引。如果你搜索给定的state和具体的ZIP代码（索引的1和3列），该索引也是不能用于这种组合值的，尽管MySQL可以利用索引来查找匹配的state从而缩小搜索的范围。</p>
-<p>explain命令的结果需要考虑属性type：ref就是使用了索引，index是对所有索引树进行扫描，而all是对整个磁盘的数据进行全表扫描。</p>
-<h1 id="索引分类及索引失效条件"><a href="#索引分类及索引失效条件" class="headerlink" title="索引分类及索引失效条件"></a>索引分类及索引失效条件</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">索引类型</th>
-<th style="text-align:center">概念</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">普通索引</td>
-<td style="text-align:center">最基本的索引，没有任何限制</td>
-</tr>
-<tr>
-<td style="text-align:center">唯一索引</td>
-<td style="text-align:center">与”普通索引”类似，不同的就是：索引列的值必须唯一，但允许有空值。</td>
-</tr>
-<tr>
-<td style="text-align:center">主键索引</td>
-<td style="text-align:center">它是一种特殊的唯一索引，不允许有空值。</td>
-</tr>
-<tr>
-<td style="text-align:center">全文索引</td>
-<td style="text-align:center">针对较大的数据，生成全文索引很耗时间空间。</td>
-</tr>
-<tr>
-<td style="text-align:center">组合索引</td>
-<td style="text-align:center">为了更多的提高mysql效率可建立组合索引，遵循”最左前缀“原则</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>失效条件：</p>
-<ol>
-<li>如果条件中有or，即使其中有条件带索引也不会使用</li>
-<li>对于多列索引，不是使用的第一部分，则不会使用索引</li>
-<li>like查询是以%开头</li>
-<li>如果列类型是字符串，那一定要在条件中将数据使用引号引用起来,否则不使用索引</li>
-<li>如果mysql估计使用全表扫描要比使用索引快,则不使用索引</li>
-<li>where中索引列有运算</li>
-<li>where中索引列使用了函数（+，-，*，/，! ）</li>
-<li>当变量采用的是times变量，而表的字段采用的是date变量时</li>
-<li>隐式类型转换导致索引失效</li>
-</ol>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法Tricks</title>
-    <url>/2022/11/22/%E7%AE%97%E6%B3%95Tricks/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在刷题过程中遇到的一些常用的算法，便于后续复习。</p>
-<a id="more"></a>
-<h1 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h1><h2 id="短除法"><a href="#短除法" class="headerlink" title="短除法"></a>短除法</h2><p>思路：逐步找出两个数的所有公约数，再将这些公约数累乘起来，就能得到最大公约数。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    t = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">while</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            t *= i</span><br><span class="line">            m /= i</span><br><span class="line">            n /= i</span><br><span class="line">    <span class="keyword">return</span> t</span><br></pre></td></tr></table></figure>
-<h2 id="欧几里得算法（辗转相除法）"><a href="#欧几里得算法（辗转相除法）" class="headerlink" title="欧几里得算法（辗转相除法）"></a>欧几里得算法（辗转相除法）</h2><p>思路：以除数和余数反复做除法运算，当余数为 0 时，取当前算式除数为最大公约数。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 非递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">while</span> n:</span><br><span class="line">        m, n = n, m % n</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> m</span><br><span class="line">    <span class="keyword">return</span> gcd(n, m % n)</span><br></pre></td></tr></table></figure>
-<h2 id="更相减损术"><a href="#更相减损术" class="headerlink" title="更相减损术"></a>更相减损术</h2><p>思路：任意给定两个正整数；判断它们是否都是偶数。若是，则用2约简。以较大的数减较小的数，接着把所得的差与较小的数比较，并以大数减小数。继续这个操作，直到所得的减数和差相等为止。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        m //= <span class="number">2</span></span><br><span class="line">        n //= <span class="number">2</span></span><br><span class="line">    r = m-n</span><br><span class="line">    <span class="keyword">while</span> r != n:</span><br><span class="line">        m = <span class="built_in">max</span>(r, n)</span><br><span class="line">        n = <span class="built_in">min</span>(r, n)</span><br><span class="line">        r = m - n</span><br><span class="line">    <span class="keyword">return</span> n * <span class="number">2</span>**count</span><br></pre></td></tr></table></figure>
-<h2 id="穷举法"><a href="#穷举法" class="headerlink" title="穷举法"></a>穷举法</h2><p>思路：最大公约数肯定在1~两者之间最小数之间，只需要从大到小穷举即可。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h2 id="Stein算法"><a href="#Stein算法" class="headerlink" title="Stein算法"></a>Stein算法</h2><p>思路：欧几里德算法是计算两个数最大公约数的传统算法，无论从理论还是从实际效率上都是很好的。但当出现大素数时，欧几里德法则存在较大的缺陷。计算 $\mbox{gcd}(m,n)=\mbox{gcd}(m−n,n)$ 的时候，实际上在描述的是 $\mbox{gcd}(2b,a+b)$ 。可以注意到它的第二参数本来就是一个奇数，因此按Stein算法可以提前将第一个参数里面的2除掉变成 $\mbox{gcd}(b,a+b)$ 。再考虑第二参数比第一参数大，相减一下，立即就可以得到 $\mbox{gcd}(m,n)=\mbox{gcd}(a,b)=\mbox{gcd}(\frac{m+n}{2},\frac{m−n}{2})$ 。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> a &lt; b:</span><br><span class="line">        a, b = b, a</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> == b:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * gcd(a//<span class="number">2</span>, b//<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a//<span class="number">2</span>, b)</span><br><span class="line">    <span class="keyword">if</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a, b//<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 传统Stein算法</span></span><br><span class="line">    <span class="keyword">return</span> gcd(a-b, b)</span><br><span class="line">    <span class="comment"># 改进Stein算法（某些情况下可以降低复杂度）</span></span><br><span class="line">    <span class="comment"># return gcd((a+b)//2, (a-b)//2)</span></span><br></pre></td></tr></table></figure>
-<h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><p> 并查集是一种树型的数据结构，用于处理一些不相交集合（disjoint sets）的合并及查询问题。并查集最常用的操作是查找和合并。</p>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>初始时，每个元素都位于一个单独的集合，表示为一棵只有根节点的树。方便起见，我们将根节点的父亲设为自己。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br></pre></td></tr></table></figure>
-<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>我们需要沿着树向上移动，直至找到根节点。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x <span class="keyword">if</span> self.pa[x] == x <span class="keyword">else</span> self.find(self.pa[x])</span><br></pre></td></tr></table></figure>
-<h3 id="路径压缩"><a href="#路径压缩" class="headerlink" title="路径压缩"></a>路径压缩</h3><p>查找过程中经过的每个元素都属于该集合，我们可以将其直接连到根节点以加快后续查询。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> self.pa[x] != x:</span><br><span class="line">        self.pa[x] = self.find(self.pa[x])</span><br><span class="line">        <span class="keyword">return</span> self.pa[x]</span><br></pre></td></tr></table></figure>
-<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>要合并两棵树，我们只需要将一棵树的根节点连到另一棵树的根节点。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">    self.pa[self.find(x)] = self.find(y)</span><br></pre></td></tr></table></figure>
-<h3 id="启发式合并"><a href="#启发式合并" class="headerlink" title="启发式合并"></a>启发式合并</h3><p>合并时，选择哪棵树的根节点作为新树的根节点会影响未来操作的复杂度。我们可以将节点较少或深度较小的树连到另一棵，以免发生退化。按节点数合并的参考实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br><span class="line">        self.size = [<span class="number">1</span>] * size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">        x, y = self.find(x), self.find(y)</span><br><span class="line">        <span class="keyword">if</span> x == y:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> self.size[x] &lt; self.size[y]:</span><br><span class="line">            x, y = y, x</span><br><span class="line">        self.pa[y] = x</span><br><span class="line">        self.size[x] += self.size[y]</span><br></pre></td></tr></table></figure>
-<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><p>字符串A是否为字符串B的子串？如果是，出现在B的什么位置？这个问题就是字符串匹配问题。字符串A称为模式串，字符串B称为主串。</p>
-<h2 id="暴力匹配"><a href="#暴力匹配" class="headerlink" title="暴力匹配"></a>暴力匹配</h2><p>从主串的第一个字符开始与模式串的第一个字符比较，如果相同则模式串往后移动一个位置和主串的下一个位置再比较，如果不同，则主串移动到下一个字符，模式串移动到第一个字符，开始重新比较，以此类推。这种方法很简单，但效率很低，假设主串的长度为m，模式串的长度为n，最差的情况是主串移动m-n+1次才能匹配到，时间复杂度为O(mn)。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; m <span class="keyword">and</span> j &lt; n:</span><br><span class="line">        <span class="keyword">if</span> str1[i] == str2[j]:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = i - j + <span class="number">1</span></span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> j == n:</span><br><span class="line">        <span class="keyword">return</span> i - j</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h2 id="KMP算法-1"><a href="#KMP算法-1" class="headerlink" title="KMP算法"></a>KMP算法</h2><p>KMP的核心思想是：某个位置匹配失败时，移动到这个位置之前的字符串的最长前缀的下一个字符继续匹配。简单来说，就是再已经匹配的模式串中找出最长的前缀和后缀相等的情况，然后将模式串从这个新位置开始匹配。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216211311.png" alt=""></p>
-<p>拿上图而言，目前能够匹配到的模式串为<code>ABCAB</code>，下次应该开始匹配的地方不是从头开始匹配，而是应该从<code>ABCAB</code>中的最长前后缀开始匹配。因为<code>ABCAB</code>的前缀和后缀（不包含字符串本身）分别为{<code>A</code>,<code>AB</code>,<code>ABC</code>,<code>ABCA</code>}和{<code>B</code>,<code>AB</code>,<code>CAB</code>,<code>BCAB</code>}，最长的前缀应该是<code>AB</code>。</p>
-<h3 id="next数组"><a href="#next数组" class="headerlink" title="next数组"></a>next数组</h3><p>接下来的问题就是如何计算这个最长前缀的长度。最朴素的方式就是从前往后和从后往前每次增加一个长度截取字符串，然后看前缀和后缀是否相同，但是计算量太大。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216215017.png" alt=""></p>
-<p>先看上图左边部分，箭头所指蓝色位置之前的字符串的最长前缀是<code>AB</code>，长度是2，我们对比这个最长前缀的下一个字符<code>A</code>和蓝色位置<code>A</code>相同，那么整个字符串的前后缀就变成了<code>ABA</code>，长度为2+1=3。仔细想想看：蓝色的<code>A</code>之前是最长后缀，白色的<code>A</code>之前是最长前缀，而这个最长前后缀是相同的，都是<code>AB</code>，那么如果第三个字符也相同，这三个字符连起来不是也相同吗？长度就是2+1=3！也就是说，如果要计算到某个位置字符串的最长前缀长度，我们只需要将这个字符和它之前字符串的最长前缀的下一个字符对比，如果相同，则它的最长前缀长度就是前面字符串的最长前缀长度+1。</p>
-<p>如果不相同呢？看上图右边部分，蓝色的<code>A</code>不等于最长前缀的下一个字符<code>C</code>，我们应该往前回溯，字符<code>C</code>前面的字符串<code>AB</code>的最长前缀长度是0（即后面代码里的k=next[k]），我们就用这个前缀的下一个字符，即第1个字符<code>A</code>和当前字符比较，如果相同，则整个字符串的最长前缀长度为0+1，如果不同，则继续往前回溯，直到第一个字符。也就是，不断往前回溯，用前面字符串的最长前缀的下一个字符和当前字符对比。</p>
-<p>注意：next数组保存的不是最长前缀的长度，而是对应的下标，也就是长度-1，如果长度是0，则保存-1。</p>
-<p>代码实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_next</span>(<span class="params">p</span>):</span></span><br><span class="line">    n = <span class="built_in">len</span>(p)</span><br><span class="line">    <span class="built_in">next</span> = [<span class="number">0</span>] * n</span><br><span class="line">    <span class="built_in">next</span>[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">    k = -<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        <span class="comment"># 当前字符和最长前缀下一个字符不同，则往前回溯；因为next[k]就是用来记录子串的最长公共前后缀的尾坐标</span></span><br><span class="line">        <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> p[i] != p[k + <span class="number">1</span>]:</span><br><span class="line">            k = <span class="built_in">next</span>[k]</span><br><span class="line">        <span class="comment"># 当前字符和当前字符前面字符串的最长前缀的下一个字符相同，则 k + 1</span></span><br><span class="line">        <span class="keyword">if</span> p[i] == p[k + <span class="number">1</span>]:</span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">        <span class="built_in">next</span>[i] = k</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">next</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    index = -<span class="number">1</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    <span class="keyword">if</span> n &lt;= m:</span><br><span class="line">        <span class="built_in">next</span> = get_next(str2)</span><br><span class="line">        k = -<span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> str1[i] != str2[k + <span class="number">1</span>]:</span><br><span class="line">                k = <span class="built_in">next</span>[k]</span><br><span class="line">            <span class="keyword">if</span> str1[i] == str2[k + <span class="number">1</span>]:</span><br><span class="line">                k += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> k == n-<span class="number">1</span>:</span><br><span class="line">                    index = i - n + <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> index</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>刷题</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>毕设知识点总结</title>
     <url>/2021/04/06/%E6%AF%95%E8%AE%BE%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>毕设的项目也算是做完了，总结一下项目过程中遇见的一些问题和解决方案，避免以后再次踩坑。</p>
@@ -817,6 +763,60 @@
       <tags>
         <tag>总结</tag>
         <tag>毕设</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法Tricks</title>
+    <url>/2022/11/22/%E7%AE%97%E6%B3%95Tricks/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在刷题过程中遇到的一些常用的算法，便于后续复习。</p>
+<a id="more"></a>
+<h1 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h1><h2 id="短除法"><a href="#短除法" class="headerlink" title="短除法"></a>短除法</h2><p>思路：逐步找出两个数的所有公约数，再将这些公约数累乘起来，就能得到最大公约数。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    t = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">while</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            t *= i</span><br><span class="line">            m /= i</span><br><span class="line">            n /= i</span><br><span class="line">    <span class="keyword">return</span> t</span><br></pre></td></tr></table></figure>
+<h2 id="欧几里得算法（辗转相除法）"><a href="#欧几里得算法（辗转相除法）" class="headerlink" title="欧几里得算法（辗转相除法）"></a>欧几里得算法（辗转相除法）</h2><p>思路：以除数和余数反复做除法运算，当余数为 0 时，取当前算式除数为最大公约数。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 非递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">while</span> n:</span><br><span class="line">        m, n = n, m % n</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> m</span><br><span class="line">    <span class="keyword">return</span> gcd(n, m % n)</span><br></pre></td></tr></table></figure>
+<h2 id="更相减损术"><a href="#更相减损术" class="headerlink" title="更相减损术"></a>更相减损术</h2><p>思路：任意给定两个正整数；判断它们是否都是偶数。若是，则用2约简。以较大的数减较小的数，接着把所得的差与较小的数比较，并以大数减小数。继续这个操作，直到所得的减数和差相等为止。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        m //= <span class="number">2</span></span><br><span class="line">        n //= <span class="number">2</span></span><br><span class="line">    r = m-n</span><br><span class="line">    <span class="keyword">while</span> r != n:</span><br><span class="line">        m = <span class="built_in">max</span>(r, n)</span><br><span class="line">        n = <span class="built_in">min</span>(r, n)</span><br><span class="line">        r = m - n</span><br><span class="line">    <span class="keyword">return</span> n * <span class="number">2</span>**count</span><br></pre></td></tr></table></figure>
+<h2 id="穷举法"><a href="#穷举法" class="headerlink" title="穷举法"></a>穷举法</h2><p>思路：最大公约数肯定在1~两者之间最小数之间，只需要从大到小穷举即可。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="Stein算法"><a href="#Stein算法" class="headerlink" title="Stein算法"></a>Stein算法</h2><p>思路：欧几里德算法是计算两个数最大公约数的传统算法，无论从理论还是从实际效率上都是很好的。但当出现大素数时，欧几里德法则存在较大的缺陷。计算 $\mbox{gcd}(m,n)=\mbox{gcd}(m−n,n)$ 的时候，实际上在描述的是 $\mbox{gcd}(2b,a+b)$ 。可以注意到它的第二参数本来就是一个奇数，因此按Stein算法可以提前将第一个参数里面的2除掉变成 $\mbox{gcd}(b,a+b)$ 。再考虑第二参数比第一参数大，相减一下，立即就可以得到 $\mbox{gcd}(m,n)=\mbox{gcd}(a,b)=\mbox{gcd}(\frac{m+n}{2},\frac{m−n}{2})$ 。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> a &lt; b:</span><br><span class="line">        a, b = b, a</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> == b:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * gcd(a//<span class="number">2</span>, b//<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a//<span class="number">2</span>, b)</span><br><span class="line">    <span class="keyword">if</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a, b//<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 传统Stein算法</span></span><br><span class="line">    <span class="keyword">return</span> gcd(a-b, b)</span><br><span class="line">    <span class="comment"># 改进Stein算法（某些情况下可以降低复杂度）</span></span><br><span class="line">    <span class="comment"># return gcd((a+b)//2, (a-b)//2)</span></span><br></pre></td></tr></table></figure>
+<h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><p> 并查集是一种树型的数据结构，用于处理一些不相交集合（disjoint sets）的合并及查询问题。并查集最常用的操作是查找和合并。</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>初始时，每个元素都位于一个单独的集合，表示为一棵只有根节点的树。方便起见，我们将根节点的父亲设为自己。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br></pre></td></tr></table></figure>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>我们需要沿着树向上移动，直至找到根节点。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x <span class="keyword">if</span> self.pa[x] == x <span class="keyword">else</span> self.find(self.pa[x])</span><br></pre></td></tr></table></figure>
+<h3 id="路径压缩"><a href="#路径压缩" class="headerlink" title="路径压缩"></a>路径压缩</h3><p>查找过程中经过的每个元素都属于该集合，我们可以将其直接连到根节点以加快后续查询。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> self.pa[x] != x:</span><br><span class="line">        self.pa[x] = self.find(self.pa[x])</span><br><span class="line">        <span class="keyword">return</span> self.pa[x]</span><br></pre></td></tr></table></figure>
+<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>要合并两棵树，我们只需要将一棵树的根节点连到另一棵树的根节点。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">    self.pa[self.find(x)] = self.find(y)</span><br></pre></td></tr></table></figure>
+<h3 id="启发式合并"><a href="#启发式合并" class="headerlink" title="启发式合并"></a>启发式合并</h3><p>合并时，选择哪棵树的根节点作为新树的根节点会影响未来操作的复杂度。我们可以将节点较少或深度较小的树连到另一棵，以免发生退化。按节点数合并的参考实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br><span class="line">        self.size = [<span class="number">1</span>] * size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">        x, y = self.find(x), self.find(y)</span><br><span class="line">        <span class="keyword">if</span> x == y:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> self.size[x] &lt; self.size[y]:</span><br><span class="line">            x, y = y, x</span><br><span class="line">        self.pa[y] = x</span><br><span class="line">        self.size[x] += self.size[y]</span><br></pre></td></tr></table></figure>
+<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><p>字符串A是否为字符串B的子串？如果是，出现在B的什么位置？这个问题就是字符串匹配问题。字符串A称为模式串，字符串B称为主串。</p>
+<h2 id="暴力匹配"><a href="#暴力匹配" class="headerlink" title="暴力匹配"></a>暴力匹配</h2><p>从主串的第一个字符开始与模式串的第一个字符比较，如果相同则模式串往后移动一个位置和主串的下一个位置再比较，如果不同，则主串移动到下一个字符，模式串移动到第一个字符，开始重新比较，以此类推。这种方法很简单，但效率很低，假设主串的长度为m，模式串的长度为n，最差的情况是主串移动m-n+1次才能匹配到，时间复杂度为O(mn)。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; m <span class="keyword">and</span> j &lt; n:</span><br><span class="line">        <span class="keyword">if</span> str1[i] == str2[j]:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = i - j + <span class="number">1</span></span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> j == n:</span><br><span class="line">        <span class="keyword">return</span> i - j</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="KMP算法-1"><a href="#KMP算法-1" class="headerlink" title="KMP算法"></a>KMP算法</h2><p>KMP的核心思想是：某个位置匹配失败时，移动到这个位置之前的字符串的最长前缀的下一个字符继续匹配。简单来说，就是再已经匹配的模式串中找出最长的前缀和后缀相等的情况，然后将模式串从这个新位置开始匹配。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216211311.png" alt=""></p>
+<p>拿上图而言，目前能够匹配到的模式串为<code>ABCAB</code>，下次应该开始匹配的地方不是从头开始匹配，而是应该从<code>ABCAB</code>中的最长前后缀开始匹配。因为<code>ABCAB</code>的前缀和后缀（不包含字符串本身）分别为{<code>A</code>,<code>AB</code>,<code>ABC</code>,<code>ABCA</code>}和{<code>B</code>,<code>AB</code>,<code>CAB</code>,<code>BCAB</code>}，最长的前缀应该是<code>AB</code>。</p>
+<h3 id="next数组"><a href="#next数组" class="headerlink" title="next数组"></a>next数组</h3><p>接下来的问题就是如何计算这个最长前缀的长度。最朴素的方式就是从前往后和从后往前每次增加一个长度截取字符串，然后看前缀和后缀是否相同，但是计算量太大。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216215017.png" alt=""></p>
+<p>先看上图左边部分，箭头所指蓝色位置之前的字符串的最长前缀是<code>AB</code>，长度是2，我们对比这个最长前缀的下一个字符<code>A</code>和蓝色位置<code>A</code>相同，那么整个字符串的前后缀就变成了<code>ABA</code>，长度为2+1=3。仔细想想看：蓝色的<code>A</code>之前是最长后缀，白色的<code>A</code>之前是最长前缀，而这个最长前后缀是相同的，都是<code>AB</code>，那么如果第三个字符也相同，这三个字符连起来不是也相同吗？长度就是2+1=3！也就是说，如果要计算到某个位置字符串的最长前缀长度，我们只需要将这个字符和它之前字符串的最长前缀的下一个字符对比，如果相同，则它的最长前缀长度就是前面字符串的最长前缀长度+1。</p>
+<p>如果不相同呢？看上图右边部分，蓝色的<code>A</code>不等于最长前缀的下一个字符<code>C</code>，我们应该往前回溯，字符<code>C</code>前面的字符串<code>AB</code>的最长前缀长度是0（即后面代码里的k=next[k]），我们就用这个前缀的下一个字符，即第1个字符<code>A</code>和当前字符比较，如果相同，则整个字符串的最长前缀长度为0+1，如果不同，则继续往前回溯，直到第一个字符。也就是，不断往前回溯，用前面字符串的最长前缀的下一个字符和当前字符对比。</p>
+<p>注意：next数组保存的不是最长前缀的长度，而是对应的下标，也就是长度-1，如果长度是0，则保存-1。</p>
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_next</span>(<span class="params">p</span>):</span></span><br><span class="line">    n = <span class="built_in">len</span>(p)</span><br><span class="line">    <span class="built_in">next</span> = [<span class="number">0</span>] * n</span><br><span class="line">    <span class="built_in">next</span>[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">    k = -<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        <span class="comment"># 当前字符和最长前缀下一个字符不同，则往前回溯；因为next[k]就是用来记录子串的最长公共前后缀的尾坐标</span></span><br><span class="line">        <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> p[i] != p[k + <span class="number">1</span>]:</span><br><span class="line">            k = <span class="built_in">next</span>[k]</span><br><span class="line">        <span class="comment"># 当前字符和当前字符前面字符串的最长前缀的下一个字符相同，则 k + 1</span></span><br><span class="line">        <span class="keyword">if</span> p[i] == p[k + <span class="number">1</span>]:</span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">        <span class="built_in">next</span>[i] = k</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">next</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    index = -<span class="number">1</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    <span class="keyword">if</span> n &lt;= m:</span><br><span class="line">        <span class="built_in">next</span> = get_next(str2)</span><br><span class="line">        k = -<span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> str1[i] != str2[k + <span class="number">1</span>]:</span><br><span class="line">                k = <span class="built_in">next</span>[k]</span><br><span class="line">            <span class="keyword">if</span> str1[i] == str2[k + <span class="number">1</span>]:</span><br><span class="line">                k += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> k == n-<span class="number">1</span>:</span><br><span class="line">                    index = i - n + <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> index</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>刷题</tag>
       </tags>
   </entry>
   <entry>
@@ -2000,6 +2000,28 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202302221943064.png" alt=""></p>
 <p>基于Delaunay的插值算法耗时较长，且无需在每个迭代步骤中更新三角网格。因此，我们引入基于余弦相似度的评估方法来决定是否重新选择S并重建三角形网格。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202302221945395.png" alt=""></p>
+<h1 id="Transfer-Learning-Enhanced-DeepONet-for-Long-Time-Prediction-of-Evolution-Equations"><a href="#Transfer-Learning-Enhanced-DeepONet-for-Long-Time-Prediction-of-Evolution-Equations" class="headerlink" title="Transfer Learning Enhanced DeepONet for Long-Time Prediction of Evolution Equations"></a>Transfer Learning Enhanced DeepONet for Long-Time Prediction of Evolution Equations</h1><h2 id="Abstract-18"><a href="#Abstract-18" class="headerlink" title="Abstract"></a>Abstract</h2><p>深度算子网络(DeepONet)在各种学习任务中取得了巨大的成功，包括学习偏微分方程的解算子。特别地，它提供了一种在有限时间范围内预测演化方程的有效方法。然而，普通的DeepONet在长期预测中存在稳定性退化的问题。本文提出了一种迁移学习辅助方法增强DeepONet的稳定性。我们的想法是使用迁移学习来按顺序更新DeepONet，作为在不同时间框架中学习的传播体的替代品。进化中的DeepONet可以更好地跟踪进化方程的不同复杂性，而只需要通过对一小部分操作网络进行有效训练来进行更新。通过系统实验，我们证明了该方法不仅提高了DeepONet的长期精度，同时保持了相似的计算成本，而且大幅减少了训练集的样本量。</p>
+<h2 id="Introduction-21"><a href="#Introduction-21" class="headerlink" title="Introduction"></a>Introduction</h2><p>利用深度学习方法求解偏微分方程近年来受到广泛关注。由于神经网络的万能逼近定理，用神经网络来近似偏微分方程的解是很自然的。最近提出了许多流行的基于神经网络的方法，如Deep Ritz Method，Deep Galerkin Method，Physics Informed Neural Networks(PINNs) 和弱对抗网络(Zang et al. 2020)。尽管这些方法在求解各种偏微分方程方面取得了巨大成功，但如果要为同一偏微分方程寻找对应于不同初始条件(IC)、边界条件(BC)或参数的解，则需要重新训练神经网络。相反，最近提出的参数算子学习方法，如DeepONet和FNO可以在不重新训练网络的情况下学习不同BC或IC对应的PDE。然而，在前面提到的算子神经网络中有一个重要的限制。也就是说，它们本质上是监督学习，通常需要求解大量的偏微分方程来形成训练数据，这可能是非常广泛的，特别是当感兴趣的偏微分方程位于高维空间时。为了克服这个问题，Wang等人提出了物理信息的DeepONet，它只使用物理信息(例如PDE的支配律)来构建损失函数，从而使DeepONet自监督。然而，在实践中，物理信息DeepONet与普通版本相比更难训练，因为精确的微分算子作用于网络，并使收敛行为高度依赖于潜在的物理问题。</p>
+<p>最近DeepONet也被应用于进化方程的传播子的学习。基本思想是使用DeepONets在短时间间隔内学习PDE的解算符，这取决于(随机)初始条件的集合。PDE在以后的时间的解可以计算为训练有素的网络算子的递归动作在先前的步骤中获得的解决方案。然而，从长远来看，至少有两个原因会导致解的近似精度下降。首先，由于近似误差的存在，经过训练的DeepONet作为代理传播器，即使精确传播器是非可膨胀的，也可能是可膨胀的，这导致了近似误差在时间上的累积，从而难以长期预测解。其次，在偏微分方程的时间演化过程中，传播器输入和输出的函数可以随时间变化，即使在固定时隙内传播器的形式可能保持不变(例如，当动态是自主的)。以扩散方程为例，我们观察到传播子或半群的范围空间中的函数比定义域中的函数平滑得多，因此，后一时刻的解比前一时刻的解越来越正则。此外，一些演化方程可能在较长的时间范围内发展出各种复杂性，如湍流和尺度分离。对于这些方程，迭代通常只在单一(短)时间框架内使用有限初始函数集合训练的DeepONet代理可能无法在长时间内捕获正确的正则性或解的复杂性。</p>
+<p>迁移学习是一类重要的机器学习技术，它将一个用于某一任务的神经网络用于另一个用于不同相关任务的新神经网络。其思想是，通过训练前一种神经网络获得的某个问题的知识或重要特征可以转移到其他问题上。迁移学习已广泛应用于图像识别，以及最近的。据我们所知，目前的工作是第一个将迁移学习应用于进化偏微分方程的学习解算子的工作。</p>
+<h3 id="Related-works-1"><a href="#Related-works-1" class="headerlink" title="Related works"></a>Related works</h3><p>迁移学习之前已经与物理神经网络相结合，用于解决来自不同领域的偏微分方程问题，包括裂缝的相场建模，湍流的超分辨率，多保真数据上的CNN训练(例如细网格和粗网格上偏微分方程解的多分辨率图像)等。迁移学习也被应用于复杂几何上定义的pde的学习解的领域适应方法。最近的论文提出了一种一次性迁移学习策略，该策略冻结了预训练PINN的隐藏层，并将用于求解新微分方程的训练神经网络减少到仅优化最后一层(线性)。这种方法消除了重新训练整个网络参数的需要，同时仍然通过在最后一层调整一小部分参数来产生高质量的解决方案。本文将这种迁移学习思想与DeepONet相结合，学习进化方程的传播子，以预测长时间进化。</p>
+<p>虽然我们正在完成当前的论文，但我们注意到最近的预印本，其中迁移学习与DeepONet一起用于在条件移位下学习PDE。其目的是用一个源域的足够标记数据训练一个源PDE模型，并将学习到的参数转移到一个标记数据有限的目标域。这里开发的技术主要用于将在PDE系统上受过训练的解决方案算子的知识从一个领域转移到另一个领域。与其不同的是，我们利用迁移学习来连续调优通过物理感知的DeepONet学习的传播体代理模型，以便调优的算子网络可以自适应地跟踪携带进化输入和输出的进化传播体。实验证明，该方法对于学习偏微分方程的长期演化具有更高的准确性和鲁棒性。</p>
+<h2 id="Numerical-method"><a href="#Numerical-method" class="headerlink" title="Numerical method"></a>Numerical method</h2><p>考虑一般进化方程的初边值问题：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303032014921.png" alt=""></p>
+<p>在整个论文中，我们假设方程在 $\int_{\Omega_{x}}f\mathcal{L}fdx\leq 0$ 的意义上是耗散的。给定时间步长 $\Delta t$ ，我们考虑解 $f(n\Delta t,x)$ 的半离散近似 $f^{n}(x)$ 由向后定义欧拉离散化：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303032028309.png" alt=""></p>
+<p>我们的目标是近似传播子</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303032029896.png" alt=""></p>
+<p>通过算子神经网络 $\mathcal{P}_{NN}$ ，使神经网络只有一次向前传递才能实现从一个步骤到下一个步骤的时间推进解决方案，并且可以在很长的时间范围内捕获进化动态。需要指出的是，向后欧拉格式并不是时间行进的唯一选择。人们可以将其扩展到高阶时间离散化方案，如RungeKutta方法，只要选择 $\Delta t$ ，使得 $\mathcal{P}^{\Delta t}$ 是非展开算子。</p>
+<h3 id="Physics-informed-DeepONet"><a href="#Physics-informed-DeepONet" class="headerlink" title="Physics-informed DeepONet"></a>Physics-informed DeepONet</h3><p>DeepONet中输出的形式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303032100151.png" alt=""></p>
+<p>整个网络的loss：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303032100790.png" alt=""></p>
+<p>训练数据是一对对样本，获取代价太大，于是使用physics-informed DeepONet：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303032101711.png" alt=""></p>
+<h3 id="DeepONet-with-transfer-learning"><a href="#DeepONet-with-transfer-learning" class="headerlink" title="DeepONet with transfer learning"></a>DeepONet with transfer learning</h3><p>迁移学习的主要思想是在大数据集上训练神经网络，然后部分冻结并将其应用于相关但不可见的任务。我们使用迁移学习技术在预测步骤中依次纠正训练好的DeepONet：我们冻结大部分训练良好的DeepONet，仅通过拟合底层定义的相同物理信息损失(4)来重新训练分支网络最后一个隐藏层的权重PDE。</p>
+<h2 id="Theoretical-result"><a href="#Theoretical-result" class="headerlink" title="Theoretical result"></a>Theoretical result</h2><p>理论方面的证明</p>
+<h2 id="Numerical-experiments"><a href="#Numerical-experiments" class="headerlink" title="Numerical experiments"></a>Numerical experiments</h2><p>Reaction diffusion equation、Allen-Cahn and Cahn-Hilliard equations、Allen-Cahn and Cahn-Hilliard equations和Multiscale linear radiative transfer equation做了实验</p>
 ]]></content>
       <categories>
         <category>总结</category>
