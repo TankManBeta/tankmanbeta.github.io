@@ -275,6 +275,179 @@
 ]]></content>
   </entry>
   <entry>
+    <title>搭建个人博客</title>
+    <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
+<a id="more"></a>
+<h1 id="搭建个人博客"><a href="#搭建个人博客" class="headerlink" title="搭建个人博客"></a>搭建个人博客</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
+<li><p>安装<code>Git</code></p>
+</li>
+<li><p>安装<code>Nodejs</code></p>
+<p>安装完成后查看<code>node</code>版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+<p>查看<code>npm</code>包管理器版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+<p>国内安装镜像源很慢，所以可以利用<code>npm</code>安装<code>cnpm</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Hexo框架搭建博客"><a href="#Hexo框架搭建博客" class="headerlink" title="Hexo框架搭建博客"></a>Hexo框架搭建博客</h2><ol>
+<li><p>安装<code>hexo</code>框架</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
+<li><p>查看是否安装成功</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_1.png" alt="pic_1"></p>
+</li>
+<li><p><code>Hexo</code>框架初始化：选择存放博客所有内容的文件夹，命令行中输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_2.png" alt="pic_2"></p>
+</li>
+<li><p>本地启动博客</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到搭建成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_4.png" alt="pic_4"></p>
+</li>
+</ol>
+<h2 id="博客进阶"><a href="#博客进阶" class="headerlink" title="博客进阶"></a>博客进阶</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><ol>
+<li><p>命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>查看是否新建文章成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_5.png" alt="pic_5"></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
+</li>
+<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
+</li>
+</ol>
+<h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
+<li><p>新建<code>GitHub</code>仓库</p>
+<p>注：一定要以<code>username.github.io</code>创建。假如我没有用<code>tankmanbeta.github.io</code>而是用了<code>jeeby.github.io</code>，那么当我浏览器访问博客的时候会出现404错误。这里并不是没有部署成功，而是把它部署在了这里:<code>http://tankmanbeta.github.io/jeeby.github.io</code>。所以，如果想直接<code>tankmanbeta.github.io</code>访问，那么就需要和用户名保持一致。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_7.png" alt="pic_7"></p>
+</li>
+<li><p>修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>，在最后添加如下代码</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">    <span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+<p>注：2020年10月1日起，<code>GitHub</code>把<code>master</code>分支换成<code>main</code>分支，据说与种族歧视有关。</p>
+</li>
+<li><p>安装<code>Git</code>部署的插件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure></li>
+<li><p>输入以下命令，完成博客在<code>GitHub</code>上的部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<code>tankmanbeta.github.io</code>，成功访问</p>
+<p><strong>注：每次部署都需要输入<code>GitHub</code>账号密码的解决方法：修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>的<code>deploy</code>属性：（需要先设置<code>SSH-key</code>）</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="博客主题更改"><a href="#博客主题更改" class="headerlink" title="博客主题更改"></a>博客主题更改</h3><ol>
+<li><p>主题选取地址：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
+</li>
+<li><p>在博客根目录下的<code>themes</code>文件夹下克隆主题：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next</span><br></pre></td></tr></table></figure></li>
+<li><p>打开本地<code>Hexo</code>目录下文件<code>_config.yml</code>，修改<code>theme</code>属性：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">hexo-theme-next</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_8.png" alt="pic_8"></p>
+</li>
+<li><p>输入以下命令，更新博客在<code>GitHub</code>上的部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<code>tankmanbeta.github.io</code>，可以看到主题更新成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_9.png" alt="pic_9"></p>
+</li>
+</ol>
+<h3 id="Next主题切换"><a href="#Next主题切换" class="headerlink" title="Next主题切换"></a>Next主题切换</h3><ol>
+<li>打开<code>next</code>主题下的<code>_config.yml</code>文件，修改<code>theme</code>属性，将其选择成自己想要的</li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="中英文切换"><a href="#中英文切换" class="headerlink" title="中英文切换"></a>中英文切换</h3><ol>
+<li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>Site</code>属性下的<code>language</code>，将其改成<code>zh-CN</code>即可</li>
+<li>重新部署，步骤同上</li>
+<li>同理可以更改<code>title</code>、<code>author</code>等</li>
+</ol>
+<h3 id="添加标签页面"><a href="#添加标签页面" class="headerlink" title="添加标签页面"></a>添加标签页面</h3><ol>
+<li><p>在博客根目录下打开<code>cmd</code>，使用<code>hexo new page tags</code>新建一个页面</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_10.png" alt="pic_10"></p>
+</li>
+<li><p>打开新建的页面，将页面的类型设置为<code>tags</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">title: tags</span></span><br><span class="line"><span class="section">date: 2021-03-31 11:20:38</span></span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改Next主题下的<code>_config.yml</code>，将<code>tags</code>添加到<code>menu</code>属性当中</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+<li><p>重新部署，步骤同上，刷新页面后的结果</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_11.png" alt="pic_11"></p>
+</li>
+<li><p><code>home</code>、<code>categories</code>、<code>archives</code>等操作也是相同的</p>
+</li>
+</ol>
+<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><ol>
+<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+<p>安装成功：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_12.png" alt="pic_12"></p>
+</li>
+<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置（有教程说新版的<code>hexo</code>中，<code>search.xml</code>需要改成<code>search.json</code>，否则部署到服务器搜索图标不能正常显示）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search Config</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改Next主题下的<code>_config.yml</code>，修改<code>local_search</code>属性下的<code>enable</code>，将其改为<code>true</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If auto, trigger search by changing input.</span></span><br><span class="line">  <span class="comment"># If manual, trigger search by pressing enter key or search button.</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="使用外链图片"><a href="#使用外链图片" class="headerlink" title="使用外链图片"></a>使用外链图片</h3><ol>
+<li><p>注册腾讯云账号，选择对象存储</p>
+</li>
+<li><p>创建存储桶</p>
+</li>
+<li><p>创建成功之后上传文件</p>
+</li>
+<li><p>修改安全管理中的防盗链设置</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_13.png" alt="pic_13"></p>
+</li>
+<li><p>修改权限管理中的存储桶访问权限</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_14.png" alt="pic_14"></p>
+</li>
+<li><p>上传图片至存储桶，复制详情中的对象地址</p>
+</li>
+<li><p>在文章中使用外链</p>
+</li>
+<li><p>重新部署，步骤同上</p>
+</li>
+</ol>
+<h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
+<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span> <span class="comment"># 文章字数</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span> <span class="comment"># 阅读时长</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span> <span class="comment"># 所有文章总字数</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span> <span class="comment"># 所有文章阅读中时长</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">separated_meta:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">item_text_total:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">item_text_post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="使用PicGo上传图片至图床"><a href="#使用PicGo上传图片至图床" class="headerlink" title="使用PicGo上传图片至图床"></a>使用PicGo上传图片至图床</h3><ol>
+<li><p>下载PicGo，下载地址<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases </a> </p>
+</li>
+<li><p>腾讯云新建密钥：[访问密钥]—&gt;[API密钥管理]—&gt;[新建密钥]</p>
+</li>
+<li><p>打开安装完成后的PicGo，进行图床设置，设置后的结果为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_15.png" alt="pic_15"></p>
+</li>
+<li><p>点击确定并设置为默认图床，拖动本地图片上传，即可成功</p>
+</li>
+<li>文章中可以直接使用刚刚产生的外链</li>
+<li>重新部署，步骤同上</li>
+</ol>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>hexo</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据库面试题总结</title>
     <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
@@ -469,176 +642,57 @@
       </tags>
   </entry>
   <entry>
-    <title>搭建个人博客</title>
-    <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
+    <title>机器学习Tricks</title>
+    <url>/2022/10/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0Tricks/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在机器学习应用过程中遇到的一些问题，包括理论、代码实践等方面。</p>
 <a id="more"></a>
-<h1 id="搭建个人博客"><a href="#搭建个人博客" class="headerlink" title="搭建个人博客"></a>搭建个人博客</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
-<li><p>安装<code>Git</code></p>
-</li>
-<li><p>安装<code>Nodejs</code></p>
-<p>安装完成后查看<code>node</code>版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-<p>查看<code>npm</code>包管理器版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-<p>国内安装镜像源很慢，所以可以利用<code>npm</code>安装<code>cnpm</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="Hexo框架搭建博客"><a href="#Hexo框架搭建博客" class="headerlink" title="Hexo框架搭建博客"></a>Hexo框架搭建博客</h2><ol>
-<li><p>安装<code>hexo</code>框架</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
-<li><p>查看是否安装成功</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_1.png" alt="pic_1"></p>
-</li>
-<li><p><code>Hexo</code>框架初始化：选择存放博客所有内容的文件夹，命令行中输入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_2.png" alt="pic_2"></p>
-</li>
-<li><p>本地启动博客</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到搭建成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_4.png" alt="pic_4"></p>
-</li>
-</ol>
-<h2 id="博客进阶"><a href="#博客进阶" class="headerlink" title="博客进阶"></a>博客进阶</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><ol>
-<li><p>命令行输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></li>
-<li><p>查看是否新建文章成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_5.png" alt="pic_5"></p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
-</li>
-<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
-</li>
-</ol>
-<h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
-<li><p>新建<code>GitHub</code>仓库</p>
-<p>注：一定要以<code>username.github.io</code>创建。假如我没有用<code>tankmanbeta.github.io</code>而是用了<code>jeeby.github.io</code>，那么当我浏览器访问博客的时候会出现404错误。这里并不是没有部署成功，而是把它部署在了这里:<code>http://tankmanbeta.github.io/jeeby.github.io</code>。所以，如果想直接<code>tankmanbeta.github.io</code>访问，那么就需要和用户名保持一致。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_7.png" alt="pic_7"></p>
-</li>
-<li><p>修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>，在最后添加如下代码</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">    <span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-<p>注：2020年10月1日起，<code>GitHub</code>把<code>master</code>分支换成<code>main</code>分支，据说与种族歧视有关。</p>
-</li>
-<li><p>安装<code>Git</code>部署的插件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure></li>
-<li><p>输入以下命令，完成博客在<code>GitHub</code>上的部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<code>tankmanbeta.github.io</code>，成功访问</p>
-<p><strong>注：每次部署都需要输入<code>GitHub</code>账号密码的解决方法：修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>的<code>deploy</code>属性：（需要先设置<code>SSH-key</code>）</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="博客主题更改"><a href="#博客主题更改" class="headerlink" title="博客主题更改"></a>博客主题更改</h3><ol>
-<li><p>主题选取地址：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
-</li>
-<li><p>在博客根目录下的<code>themes</code>文件夹下克隆主题：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next</span><br></pre></td></tr></table></figure></li>
-<li><p>打开本地<code>Hexo</code>目录下文件<code>_config.yml</code>，修改<code>theme</code>属性：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">hexo-theme-next</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_8.png" alt="pic_8"></p>
-</li>
-<li><p>输入以下命令，更新博客在<code>GitHub</code>上的部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<code>tankmanbeta.github.io</code>，可以看到主题更新成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_9.png" alt="pic_9"></p>
-</li>
-</ol>
-<h3 id="Next主题切换"><a href="#Next主题切换" class="headerlink" title="Next主题切换"></a>Next主题切换</h3><ol>
-<li>打开<code>next</code>主题下的<code>_config.yml</code>文件，修改<code>theme</code>属性，将其选择成自己想要的</li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="中英文切换"><a href="#中英文切换" class="headerlink" title="中英文切换"></a>中英文切换</h3><ol>
-<li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>Site</code>属性下的<code>language</code>，将其改成<code>zh-CN</code>即可</li>
-<li>重新部署，步骤同上</li>
-<li>同理可以更改<code>title</code>、<code>author</code>等</li>
-</ol>
-<h3 id="添加标签页面"><a href="#添加标签页面" class="headerlink" title="添加标签页面"></a>添加标签页面</h3><ol>
-<li><p>在博客根目录下打开<code>cmd</code>，使用<code>hexo new page tags</code>新建一个页面</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_10.png" alt="pic_10"></p>
-</li>
-<li><p>打开新建的页面，将页面的类型设置为<code>tags</code></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">title: tags</span></span><br><span class="line"><span class="section">date: 2021-03-31 11:20:38</span></span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改Next主题下的<code>_config.yml</code>，将<code>tags</code>添加到<code>menu</code>属性当中</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-<li><p>重新部署，步骤同上，刷新页面后的结果</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_11.png" alt="pic_11"></p>
-</li>
-<li><p><code>home</code>、<code>categories</code>、<code>archives</code>等操作也是相同的</p>
-</li>
-</ol>
-<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><ol>
-<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
-<p>安装成功：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_12.png" alt="pic_12"></p>
-</li>
-<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置（有教程说新版的<code>hexo</code>中，<code>search.xml</code>需要改成<code>search.json</code>，否则部署到服务器搜索图标不能正常显示）</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search Config</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改Next主题下的<code>_config.yml</code>，修改<code>local_search</code>属性下的<code>enable</code>，将其改为<code>true</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If auto, trigger search by changing input.</span></span><br><span class="line">  <span class="comment"># If manual, trigger search by pressing enter key or search button.</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="使用外链图片"><a href="#使用外链图片" class="headerlink" title="使用外链图片"></a>使用外链图片</h3><ol>
-<li><p>注册腾讯云账号，选择对象存储</p>
-</li>
-<li><p>创建存储桶</p>
-</li>
-<li><p>创建成功之后上传文件</p>
-</li>
-<li><p>修改安全管理中的防盗链设置</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_13.png" alt="pic_13"></p>
-</li>
-<li><p>修改权限管理中的存储桶访问权限</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_14.png" alt="pic_14"></p>
-</li>
-<li><p>上传图片至存储桶，复制详情中的对象地址</p>
-</li>
-<li><p>在文章中使用外链</p>
-</li>
-<li><p>重新部署，步骤同上</p>
-</li>
-</ol>
-<h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
-<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<h1 id="One-Hot编码"><a href="#One-Hot编码" class="headerlink" title="One-Hot编码"></a>One-Hot编码</h1><p>One-hot编码也叫独热编码，又称一位有效编码。方法就是用N位对N个状态进行表示，但是其中只有一位为1，剩下N-1位全为0。例如，特征为性别，就需要变成10和01。</p>
+<p>在回归，分类，聚类等机器学习算法中，特征之间距离的计算或相似度的计算是非常重要的。而常用的距离或相似度的计算都是在欧式空间的相似度计算，计算余弦相似性，基于的就是欧式空间。使用独热编码（One-Hot Encoding），将离散特征的取值扩展到了欧式空间，离散特征的某个取值就对应欧式空间的某个点。将离散型特征使用独热编码（One-Hot Encoding），会让特征之间的距离计算更加合理。</p>
+<p>举个例子，如果我们现在一个特征有五个取值，如果不采用One-Hot编码，则分别表示为演员=0，厨师=1，公务员=2，教师=3，律师=4，那么教师和厨师的距离为2，律师与厨师的距离为3，这显然是不合理的。比较合理的做法是将两个工作之间的距离表示为sqrt(2)，即两个工作之间的距离是一样的。</p>
+<p>总结一下，如果特征的大小表示如果有意义的话，比如我们用1-9表示年龄，这种特征的大小表示就是有意义的，所以这种情况下就不需要进行One-Hot编码；如果特征的大小没有意义，仅仅表示状态时则使用One-Hot编码。</p>
+<p>pandas实现：首先对f3这个特征做One-Hot编码，接着将生成的df和原来的df进行拼接，最后删除原来的f3特征</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1: using get_dummies to encode feature</span></span><br><span class="line">dummy_df = pd.get_dummies(df[<span class="string">&quot;gender&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 2: concat dummy_df with original df</span></span><br><span class="line">df = pd.concat((df, dummy_df), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3: remove original feature</span></span><br><span class="line">df = df.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># simplified form</span></span><br><span class="line"><span class="comment"># df = pd.concat((df, pd.get_dummies(df[&quot;gender&quot;])), axis=1)</span></span><br><span class="line"><span class="comment"># df = df.drop(&quot;gender&quot;, axis=1)</span></span><br></pre></td></tr></table></figure>
+<p>存在问题：</p>
 <ol>
-<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span> <span class="comment"># 文章字数</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span> <span class="comment"># 阅读时长</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span> <span class="comment"># 所有文章总字数</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span> <span class="comment"># 所有文章阅读中时长</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br></pre></td></tr></table></figure>
+<li><p>采用这种方法实现会存在问题，比如将性别划分成gender_male和gender_female时，这两种特征其实是冗余的，这个问题在数学中叫做多重共线性(Multicollinearity)，在pandas处理时也有人称之为虚拟变量陷阱(Dummy Varialble Trap)。解决办法就是加入参数drop_first=True，作用是除去第一个虚拟变量，然转化后的虚拟变量从k和变成k-1个。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1: using get_dummies to encode feature</span></span><br><span class="line">dummy_df = pd.get_dummies(df[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 2: concat dummy_df with original df</span></span><br><span class="line">df = pd.concat((df, dummy_df), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3: remove original feature</span></span><br><span class="line">df = df.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># simplified form</span></span><br><span class="line"><span class="comment"># df = pd.concat((df, pd.get_dummies(df[&quot;gender&quot;], drop_first=True)), axis=1)</span></span><br><span class="line"><span class="comment"># df = df.drop(&quot;gender&quot;, axis=1)</span></span><br></pre></td></tr></table></figure></li>
+<li><p>测试集中可能出现训练集中没出现过的变量。解决办法：①将训练集和测试集一起get_dummies，然后再切分；②检测不一致的列，然后在缺少这些列的数据集中加入取值全为0的同名列。③使用sklearn的OneHotEncoder</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">test = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>],</span><br><span class="line">        [<span class="number">1003</span>, <span class="string">&quot;unknown&quot;</span>, <span class="number">88</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">train = pd.concat((train, pd.get_dummies(train[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)), axis=<span class="number">1</span>)</span><br><span class="line">train.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line">test = pd.concat((test, pd.get_dummies(test[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)), axis=<span class="number">1</span>)</span><br><span class="line">test.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">list</span>(test.columns.difference(train.columns)):<span class="comment">#train没有的列</span></span><br><span class="line">    df_obj = pd.DataFrame(&#123;col:np.squeeze(np.zeros((<span class="number">1</span>,train.shape[<span class="number">0</span>])))&#125;)</span><br><span class="line">    train = pd.concat([train,df_obj], axis=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">list</span>(train.columns.difference(test.columns)):<span class="comment">#test没有的列</span></span><br><span class="line">    df_obj = pd.DataFrame(&#123;col:np.squeeze(np.zeros((<span class="number">1</span>,test.shape[<span class="number">0</span>])))&#125;)</span><br><span class="line">    test = pd.concat([test,df_obj], axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<p>sklearn实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</span><br><span class="line"></span><br><span class="line">train = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">test = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>],</span><br><span class="line">        [<span class="number">1003</span>, <span class="string">&quot;unknown&quot;</span>, <span class="number">88</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># drop:k-1 to represent k; handle_unknown:for missing value</span></span><br><span class="line">encoder = OneHotEncoder(sparse=<span class="literal">False</span>, handle_unknown=<span class="string">&#x27;ignore&#x27;</span>, drop=<span class="string">&quot;first&quot;</span>)</span><br><span class="line"><span class="comment"># fit</span></span><br><span class="line">enc = encoder.fit(train[[<span class="string">&quot;gender&quot;</span>]])</span><br><span class="line"><span class="comment"># 获取新列名</span></span><br><span class="line">columns = enc.get_feature_names_out([<span class="string">&quot;gender&quot;</span>])</span><br><span class="line"><span class="comment"># 转换测试数据</span></span><br><span class="line">enc_arr = enc.transform(test[[<span class="string">&quot;gender&quot;</span>]])</span><br><span class="line"><span class="comment"># 生成dataframe</span></span><br><span class="line">enc_df = pd.DataFrame(enc_arr, columns=columns)</span><br><span class="line">new_data = pd.concat([test, enc_df], axis=<span class="number">1</span>)</span><br><span class="line">new_data.drop([<span class="string">&quot;gender&quot;</span>], axis=<span class="number">1</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">new_data</span><br></pre></td></tr></table></figure>
+<h1 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h1><p>对于某一个特征，比如频率，原始数据可能时low、mid、high这种字符类型，模型是没办法利用这些信息的，所以应当把这种字符类型的变量转变成数值类型的变量。</p>
+<p>pandas实现：</p>
+<p>最常用的是pd.factorize()，返回值为一个元组，分别表示转换之后的数字和原来的index。我们应该取元组的第一个元素作为我们的结果。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">data[<span class="string">&quot;f3&quot;</span>] = pd.factorize(data[<span class="string">&quot;f3&quot;</span>])[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>但是这种方法有个缺点，先出现的编码小，后出现的编码大。比如频率越高，编码的值应该越大，但是pd.factorize()就捕捉不到这个特征，此时我们可以使用map映射。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">col_mapping = &#123;</span><br><span class="line">    <span class="string">&quot;low&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;mid&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&quot;high&quot;</span>: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">data.f3 = data.f3.<span class="built_in">map</span>(col_mapping)</span><br></pre></td></tr></table></figure>
+<p>sklearn实现：和One-Hot编码相似，先fit，然后再transform</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">cat_columns = [<span class="string">&#x27;f3&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> cat_columns:</span><br><span class="line">    lb = LabelEncoder()</span><br><span class="line">    lb.fit(data[col])</span><br><span class="line">    data[col] = lb.transform(data[col])</span><br></pre></td></tr></table></figure>
+<h1 id="Pytorch代码实践"><a href="#Pytorch代码实践" class="headerlink" title="Pytorch代码实践"></a>Pytorch代码实践</h1><h2 id="nn-Conv2d"><a href="#nn-Conv2d" class="headerlink" title="nn.Conv2d()"></a>nn.Conv2d()</h2><p>进行卷积操作</p>
 <ol>
-<li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">separated_meta:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">item_text_total:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">item_text_post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>重新部署，步骤同上</li>
+<li><code>in_channels</code>：输入的四维张量<code>[N, C, H, W]</code>中的<code>C</code>，即输入张量的<code>channels</code>数。这个形参是确定权重等可学习参数的<code>shape</code>所必需的。</li>
+<li><code>out_channels</code>：期望的四维输出张量的<code>channels</code>数。</li>
+<li><code>kernel_size</code>：卷积核的大小，一般我们会使用<code>5x5</code>、<code>3x3</code>这种左右两个数相同的卷积核，因此这种情况只需要写 <code>kernel_size=5</code> 这样的就行了。如果左右两个数不同，比如<code>3x5</code>的卷积核，那么写作 <code>kernel_size=(3,5)</code>，注意需要写一个<code>tuple</code>，而不能写一个<code>list</code>。</li>
+<li><code>stride=1</code>：卷积核在图像窗口上每次平移的间隔，即所谓的步长。</li>
+<li><code>padding=0</code>：<code>padding</code>即所谓的图像填充，后面的int型常数代表填充的多少（行数、列数），默认为<code>0</code>。需要注意的是这里的填充包括图像的上下左右，以<code>padding=1</code>为例，若原始图像大小为<code>32x32</code>，那么<code>padding</code>后的图像大小就变成了<code>34x34</code>，而不是<code>33x33</code>。</li>
+<li><code>dilation=1</code>：这个参数决定了是否采用空洞卷积，默认为<code>1</code>，即不采用。</li>
+<li><code>groups=1</code>：决定了是否采用分组卷积。</li>
+<li><code>bias=True</code>：即是否要添加偏置参数作为可学习参数的一个，默认为<code>True</code>。</li>
+<li><code>padding_mode=&#39;zeros&#39;</code>：<code>padding</code>的模式，默认采用零填充。</li>
 </ol>
-<h3 id="使用PicGo上传图片至图床"><a href="#使用PicGo上传图片至图床" class="headerlink" title="使用PicGo上传图片至图床"></a>使用PicGo上传图片至图床</h3><ol>
-<li><p>下载PicGo，下载地址<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases </a> </p>
-</li>
-<li><p>腾讯云新建密钥：[访问密钥]—&gt;[API密钥管理]—&gt;[新建密钥]</p>
-</li>
-<li><p>打开安装完成后的PicGo，进行图床设置，设置后的结果为</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_15.png" alt="pic_15"></p>
-</li>
-<li><p>点击确定并设置为默认图床，拖动本地图片上传，即可成功</p>
-</li>
-<li>文章中可以直接使用刚刚产生的外链</li>
-<li>重新部署，步骤同上</li>
-</ol>
+<h2 id="a-permute"><a href="#a-permute" class="headerlink" title="a.permute()"></a>a.permute()</h2><p>转换向量的维度</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2023/1/7 13:27</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置一个三维数组</span></span><br><span class="line">x = torch.linspace(<span class="number">1</span>, <span class="number">24</span>, steps=<span class="number">24</span>).view(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不改变维度 2*3*4-&gt;2*3*4</span></span><br><span class="line">a = x.permute(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">print(a)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  2.,  3.,  4.],</span></span><br><span class="line"><span class="comment">#          [ 5.,  6.,  7.,  8.],</span></span><br><span class="line"><span class="comment">#          [ 9., 10., 11., 12.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[13., 14., 15., 16.],</span></span><br><span class="line"><span class="comment">#          [17., 18., 19., 20.],</span></span><br><span class="line"><span class="comment">#          [21., 22., 23., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 每一块的行与列进行交换，即每一块做转置 2*3*4-&gt;2*4*3</span></span><br><span class="line">b = x.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">print(b)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  5.,  9.],</span></span><br><span class="line"><span class="comment">#          [ 2.,  6., 10.],</span></span><br><span class="line"><span class="comment">#          [ 3.,  7., 11.],</span></span><br><span class="line"><span class="comment">#          [ 4.,  8., 12.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[13., 17., 21.],</span></span><br><span class="line"><span class="comment">#          [14., 18., 22.],</span></span><br><span class="line"><span class="comment">#          [15., 19., 23.],</span></span><br><span class="line"><span class="comment">#          [16., 20., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和行 2*3*4-&gt;3*2*4</span></span><br><span class="line">c = x.permute(<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">print(c)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  2.,  3.,  4.],</span></span><br><span class="line"><span class="comment">#          [13., 14., 15., 16.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 5.,  6.,  7.,  8.],</span></span><br><span class="line"><span class="comment">#          [17., 18., 19., 20.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 9., 10., 11., 12.],</span></span><br><span class="line"><span class="comment">#          [21., 22., 23., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和列 2*3*4-&gt;4*3*2</span></span><br><span class="line">d = x.permute(<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">print(d)</span><br><span class="line"><span class="comment"># tensor([[[ 1., 13.],</span></span><br><span class="line"><span class="comment">#          [ 5., 17.],</span></span><br><span class="line"><span class="comment">#          [ 9., 21.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 2., 14.],</span></span><br><span class="line"><span class="comment">#          [ 6., 18.],</span></span><br><span class="line"><span class="comment">#          [10., 22.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 3., 15.],</span></span><br><span class="line"><span class="comment">#          [ 7., 19.],</span></span><br><span class="line"><span class="comment">#          [11., 23.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 4., 16.],</span></span><br><span class="line"><span class="comment">#          [ 8., 20.],</span></span><br><span class="line"><span class="comment">#          [12., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和行和列 2*3*4-&gt;4*2*3</span></span><br><span class="line">e = x.permute(<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">print(e)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  5.,  9.],</span></span><br><span class="line"><span class="comment">#          [13., 17., 21.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 2.,  6., 10.],</span></span><br><span class="line"><span class="comment">#          [14., 18., 22.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 3.,  7., 11.],</span></span><br><span class="line"><span class="comment">#          [15., 19., 23.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 4.,  8., 12.],</span></span><br><span class="line"><span class="comment">#          [16., 20., 24.]]])</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="nn-Linear"><a href="#nn-Linear" class="headerlink" title="nn.Linear()"></a>nn.Linear()</h2><p>改变最后一维，也就是数据的特征维度，通过调整<code>output_size</code>的尺寸来扩张或者是收缩特征。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2023/1/7 13:27</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 二维数组(2,4)</span></span><br><span class="line">x_2d = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">45</span>, <span class="number">6</span>]])</span><br><span class="line"><span class="comment"># 三维数组（2,3,4）</span></span><br><span class="line">x_3d = np.array([[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>]], [[<span class="number">1</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">5</span>], [<span class="number">3</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转成tensor的形式，因为Linear要求输入是float类型，因此还需要转成float32</span></span><br><span class="line">tensor_x_2d = torch.from_numpy(x_2d.astype(np.float32))</span><br><span class="line">tensor_x_3d = torch.from_numpy(x_3d.astype(np.float32))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用来改变最后数组最后一维的维度</span></span><br><span class="line"><span class="comment"># 用来缩小或者扩展特征维度</span></span><br><span class="line">embedding = nn.Linear(<span class="number">4</span>, <span class="number">3</span>)</span><br><span class="line">tensor_y_2d = embedding(tensor_x_2d)</span><br><span class="line">tensor_y_3d = embedding(tensor_x_3d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">print(tensor_y_2d)</span><br><span class="line"><span class="comment"># tensor([[  4.1090,  -2.4804,  -0.3711],</span></span><br><span class="line"><span class="comment">#         [ 23.7516, -20.5857,   0.4712]], grad_fn=&lt;AddmmBackward0&gt;)</span></span><br><span class="line"></span><br><span class="line">print(tensor_y_3d)</span><br><span class="line"><span class="comment"># tensor([[[ 4.1090, -2.4804, -0.3711],</span></span><br><span class="line"><span class="comment">#          [ 5.7849, -3.5626, -0.5762],</span></span><br><span class="line"><span class="comment">#          [ 6.0937, -3.4730, -1.0961]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 5.7498, -4.5819, -0.0172],</span></span><br><span class="line"><span class="comment">#          [ 5.4060, -4.7207,  0.3439],</span></span><br><span class="line"><span class="comment">#          [ 6.8580, -4.7442, -0.7933]]], grad_fn=&lt;AddBackward0&gt;)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>总结</category>
       </categories>
       <tags>
         <tag>总结</tag>
-        <tag>hexo</tag>
-        <tag>博客</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -763,60 +817,6 @@
       <tags>
         <tag>总结</tag>
         <tag>刷题</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习Tricks</title>
-    <url>/2022/10/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0Tricks/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在机器学习应用过程中遇到的一些问题，包括理论、代码实践等方面。</p>
-<a id="more"></a>
-<h1 id="One-Hot编码"><a href="#One-Hot编码" class="headerlink" title="One-Hot编码"></a>One-Hot编码</h1><p>One-hot编码也叫独热编码，又称一位有效编码。方法就是用N位对N个状态进行表示，但是其中只有一位为1，剩下N-1位全为0。例如，特征为性别，就需要变成10和01。</p>
-<p>在回归，分类，聚类等机器学习算法中，特征之间距离的计算或相似度的计算是非常重要的。而常用的距离或相似度的计算都是在欧式空间的相似度计算，计算余弦相似性，基于的就是欧式空间。使用独热编码（One-Hot Encoding），将离散特征的取值扩展到了欧式空间，离散特征的某个取值就对应欧式空间的某个点。将离散型特征使用独热编码（One-Hot Encoding），会让特征之间的距离计算更加合理。</p>
-<p>举个例子，如果我们现在一个特征有五个取值，如果不采用One-Hot编码，则分别表示为演员=0，厨师=1，公务员=2，教师=3，律师=4，那么教师和厨师的距离为2，律师与厨师的距离为3，这显然是不合理的。比较合理的做法是将两个工作之间的距离表示为sqrt(2)，即两个工作之间的距离是一样的。</p>
-<p>总结一下，如果特征的大小表示如果有意义的话，比如我们用1-9表示年龄，这种特征的大小表示就是有意义的，所以这种情况下就不需要进行One-Hot编码；如果特征的大小没有意义，仅仅表示状态时则使用One-Hot编码。</p>
-<p>pandas实现：首先对f3这个特征做One-Hot编码，接着将生成的df和原来的df进行拼接，最后删除原来的f3特征</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1: using get_dummies to encode feature</span></span><br><span class="line">dummy_df = pd.get_dummies(df[<span class="string">&quot;gender&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 2: concat dummy_df with original df</span></span><br><span class="line">df = pd.concat((df, dummy_df), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3: remove original feature</span></span><br><span class="line">df = df.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># simplified form</span></span><br><span class="line"><span class="comment"># df = pd.concat((df, pd.get_dummies(df[&quot;gender&quot;])), axis=1)</span></span><br><span class="line"><span class="comment"># df = df.drop(&quot;gender&quot;, axis=1)</span></span><br></pre></td></tr></table></figure>
-<p>存在问题：</p>
-<ol>
-<li><p>采用这种方法实现会存在问题，比如将性别划分成gender_male和gender_female时，这两种特征其实是冗余的，这个问题在数学中叫做多重共线性(Multicollinearity)，在pandas处理时也有人称之为虚拟变量陷阱(Dummy Varialble Trap)。解决办法就是加入参数drop_first=True，作用是除去第一个虚拟变量，然转化后的虚拟变量从k和变成k-1个。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1: using get_dummies to encode feature</span></span><br><span class="line">dummy_df = pd.get_dummies(df[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 2: concat dummy_df with original df</span></span><br><span class="line">df = pd.concat((df, dummy_df), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3: remove original feature</span></span><br><span class="line">df = df.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># simplified form</span></span><br><span class="line"><span class="comment"># df = pd.concat((df, pd.get_dummies(df[&quot;gender&quot;], drop_first=True)), axis=1)</span></span><br><span class="line"><span class="comment"># df = df.drop(&quot;gender&quot;, axis=1)</span></span><br></pre></td></tr></table></figure></li>
-<li><p>测试集中可能出现训练集中没出现过的变量。解决办法：①将训练集和测试集一起get_dummies，然后再切分；②检测不一致的列，然后在缺少这些列的数据集中加入取值全为0的同名列。③使用sklearn的OneHotEncoder</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">test = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>],</span><br><span class="line">        [<span class="number">1003</span>, <span class="string">&quot;unknown&quot;</span>, <span class="number">88</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">train = pd.concat((train, pd.get_dummies(train[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)), axis=<span class="number">1</span>)</span><br><span class="line">train.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line">test = pd.concat((test, pd.get_dummies(test[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)), axis=<span class="number">1</span>)</span><br><span class="line">test.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">list</span>(test.columns.difference(train.columns)):<span class="comment">#train没有的列</span></span><br><span class="line">    df_obj = pd.DataFrame(&#123;col:np.squeeze(np.zeros((<span class="number">1</span>,train.shape[<span class="number">0</span>])))&#125;)</span><br><span class="line">    train = pd.concat([train,df_obj], axis=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">list</span>(train.columns.difference(test.columns)):<span class="comment">#test没有的列</span></span><br><span class="line">    df_obj = pd.DataFrame(&#123;col:np.squeeze(np.zeros((<span class="number">1</span>,test.shape[<span class="number">0</span>])))&#125;)</span><br><span class="line">    test = pd.concat([test,df_obj], axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>sklearn实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</span><br><span class="line"></span><br><span class="line">train = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">test = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>],</span><br><span class="line">        [<span class="number">1003</span>, <span class="string">&quot;unknown&quot;</span>, <span class="number">88</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># drop:k-1 to represent k; handle_unknown:for missing value</span></span><br><span class="line">encoder = OneHotEncoder(sparse=<span class="literal">False</span>, handle_unknown=<span class="string">&#x27;ignore&#x27;</span>, drop=<span class="string">&quot;first&quot;</span>)</span><br><span class="line"><span class="comment"># fit</span></span><br><span class="line">enc = encoder.fit(train[[<span class="string">&quot;gender&quot;</span>]])</span><br><span class="line"><span class="comment"># 获取新列名</span></span><br><span class="line">columns = enc.get_feature_names_out([<span class="string">&quot;gender&quot;</span>])</span><br><span class="line"><span class="comment"># 转换测试数据</span></span><br><span class="line">enc_arr = enc.transform(test[[<span class="string">&quot;gender&quot;</span>]])</span><br><span class="line"><span class="comment"># 生成dataframe</span></span><br><span class="line">enc_df = pd.DataFrame(enc_arr, columns=columns)</span><br><span class="line">new_data = pd.concat([test, enc_df], axis=<span class="number">1</span>)</span><br><span class="line">new_data.drop([<span class="string">&quot;gender&quot;</span>], axis=<span class="number">1</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">new_data</span><br></pre></td></tr></table></figure>
-<h1 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h1><p>对于某一个特征，比如频率，原始数据可能时low、mid、high这种字符类型，模型是没办法利用这些信息的，所以应当把这种字符类型的变量转变成数值类型的变量。</p>
-<p>pandas实现：</p>
-<p>最常用的是pd.factorize()，返回值为一个元组，分别表示转换之后的数字和原来的index。我们应该取元组的第一个元素作为我们的结果。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">data[<span class="string">&quot;f3&quot;</span>] = pd.factorize(data[<span class="string">&quot;f3&quot;</span>])[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-<p>但是这种方法有个缺点，先出现的编码小，后出现的编码大。比如频率越高，编码的值应该越大，但是pd.factorize()就捕捉不到这个特征，此时我们可以使用map映射。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">col_mapping = &#123;</span><br><span class="line">    <span class="string">&quot;low&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;mid&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&quot;high&quot;</span>: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">data.f3 = data.f3.<span class="built_in">map</span>(col_mapping)</span><br></pre></td></tr></table></figure>
-<p>sklearn实现：和One-Hot编码相似，先fit，然后再transform</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">cat_columns = [<span class="string">&#x27;f3&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> cat_columns:</span><br><span class="line">    lb = LabelEncoder()</span><br><span class="line">    lb.fit(data[col])</span><br><span class="line">    data[col] = lb.transform(data[col])</span><br></pre></td></tr></table></figure>
-<h1 id="Pytorch代码实践"><a href="#Pytorch代码实践" class="headerlink" title="Pytorch代码实践"></a>Pytorch代码实践</h1><h2 id="nn-Conv2d"><a href="#nn-Conv2d" class="headerlink" title="nn.Conv2d()"></a>nn.Conv2d()</h2><p>进行卷积操作</p>
-<ol>
-<li><code>in_channels</code>：输入的四维张量<code>[N, C, H, W]</code>中的<code>C</code>，即输入张量的<code>channels</code>数。这个形参是确定权重等可学习参数的<code>shape</code>所必需的。</li>
-<li><code>out_channels</code>：期望的四维输出张量的<code>channels</code>数。</li>
-<li><code>kernel_size</code>：卷积核的大小，一般我们会使用<code>5x5</code>、<code>3x3</code>这种左右两个数相同的卷积核，因此这种情况只需要写 <code>kernel_size=5</code> 这样的就行了。如果左右两个数不同，比如<code>3x5</code>的卷积核，那么写作 <code>kernel_size=(3,5)</code>，注意需要写一个<code>tuple</code>，而不能写一个<code>list</code>。</li>
-<li><code>stride=1</code>：卷积核在图像窗口上每次平移的间隔，即所谓的步长。</li>
-<li><code>padding=0</code>：<code>padding</code>即所谓的图像填充，后面的int型常数代表填充的多少（行数、列数），默认为<code>0</code>。需要注意的是这里的填充包括图像的上下左右，以<code>padding=1</code>为例，若原始图像大小为<code>32x32</code>，那么<code>padding</code>后的图像大小就变成了<code>34x34</code>，而不是<code>33x33</code>。</li>
-<li><code>dilation=1</code>：这个参数决定了是否采用空洞卷积，默认为<code>1</code>，即不采用。</li>
-<li><code>groups=1</code>：决定了是否采用分组卷积。</li>
-<li><code>bias=True</code>：即是否要添加偏置参数作为可学习参数的一个，默认为<code>True</code>。</li>
-<li><code>padding_mode=&#39;zeros&#39;</code>：<code>padding</code>的模式，默认采用零填充。</li>
-</ol>
-<h2 id="a-permute"><a href="#a-permute" class="headerlink" title="a.permute()"></a>a.permute()</h2><p>转换向量的维度</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2023/1/7 13:27</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置一个三维数组</span></span><br><span class="line">x = torch.linspace(<span class="number">1</span>, <span class="number">24</span>, steps=<span class="number">24</span>).view(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不改变维度 2*3*4-&gt;2*3*4</span></span><br><span class="line">a = x.permute(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">print(a)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  2.,  3.,  4.],</span></span><br><span class="line"><span class="comment">#          [ 5.,  6.,  7.,  8.],</span></span><br><span class="line"><span class="comment">#          [ 9., 10., 11., 12.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[13., 14., 15., 16.],</span></span><br><span class="line"><span class="comment">#          [17., 18., 19., 20.],</span></span><br><span class="line"><span class="comment">#          [21., 22., 23., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 每一块的行与列进行交换，即每一块做转置 2*3*4-&gt;2*4*3</span></span><br><span class="line">b = x.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">print(b)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  5.,  9.],</span></span><br><span class="line"><span class="comment">#          [ 2.,  6., 10.],</span></span><br><span class="line"><span class="comment">#          [ 3.,  7., 11.],</span></span><br><span class="line"><span class="comment">#          [ 4.,  8., 12.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[13., 17., 21.],</span></span><br><span class="line"><span class="comment">#          [14., 18., 22.],</span></span><br><span class="line"><span class="comment">#          [15., 19., 23.],</span></span><br><span class="line"><span class="comment">#          [16., 20., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和行 2*3*4-&gt;3*2*4</span></span><br><span class="line">c = x.permute(<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">print(c)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  2.,  3.,  4.],</span></span><br><span class="line"><span class="comment">#          [13., 14., 15., 16.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 5.,  6.,  7.,  8.],</span></span><br><span class="line"><span class="comment">#          [17., 18., 19., 20.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 9., 10., 11., 12.],</span></span><br><span class="line"><span class="comment">#          [21., 22., 23., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和列 2*3*4-&gt;4*3*2</span></span><br><span class="line">d = x.permute(<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">print(d)</span><br><span class="line"><span class="comment"># tensor([[[ 1., 13.],</span></span><br><span class="line"><span class="comment">#          [ 5., 17.],</span></span><br><span class="line"><span class="comment">#          [ 9., 21.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 2., 14.],</span></span><br><span class="line"><span class="comment">#          [ 6., 18.],</span></span><br><span class="line"><span class="comment">#          [10., 22.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 3., 15.],</span></span><br><span class="line"><span class="comment">#          [ 7., 19.],</span></span><br><span class="line"><span class="comment">#          [11., 23.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 4., 16.],</span></span><br><span class="line"><span class="comment">#          [ 8., 20.],</span></span><br><span class="line"><span class="comment">#          [12., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和行和列 2*3*4-&gt;4*2*3</span></span><br><span class="line">e = x.permute(<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">print(e)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  5.,  9.],</span></span><br><span class="line"><span class="comment">#          [13., 17., 21.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 2.,  6., 10.],</span></span><br><span class="line"><span class="comment">#          [14., 18., 22.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 3.,  7., 11.],</span></span><br><span class="line"><span class="comment">#          [15., 19., 23.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 4.,  8., 12.],</span></span><br><span class="line"><span class="comment">#          [16., 20., 24.]]])</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="nn-Linear"><a href="#nn-Linear" class="headerlink" title="nn.Linear()"></a>nn.Linear()</h2><p>改变最后一维，也就是数据的特征维度，通过调整<code>output_size</code>的尺寸来扩张或者是收缩特征。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2023/1/7 13:27</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 二维数组(2,4)</span></span><br><span class="line">x_2d = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">45</span>, <span class="number">6</span>]])</span><br><span class="line"><span class="comment"># 三维数组（2,3,4）</span></span><br><span class="line">x_3d = np.array([[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>]], [[<span class="number">1</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">5</span>], [<span class="number">3</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转成tensor的形式，因为Linear要求输入是float类型，因此还需要转成float32</span></span><br><span class="line">tensor_x_2d = torch.from_numpy(x_2d.astype(np.float32))</span><br><span class="line">tensor_x_3d = torch.from_numpy(x_3d.astype(np.float32))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用来改变最后数组最后一维的维度</span></span><br><span class="line"><span class="comment"># 用来缩小或者扩展特征维度</span></span><br><span class="line">embedding = nn.Linear(<span class="number">4</span>, <span class="number">3</span>)</span><br><span class="line">tensor_y_2d = embedding(tensor_x_2d)</span><br><span class="line">tensor_y_3d = embedding(tensor_x_3d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">print(tensor_y_2d)</span><br><span class="line"><span class="comment"># tensor([[  4.1090,  -2.4804,  -0.3711],</span></span><br><span class="line"><span class="comment">#         [ 23.7516, -20.5857,   0.4712]], grad_fn=&lt;AddmmBackward0&gt;)</span></span><br><span class="line"></span><br><span class="line">print(tensor_y_3d)</span><br><span class="line"><span class="comment"># tensor([[[ 4.1090, -2.4804, -0.3711],</span></span><br><span class="line"><span class="comment">#          [ 5.7849, -3.5626, -0.5762],</span></span><br><span class="line"><span class="comment">#          [ 6.0937, -3.4730, -1.0961]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 5.7498, -4.5819, -0.0172],</span></span><br><span class="line"><span class="comment">#          [ 5.4060, -4.7207,  0.3439],</span></span><br><span class="line"><span class="comment">#          [ 6.8580, -4.7442, -0.7933]]], grad_fn=&lt;AddBackward0&gt;)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -959,20 +959,6 @@
       <tags>
         <tag>总结</tag>
         <tag>项目部署</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>面经</title>
-    <url>/2023/03/06/%E9%9D%A2%E7%BB%8F/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下暑期实习面试经验。</p>
-<a id="more"></a>
-<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -1246,6 +1232,155 @@
       <tags>
         <tag>总结</tag>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面经</title>
+    <url>/2023/03/06/%E9%9D%A2%E7%BB%8F/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下暑期实习面试经验。</p>
+<a id="more"></a>
+<h1 id="偏差和方差"><a href="#偏差和方差" class="headerlink" title="偏差和方差"></a>偏差和方差</h1><p>偏差：模型预测值的期望与真实值之间的差异，反应的是模型的拟合能力。<br>方差：反应的是训练集的变化所导致的学习性能的变化，即刻画了<strong>数据扰动</strong>所造成的影响，模型过拟合时会出现较大的方差。</p>
+<h1 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h1><p>Bagging算法（英语：Bootstrap aggregating，引导聚集算法），又称装袋算法，是机器学习领域的一种团体学习算法。最初由Leo Breiman于1996年提出。Bagging算法可与其他分类、回归算法结合，提高其准确率、稳定性的同时，通过降低结果的方差，避免过拟合的发生。</p>
+<p><strong>随机采样（bootstrap sample）</strong>从n个数据点中<strong>有放回地重复随机</strong>抽取一个样本（即同一个样本可被多次抽取），共抽取n次。创建一个与原数据大小相同得数据集，但有些数据点会缺失（大约1/3），有些会重复。</p>
+<p>Bagging对于弱学习器没有限制，这和Adaboost一样。但是最常用的一般也是<strong>决策树</strong>和<strong>神经网络</strong>。</p>
+<p>Bagging的集合策略也比较简单，对于分类问题，通常使用简单投票法，得到最多票数的类别或者类别之一为最终的模型输出。对于回归问题，通常使用简单平均法，对T个弱学习器得到的回归结果进行算术平均得到最终的模型输出。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071107979.png" alt=""></p>
+<h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><p>Bagging在随机森林的构建过程中，各棵树之间是相互独立的，在构建第m棵树的时候，不会考虑前面的m-1棵树。Boosting在构建第m棵子树的时候，会考虑到前m-1棵子树的结果。</p>
+<p><strong>提升学习</strong>（Boosting）是一种机器学习技术，通过从训练数据构建模型，然后创建第二个模型来尝试纠正第一个模型中的错误来完成的。添加模型直到完美预测训练集或添加最大数量的模型。提升学习的每一步产生弱预测模型（如决策树），并加权累加到总模型中；如果每一步的弱预测模型的生成都是依据损失函数的梯度方式，就称为梯度提升（Gradient Boosting）。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071138731.png" alt=""></p>
+<p>Adaptive Boosting（AdaBoost）是第一个为二进制分类开发的真正成功的提升算法。这是理解Boosting的最佳起点，现代提升方法建立在AdaBoost之上。</p>
+<p>AdaBoost流程：</p>
+<ol>
+<li><p>训练数据集中的每个实例都被加权。初始权重设置为：$Weight(X_{i})=\frac{1}{N_{}}$</p>
+</li>
+<li><p>使用加权之后的样本作为训练数据，以弱分类器（决策树桩）进行训练。</p>
+</li>
+<li><p>为训练后的模型计算当前分类器的分类误差。传统的计算方式如下：</p>
+<p>分类误差：$error_t = \sum_{i=1}^{N}(W_{t,i}\times terror_{i})$。其中$terror_{i}=I(G_{t}(X_{i})\neq y_{i})$。</p>
+<p>例如：如果我们有三个训练实例，权重分别为0.01、0.5和0.2。预测值为-1、-1和-1，实例中的真实输出变量为-1、1和-1，则terror为0、1和0。误分类率将计算为：<strong>error = (0.01*0 + 0.5*1 + 0.2*0) or error = 0.5</strong>。</p>
+</li>
+<li><p>为经过训练的模型计算阶段权值，该值为模型做出的任何预测提供权重。训练模型的阶段值计算公式：$\alpha_{t}=\frac{1}{2}\times\ln\frac{1-error_{t}}{error_{t}}$</p>
+</li>
+<li><p>更新训练权重，为错误预测的实例提供更多的权重，为正确预测的实例提供更少权重。计算公式：$W_{t+1,i}=\frac{W_{t,i}}{Z_{t}}\exp(-\alpha_{t}G_{t}(X_{i})y_{i})$，其中$Z_{t}$是规范因子，$Z_{t}=\sum_{i=1}^{N}W_{t,i}\exp(-\alpha_{t}G_{t}(X_{i})y_{i})$</p>
+</li>
+<li><p>最终的分类器为：$G(X)=sign(\sum_{m=1}^{K}\alpha_{m}G_{m}(X))$</p>
+</li>
+</ol>
+<h1 id="batchsize"><a href="#batchsize" class="headerlink" title="batchsize"></a>batchsize</h1><p>（1）batchsize：批大小。在深度学习中，一般采用SGD训练，即每次训练在训练集中取batchsize个样本训练。<br>（2）iteration：1个iteration等于使用batchsize个样本训练一次。<br>（3）epoch：1个epoch等于使用训练集中的全部样本训练一次。<br>如果数据集比较小，则完全可以采用全数据集的形式。这样做的好处有两点：</p>
+<ol>
+<li>全数据集的方向能够更好的代表样本总体，确定其极值所在。</li>
+<li>由于不同权重的梯度值差别巨大，因此选取一个全局的学习率很困难。</li>
+</ol>
+<p>增大batchsize的好处有三点：</p>
+<ol>
+<li>内存的利用率提高了，大矩阵乘法的并行化效率提高。</li>
+<li>跑完一次epoch(全数据集)所需迭代次数减少，对于相同的数据量的处理速度进一步加快。</li>
+<li>一定范围内，batchsize越大，其确定的下降方向就越准，引起训练震荡越小。</li>
+</ol>
+<p>盲目增大batchsize的坏处有三点：</p>
+<ol>
+<li>当数据集太大时，内存撑不住。</li>
+<li>跑完一次epoch(全数据集)所需迭代次数减少了，但要想达到相同的精度，时间开销太大，参数的修正更加缓慢。</li>
+<li>batchsize增大到一定的程度，其确定的下降方向已经基本不再变化。</li>
+</ol>
+<h1 id="BatchNorm"><a href="#BatchNorm" class="headerlink" title="BatchNorm"></a>BatchNorm</h1><p><strong>BatchNorm就是在深度神经网络训练过程中使得每一层神经网络的输入保持相同分布。</strong></p>
+<p>在神经网络中, 数据分布对训练会产生影响。比如某个神经元 x 的值为1，某个 Weights 的初始值为 0.1，这样后一层神经元计算结果就是 Wx = 0.1；又或者 x = 20，这样 Wx 的结果就为2。现在还不能看出什么问题,，但是，当我们加上一层激活函数，激活这个 Wx 值的时候，问题就来了。如果使用像tanh的激活函数， Wx 的激活值就变成了 $\approx 0.1$ 和 $\approx 1$, 接近于 1 的部已经处在了激活函数的饱和阶段, 也就是 x 无论再怎么扩大, tanh 激励函数输出值也还是接近1。</p>
+<p>我们为了避免这种情况，就会对数据进行归一化，<strong>对于每个隐层神经元，把逐渐向非线性函数映射后向取值区间极限饱和区靠拢的输入分布强制拉回到均值为0方差为1的比较标准的正态分布，使得非线性变换函数的输入值落入对输入比较敏感的区域，以此避免梯度消失问题。</strong></p>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><p>支持向量机（support vector machines，SVM）是一种二分类模型，它将实例的特征向量映射为空间中的一些点，SVM 的目的就是想要画出一条线，以 “最好地” 区分这两类点，以至如果以后有了新的点，这条线也能做出很好的分类。SVM 适合中小型数据样本、非线性、高维的分类问题。</p>
+<p>将实例的特征向量（以二维为例）映射为空间中的一些点，如下图的实心点和空心点，它们属于不同的两类。SVM 的目的就是想要画出一条线，以“最好地”区分这两类点，以至如果以后有了新的点，这条线也能做出很好的分类。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071255957.png" alt=""></p>
+<p><strong>Q1：能够画出多少条线对样本点进行区分？</strong><br>答：线是有无数条可以画的，区别就在于效果好不好，每条线都可以叫做一个划分超平面。比如上面的绿线就不好，蓝线还凑合，红线看起来就比较好。我们所希望找到的这条效果最好的线就是具有 “最大间隔的划分超平面”。</p>
+<p><strong>Q2：为什么要叫作“超平面”呢？</strong><br>答：因为样本的特征很可能是高维的，此时样本空间的划分就不是一条线了。</p>
+<p><strong>Q3：画线的标准是什么？/ 什么才叫这条线的效果好？/ 哪里好？</strong><br>答：SVM 将会寻找可以区分两个类别并且能使间隔（margin）最大的划分超平面。比较好的划分超平面，样本局部扰动时对它的影响最小、产生的分类结果最鲁棒、对未见示例的泛化能力最强。</p>
+<p><strong>Q4：间隔（margin）是什么？</strong><br>答：对于任意一个超平面，其两侧数据点都距离它有一个最小距离（垂直距离），这两个最小距离的和就是间隔。比如下图中两条虚线构成的带状区域就是 margin，虚线是由距离中央实线最近的两个点所确定出来的（也就是由支持向量决定）。但此时 margin 比较小，如果用第二种方式画，margin 明显变大也更接近我们的目标。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071300267.png" alt=""></p>
+<p><strong>Q5：为什么要让 margin 尽量大？</strong><br>答：因为大 margin 犯错的几率比较小，也就是更鲁棒啦。</p>
+<p><strong>Q6：支持向量是什么？</strong><br>答：从上图可以看出，虚线上的点到划分超平面的距离都是一样的，实际上只有这几个点共同确定了超平面的位置，因此被称作 “支持向量（support vectors）”，“支持向量机” 也是由此来的。</p>
+<p><strong>Q7：SVM 算法特性</strong></p>
+<ol>
+<li>训练好的模型的算法复杂度是由支持向量的个数决定的，而不是由数据的维度决定的。所以SVM不太容易产生overfitting。</li>
+<li>SVM训练出来的模型完全依赖于支持向量，即使训练集里面所有非支持向量的点都被去除，重复训练过程，结果仍然会得到完全一样的模型。</li>
+<li>一个SVM如果训练得出的支持向量个数比较少，那么SVM训练出的模型比较容易被泛化。</li>
+</ol>
+<h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h1><h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><p>池化层是当前卷积神经网络中常用组件之一，它最早见于<code>LeNet</code>一文，称之为<code>Subsample</code>。自<code>AlexNet</code>之后采用Pooling命名。池化层是模仿人的视觉系统对数据进行降维，用更高层次的特征表示图像。</p>
+<p>实施池化的目的：(1) 降低信息冗余；(2) 提升模型的尺度不变性、旋转不变性；(3) 防止过拟合。</p>
+<h2 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h2><h3 id="ResNet中的一些亮点"><a href="#ResNet中的一些亮点" class="headerlink" title="ResNet中的一些亮点"></a>ResNet中的一些亮点</h3><ol>
+<li>超深的网络结构（超过1000层）。</li>
+<li>提出residual（残差结构）模块。</li>
+<li>使用Batch Normalization加速训练（丢弃dropout）。</li>
+</ol>
+<h3 id="为什么采用residual"><a href="#为什么采用residual" class="headerlink" title="为什么采用residual?"></a>为什么采用residual?</h3><p>人们认为卷积层和池化层的层数越多，获取到的图片特征信息越全，学习效果也就越好。但是在实际的试验中发现，随着卷积层和池化层的叠加，不但没有出现学习效果越来越好的情况，反而两种问题：</p>
+<ol>
+<li>梯度消失和梯度爆炸<br>梯度消失：若每一层的误差梯度小于1，反向传播时，网络越深，梯度越趋近于0<br>梯度爆炸：若每一层的误差梯度大于1，反向传播时，网络越深，梯度越来越大</li>
+<li>退化问题<br>随着层数的增加，预测效果反而越来越差。</li>
+</ol>
+<ul>
+<li>为了解决梯度消失或梯度爆炸问题，ResNet论文提出通过数据的预处理以及在网络中使用 BN（Batch Normalization）层来解决。</li>
+<li>为了解决深层网络中的退化问题，可以人为地让神经网络某些层跳过下一层神经元的连接，隔层相连，弱化每层之间的强联系。这种神经网络被称为 残差网络 (ResNets)。ResNet论文提出了 residual结构（残差结构）来减轻退化问题，下图是使用residual结构的卷积网络，可以看到随着网络的不断加深，效果并没有变差，而是变的更好了。</li>
+</ul>
+<h3 id="residual结构"><a href="#residual结构" class="headerlink" title="residual结构"></a>residual结构</h3><h4 id="residual的计算方式"><a href="#residual的计算方式" class="headerlink" title="residual的计算方式"></a>residual的计算方式</h4><p>residual结构使用了一种shortcut的连接方式，也可理解为捷径。让特征矩阵隔层相加，注意 $\mathcal{F}(\mathbb{x})$和$\mathbb{x}$形状要相同，所谓相加是特征矩阵相同位置上的数字进行相加。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071317819.png" alt=""></p>
+<h4 id="ResNet中两种不同的residual"><a href="#ResNet中两种不同的residual" class="headerlink" title="ResNet中两种不同的residual"></a>ResNet中两种不同的residual</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071317983.png" alt=""></p>
+<ol>
+<li>左侧残差结构称为 BasicBlock</li>
+<li>右侧残差结构称为 Bottleneck<ul>
+<li>其中第一层的1× 1的卷积核的作用是对特征矩阵进行降维操作，将特征矩阵的深度由256降为64；</li>
+<li>第三层的1× 1的卷积核是对特征矩阵进行升维操作，将特征矩阵的深度由64升成256。<br>降低特征矩阵的深度主要是为了减少参数的个数。<br>如果采用BasicBlock,参数的个数应该是：256×256×3×3×2=1179648<br>采用Bottleneck，参数的个数是：1×1×256×64+3×3×64×64+1×1×256×64=69632</li>
+<li>先降后升为了主分支上输出的特征矩阵和捷径分支上输出的特征矩阵形状相同，以便进行加法操作。</li>
+</ul>
+</li>
+</ol>
+<h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>循环神经网络（Recurrent Neural Network, RNN）是一类以序列（sequence）数据为输入，在序列的演进方向进行递归（recursion）且所有节点（循环单元）按链式连接的递归神经网络（recursive neural network） 。</p>
+<p>对循环神经网络的研究始于二十世纪80-90年代，并在二十一世纪初发展为深度学习（deep learning）算法之一  ，其中双向循环神经网络（Bidirectional RNN, Bi-RNN）和长短期记忆网络（Long Short-Term Memory networks，LSTM）是常见的循环神经网络。</p>
+<h2 id="为什么需要RNN？"><a href="#为什么需要RNN？" class="headerlink" title="为什么需要RNN？"></a>为什么需要RNN？</h2><p>在CNN网络中的训练样本的数据为IID数据（独立同分布数据），所解决的问题也是分类问题或者回归问题或者是特征表达问题。<strong>但更多的数据是不满足IID的</strong>，如语言翻译，自动文本生成。它们是一个序列问题，包括时间序列和空间序列。比如时间序列数据，这类数据是在不同时间点上收集到的数据，反映了某一事物、现象等随时间的变化状态或程度。一般的神经网络，在训练数据足够、算法模型优越的情况下，给定特定的x，就能得到期望y。其一般处理单个的输入，前一个输入和后一个输入完全无关，但实际应用中，某些任务需要能够更好的处理序列的信息，即前面的输入和后面的输入是有关系的。 这时就要用到RNN网络，RNN的结构图如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071328562.png" alt=""></p>
+<h2 id="RNN的主要应用领域"><a href="#RNN的主要应用领域" class="headerlink" title="RNN的主要应用领域"></a>RNN的主要应用领域</h2><p>可以说只要考虑时间先后顺序的问题都可以使用RNN来解决.这里主要说一下几个常见的应用领域:</p>
+<ul>
+<li>自然语言处理(NLP): 主要有视频处理, 文本生成, 语言模型, 图像处理</li>
+<li>机器翻译, 机器写文章</li>
+<li>语音识别</li>
+<li>图像描述生成</li>
+<li>文本相似度计算</li>
+<li>推荐系统。例如：音乐推荐、网易考拉商品推荐、Youtube视频推荐等新的应用领域。</li>
+</ul>
+<h2 id="RNN的计算过程"><a href="#RNN的计算过程" class="headerlink" title="RNN的计算过程"></a>RNN的计算过程</h2><p>RNN引入了隐状态h（hidden state），h可对序列数据提取特征，接着再转换为输出。首先我们计算$h_{1}$：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071332166.jpg" alt=""></p>
+<p>RNN中，每个步骤使用的参数<code>U,W,b</code>相同，$h_{2},h_{3},h_{4}$的计算方式和$h_{1}$类似，其计算结果如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071333924.jpg" alt=""></p>
+<p>接下来，计算RNN的输出$y_1$，采用Softmax作为激活函数，根据$y_n=f(Wx+b)$，得到$y_1$:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071335563.jpg" alt=""></p>
+<p>使用和$y_1$相同的参数<code>V,c</code>，得到$y_2,y_3,y_4$的输出结构：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071336003.jpg" alt=""></p>
+<h2 id="RNN的建模方式"><a href="#RNN的建模方式" class="headerlink" title="RNN的建模方式"></a>RNN的建模方式</h2><h3 id="一对多（vector-to-sequence-）"><a href="#一对多（vector-to-sequence-）" class="headerlink" title="一对多（vector-to-sequence ）"></a>一对多（vector-to-sequence ）</h3><p>输入是一个单独的值，输出是一个序列。此时，有两种主要建模方式：</p>
+<p>方式一：可只在其中的某一个序列进行计算，比如序列第一个进行输入计算，其建模方式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071339814.jpg" alt=""></p>
+<p>方式二：把输入信息X作为每个阶段的输入，其建模方式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071339457.jpg" alt=""></p>
+<h3 id="多对一（sequence-to-vector-）"><a href="#多对一（sequence-to-vector-）" class="headerlink" title="多对一（sequence-to-vector ）"></a>多对一（sequence-to-vector ）</h3><p>输入是一个序列，输出是一个单独的值，此时通常在最后的一个序列上进行输出变换，其建模如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071340668.jpg" alt=""></p>
+<h3 id="多对多（Encoder-Decoder-）"><a href="#多对多（Encoder-Decoder-）" class="headerlink" title="多对多（Encoder-Decoder ）"></a>多对多（Encoder-Decoder ）</h3><p><strong>步骤一</strong>：将输入数据编码成一个上下文向量c，这部分称为Encoder，得到c有多种方式，最简单的方法就是把Encoder的最后一个隐状态赋值给c，还可以对最后的隐状态做一个变换得到c，也可以对所有的隐状态做变换。其示意如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071341013.jpg" alt=""></p>
+<p><strong>步骤二</strong>：用另一个RNN网络（我们将其称为Decoder）对其进行编码。</p>
+<p>方法一是将步骤一中的c作为初始状态输入到Decoder，示意图如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071342703.jpg" alt=""></p>
+<p>方法二是将c作为Decoder的每一步输入，示意图如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071343619.jpg" alt=""></p>
+<h2 id="RNN中为什么会出现梯度消失？如何解决？"><a href="#RNN中为什么会出现梯度消失？如何解决？" class="headerlink" title="RNN中为什么会出现梯度消失？如何解决？"></a>RNN中为什么会出现梯度消失？如何解决？</h2><p><strong>梯度消失的原因：</strong>sigmoid函数的导数范围是(0,0.25]，tanh函数的导数范围是(0,1]，他们的导数最大都不大于1，如果取tanh或sigmoid函数作为激活函数嵌套到RNN中，那么必然是一堆小数在做乘法，结果就是越乘越小。随着时间序列的不断深入，小数的累乘就会导致梯度越来越小直到接近于0，这就是“梯度消失“现象。实际使用中，会优先选择tanh函数，原因是tanh函数相对于sigmoid函数来说梯度较大，收敛速度更快且引起梯度消失更慢。</p>
+<p> <strong>解决RNN中的梯度消失方法主要有：</strong></p>
+<ol>
+<li>选取更好的激活函数，如Relu激活函数。ReLU函数的左侧导数为0，右侧导数恒为1，这就避免了“梯度消失“的发生。但恒为1的导数容易导致“梯度爆炸“，但设定合适的阈值可以解决这个问题。</li>
+<li>加入BN层，其优点包括可加速收敛、控制过拟合，可以少用或不用Dropout和正则、降低网络对初始化权重不敏感，且能允许使用较大的学习率等。</li>
+<li>改变传播结构，选择更高级的模型，例如：LSTM结构可以有效解决这个问题。</li>
+</ol>
+<h2 id="RNN的注意力机制"><a href="#RNN的注意力机制" class="headerlink" title="RNN的注意力机制"></a>RNN的注意力机制</h2><p>在上述的Encoder-Decoder结构中，Encoder把所有的输入序列都编码成一个统一的语义特征c再解码。因此，c中必须包含原始序列中的所有信息，它的长度就成了限制模型性能的瓶颈。如机器翻译问题，当要翻译的句子较长时，一个c可能存不下那么多信息，就会造成翻译精度的下降。Attention机制通过在每个时间输入不同的c来解决此问题。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071356215.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
