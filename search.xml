@@ -91,12 +91,6 @@
       </tags>
   </entry>
   <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
-  </entry>
-  <entry>
     <title>Python知识点</title>
     <url>/2021/11/07/Python%E6%8B%BE%E9%81%97/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下一些Python的知识点</p>
@@ -273,6 +267,12 @@
         <tag>总结</tag>
         <tag>Python</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
   </entry>
   <entry>
     <title>搭建个人博客</title>
@@ -1304,7 +1304,7 @@
 </ol>
 <h1 id="LableSmoothing"><a href="#LableSmoothing" class="headerlink" title="LableSmoothing"></a>LableSmoothing</h1><p>传统做图像分类采用的损失是交叉熵损失，具体形式是： $\mathcal{L}=-\sum_{i=1}^{m}t_{i}\log(y_{i})$ 。其中， $m$ 表示类别数， $y_{i}$ 表示 $softmax$ 之后每个类的预测概率， $t_{i}$ 表示样本的真实标签值。然而，神经网络 有一个坏习惯，就是在训练过程中对预测变得”过于自信“，这可能会降低它们的泛化能力，从而在新的、看不见的未来数据上表现得同样出色。此外，大型数据集通常会包含标签错误的数据，这意味着神经网络在本质上应该对“正确答案”持怀疑态度，以减少一定程度上围绕错误答案的极端情况下的建模。</p>
 <p>因此，标签平滑所做的就是通过训练网络向<code>1-adjustment</code>目标移动，然后在其余的类上除以这个<code>adjustment</code>，从而使它对自己的答案不那么自信，而不是简单的设为 $1$ 。新标签的表现形式为：$T^{\prime}=(1-\varepsilon)*T+\frac{\varepsilon}{N}$。其中， $N$ 表示类别的个数， $T$ 表示真实标签值， $T^{\prime}$ 表示平滑后的标签。</p>
-<p>例如，原来的标签 $T$ 为 $[0,0,1,0,0]$ ， $\varepsilon=0.1$ ，经过<code>LabelSmoothing</code>之后的标签 $T^{‘}$ 为 $[0.02,0.02,0.92,0.02,0.02]$ 。</p>
+<p>例如，原来的标签 $T$ 为 $[0,0,1,0,0]$ ， $\varepsilon=0.1$ ，经过<code>LabelSmoothing</code>之后的标签 $T^{\prime}$ 为 $[0.02,0.02,0.92,0.02,0.02]$ 。</p>
 <h1 id="batchsize"><a href="#batchsize" class="headerlink" title="batchsize"></a>batchsize</h1><p>（1）<code>batchsize</code>：批大小。在深度学习中，一般采用<code>SGD</code>训练，即每次训练在训练集中取<code>batchsize</code>个样本训练。<br>（2）<code>iteration</code>：1个<code>iteration</code>等于使用<code>batchsize</code>个样本训练一次。<br>（3）<code>epoch</code>：1个<code>epoch</code>等于使用训练集中的全部样本训练一次。<br>如果数据集比较小，则完全可以采用全数据集的形式。这样做的好处有两点：</p>
 <ol>
 <li>全数据集的方向能够更好的代表样本总体，确定其极值所在。</li>
