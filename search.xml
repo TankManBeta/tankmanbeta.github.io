@@ -112,12 +112,6 @@
       </tags>
   </entry>
   <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
-  </entry>
-  <entry>
     <title>搭建个人博客</title>
     <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
@@ -289,6 +283,12 @@
         <tag>hexo</tag>
         <tag>博客</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
   </entry>
   <entry>
     <title>数据库面试题总结</title>
@@ -3781,7 +3781,8 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212052434.png" alt=""></p>
 <p>只不过这里的符合和上图中的不太一样，这里的$w_{ij}$对应的是每个输入胶囊的权重$c_{ij}$， 这里的$\vec{c}_{j}^h$对应上图中的$a$， 这里的$\vec{z}_{j}^h$对应的是输入胶囊的加权组合。这里的$\vec{c}_{i}^l$对应上图中的$v_i$，这里的$S_{ij}$对应的是上图的权重$W_{ij}$，只不过这个可以换成矩阵运算。 和上图中不同的是路由对数$b_{ij}$更新那里，没有了上一层的路由对数值，但感觉这样会有问题。</p>
 <p>所以，这样解释完之后就会发现，其实上面的一顿操作就是说的传统的动态路由机制。</p>
-<h4 id="B2I动态路由"><a href="#B2I动态路由" class="headerlink" title="B2I动态路由"></a>B2I动态路由</h4><p>作者设计的多兴趣提取层就是就是受到了上述胶囊网络的启发。</p>
+<p><strong>B2I动态路由</strong></p>
+<p>作者设计的多兴趣提取层就是就是受到了上述胶囊网络的启发。</p>
 <p>如果把用户的行为序列看成是行为胶囊， 把用户的多兴趣看成兴趣胶囊，那么多兴趣提取层就是利用动态路由机制学习行为胶囊<code>-&gt;</code>兴趣胶囊的映射关系。但是原始路由算法无法直接应用于处理用户行为数据。因此，提出了<strong>行为(Behavior)到兴趣(Interest)（B2I）动态路由</strong>来自适应地将用户的行为聚合到兴趣表示向量中，它与原始路由算法有三个不同之处：</p>
 <ol>
 <li><strong>共享双向映射矩阵</strong>。在初始动态路由中，使用固定的或者说共享的双线性映射矩阵$S$而不是单独的双线性映射矩阵， 在原始的动态路由中，对于每个输出胶囊$\vec{c}_{j}^h$，都会有对应的$S_{ij}$，而这里是每个输出胶囊，都共用一个$S$矩阵。 原因有两个：<ol>
@@ -3799,10 +3800,10 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212053113.png" alt=""></p>
 <p>这种调整兴趣胶囊数量的策略可以为兴趣较小的用户节省一些资源，包括计算和内存资源。这个公式不用多解释，与行为序列长度成正比。</p>
 <p>最终的B2I动态路由算法如下：<br><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212053253.png" alt=""><br>应该很好理解了吧。</p>
-<h3 id="Label-aware-Attention-Layer"><a href="#Label-aware-Attention-Layer" class="headerlink" title="Label-aware Attention Layer"></a>Label-aware Attention Layer</h3><p> 通过多兴趣提取器层，从用户的行为embedding中生成多个兴趣胶囊。不同的兴趣胶囊代表用户兴趣的不同方面，相应的兴趣胶囊用于评估用户对特定类别的偏好。所以，在训练的期间，最后需要设置一个Label-aware的注意力层，对于当前的商品，根据相关性选择最相关的兴趣胶囊。这里其实就是一个普通的注意力机制，和DIN里面的那个注意力层基本上是一模一样，计算公式如下：</p>
+<h6 id="Label-aware-Attention-Layer"><a href="#Label-aware-Attention-Layer" class="headerlink" title="Label-aware Attention Layer"></a>Label-aware Attention Layer</h6><p> 通过多兴趣提取器层，从用户的行为embedding中生成多个兴趣胶囊。不同的兴趣胶囊代表用户兴趣的不同方面，相应的兴趣胶囊用于评估用户对特定类别的偏好。所以，在训练的期间，最后需要设置一个Label-aware的注意力层，对于当前的商品，根据相关性选择最相关的兴趣胶囊。这里其实就是一个普通的注意力机制，和DIN里面的那个注意力层基本上是一模一样，计算公式如下：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212054677.png" alt=""></p>
 <p>首先这里的$\overrightarrow{\boldsymbol{e}}_{i}$表示当前的商品向量，$V_u$表示用户的多兴趣向量组合，里面有$K$个向量，表示用户的$K$的兴趣。用户的各个兴趣向量与目标商品做内积，然后softmax转成权重，然后反乘到多个兴趣向量进行加权求和。 但是这里需要注意的一个小点，就是这里做内积求完相似性之后，先做了一个指数操作，<strong>这个操作其实能放大或缩小相似程度</strong>，至于放大或者缩小的程度，由$p$控制。 比如某个兴趣向量与当前商品非常相似，那么再进行指数操作之后，如果$p$也很大，那么显然这个兴趣向量就占了主导作用。$p$是一个可调节的参数来调整注意力分布。当$p$接近0，每一个兴趣胶囊都得到相同的关注。当$p$大于1时，随着$p$的增加，具有较大值的点积将获得越来越多的权重。考虑极限情况，当$p$趋近于无穷大时，注意机制就变成了一种硬注意，选关注最大的值而忽略其他值。在实验中，发现使用硬注意导致更快的收敛。</p>
-<h3 id="训练与服务"><a href="#训练与服务" class="headerlink" title="训练与服务"></a>训练与服务</h3><p>得到用户向量$\overrightarrow{\boldsymbol{v}}_{u}$和标签物品embedding$\vec{e}_{i}$后，计算用户$u$与标签物品$i$交互的概率：</p>
+<h6 id="训练与服务"><a href="#训练与服务" class="headerlink" title="训练与服务"></a>训练与服务</h6><p>得到用户向量$\overrightarrow{\boldsymbol{v}}_{u}$和标签物品embedding$\vec{e}_{i}$后，计算用户$u$与标签物品$i$交互的概率：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212054847.png" alt=""></p>
 <p>目标函数是：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212054640.png" alt=""></p>
