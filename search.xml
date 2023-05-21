@@ -118,6 +118,179 @@
 ]]></content>
   </entry>
   <entry>
+    <title>搭建个人博客</title>
+    <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
+<a id="more"></a>
+<h1 id="搭建个人博客"><a href="#搭建个人博客" class="headerlink" title="搭建个人博客"></a>搭建个人博客</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
+<li><p>安装<code>Git</code></p>
+</li>
+<li><p>安装<code>Nodejs</code></p>
+<p>安装完成后查看<code>node</code>版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+<p>查看<code>npm</code>包管理器版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+<p>国内安装镜像源很慢，所以可以利用<code>npm</code>安装<code>cnpm</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Hexo框架搭建博客"><a href="#Hexo框架搭建博客" class="headerlink" title="Hexo框架搭建博客"></a>Hexo框架搭建博客</h2><ol>
+<li><p>安装<code>hexo</code>框架</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
+<li><p>查看是否安装成功</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_1.png" alt="pic_1"></p>
+</li>
+<li><p><code>Hexo</code>框架初始化：选择存放博客所有内容的文件夹，命令行中输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_2.png" alt="pic_2"></p>
+</li>
+<li><p>本地启动博客</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到搭建成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_4.png" alt="pic_4"></p>
+</li>
+</ol>
+<h2 id="博客进阶"><a href="#博客进阶" class="headerlink" title="博客进阶"></a>博客进阶</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><ol>
+<li><p>命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>查看是否新建文章成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_5.png" alt="pic_5"></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
+</li>
+<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
+</li>
+</ol>
+<h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
+<li><p>新建<code>GitHub</code>仓库</p>
+<p>注：一定要以<code>username.github.io</code>创建。假如我没有用<code>tankmanbeta.github.io</code>而是用了<code>jeeby.github.io</code>，那么当我浏览器访问博客的时候会出现404错误。这里并不是没有部署成功，而是把它部署在了这里:<code>http://tankmanbeta.github.io/jeeby.github.io</code>。所以，如果想直接<code>tankmanbeta.github.io</code>访问，那么就需要和用户名保持一致。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_7.png" alt="pic_7"></p>
+</li>
+<li><p>修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>，在最后添加如下代码</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">    <span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+<p>注：2020年10月1日起，<code>GitHub</code>把<code>master</code>分支换成<code>main</code>分支，据说与种族歧视有关。</p>
+</li>
+<li><p>安装<code>Git</code>部署的插件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure></li>
+<li><p>输入以下命令，完成博客在<code>GitHub</code>上的部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<code>tankmanbeta.github.io</code>，成功访问</p>
+<p><strong>注：每次部署都需要输入<code>GitHub</code>账号密码的解决方法：修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>的<code>deploy</code>属性：（需要先设置<code>SSH-key</code>）</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="博客主题更改"><a href="#博客主题更改" class="headerlink" title="博客主题更改"></a>博客主题更改</h3><ol>
+<li><p>主题选取地址：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
+</li>
+<li><p>在博客根目录下的<code>themes</code>文件夹下克隆主题：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next</span><br></pre></td></tr></table></figure></li>
+<li><p>打开本地<code>Hexo</code>目录下文件<code>_config.yml</code>，修改<code>theme</code>属性：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">hexo-theme-next</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_8.png" alt="pic_8"></p>
+</li>
+<li><p>输入以下命令，更新博客在<code>GitHub</code>上的部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<code>tankmanbeta.github.io</code>，可以看到主题更新成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_9.png" alt="pic_9"></p>
+</li>
+</ol>
+<h3 id="Next主题切换"><a href="#Next主题切换" class="headerlink" title="Next主题切换"></a>Next主题切换</h3><ol>
+<li>打开<code>next</code>主题下的<code>_config.yml</code>文件，修改<code>theme</code>属性，将其选择成自己想要的</li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="中英文切换"><a href="#中英文切换" class="headerlink" title="中英文切换"></a>中英文切换</h3><ol>
+<li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>Site</code>属性下的<code>language</code>，将其改成<code>zh-CN</code>即可</li>
+<li>重新部署，步骤同上</li>
+<li>同理可以更改<code>title</code>、<code>author</code>等</li>
+</ol>
+<h3 id="添加标签页面"><a href="#添加标签页面" class="headerlink" title="添加标签页面"></a>添加标签页面</h3><ol>
+<li><p>在博客根目录下打开<code>cmd</code>，使用<code>hexo new page tags</code>新建一个页面</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_10.png" alt="pic_10"></p>
+</li>
+<li><p>打开新建的页面，将页面的类型设置为<code>tags</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">title: tags</span></span><br><span class="line"><span class="section">date: 2021-03-31 11:20:38</span></span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改Next主题下的<code>_config.yml</code>，将<code>tags</code>添加到<code>menu</code>属性当中</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+<li><p>重新部署，步骤同上，刷新页面后的结果</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_11.png" alt="pic_11"></p>
+</li>
+<li><p><code>home</code>、<code>categories</code>、<code>archives</code>等操作也是相同的</p>
+</li>
+</ol>
+<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><ol>
+<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+<p>安装成功：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_12.png" alt="pic_12"></p>
+</li>
+<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置（有教程说新版的<code>hexo</code>中，<code>search.xml</code>需要改成<code>search.json</code>，否则部署到服务器搜索图标不能正常显示）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search Config</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改Next主题下的<code>_config.yml</code>，修改<code>local_search</code>属性下的<code>enable</code>，将其改为<code>true</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If auto, trigger search by changing input.</span></span><br><span class="line">  <span class="comment"># If manual, trigger search by pressing enter key or search button.</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="使用外链图片"><a href="#使用外链图片" class="headerlink" title="使用外链图片"></a>使用外链图片</h3><ol>
+<li><p>注册腾讯云账号，选择对象存储</p>
+</li>
+<li><p>创建存储桶</p>
+</li>
+<li><p>创建成功之后上传文件</p>
+</li>
+<li><p>修改安全管理中的防盗链设置</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_13.png" alt="pic_13"></p>
+</li>
+<li><p>修改权限管理中的存储桶访问权限</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_14.png" alt="pic_14"></p>
+</li>
+<li><p>上传图片至存储桶，复制详情中的对象地址</p>
+</li>
+<li><p>在文章中使用外链</p>
+</li>
+<li><p>重新部署，步骤同上</p>
+</li>
+</ol>
+<h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
+<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span> <span class="comment"># 文章字数</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span> <span class="comment"># 阅读时长</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span> <span class="comment"># 所有文章总字数</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span> <span class="comment"># 所有文章阅读中时长</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">separated_meta:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">item_text_total:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">item_text_post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="使用PicGo上传图片至图床"><a href="#使用PicGo上传图片至图床" class="headerlink" title="使用PicGo上传图片至图床"></a>使用PicGo上传图片至图床</h3><ol>
+<li><p>下载PicGo，下载地址<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases </a> </p>
+</li>
+<li><p>腾讯云新建密钥：[访问密钥]—&gt;[API密钥管理]—&gt;[新建密钥]</p>
+</li>
+<li><p>打开安装完成后的PicGo，进行图床设置，设置后的结果为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_15.png" alt="pic_15"></p>
+</li>
+<li><p>点击确定并设置为默认图床，拖动本地图片上传，即可成功</p>
+</li>
+<li>文章中可以直接使用刚刚产生的外链</li>
+<li>重新部署，步骤同上</li>
+</ol>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>hexo</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据库面试题总结</title>
     <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
@@ -309,179 +482,6 @@
       <tags>
         <tag>总结</tag>
         <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>搭建个人博客</title>
-    <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
-<a id="more"></a>
-<h1 id="搭建个人博客"><a href="#搭建个人博客" class="headerlink" title="搭建个人博客"></a>搭建个人博客</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
-<li><p>安装<code>Git</code></p>
-</li>
-<li><p>安装<code>Nodejs</code></p>
-<p>安装完成后查看<code>node</code>版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-<p>查看<code>npm</code>包管理器版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-<p>国内安装镜像源很慢，所以可以利用<code>npm</code>安装<code>cnpm</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="Hexo框架搭建博客"><a href="#Hexo框架搭建博客" class="headerlink" title="Hexo框架搭建博客"></a>Hexo框架搭建博客</h2><ol>
-<li><p>安装<code>hexo</code>框架</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
-<li><p>查看是否安装成功</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_1.png" alt="pic_1"></p>
-</li>
-<li><p><code>Hexo</code>框架初始化：选择存放博客所有内容的文件夹，命令行中输入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_2.png" alt="pic_2"></p>
-</li>
-<li><p>本地启动博客</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到搭建成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_4.png" alt="pic_4"></p>
-</li>
-</ol>
-<h2 id="博客进阶"><a href="#博客进阶" class="headerlink" title="博客进阶"></a>博客进阶</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><ol>
-<li><p>命令行输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></li>
-<li><p>查看是否新建文章成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_5.png" alt="pic_5"></p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
-</li>
-<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
-</li>
-</ol>
-<h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
-<li><p>新建<code>GitHub</code>仓库</p>
-<p>注：一定要以<code>username.github.io</code>创建。假如我没有用<code>tankmanbeta.github.io</code>而是用了<code>jeeby.github.io</code>，那么当我浏览器访问博客的时候会出现404错误。这里并不是没有部署成功，而是把它部署在了这里:<code>http://tankmanbeta.github.io/jeeby.github.io</code>。所以，如果想直接<code>tankmanbeta.github.io</code>访问，那么就需要和用户名保持一致。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_7.png" alt="pic_7"></p>
-</li>
-<li><p>修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>，在最后添加如下代码</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">    <span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-<p>注：2020年10月1日起，<code>GitHub</code>把<code>master</code>分支换成<code>main</code>分支，据说与种族歧视有关。</p>
-</li>
-<li><p>安装<code>Git</code>部署的插件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure></li>
-<li><p>输入以下命令，完成博客在<code>GitHub</code>上的部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<code>tankmanbeta.github.io</code>，成功访问</p>
-<p><strong>注：每次部署都需要输入<code>GitHub</code>账号密码的解决方法：修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>的<code>deploy</code>属性：（需要先设置<code>SSH-key</code>）</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="博客主题更改"><a href="#博客主题更改" class="headerlink" title="博客主题更改"></a>博客主题更改</h3><ol>
-<li><p>主题选取地址：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
-</li>
-<li><p>在博客根目录下的<code>themes</code>文件夹下克隆主题：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next</span><br></pre></td></tr></table></figure></li>
-<li><p>打开本地<code>Hexo</code>目录下文件<code>_config.yml</code>，修改<code>theme</code>属性：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">hexo-theme-next</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_8.png" alt="pic_8"></p>
-</li>
-<li><p>输入以下命令，更新博客在<code>GitHub</code>上的部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<code>tankmanbeta.github.io</code>，可以看到主题更新成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_9.png" alt="pic_9"></p>
-</li>
-</ol>
-<h3 id="Next主题切换"><a href="#Next主题切换" class="headerlink" title="Next主题切换"></a>Next主题切换</h3><ol>
-<li>打开<code>next</code>主题下的<code>_config.yml</code>文件，修改<code>theme</code>属性，将其选择成自己想要的</li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="中英文切换"><a href="#中英文切换" class="headerlink" title="中英文切换"></a>中英文切换</h3><ol>
-<li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>Site</code>属性下的<code>language</code>，将其改成<code>zh-CN</code>即可</li>
-<li>重新部署，步骤同上</li>
-<li>同理可以更改<code>title</code>、<code>author</code>等</li>
-</ol>
-<h3 id="添加标签页面"><a href="#添加标签页面" class="headerlink" title="添加标签页面"></a>添加标签页面</h3><ol>
-<li><p>在博客根目录下打开<code>cmd</code>，使用<code>hexo new page tags</code>新建一个页面</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_10.png" alt="pic_10"></p>
-</li>
-<li><p>打开新建的页面，将页面的类型设置为<code>tags</code></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">title: tags</span></span><br><span class="line"><span class="section">date: 2021-03-31 11:20:38</span></span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改Next主题下的<code>_config.yml</code>，将<code>tags</code>添加到<code>menu</code>属性当中</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-<li><p>重新部署，步骤同上，刷新页面后的结果</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_11.png" alt="pic_11"></p>
-</li>
-<li><p><code>home</code>、<code>categories</code>、<code>archives</code>等操作也是相同的</p>
-</li>
-</ol>
-<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><ol>
-<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
-<p>安装成功：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_12.png" alt="pic_12"></p>
-</li>
-<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置（有教程说新版的<code>hexo</code>中，<code>search.xml</code>需要改成<code>search.json</code>，否则部署到服务器搜索图标不能正常显示）</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search Config</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改Next主题下的<code>_config.yml</code>，修改<code>local_search</code>属性下的<code>enable</code>，将其改为<code>true</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If auto, trigger search by changing input.</span></span><br><span class="line">  <span class="comment"># If manual, trigger search by pressing enter key or search button.</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="使用外链图片"><a href="#使用外链图片" class="headerlink" title="使用外链图片"></a>使用外链图片</h3><ol>
-<li><p>注册腾讯云账号，选择对象存储</p>
-</li>
-<li><p>创建存储桶</p>
-</li>
-<li><p>创建成功之后上传文件</p>
-</li>
-<li><p>修改安全管理中的防盗链设置</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_13.png" alt="pic_13"></p>
-</li>
-<li><p>修改权限管理中的存储桶访问权限</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_14.png" alt="pic_14"></p>
-</li>
-<li><p>上传图片至存储桶，复制详情中的对象地址</p>
-</li>
-<li><p>在文章中使用外链</p>
-</li>
-<li><p>重新部署，步骤同上</p>
-</li>
-</ol>
-<h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
-<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span> <span class="comment"># 文章字数</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span> <span class="comment"># 阅读时长</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span> <span class="comment"># 所有文章总字数</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span> <span class="comment"># 所有文章阅读中时长</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">separated_meta:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">item_text_total:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">item_text_post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="使用PicGo上传图片至图床"><a href="#使用PicGo上传图片至图床" class="headerlink" title="使用PicGo上传图片至图床"></a>使用PicGo上传图片至图床</h3><ol>
-<li><p>下载PicGo，下载地址<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases </a> </p>
-</li>
-<li><p>腾讯云新建密钥：[访问密钥]—&gt;[API密钥管理]—&gt;[新建密钥]</p>
-</li>
-<li><p>打开安装完成后的PicGo，进行图床设置，设置后的结果为</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_15.png" alt="pic_15"></p>
-</li>
-<li><p>点击确定并设置为默认图床，拖动本地图片上传，即可成功</p>
-</li>
-<li>文章中可以直接使用刚刚产生的外链</li>
-<li>重新部署，步骤同上</li>
-</ol>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>hexo</tag>
-        <tag>博客</tag>
       </tags>
   </entry>
   <entry>
@@ -3417,7 +3417,7 @@
 <li>用于描述短期实时性的个性化特征 Embedding：<strong>listing Embeddings</strong></li>
 <li>用于描述长期的个性化特征 Embedding：<strong>user-type &amp; listing type Embeddings</strong></li>
 </ul>
-<h5 id="YouTubeDNN召回"><a href="#YouTubeDNN召回" class="headerlink" title="YouTubeDNN召回"></a>YouTubeDNN召回</h5><p>召回模型的结构如下：</p>
+<h4 id="YouTubeDNN召回"><a href="#YouTubeDNN召回" class="headerlink" title="YouTubeDNN召回"></a>YouTubeDNN召回</h4><p>召回模型的结构如下：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305202146491.png" alt=""></p>
 <p>它的输入主要是用户侧的特征，包括用户观看的历史video序列， 用户搜索的历史tokens， 然后就是用户的人文特征，比如地理位置， 性别，年龄这些。</p>
 <ul>
@@ -3432,6 +3432,133 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305202201783.png" alt=""></p>
 </li>
 </ul>
+<h4 id="双塔召回"><a href="#双塔召回" class="headerlink" title="双塔召回"></a>双塔召回</h4><h5 id="经典双塔"><a href="#经典双塔" class="headerlink" title="经典双塔"></a>经典双塔</h5><h6 id="经典双塔模型"><a href="#经典双塔模型" class="headerlink" title="经典双塔模型"></a>经典双塔模型</h6><p>在推荐系统中，最为关键的问题是如何做好用户与item的匹配问题，因此对于推荐系统中DSSM模型的则是为 user 和 item 分别构建独立的子网络塔式结构，利用user和item的曝光或点击日期进行训练，最终得到user侧的embedding和item侧的embedding。因此在推荐系统中，常见的模型结构如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211446441.png" alt=""></p>
+<p>从模型结构上来看，主要包括两个部分：user侧塔和item侧塔，对于每个塔分别是一个DNN结构。通过两侧的特征输入，通过DNN模块到user和item的embedding，然后计算两者之间的相似度(常用內积或者余弦值，下面会说这两种方式的联系和区别)，因此对于user和item两侧最终得到的embedding维度需要保持一致，即最后一层全连接层隐藏单元个数相同。</p>
+<p>在召回模型中，将这种检索行为视为多类分类问题，类似于YouTubeDNN模型。将物料库中所有的item视为一个类别，因此损失函数需要计算每个类的概率值：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211448528.png" alt=""></p>
+<p>其中$s(x,y)$表示两个向量的相似度，$P(y|x;\theta)$表示预测类别的概率，$M$表示物料库所有的item。但是在实际场景中，由于物料库中的item数量巨大，在计算上式时会十分的耗时，因此会采样一定的数量的负样本来近似计算，后面针对负样本的采样做一些简单介绍。</p>
+<p>以上就是推荐系统中经典的双塔模型，之所以在实际应用中非常常见，是因为<strong>在海量的候选数据进行召回的场景下，速度很快，效果说不上极端好，但一般而言效果也够用了</strong>。之所以双塔模型在服务时速度很快，是因为模型结构简单(两侧没有特征交叉)，但这也带来了问题，双塔的结构无法考虑两侧特征之间的交互信息，<strong>在一定程度上牺牲掉模型的部分精准性</strong>。例如在精排模型中，来自user侧和item侧的特征会在第一层NLP层就可以做细粒度的特征交互，而对于双塔模型，user侧和item侧的特征只会在最后的內积计算时发生，这就导致很多有用的信息在经过DNN结构时就已经被其他特征所模糊了，因此双塔结构由于其结构问题先天就会存在这样的问题。下面针对这个问题来看看一下现有模型的解决思路。</p>
+<h6 id="SENet双塔模型"><a href="#SENet双塔模型" class="headerlink" title="SENet双塔模型"></a>SENet双塔模型</h6><p>SENet由Momenta在2017年提出，当时是一种应用于图像处理的新型网络结构。后来张俊林大佬将SENet引入了精排模型<strong>FiBiNET</strong>中，其作用是为了将大量长尾的低频特征抛弃，弱化不靠谱低频特征embedding的负面影响，强化高频特征的重要作用。那SENet结构到底是怎么样的呢，为什么可以起到特征筛选的作用？</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211452527.png" alt=""></p>
+<p>从上图可以看出SENET主要分为三个步骤Squeeze, Excitation, Re-weight：</p>
+<ul>
+<li><p>Squeeze阶段：我们对每个特征的Embedding向量进行数据压缩与信息汇总，即在Embedding维度计算均值：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211453721.png" alt=""></p>
+<p>其中k表示Embedding的维度，Squeeze阶段是将每个特征的Squeeze转换成单一的数值。</p>
+</li>
+<li><p>Excitation阶段：这阶段是根据上一阶段得到的向量进行缩放，即将上阶段的得到的 $1 \times f$ 的向量$Z$先压缩成 $1 \times \frac{f}{r}$ 长度，然后在放回到  $1 \times f$ 的维度，其中$r$表示压缩的程度。这个过程的具体操作就是经过两层DNN。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211454010.png" alt=""></p>
+<p>该过程可以理解为：对于当前所有输入的特征，通过相互发生关联，来动态地判断哪些特征重要，哪些特征不重要，而这体现在Excitation阶段的输出结果 $A$，其反应每个特征对应的重要性权重。</p>
+</li>
+<li><p>Re-weight阶段：是将Excitation阶段得到的每个特征对应的权重 $A$ 再乘回到特征对应的Embedding里，就完成了对特征重要性的加权操作。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211454382.png" alt=""></p>
+</li>
+</ul>
+<p>以上简单的介绍了一下SENet结构，可以发现这种结构可以通过对特征embedding先压缩，再交互，再选择，进而实现特征选择的效果。</p>
+<p>此外张俊林大佬还将SENet应用于双塔模型中<strong>（SENet双塔模型）</strong>，模型结构如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211518409.png" alt=""></p>
+<p>从上图可以发现，具体地是将双塔中的user塔和Item侧塔的特征输入部分加上一个SENet模块，通过SENet网络，动态地学习这些特征的重要性，通过小权重抑制噪音或者无效低频特征，通过大权重放大重要特征影响的目的。</p>
+<p>之所以SENet双塔模型是有效的呢？张俊林老师的解释是：双塔模型的问题在于User侧特征和Item侧特征交互太晚，在高层交互，会造成细节信息，也就是具体特征信息的损失，影响两侧特征交叉的效果。而SENet模块在最底层就进行了特征的过滤，使得很多无效低频特征即使被过滤掉，这样更多有用的信息被保留到了双塔的最高层，使得两侧的交叉效果很好；同时由于SENet模块选择出更加重要的信息，使得User侧和Item侧特征之间的交互表达方面增强了DNN双塔的能力。</p>
+<p>因此SENet双塔模型主要是从特征选择的角度，提高了两侧特征交叉的有效性，减少了噪音对有效信息的干扰，进而提高了双塔模型的效果。此外，除了这样的方式，还可以通过增加通道的方式来增强两侧的信息交互。即对于user和item两侧不仅仅使用一个DNN结构，而是可以通过不同结构(如FM，DCN等)来建模user和item的自身特征交叉，例如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211523344.png" alt=""></p>
+<p>这样对于user和item侧会得到多个embedding，类似于多兴趣的概念。通过得到的多个user和item的embedding，然后分别计算余弦值再相加（两侧的Embedding维度需要对齐），进而增加了双塔两侧的信息交互。而这种方法在腾讯进行过尝试，他们提出的“并联”双塔就是按照这样的思路。</p>
+<h6 id="多目标的双塔模型"><a href="#多目标的双塔模型" class="headerlink" title="多目标的双塔模型"></a>多目标的双塔模型</h6><p>现如今多任务学习在实际的应用场景也十分的常见，主要是因为实际场景中业务复杂，往往有很多的衡量指标，例如点击，评论，收藏，关注，转发等。在多任务学习中，往往会针对不同的任务使用一个独有的tower，然后优化不同任务损失。那么针对双塔模型应该如何构建多任务学习框架呢？</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211528560.png" alt=""></p>
+<p>如上图所示，在user侧和item侧分别通过多个通道(DNN结构)为每个任务得到一个user embedding和item embedding，然后针对不同的目标分别计算user 和 item 的相似度，并计算各个目标的损失，最后的优化目标可以是多个任务损失之和，或者使用多任务学习中的动态损失权重。</p>
+<p>这种模型结构，可以针对多目标进行联合建模，通过多任务学习的结构，一方面可以利用不同任务之间的信息共享，为一些稀疏特征提供其他任务中的迁移信息，另一方面可以在召回时，直接使用一个模型得到多个目标预测，解决了多个模型维护困难的问题。也就是说，在线上通过这一个模型就可以同时得到多个指标，例如视频场景，一个模型就可以直接得到点赞，品论，转发等目标的预测值，进而通过这些值计算分数获得最终的Top-K召回结果。</p>
+<h6 id="模型的应用"><a href="#模型的应用" class="headerlink" title="模型的应用"></a>模型的应用</h6><p>在实际的工业应用场景中，分为离线训练和在线服务两个环节。</p>
+<ul>
+<li>在离线训练阶段，同过训练数据，训练好模型参数。然后将候选库中所有的item集合离线计算得到对应的embedding，并存储进ANN检索系统，比如faiss。为什么将离线计算item集合，主要是因为item的会相对稳定，不会频繁的变动，而对于用户而言，如果将用户行为作为user侧的输入，那么user的embedding会随着用户行为的发生而不断变化，因此对于user侧的embedding需要实时的计算。</li>
+<li>在线服务阶段，正是因为用户的行为变化需要被即使的反应在用户的embedding中，以更快的反应用户当前的兴趣，即可以实时地体现用户即时兴趣的变化。因此在线服务阶段需要实时的通过拼接用户特征，输入到user侧的DNN当中，进而得到user embedding，在通过user embedding去 faiss中进行ANN检索，召回最相似的K个item embedding。</li>
+</ul>
+<p>可以看到双塔模型结构十分的适合实际的应用场景，在快速服务的同时，还可以更快的反应用户即时兴趣的变化。</p>
+<h5 id="Youtube双塔"><a href="#Youtube双塔" class="headerlink" title="Youtube双塔"></a>Youtube双塔</h5><p><strong>文章核心思想</strong></p>
+<ul>
+<li>在大规模的推荐系统中，利用双塔模型对user-item对的交互关系进行建模，学习 $\{user，context\}$ 向量与 $\{item\}$ 向量.</li>
+<li>针对大规模流数据，提出in-batch softmax损失函数与流数据频率估计方法(Streaming Frequency Estimation)，可以更好的适应item的多种数据分布。</li>
+</ul>
+<p><strong>文章主要贡献</strong></p>
+<ul>
+<li>提出了改进的流数据频率估计方法：针对流数据来估计item出现的频率，利用实验分析估计结果的偏差与方差，模拟实验证明该方法在数据动态变化时的功效</li>
+<li>提出了双塔模型架构：提供了一个针对大规模的检索推荐系统，包括了 in-batch softmax 损失函数与流数据频率估计方法，减少了负采样在每个batch中可能会出现的采样偏差问题。</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211603934.png" alt=""></p>
+<p>模型结构如上图所示，论文旨在对用户和物品建立两个不同的模型，将它们投影到相同维度的空间：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211605627.png" alt=""></p>
+<p>模型的输出为用户与物品向量的内积：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211606515.png" alt=""></p>
+<p>模型的目标是为了学习参数 $\theta$， 样本集被表示为如下格式 $\{query, item, reward \}$：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211606561.png" alt=""></p>
+<ul>
+<li>在推荐系统中，$r_i$ 可以扩展来捕获用户对不同候选物品的参与度。</li>
+<li>例如，在新闻推荐中 $r_i$ 可以是用户在某篇文章上花费的时间。</li>
+</ul>
+<h6 id="模型流程"><a href="#模型流程" class="headerlink" title="模型流程"></a>模型流程</h6><ol>
+<li><p>给定用户 $x$，基于 softmax 函数从物料库 $M$ 中选中候选物品 $y$ 的概率为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211612604.png" alt=""></p>
+<ul>
+<li><p>考虑到相关奖励 $r_i$ ，加权对数似然函数的定义如下：  </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211612034.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>原表达式 $\mathcal{P}(y \mid x ; \theta)$ 中的分母需要遍历物料库中所有的物品，计算成本太高，故对分母中的物品要进行负采样。为了提高负采样的速度，一般是直接从训练样本所在 Batch 中进行负样本选择。于是有：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211613957.png" alt=""></p>
+<ul>
+<li>其中，$B$ 表示与样本 $\{x_i,y_j\}$ 同在一个 Batch 的物品集合。</li>
+<li>举例来说，对于用户1，Batch 内其他用户的正样本是用户1的负样本。</li>
+</ul>
+</li>
+<li><p>一般而言，负采样分为 <strong>Easy Negative Sample</strong> 和 <strong>Hard Negative Sample</strong> 。</p>
+<ul>
+<li><p>这里的 Easy Negative Sample 一般是直接从<strong>全局物料库</strong>中随机选取的负样本，由于每个用户感兴趣的物品有限，而物料库又往往很大，故即便从物料库中随机选取负样本，也大概率是用户不感兴趣的。</p>
+</li>
+<li><p>在真实场景中，热门物品占据了绝大多数的购买点击。而这些热门物品往往只占据物料库物品的少部分，绝大部分物品是冷门物品。</p>
+<ul>
+<li>在物料库中随机选择负样本，往往被选中的是冷门物品。这就会造成马太效应，热门物品更热，冷门物品更冷。</li>
+<li>一种解决方式时，在对训练样本进行负采样时，提高热门物品被选为负样本的概率，工业界的经验做法是物品被选为负样本的概率正比于物品点击次数的 0.75 次幂。</li>
+</ul>
+</li>
+<li><p>前面提到 Batch 内进行负采样，热门物品出现在一个 Batch 的概率正比于它的点击次数。问题是，热门物品被选为负样本的概率过高了（一般正比于点击次数的 0.75 次幂），导致热门物品被过度打压。</p>
+</li>
+<li><p>在本文中，为了避免对热门物品进行过度惩罚，进行了纠偏。公式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211616699.png" alt=""></p>
+<ul>
+<li>在内积 $s(x_i,y_j)$ 的基础上，减去了物品 $j$ 的采样概率的对数。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>纠偏后，物品 $y$ 被选中的概率为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211617066.png" alt=""></p>
+<ul>
+<li>此时，batch loss function 的表示式如下：</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211617038.png" alt=""></p>
+<ul>
+<li>通过 SGD 和学习率，来优化模型参数 $\theta$ ：</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211617296.png" alt=""></p>
+</li>
+<li><p>Normalization and Temperature</p>
+<ul>
+<li><p>最后一层，得到用户和物品的特征 Embedding 表示后，再进行进行 $l2$ 归一化：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211618509.png" alt=""></p>
+<ul>
+<li>本质上，其实就是将用户和物品的向量内积转换为了余弦相似度。</li>
+</ul>
+</li>
+<li><p>对于内积的结果，再除以温度参数 $\tau$：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211618888.png" alt=""></p>
+<ul>
+<li>论文提到，这样有利于提高预测准确度。</li>
+<li>从实验结果来看，温度参数 $\tau$ 一般小于 $1$，所以感觉就是放大了内积结果。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
 <h3 id="基于图的召回"><a href="#基于图的召回" class="headerlink" title="基于图的召回"></a>基于图的召回</h3><h4 id="EGES"><a href="#EGES" class="headerlink" title="EGES"></a>EGES</h4><p><strong>Billion-scale Commodity Embedding for E-commerce Recommendation in Alibaba</strong></p>
 <p>在电商领域，推荐已经是不可或缺的一部分，旨在为用户的喜好提供有趣的物品，并且成为淘宝和阿里巴巴收入的重要引擎。尽管学术界和产业界的各种推荐方法都取得了成功，如协同过滤、基于内容的方法和基于深度学习的方法，但由于用户和项目的数十亿规模，传统的方法已经不能满足于实际的需求，主要的问题体现在三个方面：</p>
 <ul>
@@ -3444,6 +3571,355 @@
 <p>考虑可扩展性的问题，图嵌入的随机游走方式可以在物品图上捕获<strong>物品之间高阶相似性</strong>，即Base Graph Embedding（BGE）方法。其不同于CF方法，除了考虑物品的共现，还考虑到了行为的序列信息。</p>
 <p>考虑到稀疏性和冷启物品问题，在图嵌入的基础上，考虑了节点的属性信息。希望具有相似属性的物品可以在空间上相似，即希望通过头部物品，提高属性信息的泛化能力，进而帮助尾部和冷启物品获取更加准确的embedding，即Graph Embedding with Side Information（GES）方法。</p>
 <p>考虑到不同属性信息对于学习embedding的贡献不同，因此在聚合不同的属性信息时，动态的学习不同属性对于学习节点的embedding所参与的重要性权重，即Enhanced Graph Embedding with Side Information（EGES）。</p>
+<h5 id="构建物品图"><a href="#构建物品图" class="headerlink" title="构建物品图"></a>构建物品图</h5><p>在介绍三个模型之前，我们首先需要构建好item-item图。由于基于CF的方法仅考虑物品之间的共现，忽略了行为的序列信息(即序列中相邻的物品之间的语义信息)，因此item-item图的构建方式如下图所示。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211633299.png" alt=""></p>
+<p>首先根据用户的session行为序列构建网络结构，即序列中相邻两个item之间在存在边，并且是有向带权图。物品图边上的权重为所有用户行为序列中两个 item 共现的次数，最终构造出来简单的有向有权图。</p>
+<p>值得注意的是，本文通过行为序列中物品的共现来表示其中的<strong>语义信息</strong>，并将这种语义信息理解为<strong>物品之间的相似性</strong>，并将共现频次作为相似性的一个度量值。其次基于用户的历史行为序列数据，一般不太可能取全量的历史序列数据，一方面行为数据量过大，一方面用户的兴趣会随时间发生演变，因此在处理行为序列时会设置了一个窗口来截断历史序列数据，切分出来的序列称为session。</p>
+<p>由于实际中会存在一些现实因素，数据中会有一些噪音，需要特殊处理，主要分为三个方面：</p>
+<ul>
+<li>从行为方面考虑，用户在点击后停留的时间少于1秒，可以认为是误点，需要移除。</li>
+<li>从用户方面考虑，淘宝场景中会有一些过度活跃用户。本文对活跃用户的定义是三月内购买商品数超过1000，或者点击数超过3500，就可以认为是一个无效用户，需要去除。</li>
+<li>从商品方面考虑，存在一些商品频繁的修改，即ID对应的商品频繁更新，这使得这个ID可能变成一个完全不同的商品，这就需要移除与这个ID相关的这个商品。</li>
+</ul>
+<h5 id="图嵌入-BGE"><a href="#图嵌入-BGE" class="headerlink" title="图嵌入(BGE)"></a>图嵌入(BGE)</h5><p>对于图嵌入模型，第一步先进行随机游走得到物品序列；第二步通过skip-gram为图上节点生成embedding。那么对于随机游走的思想：如何利用随机游走在图中生成的序列？不同于DeepWalk中的随机游走，本文的采样策略使用的是带权游走策略，不同权重的游走到的概率不同，（其本质上就是node2vec），传统的node2vec方法可以直接支持有向带权图。因此在给定图的邻接矩阵M后(表示节点之间的边权重)，随机游走中每次转移的概率为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211638065.png" alt=""></p>
+<p>其中$M_{ij}$为边$e_{ij}$上的权重，$N_{+}(v_i)$表示节点$v_i$所有邻居节点集合，并且随机游走的转移概率的对每个节点所有邻接边权重的归一化结果。在随机游走之后，每个item得到一个序列。</p>
+<p>然后类似于word2vec，为每个item学习embedding，于是优化目标如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211639379.png" alt=""></p>
+<p>其中，w 为窗口大小。考虑独立性假设的话，上面的式子可以进一步化简：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211640294.png" alt=""></p>
+<p>这样看起来就很直观了，在已知物品 i 时，最大化序列中(上下文)其他物品 j 的条件概率。为了近似计算，采样了Negative sampling，上面的优化目标可以化简得到如下式子：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211640558.png" alt=""></p>
+<p>其中$N(v_i)’$表示负样本集合，负采样个数越多，结果越好。</p>
+<h5 id="基于side-information的图嵌入（GES）"><a href="#基于side-information的图嵌入（GES）" class="headerlink" title="基于side information的图嵌入（GES）"></a>基于side information的图嵌入（GES）</h5><p>尽管BGE将行为序列关系编码进物品的embedding中，从而从用户行为中捕捉高阶相似性。但是这里有个问题，对于新加入的商品，由于未和用户产生过交互，所以不会出现在item-item图上，进而模型无法学习到其embedding，即无法解决冷启动问题。</p>
+<p>为了解决冷启问题，本文通过使用side information（ 类别，店铺, 价格等）加入模型的训练过程中，使得模型最终的泛化能力体现在商品的side information上。这样通过<strong>side information学习到的embedding来表示具体的商品</strong>，使得相似side information的物品可以得到在空间上相近的表示，进而来增强 BGE。</p>
+<p>那么对于每个商品如何通过side information的embedidng来表示呢？对于随机游走之后得到的商品序列，其中每个商品由其id和属性(品牌，价格等)组成。用公式表示，对于序列中的每一个物品可以得到$W^0_V,…W_V^n$,（n+1）个向量表示，$W^0_V$表示物品v，剩下是side information的embedding。然后将所有的side information聚合成一个整体来表示物品，聚合方式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211642022.png" alt=""></p>
+<p>其中，$H_v$是商品 v 的聚合后的 embedding 向量。</p>
+<h5 id="增强型EGS（EGES）"><a href="#增强型EGS（EGES）" class="headerlink" title="增强型EGS（EGES）"></a>增强型EGS（EGES）</h5><p>尽管 GES 相比 BGE 在性能上有了提升，但是在聚合多个属性向量得到商品的embedding的过程中，不同 side information的聚合依然存在问题。在GES中采用 average-pooling 是在假设不同种类的 side information 对商品embedding的贡献是相等的，但实际中却并非如此。例如，购买 Iphone 的用户更可能倾向于 Macbook 或者 Ipad，相比于价格属性，品牌属性相对于苹果类商品具有更重要的影响。因此，根据实际现状，不同类型的 side information 对商品的表示是具有不同的贡献值的。</p>
+<p>针对上述问题，作者提出了weight pooling方法来聚合不同类型的 side information。具体地，EGES 与 GES 的区别在聚合不同类型 side information计算不同的权重，根据权重聚合 side information 得到商品的embedding，如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211645673.png" alt=""></p>
+<p>其中 $a_i$ 表示每个side information 用于计算权重的参数向量，最终通过下面的公式得到商品的embedding：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211646357.png" alt=""></p>
+<p>这里对参数 $a_v^j$ 先做指数变换，目的是为了保证每个边界信息的贡献都能大于0，然后通过归一化为每个特征得到一个o-1之内的权重。最终物品的embedding通过权重进行加权聚合得到，进而优化损失函数：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211646534.png" alt=""></p>
+<p> y是标签符号，等于1时表示正样本，等于0时表示负样本。$H_v$表示商品 v 的最终的隐层表示，$Z_u$表示训练数据中的上下文节点的embedding。</p>
+<h4 id="PinSAGE"><a href="#PinSAGE" class="headerlink" title="PinSAGE"></a>PinSAGE</h4><p><strong>Graph Convolutional Neural Networks for Web-Scale Recommender Systems</strong></p>
+<p>该论文是斯坦福大学和Pinterest公司与2018年联合发表与KDD上的一篇关于GCN成功应用于工业级推荐系统的工作。该论文提到的PinSage模型，是在GraphSAGE的理论基础进行了更改，以适用于实际的工业场景。下面将简单介绍一下GraphSAGE的原理，以及Pinsage的核心和细节。</p>
+<h5 id="GraphSAGE原理"><a href="#GraphSAGE原理" class="headerlink" title="GraphSAGE原理"></a>GraphSAGE原理</h5><p>GraphSAGE提出的前提是因为基于直推式(transductive)学习的图卷积网络无法适应工业界的大多数业务场景。我们知道的是，基于直推式学习的图卷积网络是通过拉普拉斯矩阵直接为图上的每个节点学习embedding表示，每次学习是针对于当前图上所有的节点。然而在实际的工业场景中，图中的结构和节点都不可能是固定的，会随着时间的变化而发生改变。例如在Pinterest公司的场景下，每分钟都会上传新的照片素材，同时也会有新用户不断的注册，那么图上的节点会不断的变化。在这样的场景中，直推式学习的方法就需要不断的重新训练才能够为新加入的节点学习embedding，导致在实际场景中无法投入使用。</p>
+<p>在这样的背景下，斯坦福大学提出了一种归纳(inductive)学习的GCN方法——GraphSAGE，即<strong>通过聚合邻居信息的方式为给定的节点学习embedding</strong>。不同于直推式(transductive)学习，GraphSAGE是通过学习聚合节点邻居生成节点Embedding的函数的方式，为任意节点学习embedding，进而将GCN扩展成归纳学习任务。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211711238.png" alt=""></p>
+<p>上面这个公式可以非常直观的让我们理解GraphSAGE的原理。</p>
+<ul>
+<li>$h_v^0$表示图上节点的初始化表示，等同于节点自身的特征。</li>
+<li>$h_v^k$表示第k层卷积后的节点表示，其来源于两个部分：<ul>
+<li>第一部分来源于节点v的邻居节点集合$N(v)$，利用邻居节点的第k-1层卷积后的特征$h_u^{k-1}$进行 （ $\sum_{u \in N(v)} \frac{h_u^{k-1}}{|N(v)|}$ ）后，在进行线性变换。这里<strong>借助图上的边将邻居节点的信息通过边关系聚合到节点表示中(简称卷积操作)</strong>。</li>
+<li>第二部分来源于节点v的第k-1层卷积后的特征$h_v^{k-1}$，进行线性变换。总的来说图卷积的思想是<strong>在对自身做多次非线性变换时，同时利用边关系聚合邻居节点信息。</strong></li>
+</ul>
+</li>
+<li>最后一次卷积结果作为节点的最终表示$Z_v$，以用于下游任务(节点分类，链路预测或节点召回)。</li>
+</ul>
+<p>可以发现相比传统的方法(MLP，CNN，DeepWalk 或 EGES)，GCN或GraphSAGE存在一些优势：</p>
+<ol>
+<li>相比于传统的深度学习方法(MLP,CNN)，GCN在对自身节点进行非线性变换时，同时考虑了图中的邻接关系。从CNN的角度理解，GCN通过堆叠多层结构在图结构数据上拥有更大的<strong>感受野</strong>，利用更加广域内的信息。</li>
+<li>相比于图嵌入学习方法(DeepWalk，EGES)，GCN在学习节点表示的过程中，在利用节点自身的属性信息之外，更好的利用图结构上的边信息。相比于借助随机采样的方式来使用边信息，GCN的方式能从全局的角度利用的邻居信息。此外，类似于GraphSAGE这种归纳(inductive)学习的GCN方法，通过学习聚合节点邻居生成节点Embedding的函数的方式，更适用于图结构和节点会不断变化的工业场景。</li>
+</ol>
+<p>在采样得到目标节点的邻居集之后，那么如何聚合邻居节点的信息来更新目标节点的嵌入表示呢？下面就来看看GraphSAGE中提及的四个聚合函数。</p>
+<h5 id="GraphSAGE的采样和聚合"><a href="#GraphSAGE的采样和聚合" class="headerlink" title="GraphSAGE的采样和聚合"></a>GraphSAGE的采样和聚合</h5><p>通过上面的公式可以知道，得到节点的表示主要依赖于两部分，其中一部分其邻居节点。因此对于GraphSAGE的关键主要分为两步：Sample采样和Aggregate聚合。其中Sample的作用是从庞大的邻居节点中选出用于聚合的邻居节点集合$N(v)$以达到降低迭代计算复杂度，而聚合操作就是如何利用邻居节点的表示来更新节点v的表示，已达到聚合作用。具体的过程如下伪代码所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211716358.png" alt=""></p>
+<p>GraphSAGE的minibatch算法的思路是针对Batch内的所有节点，通过采样和聚合节点，为每一个节点学习一个embedding。</p>
+<p><strong>邻居采样</strong></p>
+<p>GraphSAGE的具体采样过程是，首先根据中心节点集合$B^k$，对集合中每个中心节点通过随机采样的方式对其邻居节点采样固定数量S个(如果邻居节点数量大于S，采用无放回抽样；如果小于S，则采用有放回抽样)，形成的集合表示为$B^{k-1}$；以此类推每次都是为前一个得到的集合的每个节点随机采样S个邻居，最终得到第k层的所有需要参与计算的节点集合$B^{0}$。值得注意的有两点：<strong>为什么需要采样并且固定采样数量S？</strong> <strong>为什么第k层所采样的节点集合表示为$B^0$？</strong></p>
+<p>进行邻居采样并固定采样数量S主要是因为：1. 采样邻居节点避免了在全图的搜索以及使用全部邻居节点所导致计算复杂度高的问题；2. 可以通过采样使得部分节点更同质化，即两个相似的节点具有相同表达形式。3. 采样固定数量是保持每个batch的计算占用空间是固定的，方便进行批量训练。</p>
+<p>第k层所采样的节点集合表示为$B^0$主要是因为：采样和聚合过程是相反的，即采样时我们是从中心节点组层进行采样，而聚合的过程是从中心节点的第k阶邻居逐层聚合得到前一层的节点表示。因此可以认为聚合阶段是：将k阶邻居的信息聚合到k-1阶邻居上，k-1阶邻居的信息聚合到k-2阶邻居上，….，1阶邻居的信息聚合到中心节点上的过程。</p>
+<p><strong>聚合函数</strong></p>
+<p>如何对于采样到的节点集进行聚合，介绍的4种方式：Mean 聚合、Convolutional 聚合、LSTM聚合以及Pooling聚合。由于邻居节点是无序的，所以希望构造的聚合函数具有<strong>对称性(即输出的结果不因输入排序的不同而改变)</strong>，同时拥有<strong>较强的表达能力</strong>。</p>
+<ul>
+<li>Mean 聚合：首先会对邻居节点按照<strong>element-wise</strong>进行均值聚合，然后将当前节点k-1层得到特征$h_v^{k-1}$与邻居节点均值聚合后的特征 $MEAN(h_u^k | u\in N(v))$<strong>分别</strong>送入全连接网络后<strong>相加</strong>得到结果。</li>
+<li><p>Convolutional 聚合：这是一种基于GCN聚合方式的变种，首先对邻居节点特征和自身节点特征求均值，得到的聚合特征送入到全连接网络中。与Mean不同的是，这里<strong>只经过一个全连接层</strong>。</p>
+</li>
+<li><p>LSTM聚合：由于LSTM可以捕捉到序列信息，因此相比于Mean聚合，这种聚合方式的<strong>表达能力更强</strong>；但由于LSTM对于输入是有序的，因此该方法不具备<strong>对称性</strong>。作者对于无序的节点进行随机排列以调整LSTM所需的有序性。</p>
+</li>
+<li>Pooling聚合：对于邻居节点和中心节点进行一次非线性转化，将结果进行一次基于<strong>element-wise</strong>的<strong>最大池化</strong>操作。该种方式具有<strong>较强的表达能力</strong>的同时还具有<strong>对称性</strong>。</li>
+</ul>
+<p>综上，可以发现GraphSAGE之所以可以用于大规模的工业场景，主要是因为模型主要是通过学习聚合函数，通过归纳式的学习方法为节点学习特征表示。</p>
+<h5 id="PinSAGE-1"><a href="#PinSAGE-1" class="headerlink" title="PinSAGE"></a>PinSAGE</h5><p>PinSAGE 模型是Pinterest 在GraphSAGE 的基础上实现的可以应用于实际工业场景的召回算法。Pinterest 公司的主要业务是采用瀑布流的形式向用户展现图片，无需用户翻页，新的图片会自动加载。因此在Pinterest网站上，有大量的图片(被称为pins)，而用户可以将喜欢的图片分类，即将pins钉在画板 boards上。可以发现基于这样的场景，pin相当于普通推荐场景中item，用户<strong>钉</strong>的行为可以认为是用于的交互行为。于是PinSAGE 模型主要应用的思路是，基于GraphSAGE 的原理学习到聚合方法，并为每个图片(pin)学习一个向量表示，然后基于pin的向量表示做<strong>item2item的召回</strong>。</p>
+<p>可以知道的是，PinSAGE 是在GraphSAGE的基础上进行改进以适应实际的工业场景，因此除了改进卷积操作中的邻居采样策略以及聚合函数的同时还有一些工程技巧上的改进，使得在大数据场景下能更快更好的进行模型训练。因此在了解GraphSAGE的原理后，我们详细的了解一下本文的主要改进以及与GraphSAGE的区别。</p>
+<p><strong>重要性采样</strong></p>
+<p>在实际场景当中，一个item可能被数以百万，千万的用户交互过，所以不可能聚合所有邻居节点是不可行的，只可能是采样部分邻居进行信息聚合。但是如果采用GraphSAGE中随机采样的方法，由于采样的邻居有限(这里是相对于所有节点而言)，会存在一定的偏差。因此PinSAGE 在采样中考虑了更加重要的邻居节点，即卷积时只注重部分重要的邻居节点信息，已达到高效计算的同时又可以消除偏置。</p>
+<p>PinSAGE使用重要性采样方法，即需要为每个邻居节点计算一个重要性权重，根据权重选取top-t的邻居作为聚合时的邻居集合。其中计算重要性的过程是，以目标节点为起点，进行random-walk，采样结束之后计算所有节点访问数的L1-normalized作为重要性权重，同时这个权重也会在聚合过程中加以使用(<strong>加权聚合</strong>)。</p>
+<p>这里对于<strong>计算权重之后如何得到top-t的邻居节点，</strong>原文并没有直接的叙述。这里可以有两种做法，第一种就是直接采用重要权重，这种方法言简意赅，比较直观。第二种做法就是对游走得到的所有邻居进行随机抽样，而计算出的权重可以用于聚合阶段。个人理解第二种做法的可行性出于两点原因，其一是这样方法可以避免存在一些item由于权重系数低永远不会被选中的问题；其二可能并不是将所有重要性的邻居进行聚合更合理，毕竟重要性权重是通过随机采样而得到的，具有一定的随机性。当然以上两种方法都是可行的方案，可以通过尝试看看具体哪种方法会更有效。</p>
+<p><strong>聚合函数</strong></p>
+<p>PinSAGE中提到的Convolve算法（单层图卷积操作）相当于GraphSAGE算法的聚合过程，在实际执行过程中通过对每一层执行一次图卷积操作以得到不同阶邻居的信息，具体过程如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211728762.png" alt=""></p>
+<p>上述的单层图卷积过程如下三步：</p>
+<ol>
+<li>聚合邻居： 先将所有的邻居节点经过一次非线性转化(一层DNN)，再由聚合函数(Pooling聚合) $\gamma$（如元素平均，<strong>加权和</strong>等）将所有邻居信息聚合成目标节点的embedding。这里的加权聚合采用的是通过random-walk得到的重要性权重。</li>
+<li>更新当前节点的embedding：将目标节点当前的向量 $z_u$ 与步骤1中聚合得到的邻居向量 $n_u$ 进行拼接，在通过一次非线性转化。</li>
+<li>归一化操作：对目标节点向量 $z_u$ 归一化。</li>
+</ol>
+<p>Convolve算法的聚合方法与GraphSAGE的Pooling聚合函数相同，主要区别在于对更新得到的向量 $z_u$ 进行归一化操作，<strong>可以使训练更稳定，以及在近似查找最近邻的应用中更有效率。</strong></p>
+<p><strong>基于mini-batch堆叠多层图卷积</strong></p>
+<p>与GraphSAGE类似，采用的是基于mini-batch 的方式进行训练。之所以这么做的原因是因为什么呢？在实际的工业场景中，由于用户交互图非常庞大，无法对于所有的节点同时学习一个embedding，因此需要从原始图上寻找与 mini-batch 节点相关的子图。具体地是说，对于mini-batch内的所有节点，会通过采样的方式逐层的寻找相关邻居节点，再通过对每一层的节点做一次图卷积操作，以从k阶邻居节点聚合信息。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211730740.png" alt=""></p>
+<p>如上图所示：对于batch内的所有节点(图上最顶层的6个节点)，依次根据权重采样，得到batch内所有节点的一阶邻居(图上第二层的所有节点)；然后对于所有一阶邻居再次进行采样，得到所有二阶邻居(图上的最后一层)。节点采样阶段完成之后，与采样的顺序相反进行聚合操作。首先对二阶邻居进行单次图卷积，将二阶节点信息聚合已更新一阶节点的向量表示(其中小方块表示的是一层非线性转化)；其次对一阶节点再次进行图卷积操作，将一阶节点的信息聚合已更新batch内所有节点的向量表示。仅此对于一个batch内的所有的样本通过卷积操作学习到一个embedding，而每一个batch的学习过程中仅<strong>利用与mini-batch内相关节点的子图结构。</strong></p>
+<p><strong>训练过程</strong></p>
+<p>PinSage在训练时采用的是 Margin Hinge Loss 损失函数，主要的思想是最大化正例embedding之间的相关性，同时还要保证负例之间相关性相比正例之间的相关性小于某个阈值(Margin)。具体的公式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211731896.png" alt=""></p>
+<p>其中$Z_p$是学习得到的目标节点embedding，$Z_i$是与目标节点相关item的embedding，$Z_{n_k}$是与目标节点不相关item的embedding，$\Delta$为margin值，具体大小需要调参。那么对于相关节点i，以及不相关节点nk，具体都是如何定义的，这对于召回模型的训练意义重大，让我们看看具体是如何定义的。</p>
+<p>对于正样本而言，文中的定义是如果用户在点击的 item q之后立即点击了 item i，即认为 &lt; q, i &gt;构成正样本对。直观的我们很好理解这句话，不过在参考DGL中相关代码实现时，发现这部分的内容和原文中有一定的出入。具体地，代码中将所有的训练样本构造成用户-项目二部图，然后对batch内的每个 item q，根据item-user-item的元路径进行随机游走，得到被同一个用户交互过的 item i，因此组成<q,i>正样本对。对于负样本部分，相对来说更为重要，因此内容相对比较多，将在下面的负样本生成部分详细介绍。</p>
+<p>这里还有一个比较重要的细节需要注意，由于模型是用于 item to item的召回，因此优化目标是与正样本之间的表示尽可能的相近，与负样本之间的表示尽可能的远。而图卷积操作会使得具有邻接关系的节点表示具有同质性，因此结合这两点，就需要在构建图结构的时，要将<strong>训练样本之间可能存在的边在二部图上删除</strong>，避免因为边的存在使得因卷积操作而导致的信息泄露。</p>
+<p><strong>工程技巧</strong></p>
+<ol>
+<li><p>负样本的生成</p>
+<p>召回模型最主要的任务是从候选集合中选出用户可能感兴趣的item，直观的理解就是让模型将用户喜欢的和不喜欢的进行区分。然而由于候选集合的庞大数量，许多item之间十分相似，导致模型划分出来用户喜欢的item中会存在一些难以区分的item(即与用户非常喜欢item比较相似的那一部分)。因此对于召回模型不仅能区分用户喜欢和不喜欢的 item，同时还能区分与用户喜欢的 item 十分相似的那一部分item。那么如果做到呢？这主要是交给 easy negative examples 和 hard negative examples 两种负样本给模型学习。</p>
+<ul>
+<li>easy 负样本：这里对于mini-batch内的所有pair(训练样本对)会共享500负样本，这500个样本从batch之外的所有节点中随机采样得到。这么做可以减少在每个mini-batch中因计算所有节点的embedding所需的时间，文中指出这和为每个item采样一定数量负样本无差异。</li>
+<li>hard 负样本：这里使用hard 负样本的原因是根据实际场景的问题出发，模型需要从20亿的物品item集合中识别出最相似的1000个，即模型需要从2百万 item 中识别出最相似的那一个 item。也就是说模型的区分能力不够细致，为了解决这个问题，加入了一些hard样本。对于hard 负样本，应该是与 q 相似 以及和 i 不相似的物品，具体地的生成方式是将图上的节点计算相对节点 q 的个性化PageRank分值，根据分值的排序随机从2000~5000的位置选取节点作为负样本。</li>
+</ul>
+</li>
+<li><p>渐进式训练(Curriculum training)</p>
+<p>由于hard 负样本的加入，模型的训练时间加长（由于与q过于相似，导致loss比较小，导致梯度更新的幅度比较小，训练起来比较慢），那么渐进式训练就是为了来解决这个问题。</p>
+<p>如何渐进式：先在第一轮训练使用easy 负样本，帮助模型先快速收敛(先让模型有个最基本的分辨能力)到一定范围，然后在逐步分加入hard负样本(方式是在第n轮训练时给每个物品的负样本集合增加n-1个 hard 负样本)，以调整模型细粒度的区分能力(让模型能够区分相似的item)。</p>
+</li>
+<li><p>节点特征(side information)</p>
+<p>这里与EGES的不同，这里的边信息不是端到端训练得到，而是通过事前的预处理得到的。对于每个节点(即 pin)，都会有一个图片和一点文本信息。因此对于每个节点使用图片的向量、文字的向量以及节点的度拼接得到。这里其实也解释了为什么在图卷积操作时，会先进行一个非线性转化，其实就是将不同空间的特征进行转化(融合)。</p>
+</li>
+<li><p>构建 mini-batch</p>
+<p>不同于常规的构建方式，PinSAGE中构建mini-batch的方式是基于生产者消费者模式。什么意思的，就是将CPU和GPU分开工作，让CPU负责取特征，重建索引，邻接列表，负采样等工作，让GPU进行矩阵运算，即CPU负责生产每个batch所需的所有数据，GPU则根据CPU生产的数据进行消费(运算)。这样由于考虑GPU的利用率，无法将所有特征矩阵放在GPU，只能存在CPU中，然而每次查找会导致非常耗时，通过上面的方式使得图卷积操作过程中就没有GPU与CPU的通信需求。</p>
+</li>
+<li><p>多GPU训练超大batch</p>
+<p>前向传播过程中，各个GPU等分minibatch，共享一套模型参数；反向传播时，将每个GPU中的参数梯度都聚合到一起，同步执行SGD。为了保证因海量数据而使用的超大batchsize的情况下模型快速收敛以及泛化精度，采用warmup过程，即在第一个epoch中将学习率线性提升到最高，后面的epoch中再逐步指数下降。</p>
+</li>
+<li><p>使用MapReduce高效推断</p>
+<p>在模型训练结束之后，需要为所有节点计算一个embedding，如果按照训练过程中的前向传播过程来生成，会存在大量重复的计算。因为当计算一个节点的embedding的时候，其部分邻居节点已经计算过了，同时如果该节点作为其他节点邻居时，也会被再次计算。针对这个问题，本文采用MapReduce的方法进行推断。该过程主要分为两步，具体如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211735181.png" alt=""></p>
+<ol>
+<li>将item的embedding进行聚合，即利用item的图片、文字和度等信息的表示进行join(拼接)，在通过一层dense后得到item的低维向量。</li>
+<li>然后根据item来匹配其一阶邻居(join)，然后根据item进行pooling(其实就是GroupBy pooling)，得到一次图卷积操作。通过堆叠多次直接得到全量的embedding。</li>
+</ol>
+<p>其实这块主要就是通过MapReduce的大数据处理能力，直接对全量节点进行一次运算得到其embedding，避免了分batch所导致的重复计算。</p>
+</li>
+</ol>
+<h3 id="基于序列的召回"><a href="#基于序列的召回" class="headerlink" title="基于序列的召回"></a>基于序列的召回</h3><h4 id="MIND"><a href="#MIND" class="headerlink" title="MIND"></a>MIND</h4><p>MIND模型(Multi-Interest Network with Dynamic Routing)， 是阿里团队2019年在CIKM上发的一篇paper，该模型依然是用在召回阶段的一个模型，解决的痛点是之前在召回阶段的模型，比如双塔，YouTubeDNN召回模型等，在模拟用户兴趣的时候，总是基于用户的历史点击，最后通过pooling的方式得到一个兴趣向量，用该向量来表示用户的兴趣，但是该篇论文的作者认为，<strong>用一个向量来表示用户的广泛兴趣未免有点太过于单一</strong>，这是作者基于天猫的实际场景出发的发现，每个用户每天与数百种产品互动， 而互动的产品往往来自于很多个类别，这就说明用户的兴趣极其广泛，<strong>用一个向量是无法表示这样广泛的兴趣的</strong>，于是乎，就自然而然的引出一个问题，<strong>有没有可能用多个向量来表示用户的多种兴趣呢？</strong> </p>
+<p>这篇paper的核心是胶囊网络，<strong>该网络采用了动态路由算法能非常自然的将历史商品聚成多个集合，每个集合的历史行为进一步推断对应特定兴趣的用户表示向量。这样，对于一个特定的用户，MND输出了多个表示向量，它们代表了用户的不同兴趣。当用户再有新的交互时，通过胶囊网络，还能实时的改变用户的兴趣表示向量，做到在召回阶段的实时个性化</strong>。那么，胶囊网络究竟是怎么做到的呢？ 胶囊网络又是什么原理呢？</p>
+<h5 id="背景与动机"><a href="#背景与动机" class="headerlink" title="背景与动机"></a>背景与动机</h5><p>本章是基于天猫APP的背景来探索十亿级别的用户个性化推荐。天猫的推荐的流程主要分为召回阶段和排序阶段。召回阶段负责检索数千个与用户兴趣相关的候选物品，之后，排序阶段预测用户与这些候选物品交互的精确概率。这篇文章做的是召回阶段的工作，来对满足用户兴趣的物品的有效检索。</p>
+<p>作者这次的出发点是基于场景出发，在天猫的推荐场景中，作者发现<strong>用户的兴趣存在多样性</strong>。平均上，10亿用户访问天猫，每个用户每天与数百种产品互动。交互后的物品往往属于不同的类别，说明用户兴趣的多样性。 一张图片会更加简洁直观：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212023626.png" alt=""></p>
+<p>因此如果能在<strong>召回阶段建立用户多兴趣模型来模拟用户的这种广泛兴趣</strong>，那么作者认为是非常有必要的，因为召回阶段的任务就是根据用户兴趣检索候选商品嘛。</p>
+<p>那么，如何能基于用户的历史交互来学习用户的兴趣表示呢？  以往的解决方案如下：</p>
+<ul>
+<li>协同过滤的召回方法(itemcf和usercf)是通过历史交互过的物品或隐藏因子直接表示用户兴趣，但会遇到<strong>稀疏或计算问题</strong></li>
+<li>基于深度学习的方法用低维的embedding向量表示用户，比如YoutubeDNN召回模型，双塔模型等，都是把用户的基本信息，或者用户交互过的历史商品信息等，过一个全连接层，最后编码成一个向量，用这个向量来表示用户兴趣，但作者认为，<strong>这是多兴趣表示的瓶颈</strong>，因为需要压缩所有与用户多兴趣相关的信息到一个表示向量，所有用户多兴趣的信息进行了混合，导致这种多兴趣并无法体现，所以往往召回回来的商品并不是很准确，除非向量维度很大，但是大维度又会带来高计算。</li>
+<li>DIN模型在Embedding的基础上加入了Attention机制，来选择的捕捉用户兴趣的多样性，但采用Attention机制，<strong>对于每个目标物品，都需要重新计算用户表示</strong>，这在召回阶段是行不通的（海量），所以DIN一般是用于排序。</li>
+</ul>
+<p>所以，作者想在召回阶段去建模用户的多兴趣，但以往的方法都不好使，为了解决这个问题，就提出了动态路由的多兴趣网络MIND。为了推断出用户的多兴趣表示，提出了一个多兴趣提取层，该层使用动态路由机制自动的能将用户的历史行为聚类，然后每个类簇中产生一个表示向量，这个向量能代表用户某种特定的兴趣，而多个类簇的多个向量合起来，就能表示用户广泛的兴趣了。</p>
+<p>这就是MIND的提出动机以及初步思路了，这里面的核心是Multi-interest extractor layer， 而这里面重点是动态路由与胶囊网络，所以接下来先补充这方面的相关知识。</p>
+<h5 id="胶囊网络与动态路由机制"><a href="#胶囊网络与动态路由机制" class="headerlink" title="胶囊网络与动态路由机制"></a>胶囊网络与动态路由机制</h5><h6 id="胶囊网络初识"><a href="#胶囊网络初识" class="headerlink" title="胶囊网络初识"></a>胶囊网络初识</h6><p>Hinton大佬在2011年的时候，就首次提出了”胶囊”的概念， “胶囊”可以看成是一组聚合起来输出整个向量的小神经元组合，这个向量的每个维度(每个小神经元)，代表着某个实体的某个特征。</p>
+<p>胶囊网络其实可以和神经网络对比着看可能更好理解，我们知道神经网络的每一层的神经元输出的是单个的标量值，接收的输入，也是多个标量值，所以这是一种value to value的形式，而胶囊网络每一层的胶囊输出的是一个向量值，接收的输入也是多个向量，所以它是vector to vector形式的。来个图对比下就清楚了：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212029715.png" alt=""></p>
+<p>左边的图是普通神经元的计算示意，而右边是一个胶囊内部的计算示意图。 神经元这里不过多解释，这里主要是剖析右边的这个胶囊计算原理。从上图可以看出， 输入是两个向量$v_1,v_2$，首先经过了一个线性映射，得到了两个新向量$u_1,u_2$，然后呢，经过了一个向量的加权汇总，这里的$c_1$,$c_2$可以先理解成权重，具体计算后面会解释。 得到汇总后的向量$s$，接下来进行了Squash操作，整体的计算公式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212030357.png" alt=""></p>
+<p>这里的Squash操作可以简单看下，主要包括两部分，右边的那部分其实就是向量归一化操作，把norm弄成1，而左边那部分算是一个非线性操作，如果$s$的norm很大，那么这个整体就接近1， 而如果这个norm很小，那么整体就会接近0， 和sigmoid很像有没有？</p>
+<p>这样就完成了一个胶囊的计算，但有两点需要注意：</p>
+<ol>
+<li>这里的$W^i$参数是可学习的，和神经网络一样， 通过BP算法更新</li>
+<li>这里的$c_i$参数不是BP算法学习出来的，而是采用动态路由机制现场算出来的，这个非常类似于pooling层，我们知道pooling层的参数也不是学习的，而是根据前面的输入现场取最大或者平均计算得到的。</li>
+</ol>
+<p>所以这里的问题，就是怎么通过动态路由机制得到$c_i$，下面是动态路由机制的过程。</p>
+<h6 id="动态路由机制原理"><a href="#动态路由机制原理" class="headerlink" title="动态路由机制原理"></a>动态路由机制原理</h6><p>我们先来一个胶囊结构: </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212035441.png" alt=""></p>
+<p>这个$c_i$是通过动态路由机制计算得到，那么动态路由机制究竟是啥子意思？  其实就是通过迭代的方式去计算，没有啥神秘的，迭代计算的流程如下图:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212035613.png" alt=""></p>
+<p>首先我们先初始化$b_i$，与每一个输入胶囊$u_i$进行对应，这哥们有个名字叫做”routing logit”， 表示的是输出的这个胶囊与输入胶囊的相关性，和注意力机制里面的score值非常像。由于一开始不知道这个哪个胶囊与输出的胶囊有关系，所以默认相关性分数都一样，然后进入迭代。</p>
+<p>在每一次迭代中，首先把分数转成权重，然后加权求和得到$s$，这个很类似于注意力机制的步骤，得到$s$之后，通过归一化操作，得到$a$，接下来要通过$a$和输入胶囊的相关性以及上一轮的$b_i$来更新$b_i$。</p>
+<p>通过若干次迭代之后，得到最后的输出胶囊向量$a$会慢慢的走到与它更相关的那些$u$附近，而远离那些与它不相干的$u$。所以上面的这个迭代过程有点像<strong>排除异常输入胶囊的感觉</strong>。</p>
+<p>而从另一个角度来考虑，这个过程其实像是聚类的过程，因为胶囊的输出向量$v$经过若干次迭代之后，会最终停留到与其非常相关的那些输入胶囊里面，而这些输入胶囊，其实就可以看成是某个类别了，因为既然都共同的和输出胶囊$v$比较相关，那么彼此之间的相关性也比较大，于是乎，经过这样一个动态路由机制之后，就不自觉的，把输入胶囊实现了聚类。把和与其他输入胶囊不同的那些胶囊给排除了出去。</p>
+<p>所以，这个动态路由机制的计算设计的还是比较巧妙的， 下面是上述过程的展开计算过程， 这个和RNN的计算有点类似：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212037262.png" alt=""></p>
+<p>这样就完成了一个胶囊内部的计算过程了。</p>
+<p>Ok， 有了上面的这些铺垫，再来看MIND就会比较简单了。下面正式对MIND模型的网络架构剖析。</p>
+<h5 id="MIND模型的网络结构与细节剖析"><a href="#MIND模型的网络结构与细节剖析" class="headerlink" title="MIND模型的网络结构与细节剖析"></a>MIND模型的网络结构与细节剖析</h5><h6 id="网络整体结构"><a href="#网络整体结构" class="headerlink" title="网络整体结构"></a>网络整体结构</h6><p>MIND网络的架构如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212044848.png" alt=""></p>
+<p>初步先分析这个网络结构的运作： 首先接收的输入有三类特征，用户base属性，历史行为属性以及商品的属性，用户的历史行为序列属性过了一个多兴趣提取层得到了多个兴趣胶囊，接下来和用户base属性拼接过DNN，得到了交互之后的用户兴趣。然后在训练阶段，用户兴趣和当前商品向量过一个label-aware attention，然后求softmax损失。 在服务阶段，得到用户的向量之后，就可以直接进行近邻检索，找候选商品了。 这就是宏观过程，但是，多兴趣提取层以及这个label-aware attention是在做什么事情呢？  如果单独看这个图，感觉得到多个兴趣胶囊之后，直接把这些兴趣胶囊以及用户的base属性拼接过全连接，那最终不就成了一个用户向量，此时label-aware attention的意义不就没了？ 所以这个图初步感觉画的有问题，和论文里面描述的不符。所以下面先以论文为主，正式开始描述具体细节。</p>
+<h6 id="任务目标"><a href="#任务目标" class="headerlink" title="任务目标"></a>任务目标</h6><p>召回任务的目标是对于每一个用户$u \in \mathcal{U}$从十亿规模的物品池$\mathcal{I}$检索出包含与用户兴趣相关的上千个物品集。</p>
+<p><strong>模型的输入</strong></p>
+<p>对于模型，每个样本的输入可以表示为一个三元组：$\left(\mathcal{I}_{u}, \mathcal{P}_{u}, \mathcal{F}_{i}\right)$，其中$\mathcal{I}_{u}$代表与用户$u$交互过的物品集，即用户的历史行为；$\mathcal{P}_{u}$表示用户的属性，例如性别、年龄等；$\mathcal{F}_{i}$定义为目标物品$i$的一些特征，例如物品id和种类id等。</p>
+<p><strong>任务描述</strong></p>
+<p>MIND的核心任务是学习一个从原生特征映射到<strong>用户表示</strong>的函数，用户表示定义为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212048618.png" alt=""></p>
+<p>其中，$\mathbf{V}_{u}=\left(\overrightarrow{\boldsymbol{v}}_{u}^{1}, \ldots, \overrightarrow{\boldsymbol{v}}_{u}^{K}\right) \in \mathbb{R}^{d \times k}$是用户$u$的表示向量，$d$是embedding的维度，$K$表示向量的个数，即兴趣的数量。如果$K=1$，那么MIND模型就退化成YouTubeDNN的向量表示方式了。</p>
+<p>目标物品$i$的embedding函数为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212049445.png" alt=""></p>
+<p>其中，$\overrightarrow{\mathbf{e}}_{i} \in \mathbb{R}^{d \times 1}, \quad f_{i t e m}(\cdot)$表示一个embedding&amp;pooling层。</p>
+<p><strong>最终结果</strong></p>
+<p>根据评分函数检索（根据<strong>目标物品与用户表示向量的内积的最大值作为相似度依据</strong>，DIN的Attention部分也是以这种方式来衡量两者的相似度），得到top-N个候选项：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212049720.png" alt=""></p>
+<h6 id="Embedding-amp-Pooling层"><a href="#Embedding-amp-Pooling层" class="headerlink" title="Embedding &amp; Pooling层"></a>Embedding &amp; Pooling层</h6><p>Embedding层的输入由三部分组成，用户属性$\mathcal{P}_{u}$、用户行为$\mathcal{I}_{u}$和目标物品标签$\mathcal{F}_{i}$。每一部分都由多个id特征组成，则是一个高维的稀疏数据，因此需要Embedding技术将其映射为低维密集向量。具体来说，</p>
+<ul>
+<li>对于$\mathcal{P}_{u}$的id特征（年龄、性别等）是将其Embedding的向量进行Concat，组成用户属性Embedding$\overrightarrow{\mathbf{p}}_{u}$；</li>
+<li>目标物品$\mathcal{F}_{i}$通常包含其他分类特征id（品牌id、店铺id等） ，这些特征有利于物品的冷启动问题，需要将所有的分类特征的Embedding向量进行平均池化，得到一个目标物品向量$\overrightarrow{\mathbf{e}}_{i}$；</li>
+<li>对于用户行为$\mathcal{I}_{u}$，由物品的Embedding向量组成用户行为Embedding列表$E_{u}=\overrightarrow{\mathbf{e}}_{j}, j \in \mathcal{I}_{u}$， 当然这里不仅只有物品embedding哈，也可能有类别，品牌等其他的embedding信息。</li>
+</ul>
+<h6 id="Multi-Interest-Extractor-Layer-核心"><a href="#Multi-Interest-Extractor-Layer-核心" class="headerlink" title="Multi-Interest Extractor Layer(核心)"></a>Multi-Interest Extractor Layer(核心)</h6><p>作者认为，单一的向量不足以表达用户的多兴趣。所以作者采用<strong>多个表示向量</strong>来分别表示用户不同的兴趣。通过这个方式，在召回阶段，用户的多兴趣可以分别考虑，对于兴趣的每一个方面，能够更精确的进行物品检索。</p>
+<p>为了学习多兴趣表示，作者利用胶囊网络表示学习的动态路由将用户的历史行为分组到多个簇中。来自一个簇的物品应该密切相关，并共同代表用户兴趣的一个特定方面。</p>
+<p>由于多兴趣提取器层的设计灵感来自于胶囊网络表示学习的动态路由，所以这里作者回顾了动态路由机制。当然，如果之前对胶囊网络或动态路由不了解，这里读起来就会有点艰难，但由于我上面进行了铺垫，这里就直接拿过原文并解释即可。</p>
+<p><strong>动态路由</strong></p>
+<p>动态路由是胶囊网络中的迭代学习算法，用于学习低水平胶囊和高水平胶囊之间的路由对数（logit）$b_{ij}$，来得到高水平胶囊的表示。</p>
+<p>我们假设胶囊网络有两层，即低水平胶囊$\vec{c}_{i}^{l} \in \mathbb{R}^{N_{l} \times 1}, i \in\{1, \ldots, m\}$和高水平胶囊$\vec{c}_{j}^{h} \in \mathbb{R}^{N_{h} \times 1}, j \in\{1, \ldots, n\}$，其中$m,n$表示胶囊的个数， $N_l,N_h$表示胶囊的维度。 路由对数$b_{ij}$计算公式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212050370.png" alt=""></p>
+<p>其中$\mathbf{S}_{i j} \in \mathbb{R}^{N_{h} \times N_{l}}$表示待学习的双线性映射矩阵【在胶囊网络的原文中称为转换矩阵】</p>
+<p>通过计算路由对数，将高阶胶囊$j$的候选向量计算为所有低阶胶囊的加权和：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212050471.png" alt=""></p>
+<p>其中$w_{ij}$定义为连接低阶胶囊$i$和高阶胶囊$j$的权重【称为耦合系数】，而且其通过对路由对数执行softmax来计算：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212051995.png" alt=""></p>
+<p>最后，应用一个非线性的“压缩”函数来获得一个高阶胶囊的向量【胶囊网络向量的模表示由胶囊所代表的实体存在的概率】</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212051641.png" alt=""></p>
+<p>路由过程重复进行3次达到收敛。当路由结束，高阶胶囊值$\vec{c}_{j}^{h}$固定，作为下一层的输入。</p>
+<p>Ok，下面我们开始解释，其实上面说的这些就是胶囊网络的计算过程，只不过和之前所用的符号不一样了。这里拿个图：<br><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212051116.png" alt=""><br>首先，论文里面也是个两层的胶囊网络，低水平层-&gt;高水平层。 低水平层有$m$个胶囊，每个胶囊向量维度是$N_l$，用$\vec{c}_{i}^l$表示的，高水平层有$n$个胶囊，每个胶囊$N_h$维，用$\vec{c}_{j}^h$表示。</p>
+<p>单独拿出每个$\vec{c}_{j}^h$，其计算过程如上图所示。首先，先随机初始化路由对数$b_{ij}=0$，然后开始迭代，对于每次迭代：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212052434.png" alt=""></p>
+<p>只不过这里的符合和上图中的不太一样，这里的$w_{ij}$对应的是每个输入胶囊的权重$c_{ij}$， 这里的$\vec{c}_{j}^h$对应上图中的$a$， 这里的$\vec{z}_{j}^h$对应的是输入胶囊的加权组合。这里的$\vec{c}_{i}^l$对应上图中的$v_i$，这里的$S_{ij}$对应的是上图的权重$W_{ij}$，只不过这个可以换成矩阵运算。 和上图中不同的是路由对数$b_{ij}$更新那里，没有了上一层的路由对数值，但感觉这样会有问题。</p>
+<p>所以，这样解释完之后就会发现，其实上面的一顿操作就是说的传统的动态路由机制。</p>
+<h4 id="B2I动态路由"><a href="#B2I动态路由" class="headerlink" title="B2I动态路由"></a>B2I动态路由</h4><p>作者设计的多兴趣提取层就是就是受到了上述胶囊网络的启发。</p>
+<p>如果把用户的行为序列看成是行为胶囊， 把用户的多兴趣看成兴趣胶囊，那么多兴趣提取层就是利用动态路由机制学习行为胶囊<code>-&gt;</code>兴趣胶囊的映射关系。但是原始路由算法无法直接应用于处理用户行为数据。因此，提出了<strong>行为(Behavior)到兴趣(Interest)（B2I）动态路由</strong>来自适应地将用户的行为聚合到兴趣表示向量中，它与原始路由算法有三个不同之处：</p>
+<ol>
+<li><strong>共享双向映射矩阵</strong>。在初始动态路由中，使用固定的或者说共享的双线性映射矩阵$S$而不是单独的双线性映射矩阵， 在原始的动态路由中，对于每个输出胶囊$\vec{c}_{j}^h$，都会有对应的$S_{ij}$，而这里是每个输出胶囊，都共用一个$S$矩阵。 原因有两个：<ol>
+<li>一方面，用户行为是可变长度的，从几十个到几百个不等，因此使用共享的双线性映射矩阵是有利于泛化。</li>
+<li>另一方面，希望兴趣胶囊在同一个向量空间中，但不同的双线性映射矩阵将兴趣胶囊映射到不同的向量空间中。因为映射矩阵的作用就是对用户的行为胶囊进行线性映射嘛， 由于用户的行为序列都是商品，所以希望经过映射之后，到统一的商品向量空间中去。路由对数计算如下：</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212052546.png" alt=""></p>
+<p>​        其中，$\overrightarrow{\boldsymbol{e}}_{i} \in \mathbb{R}^{d}$是历史物品$i$的embedding，$\vec{u}_{j} \in \mathbb{R}^{d}$表示兴趣胶囊$j$的向量。$S \in \mathbb{R}^{d \times d}$是每一对行为胶囊(低价)到兴趣胶囊(高阶)之间        的共享映射矩阵。</p>
+<ol>
+<li><strong>随机初始化路由对数</strong>。由于利用共享双向映射矩阵$S$，如果再初始化路由对数为0将导致相同的初始的兴趣胶囊。随后的迭代将陷入到一个不同兴趣胶囊在所有的时间保持相同的情景。因为每个输出胶囊的运算都一样了嘛(除非迭代的次数不同，但这样也会导致兴趣胶囊都很类似)，为了减轻这种现象，作者通过高斯分布进行随机采样来初始化路由对数$b_{ij}$，让初始兴趣胶囊与其他每一个不同，其实就是希望在计算每个输出胶囊的时候，通过随机化的方式，希望这几个聚类中心离得远一点，这样才能表示出广泛的用户兴趣(我们已经了解这个机制就仿佛是聚类，而计算过程就是寻找聚类中心)。</li>
+<li><strong>动态的兴趣数量</strong>，兴趣数量就是聚类中心的个数，由于不同用户的历史行为序列不同，那么相应的，其兴趣胶囊有可能也不一样多，所以这里使用了一种启发式方式自适应调整聚类中心的数量，即$K$值。</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212053113.png" alt=""></p>
+<p>这种调整兴趣胶囊数量的策略可以为兴趣较小的用户节省一些资源，包括计算和内存资源。这个公式不用多解释，与行为序列长度成正比。</p>
+<p>最终的B2I动态路由算法如下：<br><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212053253.png" alt=""><br>应该很好理解了吧。</p>
+<h3 id="Label-aware-Attention-Layer"><a href="#Label-aware-Attention-Layer" class="headerlink" title="Label-aware Attention Layer"></a>Label-aware Attention Layer</h3><p> 通过多兴趣提取器层，从用户的行为embedding中生成多个兴趣胶囊。不同的兴趣胶囊代表用户兴趣的不同方面，相应的兴趣胶囊用于评估用户对特定类别的偏好。所以，在训练的期间，最后需要设置一个Label-aware的注意力层，对于当前的商品，根据相关性选择最相关的兴趣胶囊。这里其实就是一个普通的注意力机制，和DIN里面的那个注意力层基本上是一模一样，计算公式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212054677.png" alt=""></p>
+<p>首先这里的$\overrightarrow{\boldsymbol{e}}_{i}$表示当前的商品向量，$V_u$表示用户的多兴趣向量组合，里面有$K$个向量，表示用户的$K$的兴趣。用户的各个兴趣向量与目标商品做内积，然后softmax转成权重，然后反乘到多个兴趣向量进行加权求和。 但是这里需要注意的一个小点，就是这里做内积求完相似性之后，先做了一个指数操作，<strong>这个操作其实能放大或缩小相似程度</strong>，至于放大或者缩小的程度，由$p$控制。 比如某个兴趣向量与当前商品非常相似，那么再进行指数操作之后，如果$p$也很大，那么显然这个兴趣向量就占了主导作用。$p$是一个可调节的参数来调整注意力分布。当$p$接近0，每一个兴趣胶囊都得到相同的关注。当$p$大于1时，随着$p$的增加，具有较大值的点积将获得越来越多的权重。考虑极限情况，当$p$趋近于无穷大时，注意机制就变成了一种硬注意，选关注最大的值而忽略其他值。在实验中，发现使用硬注意导致更快的收敛。</p>
+<h3 id="训练与服务"><a href="#训练与服务" class="headerlink" title="训练与服务"></a>训练与服务</h3><p>得到用户向量$\overrightarrow{\boldsymbol{v}}_{u}$和标签物品embedding$\vec{e}_{i}$后，计算用户$u$与标签物品$i$交互的概率：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212054847.png" alt=""></p>
+<p>目标函数是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212054640.png" alt=""></p>
+<p>其中$\mathcal{D}$是训练数据包含用户物品交互的集合。因为物品的数量可伸缩到数十亿，所以不能直接算。因此。使用采样的softmax技术，并且选择Adam优化来训练MIND。</p>
+<p>训练结束后，抛开label-aware注意力层，MIND网络得到一个用户表示映射函数$f_{user}$。在服务期间，用户的历史序列与自身属性喂入到$f_{user}$，每个用户得到多兴趣向量。然后这个表示向量通过一个近似邻近方法来检索top N物品。</p>
+<p>这就是整个MIND模型的细节了。</p>
+<h4 id="SDM"><a href="#SDM" class="headerlink" title="SDM"></a>SDM</h4><p>SDM模型(Sequential Deep Matching Model)，是阿里团队在2019年CIKM上的一篇paper。和MIND模型一样，是一种序列召回模型，研究的依然是如何通过用户的历史行为序列去学习到用户的丰富兴趣。 对于MIND，我们已经知道是基于胶囊网络的动态路由机制，设计了一个动态兴趣提取层，把用户的行为序列通过路由机制聚类，然后映射成了多个兴趣胶囊，以此来获取到用户的广泛兴趣。而SDM模型，是先把用户的历史序列根据交互的时间分成了短期和长期两类，然后从<strong>短期会话</strong>和<strong>长期行为</strong>中分别采取<strong>相应的措施（短期的RNN+多头注意力，长期的Att Net）</strong> 去学习到用户的短期兴趣和长期行为偏好，并<strong>巧妙的设计了一个门控网络有选择的将长短期兴趣进行融合</strong>，以此得到用户的最终兴趣向量。 这篇paper中的一些亮点，比如长期偏好的行为表示，多头注意力机制学习多兴趣，长短期兴趣的融合机制等，又给了一些看待问题的新角度，同时，给出了我们一种利用历史行为序列去捕捉用户动态偏好的新思路。 </p>
+<p>这篇paper依然是从引言开始， 介绍SDM模型提出的动机以及目前方法存在的不足(why)， 接下来就是SDM的网络模型架构(what)， 这里面的关键是如何从短期会话和长期行为两个方面学习到用户的短期长期偏好(how)。</p>
+<h5 id="背景与动机-1"><a href="#背景与动机-1" class="headerlink" title="背景与动机"></a>背景与动机</h5><p> 这里要介绍该模型提出的动机，即why要有这样的一个模型？</p>
+<p>一个好的推荐系统应该是能精确的捕捉用户兴趣偏好以及能对他们当前需求进行快速响应的，往往工业上的推荐系统，为了能快速响应， 一般会把整个推荐流程分成召回和排序两个阶段，先通过召回，从海量商品中得到一个小的候选集，然后再给到排序模型做精确的筛选操作。 这也是目前推荐系统的一个范式了。在这个过程中，召回模块所检索到的候选对象的质量在整个系统中起着至关重要的作用。</p>
+<p>淘宝目前的召回模型是一些基于协同过滤的模型， 这些模型是通过用户与商品的历史交互建模，从而得到用户的物品的表示向量，但这个过程是<strong>静态的</strong>，而用户的行为或者兴趣是时刻变化的， 对于协同过滤的模型来说，并不能很好的捕捉到用户整个行为序列的动态变化。</p>
+<p>那我们知道了学习用户历史行为序列很重要， 那么假设序列很长呢？这时候直接用模型学习长序列之间的演进可能不是很好，因为很长的序列里面可能用户的兴趣发生过很大的转变，很多商品压根就没有啥关系，这样硬学，反而会导致越学越乱，就别提这个演进了。所以这里是以会话为单位，对长序列进行切分。作者这里的依据就是用户在同一个Session下，其需求往往是很明确的， 这时候，交互的商品也往往都非常类似。 但是Session与Session之间，可能需求改变，那么商品类型可能骤变。 所以以Session为单位来学习商品之间的序列信息，感觉要比整个长序列学习来的靠谱。 </p>
+<p>作者首先是先把长序列分成了多个会话， 然后<strong>把最近的一次会话，和之前的会话分别视为了用户短期行为和长期行为分别进行了建模，并采用不同的措施学习用户的短期兴趣和长期兴趣，然后通过一个门控机制融合得到用户最终的表示向量</strong>。这就是SDM在做的事情，</p>
+<p>长短期行为序列联合建模，其实是在给我们提供一种新的学习用户兴趣的新思路， 那么究竟是怎么做的呢？以及为啥这么做呢？</p>
+<ul>
+<li><p>对于短期用户行为， 首先作者使用了LSTM来学习序列关系， 而接下来是用一个Multi-head attention机制，学习用户的多兴趣。 </p>
+<p>先分析分析作者为啥用多头注意力机制，作者这里依然是基于实际的场景出发，作者发现，<strong>用户的兴趣点在一个会话里面其实也是多重的</strong>。这个可能之前的很多模型也是没考虑到的，但在商品购买的场景中，这确实也是个事实， 顾客在买一个商品的时候，往往会进行多方比较， 考虑品牌，颜色，商店等各种因素。作者认为用普通的注意力机制是无法反映广泛的兴趣了，所以用多头注意力网络。 </p>
+<p>多头注意力机制从某个角度去看，也有类似聚类的功效，首先它接收了用户的行为序列，然后从多个角度学习到每个商品与其他商品的相关性，然后根据与其他商品的相关性加权融合，这样，相似的item向量大概率就融合到了一块组成一个向量，所谓用户的多兴趣，可能是因为这些行为商品之间，可以从多个空间或者角度去get彼此之间的相关性，这里面有着用户多兴趣的表达信息。</p>
+</li>
+<li><p>用户的长期行为也会影响当前的决策，作者在这里举了一个NBA粉丝的例子，说如果一个是某个NBA球星的粉丝，那么他可能在之前会买很多有关这个球星的商品，如果现在这个时刻想买鞋的时候，大概率会考虑和球星相关的。所以作者说<strong>长期偏好和短期行为都非常关键</strong>。但是长期偏好或者行为往往是复杂广泛的，就像刚才这个例子里面，可能长期行为里面，买的与这个球星相关商品只占一小部分，而就只有这一小部分对当前决策有用。<br>这个也是之前的模型利用长期偏好方面存在的问题，那么如何选择出长期偏好里面对于当前决策有用的那部分呢？  作者这里设计了一个门控的方式融合短期和长期，这个想法还是很巧妙的，后面介绍这个东西的时候说下我的想法。 </p>
+</li>
+</ul>
+<p>所以下面总结动机以及本篇论文的亮点：</p>
+<ul>
+<li>动机： 召回模型需要捕获用户的动态兴趣变化，这个过程中利用好用户的长期行为和短期偏好非常关键，而以往的模型有下面几点不足：<ul>
+<li>协同过滤模型： 基于用户的交互进行静态建模，无法感知用户的兴趣变化过程，易召回同质性的商品</li>
+<li>早期的一些序列推荐模型: 要么是对整个长序列直接建模，但这样太暴力，没法很好的学习商品之间的序列信息，有些是把长序列分成会话，但忽视了一个会话中用户的多重兴趣</li>
+<li>有些方法在考虑用户的长期行为方面，只是简单的拼接或者加权求和，而实际上用户长期行为中只有很少一小部分对当前的预测有用，这样暴力融合反而会适得其反，起不到效果。另外还有一些多任务或者对抗方法， 在工业场景中不适用等。 </li>
+<li>这些我只是通过我的理解简单总结，详细内容看原论文相关工作部分。</li>
+</ul>
+</li>
+<li>亮点: <ul>
+<li>SDM模型， 考虑了用户的短期行为和长期兴趣，以会话的形式进行分割，并对这两方面分别建模</li>
+<li>短期会话由于对当前决策影响比较大，那么我们就学习的全面一点， 首先RNN学习序列关系，其次通过多头注意力机制捕捉多兴趣，然后通过一个Attention Net加权得到短期兴趣表示</li>
+<li>长期会话通过Attention Net融合，然后过DNN，得到用户的长期表示</li>
+<li>我们设计了一个门控机制，类似于LSTM的那种门控，能巧妙的融合这两种兴趣，得到用户最终的表示向量</li>
+</ul>
+</li>
+</ul>
+<p>这就是动机与背景总结啦。 那么接下来，SDM究竟是如何学习短期和长期表示，又是如何融合的？ 为什么要这么玩？</p>
+<h5 id="SDM的网络结构与细节剖析"><a href="#SDM的网络结构与细节剖析" class="headerlink" title="SDM的网络结构与细节剖析"></a>SDM的网络结构与细节剖析</h5><h6 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h6><p>这里本来直接看模型结构，但感觉还是先过一下问题定义吧，毕竟这次涉及到了会话，还有几个小规则。</p>
+<p>$\mathcal{U}$表示用户集合，$\mathcal{I}$表示item集合，模型考虑在时间$t$，是否用户$u$会对$i$产生交互。 对于$u$， 我们能够得到它的历史行为序列，那么先说一下如何进行会话的划分， 这里有三个规则：</p>
+<ol>
+<li>相同会话ID的商品(后台能获取)算是一个会话</li>
+<li>相邻的商品，时间间隔小于10分钟(业务自己调整)算一个会话</li>
+<li>同一个会话中的商品不能超过50个，多出来的放入下一个会话</li>
+</ol>
+<p>这样划分开会话之后， 对于用户$u$的短期行为定义是离目前最近的这次会话， 用$\mathcal{S}^{u}=\left[i_{1}^{u}, \ldots, i_{t}^{u}, \ldots, i_{m}^{u}\right]$表示，$m$是序列长度。 而长期的用户行为是过去一周内的会话，但不包括短期的这次会话， 这个用$\mathcal{L}^{u}$表示。网络推荐架构如下：<br><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212059483.png" alt=""><br>这个感觉并不用过多解释。看过召回的应该都能懂， 接收了用户的短期行为和长期行为，然后分别通过两个盲盒得到表示向量，再通过门控融合就得到了最终的用户表示。 </p>
+<p>下面要开那三个盲盒操作，即短期行为学习，长期行为学习以及门控融合机制。但在这之前，得先说一个东西，就是输入层这里， 要带物品的side infomation，比如物品的item ID, 物品的品牌ID，商铺ID， 类别ID等等， 那你说，为啥要单独说呢？ 之前的模型不也有，但是这里在利用方式上有些不一样需要注意。</p>
+<h6 id="Input-Embedding-with-side-Information"><a href="#Input-Embedding-with-side-Information" class="headerlink" title="Input Embedding with side Information"></a>Input Embedding with side Information</h6><p>在淘宝的推荐场景中，作者发现， 顾客与物品产生交互行为的时候，不仅考虑特定的商品本身，还考虑产品， 商铺，价格等，这个显然。所以，这里对于一个商品来说，不仅要用到Item ID，还用了更多的side info信息，包括<code>leat category, fist level category, brand,shop</code>。 </p>
+<p>所以，假设用户的短期行为是$\mathcal{S}^{u}=\left [i_{1}^{u},\cdots,i_{t}^{u}, \cdots,i_{m}^{u}\right]$， 这里面的每个商品$i_t^u$其实有5个属性表示了，每个属性本质是ID，但转成embedding之后，就得到了5个embedding， 所以这里就涉及到了融合问题。 这里用$$来表示每个$i_t^u$，但这里不是embedding的pooling操作，而是Concat</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212101984.png" alt=""></p>
+<p>其中，$\boldsymbol{e}_{i}^{f}=\boldsymbol{W}^{f} \boldsymbol{x}_{i}^{f} \in \mathbb{R}^{d_{f} \times 1}$， 这个公式看着负责，其实就是每个side info的id过embedding layer得到各自的embedding。这里embedding的维度是$d_f$， 等拼接起来之后，就是$d$维了。</p>
+<p>另外就是用户的base表示向量了，这个很简单， 就是用户的基础画像，得到embedding，直接也是Concat，这个常规操作不解释：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212101121.png" alt=""></p>
+<p>$e_u^p$是特征$p$的embedding。</p>
+<p>Ok，输入这里说完了之后，就直接开盲盒， 不按照论文里面的顺序来了。想看更多细节的就去看原论文吧，感觉那里面说的有些啰嗦。不如直接上图解释来的明显：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212101061.png" alt=""><br>这里正好三个框把盒子框住了，下面剖析出每个来就行啦。</p>
+<h6 id="短期用户行为建模"><a href="#短期用户行为建模" class="headerlink" title="短期用户行为建模"></a>短期用户行为建模</h6><p>这里短期用户行为是下面的那个框，接收的输入，首先是用户最近的那次会话，里面各个商品加入了side info信息之后，有了最终的embedding表示$\left[\boldsymbol{e}_{i_{1}^{u}}, \ldots, \boldsymbol{e}_{i_{t}^{u}}\right]$。 </p>
+<p>这个东西，首先要过LSTM，学习序列信息，这个感觉不用多说，直接上公式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212103361.png" alt=""></p>
+<p>这里采用的是多输入多输出， 即每个时间步都会有一个隐藏状态$h_t^u$输出出来，那么经过LSTM之后，原始的序列就有了序列相关信息，得到了$\left[\boldsymbol{h}_{1}^{u}, \ldots, \boldsymbol{h}_{t}^{u}\right]$, 把这个记为$\boldsymbol{X}^{u}$。这里的$\boldsymbol{h}_{t}^{u} \in \mathbb{R}^{d \times 1}$表示时间$t$的序列偏好表示。</p>
+<p>接下来， 这个东西要过Multi-head self-attention层，这个东西的原理我这里就不多讲了，这个东西可以学习到$h_i^u$系列之间的相关性，这个操作从某种角度看，也很像聚类， 因为我们这里是先用多头矩阵把$h_i^u$系列映射到多个空间，然后从各个空间中互求相关性</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212104750.png" alt=""></p>
+<p>得到权重后，对原始的向量加权融合。 让$Q_{i}^{u}=W_{i}^{Q} X^{u}$， $K_{i}^{u}=W_{i}^{K} \boldsymbol{X}^{u}$，$V_{i}^{u}=W_{i}^{V} X^{u}$， 背后计算是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212104358.png" alt=""></p>
+<p>这是一个头的计算， 接下来每个头都这么算，假设有$h$个头，这里会通过上面的映射矩阵$W$系列，先把原始的$h_i^u$向量映射到$d_{k}=\frac{1}{h} d$维度，然后计算$head_i^u$也是$d_k$维，这样$h$个head进行拼接，正好是$d$维， 接下来过一个全连接或者线性映射得到MultiHead的输出。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212104590.png" alt=""></p>
+<p>这样就相当于更相似的$h_i^u$融合到了一块，而这个更相似又是从多个角度得到的，于是乎， 作者认为，这样就能学习到用户的多兴趣。</p>
+<p>得到这个东西之后，接下来再过一个User Attention， 因为作者发现，对于相似历史行为的不同用户，其兴趣偏好也不太一样。<br>所以加入这个用户Attention层，想挖掘更细粒度的用户个性化信息。 当然，这个就是普通的embedding层了， 用户的base向量$e_u$作为query，与$\hat{X}^{u}$的每个向量做Attention，然后加权求和得最终向量：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212105264.png" alt=""></p>
+<p>其中$s_{t}^{u} \in \mathbb{R}^{d \times 1}$，这样短期行为兴趣就修成了正果。</p>
+<h6 id="用户长期行为建模"><a href="#用户长期行为建模" class="headerlink" title="用户长期行为建模"></a>用户长期行为建模</h6><p>从长期的视角来看，用户在不同的维度上可能积累了广泛的兴趣，用户可能经常访问一组类似的商店，并反复购买属于同一类别的商品。 所以长期行为$\mathcal{L}^{u}$来自于不同的特征尺度。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212105990.png" alt=""></p>
+<p>这里面包含了各种side特征。这里就和短期行为那里不太一样了，长期行为这里，是从特征的维度进行聚合，也就是把用户的历史长序列分成了多个特征，比如用户历史点击过的商品，历史逛过的店铺，历史看过的商品的类别，品牌等，分成了多个特征子集，然后这每个特征子集里面有对应的id，比如商品有商品id, 店铺有店铺id等，对于每个子集，过user Attention layer，和用户的base向量求Attention， 相当于看看用户喜欢逛啥样的商店， 喜欢啥样的品牌，啥样的商品类别等等，得到每个子集最终的表示向量。每个子集的计算过程如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212105910.png" alt=""></p>
+<p>每个子集都会得到一个加权的向量，把这个东西拼起来，然后过DNN。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212106394.png" alt=""></p>
+<p>这里的$\boldsymbol{p}^{u} \in \mathbb{R}^{d \times 1}$， 这样就得到了用户的长期兴趣表示。</p>
+<h6 id="短长期兴趣融合"><a href="#短长期兴趣融合" class="headerlink" title="短长期兴趣融合"></a>短长期兴趣融合</h6><p>长短期兴趣融合这里，作者发现之前模型往往喜欢直接拼接起来，或者加和，注意力加权等，但作者认为这样不能很好的将两类兴趣融合起来，因为长期序列里面，其实只有很少的一部分行为和当前有关。那么这样的话，直接无脑融合是有问题的。所以这里作者用了一种较为巧妙的方式，即门控机制：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305212106342.png" alt=""></p>
+<p>这个和LSTM的这种门控机制很像，首先门控接收的输入有用户画像$e_u$，用户短期兴趣$s_t^u$， 用户长期兴趣$p^u$，经过sigmoid函数得到了$G_{t}^{u} \in \mathbb{R}^{d \times 1}$，用来决定在$t$时刻短期和长期兴趣的贡献程度。然后根据这个贡献程度对短期和长期偏好加权进行融合。</p>
+<p>为啥这东西就有用了呢？  实验中证明了这个东西有用，但这里给出我的理解哈，我们知道最终得到的短期或者长期兴趣都是$d$维的向量， 每一个维度可能代表着不同的兴趣偏好，比如第一维度代表品牌，第二个维度代表类别，第三个维度代表价格，第四个维度代表商店等等，当然假设哈，真实的向量不可解释。</p>
+<p>那么如果我们是直接相加或者是加权相加，其实都意味着长短期兴趣这每个维度都有很高的保留， 但其实上，万一长期兴趣和短期兴趣维度冲突了呢？ 比如短期兴趣里面可能用户喜欢这个品牌，长期用户里面用户喜欢那个品牌，那么听谁的？ 你可能说短期兴趣这个占更大权重呗，那么普通加权可是所有向量都加的相同的权重，品牌这个维度听短期兴趣的，其他维度比如价格，商店也都听短期兴趣的？本身存在不合理性。那么反而直接相加或者加权效果会不好。</p>
+<p>而门控机制的巧妙就在于，我会给每个维度都学习到一个权重，而这个权重非0即1(近似哈)， 那么接下来融合的时候，我通过这个门控机制，取长期和短期兴趣向量每个维度上的其中一个。比如在品牌方面听谁的，类别方面听谁的，价格方面听谁的，只会听短期和长期兴趣的其中一个的。这样就不会有冲突发生，而至于具体听谁的，交给网络自己学习。这样就使得用户长期兴趣和短期兴趣融合的时候，每个维度上的信息保留变得<strong>有选择</strong>。使得兴趣的融合方式更加的灵活。</p>
+<p> <strong>这其实又给我们提供了一种两个向量融合的一种新思路，并不一定非得加权或者拼接或者相加了，还可以通过门控机制让网络自己学</strong></p>
+<h3 id="基于树模型的召回"><a href="#基于树模型的召回" class="headerlink" title="基于树模型的召回"></a>基于树模型的召回</h3><h4 id="TDM"><a href="#TDM" class="headerlink" title="TDM"></a>TDM</h4><p>召回早前经历的第一代协同过滤技术，让模型可以在数量级巨大的item集中找到用户潜在想要看到的商品。这种方式有很明显的缺点，一个是对于用户而言，只能通过他历史行为去构建候选集，并且会基于算力的局限做截断。所以推荐结果的多样性和新颖性比较局限，导致推荐的有可能都是用户看过的或者买过的商品。之后在Facebook开源了FASSI库之后，基于内积模型的向量检索方案得到了广泛应用，也就是第二代召回技术。这种技术通过将用户和物品用向量表示，然后用内积的大小度量兴趣，借助向量索引实现大规模的全量检索。这里虽然改善了第一代的无法全局检索的缺点，然而这种模式下存在索引构建和模型优化目标不一致的问题，索引优化是基于向量的近似误差，而召回问题的目标是最大化topK召回率。且这类方法也不方便在用户和物品之间做特征组合。</p>
+<p>所以阿里开发了一种可以承载各种深度模型来检索用户潜在兴趣的推荐算法解决方案。这个TDM模型是基于树结构，利用树结构对全量商品进行检索，将复杂度由O(N)下降到O(logN)。</p>
+<h5 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h5><p><strong>树结构</strong></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211740339.png" alt=""></p>
+<p>如上图，树中的每一个叶子节点对应一个商品item，非叶子结点表示的是item的集合<strong>（这里的树不限于二叉树）</strong>。这种层次化结构体现了粒度从粗到细的item架构。</p>
+<p><strong>整体结构</strong></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211741089.png" alt=""></p>
+<h5 id="算法详解"><a href="#算法详解" class="headerlink" title="算法详解"></a>算法详解</h5><ol>
+<li><p>基于树的高效检索</p>
+<p>算法通常采用beam-search的方法，根据用户对每层节点挑选出topK，将挑选出来的这几个topK节点的子节点作为下一层的候选集，最终会落到叶子节点上。<br>这么做的理论依据是当前层的最有优topK节点的父亲必然属于上次的父辈节点的最优topK：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211743079.png" alt=""></p>
+<p>其中$p^{(j)}(n|u)$表示用户u对j层节点n感兴趣的概率，$\alpha^{j}$表示归一化因子。</p>
+</li>
+<li><p>对兴趣进行建模</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211744832.png" alt=""></p>
+<p>如上图，用户对叶子层item6感兴趣，可以认为它的兴趣是1，同层别的候选节点的兴趣为0，顺着着绿色线路上去的节点都标记为1，路线上的同层别的候选节点都标记为0。这样的操作就可以根据1和0构建用于每一层的正负样本。</p>
+<p>样本构建完成后，可以在模型结构左侧采用任意的深度学习模型来承担用户兴趣判别器的角色，输入就是当前层构造的正负样本，输出则是（用户，节点）对的兴趣度，这个将被用作检索过程中选取topK的评判指标。<strong>在整体结构图中，我们可以看到节点特征方面，使用的是node embedding</strong>，说明在进入模型前已经向量化了。</p>
+</li>
+<li><p>训练过程</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305211745271.png" alt=""></p>
+<p>整体联合训练的方式如下：</p>
+<ol>
+<li>构造随机二叉树</li>
+<li>基于树模型生成样本</li>
+<li>训练DNN模型直到收敛</li>
+<li>基于DNN模型得到样本的Embedding，重新构造聚类二叉树</li>
+<li>循环上述2～4过程</li>
+</ol>
+<p>具体的，在初始化树结构的时候，首先借助商品的类别信息进行排序，将相同类别的商品放到一起，然后递归的将同类别中的商品等量的分到两个子类中，直到集合中只包含一项，利用这种自顶向下的方式来初始化一棵树。基于该树采样生成深度模型训练所需的样本，然后进一步训练模型，训练结束之后可以得到每个树节点对应的Embedding向量，利用节点的Embedding向量，采用K-Means聚类方法来重新构建一颗树，最后基于这颗新生成的树，重新训练深层网络。</p>
+</li>
+</ol>
 <h2 id="经典排序模型"><a href="#经典排序模型" class="headerlink" title="经典排序模型"></a>经典排序模型</h2><h3 id="GBDT-LR"><a href="#GBDT-LR" class="headerlink" title="GBDT+LR"></a>GBDT+LR</h3><p>pass</p>
 <h3 id="特征交叉"><a href="#特征交叉" class="headerlink" title="特征交叉"></a>特征交叉</h3><h4 id="FM模型"><a href="#FM模型" class="headerlink" title="FM模型"></a>FM模型</h4><p><code>FM(Factorization Machine)</code>，即因式分解机。</p>
 <h5 id="为什么需要FM模型"><a href="#为什么需要FM模型" class="headerlink" title="为什么需要FM模型"></a>为什么需要FM模型</h5><ol>
