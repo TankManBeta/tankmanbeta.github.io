@@ -4319,6 +4319,90 @@
 </ol>
 <p>加上正则参数之后的回归任务的损失函数表示为：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222119465.png" alt=""></p>
+<h4 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a>DeepFM</h4><h5 id="动机-2"><a href="#动机-2" class="headerlink" title="动机"></a>动机</h5><p>对于CTR问题，被证明的最有效的提升任务表现的策略是特征组合(Feature Interaction), 在CTR问题的探究历史上来看就是如何更好地学习特征组合，进而更加精确地描述数据的特点。可以说这是基础推荐模型到深度学习推荐模型遵循的一个主要的思想。而组合特征大牛们研究过组合二阶特征，三阶甚至更高阶，但是面临一个问题就是随着阶数的提升，复杂度就成几何倍的升高。这样即使模型的表现更好了，但是推荐系统在实时性的要求也不能满足了。所以很多模型的出现都是为了解决另外一个更加深入的问题：如何更高效的学习特征组合？</p>
+<p>为了解决上述问题，出现了FM和FFM来优化LR的特征组合较差这一个问题。并且在这个时候科学家们已经发现了DNN在特征组合方面的优势，所以又出现了FNN和PNN等使用深度网络的模型。但是DNN也存在局限性。</p>
+<ul>
+<li><strong>DNN局限</strong><br>当我们使用DNN网络解决推荐问题的时候存在网络参数过于庞大的问题，这是因为在进行特征处理的时候我们需要使用one-hot编码来处理离散特征，这会导致输入的维度猛增。</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222138309.png" alt=""></p>
+<p>这样庞大的参数量也是不实际的。为了解决DNN参数量过大的局限性，可以采用非常经典的Field思想，将OneHot特征转换为Dense Vector</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222138450.png" alt=""></p>
+<p>此时通过增加全连接层就可以实现高阶的特征组合，如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222139876.png" alt=""></p>
+<p>但是仍然缺少低阶的特征组合，于是增加FM来表示低阶的特征组合。</p>
+<ul>
+<li><strong>FNN和PNN</strong><br>结合FM和DNN其实有两种方式，可以并行结合也可以串行结合。这两种方式各有几种代表模型。在DeepFM之前有FNN，虽然在影响力上可能并不如DeepFM，但是了解FNN的思想对我们理解DeepFM的特点和优点是很有帮助的。</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222139053.png" alt=""></p>
+<p>FNN是使用预训练好的FM模块，得到隐向量，然后把隐向量作为DNN的输入，但是经过实验进一步发现，在Embedding layer和hidden layer1之间增加一个product层（如上图所示）可以提高模型的表现，所以提出了PNN，使用product layer替换FM预训练层。</p>
+<ul>
+<li><strong>Wide&amp;Deep</strong><br>FNN和PNN模型仍然有一个比较明显的尚未解决的缺点：对于低阶组合特征学习到的比较少，这一点主要是由于FM和DNN的串行方式导致的，也就是虽然FM学到了低阶特征组合，但是DNN的全连接结构导致低阶特征并不能在DNN的输出端较好的表现。看来我们已经找到问题了，将串行方式改进为并行方式能比较好的解决这个问题。于是Google提出了Wide&amp;Deep模型（将前几章），但是如果深入探究Wide&amp;Deep的构成方式，虽然将整个模型的结构调整为了并行结构，在实际的使用中Wide Module中的部分需要较为精巧的特征工程，换句话说人工处理对于模型的效果具有比较大的影响（这一点可以在Wide&amp;Deep模型部分得到验证）。</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222140078.png" alt=""></p>
+<p>如上图所示，该模型仍然存在问题：<strong>在output Units阶段直接将低阶和高阶特征进行组合，很容易让模型最终偏向学习到低阶或者高阶的特征，而不能做到很好的结合。</strong></p>
+<p>综上所示，DeepFM模型横空出世。</p>
+<h5 id="模型的结构与原理"><a href="#模型的结构与原理" class="headerlink" title="模型的结构与原理"></a>模型的结构与原理</h5><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222140551.png" alt=""></p>
+<p>前面的Field和Embedding处理是和前面的方法是相同的，如上图中的绿色部分；DeepFM将Wide部分替换为了FM layer如上图中的蓝色部分</p>
+<p>这幅图其实有很多的点需要注意，很多人都一眼略过了，这里我个人认为在DeepFM模型中有三点需要注意：</p>
+<ul>
+<li><strong>Deep模型部分</strong></li>
+<li><strong>FM模型部分</strong></li>
+<li><strong>Sparse Feature中黄色和灰色节点代表什么意思</strong></li>
+</ul>
+<h6 id="FM"><a href="#FM" class="headerlink" title="FM"></a>FM</h6><p>详细内容参考FM模型部分的内容，下图是FM的一个结构图，从图中大致可以看出FM Layer是由一阶特征和二阶特征Concatenate到一起在经过一个Sigmoid得到logits（结合FM的公式一起看），所以在实现的时候需要单独考虑linear部分和FM交叉特征部分。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222141214.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222141391.png" alt=""></p>
+<h6 id="Deep"><a href="#Deep" class="headerlink" title="Deep"></a>Deep</h6><p>Deep架构图</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222142236.png" alt=""></p>
+<p>Deep Module是为了学习高阶的特征组合，在上图中使用用全连接的方式将Dense Embedding输入到Hidden Layer，这里面Dense Embeddings就是为了解决DNN中的参数爆炸问题，这也是推荐模型中常用的处理方法。</p>
+<p>Embedding层的输出是将所有id类特征对应的embedding向量concat到到一起输入到DNN中。其中$v_i$表示第i个field的embedding，m是field的数量。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222143624.png" alt=""></p>
+<p>上一层的输出作为下一层的输入，我们得到：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222143038.png" alt=""></p>
+<p>其中$\sigma$表示激活函数，$z, W, b $分别表示该层的输入、权重和偏置。</p>
+<p>最后进入DNN部分输出使用sigmod激活函数进行激活：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222143674.png" alt=""></p>
+<h4 id="xDeepFM"><a href="#xDeepFM" class="headerlink" title="xDeepFM"></a>xDeepFM</h4><h5 id="xDeepFM的架构剖析"><a href="#xDeepFM的架构剖析" class="headerlink" title="xDeepFM的架构剖析"></a>xDeepFM的架构剖析</h5><p>首先，我们先看下xDeepFM的架构</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222202895.png" alt=""></p>
+<p>这个网络结构名副其实，依然是采用了W&amp;D架构，DNN负责Deep端，学习特征之间的隐性高阶交互， 而CIN网络负责wide端，学习特征之间的显性高阶交互，这样显隐性高阶交互就在这个模型里面体现的淋漓尽致了。</p>
+<p>最终的计算公式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222204455.png" alt=""></p>
+<p>这里的$\mathbf{a}$表示原始的特征，$\mathbf{a}_{dnn}^k$表示的是DNN的输出， $\mathbf{p}^+$表示的是CIN的输出。最终的损失依然是交叉熵损失，这里也是做一个点击率预测的问题：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222205209.png" alt=""></p>
+<p>最终的目标函数加了正则化:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222206641.png" alt=""></p>
+<h5 id="CIN网络的细节"><a href="#CIN网络的细节" class="headerlink" title="CIN网络的细节"></a>CIN网络的细节</h5><p>这里尝试剖析下本篇论文的主角CIN网络，全称Compressed Interaction Network。这个东西说白了其实也是一个网络，并不是什么高大上的东西，和Cross Network一样，也是一层一层，每一层都是基于一个固定的公式进行的计算，那个公式长这样:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222209233.png" alt=""></p>
+<p> 这个公式第一眼看过来，肯定更是懵逼，这是写的个啥玩意？如果我再把CIN的三个核心图放上来:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222209772.png" alt=""></p>
+<p> 上面其实就是CIN网络的精髓了，也是它具体的运算过程，只不过直接上图的话，会有些抽象，难以理解，也不符合我整理论文的习惯。下面，我们就一一进行剖析， 先从上面这个公式开始。但在这之前，需要先约定一些符号。要不然不知道代表啥意思。</p>
+<ol>
+<li>$\mathbf{X}^{0} \in \mathbb{R}^{m \times D}$: 这个就是我们的输入，也就是embedding层的输出，可以理解为各个embedding的堆叠而成的矩阵，假设有$m$个特征，embedding的维度是$D$维，那么这样就得到了这样的矩阵， $m$行$D$列。$\mathbf{X}_{i, *}^{0}=\mathbf{e}_{i}$， 这个表示的是第$i$个特征的embedding向量$e_i$。所以上标在这里表示的是网络的层数，输入可以看做第0层，而下标表示的第几行的embedding向量，这个清楚了。</li>
+<li>$\mathbf{X}^{k} \in \mathbb{R}^{H_{k} \times D}$: 这个表示的是CIN网络第$k$层的输出，和上面这个一样，也是一个矩阵，每一行是一个embedding向量，每一列代表一个embedding维度。这里的$H_k$表示的是第$k$层特征的数量，也可以理解为神经元个数。那么显然，这个$\mathbf{X}^{k}$就是$H_k$个$D$为向量堆叠而成的矩阵，维度也显然了。$\mathbf{X}_{h, *}^{k}$代表的就是第$k$层第$h$个特征向量了。</li>
+</ol>
+<p>所以上面的那个公式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222210887.png" alt=""></p>
+<p>其实就是计算第$k$层第$h$个特征向量， 这里的$1 \leq h \leq H_{k}, \mathbf{W}^{k, h} \in \mathbb{R}^{H_{k-1} \times m}$是第$h$个特征向量的参数矩阵。 $\circ$表示的哈达玛积，也就是向量之间对应维度元素相乘(不相加了)。$\left\langle a_{1}, a_{2}, a_{3}\right\rangle \circ\left\langle b_{1}, b_{2}, b_{3}\right\rangle=\left\langle a_{1} b_{1}, a_{2} b_{2}, a_{3} b_{3}\right\rangle$。通过这个公式也能看到$\mathbf{X}^k$是通过$\mathbf{X}^{k-1}$和$\mathbf{X}^0$计算得来的，也就是说特征的显性交互阶数会虽然网络层数的加深而增加。</p>
+<p>那么这个公式到底表示的啥意思呢？ 是具体怎么计算的呢？我们往前计算一层就知道了，这里令$k=1$，也就是尝试计算第一层里面的第$h$个向量， 那么上面公式就变成了:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222210151.png" alt=""></p>
+<p>这里的$\mathbf{W}^{1, h} \in \mathbb{R}^{H_{0} \times m}$。这个能看懂吗？ 首先这个$\mathbf{W}$矩阵是$H_0$行$m$列， 而前面那两个累加正好也是$H_0$行$m$列的参数。$m$代表的是输入特征的个数， $H_0$代表的是第0层($k-1$层)的神经元的个数， 这个也是$m$。这个应该好理解，输入层就是第0层。所以这其实就是一个$m\times m$的矩阵。那么后面这个运算到底是怎么算的呢？   首先对于第$i$个特征向量， 要依次和其他的$m$个特征向量做哈达玛积操作，当然也乘以对应位置的权重，求和。对于每个$i$特征向量，都重复这样的操作，最终求和得到一个$D$维的向量，这个就是$\mathbf{X}_{h, *}^{1}$。好吧，这么说。我觉得应该也没有啥感觉，画一下就了然了，现在可以先不用管论文里面是怎么说的，先跟着这个思路走，只要理解了这个公式是怎么计算的，论文里面的那三个图就会非常清晰了。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222211775.png" alt=""></p>
+<p>这就是上面那个公式的具体过程了，图实在是太难看了， 但应该能说明这个详细的过程了。这样只要给定一个$\mathbf{W}^{1,h}$之后，就能算出一个相应的$\mathbf{X}^1_{h,*}$来，这样第一层的$H_1$个神经元按照这样的步骤就能够都计算出来了。 后面的计算过程其实是同理，无非就是输入是前一层的输出以及$\mathbf{X}_0$罢了，而这时候，第一个矩阵特征数就不一定是$m$了，而是一个$H_{k-1}$行$D$列的矩阵了。这里的$\mathbf{W}^{k,h}$就是上面写的$H_{k-1}$行$m$列了。</p>
+<p>这个过程明白了之后，再看论文后面的内容就相对容易了，首先</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222211538.png" alt=""></p>
+<p>CIN里面能看到RNN的身影，也就是当前层的隐藏单元的计算要依赖于上一层以及当前的输入层，只不过这里的当前输入每个时间步都是$\mathbf{X}_0$。 同时这里也能看到，CIN的计算是vector-wise级别的，也就是向量之间的哈达玛积的操作，并没有涉及到具体向量里面的位交叉。</p>
+<p>下面我们再从CNN的角度去看这个计算过程。其实还是和上面一样的计算过程，只不过是换了个角度看而已，所以上面那个只要能理解，下面CNN也容易理解了。首先，这里引入了一个tensor张量$\mathbf{Z}^{k+1}$表示的是$\mathbf{X}^k$和$\mathbf{X}^0$的外积，那么这个东西是啥呢？ 上面加权求和前的那个矩阵，是一个三维的张量。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222211833.png" alt=""></p>
+<p>这个可以看成是一个三维的图片，$H_{k-1}$高，$m$宽，$D$个通道。而$\mathbf{W}^{k,h}$的大小是$H_{k-1}\times m$的， 这个就相当于一个过滤器，用这个过滤器对输入的图片如果<strong>逐通道进行卷积</strong>，就会最终得到一个$D$维的向量，而这个其实就是$\mathbf{X}^{k}_{h,*}$，也就是一张特征图(每个通道过滤器是共享的)。 第$k$层其实有$H_k$个这样的过滤器，所以最后得到的是一个$H_k\times D$的矩阵。这样，在第$k$个隐藏层，就把了$H_{k-1}\times m\times D$的三维张量通过逐通道卷积的方式，压缩成了一个$H_k\times D$的矩阵($H_k$张特征图)， 这就是第$k$层的输出$\mathbf{X}^k$。 而这也就是“compressed”的由来。这时候再看这两个图就非常舒服了：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222212318.png" alt=""></p>
+<p>通过这样的一个CIN网络，就很容易的实现了特征的显性高阶交互，并且是vector-wise级别的，那么最终的输出层是啥呢？   通过上面的分析，首先我们了解了对于第$k$层输出的某个特征向量，其实是综合了输入里面各个embedding向量显性高阶交互的信息(第$k$层其实学习的输入embedding$k+1$阶交互信息)，这个看第一层那个输出就能看出来。第$k$层的每个特征向量其实都能学习到这样的信息，那么如果把这些向量在从$D$维度上进行加和，也就是$\mathbf{X}^k$，这是个$H_k\times D$的，我们沿着D这个维度加和，又会得到一个$H_k$的向量，公式如下:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222212723.png" alt=""></p>
+<p> 每一层，都会得到一个这样的向量，那么把所有的向量拼接到一块，其实就是CIN网络的输出了。之所以，这里要把中间结果都与输出层相连，就是因为CIN与Cross不同的一点是，在第$k$层，CIN只包含$k+1$阶的组合特征，而Cross是能包含从1阶-$k+1$阶的组合特征的，所以为了让模型学习到从1阶到所有阶的组合特征，CIN这里需要把中间层的结果与输出层建立连接。</p>
+<p>这也就是第三个图表示的含义:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222213526.png" alt=""></p>
+<p>这样， 就得到了最终CIN的输出$\mathbf{p}^+$了: </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222213378.png" alt=""></p>
+<p>后面那个维度的意思，就是说每一层是的向量维度是$H_i$维， 最后是所有时间步的维度之和。 </p>
 <h3 id="序列模型"><a href="#序列模型" class="headerlink" title="序列模型"></a>序列模型</h3><p>pass</p>
 <h3 id="多任务模型"><a href="#多任务模型" class="headerlink" title="多任务模型"></a>多任务模型</h3><p>pass</p>
 ]]></content>
