@@ -112,6 +112,185 @@
       </tags>
   </entry>
   <entry>
+    <title>搭建个人博客</title>
+    <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
+<a id="more"></a>
+<h1 id="搭建个人博客"><a href="#搭建个人博客" class="headerlink" title="搭建个人博客"></a>搭建个人博客</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
+<li><p>安装<code>Git</code></p>
+</li>
+<li><p>安装<code>Nodejs</code></p>
+<p>安装完成后查看<code>node</code>版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+<p>查看<code>npm</code>包管理器版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+<p>国内安装镜像源很慢，所以可以利用<code>npm</code>安装<code>cnpm</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Hexo框架搭建博客"><a href="#Hexo框架搭建博客" class="headerlink" title="Hexo框架搭建博客"></a>Hexo框架搭建博客</h2><ol>
+<li><p>安装<code>hexo</code>框架</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
+<li><p>查看是否安装成功</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_1.png" alt="pic_1"></p>
+</li>
+<li><p><code>Hexo</code>框架初始化：选择存放博客所有内容的文件夹，命令行中输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_2.png" alt="pic_2"></p>
+</li>
+<li><p>本地启动博客</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到搭建成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_4.png" alt="pic_4"></p>
+</li>
+</ol>
+<h2 id="博客进阶"><a href="#博客进阶" class="headerlink" title="博客进阶"></a>博客进阶</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><ol>
+<li><p>命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>查看是否新建文章成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_5.png" alt="pic_5"></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
+</li>
+<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
+</li>
+</ol>
+<h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
+<li><p>新建<code>GitHub</code>仓库</p>
+<p>注：一定要以<code>username.github.io</code>创建。假如我没有用<code>tankmanbeta.github.io</code>而是用了<code>jeeby.github.io</code>，那么当我浏览器访问博客的时候会出现404错误。这里并不是没有部署成功，而是把它部署在了这里:<code>http://tankmanbeta.github.io/jeeby.github.io</code>。所以，如果想直接<code>tankmanbeta.github.io</code>访问，那么就需要和用户名保持一致。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_7.png" alt="pic_7"></p>
+</li>
+<li><p>修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>，在最后添加如下代码</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">    <span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+<p>注：2020年10月1日起，<code>GitHub</code>把<code>master</code>分支换成<code>main</code>分支，据说与种族歧视有关。</p>
+</li>
+<li><p>安装<code>Git</code>部署的插件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure></li>
+<li><p>输入以下命令，完成博客在<code>GitHub</code>上的部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<code>tankmanbeta.github.io</code>，成功访问</p>
+<p><strong>注：每次部署都需要输入<code>GitHub</code>账号密码的解决方法：修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>的<code>deploy</code>属性：（需要先设置<code>SSH-key</code>）</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="博客主题更改"><a href="#博客主题更改" class="headerlink" title="博客主题更改"></a>博客主题更改</h3><ol>
+<li><p>主题选取地址：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
+</li>
+<li><p>在博客根目录下的<code>themes</code>文件夹下克隆主题：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next</span><br></pre></td></tr></table></figure></li>
+<li><p>打开本地<code>Hexo</code>目录下文件<code>_config.yml</code>，修改<code>theme</code>属性：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">hexo-theme-next</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_8.png" alt="pic_8"></p>
+</li>
+<li><p>输入以下命令，更新博客在<code>GitHub</code>上的部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<code>tankmanbeta.github.io</code>，可以看到主题更新成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_9.png" alt="pic_9"></p>
+</li>
+</ol>
+<h3 id="Next主题切换"><a href="#Next主题切换" class="headerlink" title="Next主题切换"></a>Next主题切换</h3><ol>
+<li>打开<code>next</code>主题下的<code>_config.yml</code>文件，修改<code>theme</code>属性，将其选择成自己想要的</li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="中英文切换"><a href="#中英文切换" class="headerlink" title="中英文切换"></a>中英文切换</h3><ol>
+<li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>Site</code>属性下的<code>language</code>，将其改成<code>zh-CN</code>即可</li>
+<li>重新部署，步骤同上</li>
+<li>同理可以更改<code>title</code>、<code>author</code>等</li>
+</ol>
+<h3 id="添加标签页面"><a href="#添加标签页面" class="headerlink" title="添加标签页面"></a>添加标签页面</h3><ol>
+<li><p>在博客根目录下打开<code>cmd</code>，使用<code>hexo new page tags</code>新建一个页面</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_10.png" alt="pic_10"></p>
+</li>
+<li><p>打开新建的页面，将页面的类型设置为<code>tags</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">title: tags</span></span><br><span class="line"><span class="section">date: 2021-03-31 11:20:38</span></span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改Next主题下的<code>_config.yml</code>，将<code>tags</code>添加到<code>menu</code>属性当中</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+<li><p>重新部署，步骤同上，刷新页面后的结果</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_11.png" alt="pic_11"></p>
+</li>
+<li><p><code>home</code>、<code>categories</code>、<code>archives</code>等操作也是相同的</p>
+</li>
+</ol>
+<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><ol>
+<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+<p>安装成功：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_12.png" alt="pic_12"></p>
+</li>
+<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置（有教程说新版的<code>hexo</code>中，<code>search.xml</code>需要改成<code>search.json</code>，否则部署到服务器搜索图标不能正常显示）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search Config</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改Next主题下的<code>_config.yml</code>，修改<code>local_search</code>属性下的<code>enable</code>，将其改为<code>true</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If auto, trigger search by changing input.</span></span><br><span class="line">  <span class="comment"># If manual, trigger search by pressing enter key or search button.</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="使用外链图片"><a href="#使用外链图片" class="headerlink" title="使用外链图片"></a>使用外链图片</h3><ol>
+<li><p>注册腾讯云账号，选择对象存储</p>
+</li>
+<li><p>创建存储桶</p>
+</li>
+<li><p>创建成功之后上传文件</p>
+</li>
+<li><p>修改安全管理中的防盗链设置</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_13.png" alt="pic_13"></p>
+</li>
+<li><p>修改权限管理中的存储桶访问权限</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_14.png" alt="pic_14"></p>
+</li>
+<li><p>上传图片至存储桶，复制详情中的对象地址</p>
+</li>
+<li><p>在文章中使用外链</p>
+</li>
+<li><p>重新部署，步骤同上</p>
+</li>
+</ol>
+<h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
+<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span> <span class="comment"># 文章字数</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span> <span class="comment"># 阅读时长</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span> <span class="comment"># 所有文章总字数</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span> <span class="comment"># 所有文章阅读中时长</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">separated_meta:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">item_text_total:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">item_text_post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="使用PicGo上传图片至图床"><a href="#使用PicGo上传图片至图床" class="headerlink" title="使用PicGo上传图片至图床"></a>使用PicGo上传图片至图床</h3><ol>
+<li><p>下载PicGo，下载地址<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases </a> </p>
+</li>
+<li><p>腾讯云新建密钥：[访问密钥]—&gt;[API密钥管理]—&gt;[新建密钥]</p>
+</li>
+<li><p>打开安装完成后的PicGo，进行图床设置，设置后的结果为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_15.png" alt="pic_15"></p>
+</li>
+<li><p>点击确定并设置为默认图床，拖动本地图片上传，即可成功</p>
+</li>
+<li>文章中可以直接使用刚刚产生的外链</li>
+<li>重新部署，步骤同上</li>
+</ol>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>hexo</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
+  </entry>
+  <entry>
     <title>数据库面试题总结</title>
     <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
@@ -304,185 +483,6 @@
         <tag>总结</tag>
         <tag>数据库</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>搭建个人博客</title>
-    <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
-<a id="more"></a>
-<h1 id="搭建个人博客"><a href="#搭建个人博客" class="headerlink" title="搭建个人博客"></a>搭建个人博客</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
-<li><p>安装<code>Git</code></p>
-</li>
-<li><p>安装<code>Nodejs</code></p>
-<p>安装完成后查看<code>node</code>版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-<p>查看<code>npm</code>包管理器版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-<p>国内安装镜像源很慢，所以可以利用<code>npm</code>安装<code>cnpm</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="Hexo框架搭建博客"><a href="#Hexo框架搭建博客" class="headerlink" title="Hexo框架搭建博客"></a>Hexo框架搭建博客</h2><ol>
-<li><p>安装<code>hexo</code>框架</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
-<li><p>查看是否安装成功</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_1.png" alt="pic_1"></p>
-</li>
-<li><p><code>Hexo</code>框架初始化：选择存放博客所有内容的文件夹，命令行中输入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_2.png" alt="pic_2"></p>
-</li>
-<li><p>本地启动博客</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到搭建成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_4.png" alt="pic_4"></p>
-</li>
-</ol>
-<h2 id="博客进阶"><a href="#博客进阶" class="headerlink" title="博客进阶"></a>博客进阶</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><ol>
-<li><p>命令行输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></li>
-<li><p>查看是否新建文章成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_5.png" alt="pic_5"></p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
-</li>
-<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
-</li>
-</ol>
-<h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
-<li><p>新建<code>GitHub</code>仓库</p>
-<p>注：一定要以<code>username.github.io</code>创建。假如我没有用<code>tankmanbeta.github.io</code>而是用了<code>jeeby.github.io</code>，那么当我浏览器访问博客的时候会出现404错误。这里并不是没有部署成功，而是把它部署在了这里:<code>http://tankmanbeta.github.io/jeeby.github.io</code>。所以，如果想直接<code>tankmanbeta.github.io</code>访问，那么就需要和用户名保持一致。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_7.png" alt="pic_7"></p>
-</li>
-<li><p>修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>，在最后添加如下代码</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">    <span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-<p>注：2020年10月1日起，<code>GitHub</code>把<code>master</code>分支换成<code>main</code>分支，据说与种族歧视有关。</p>
-</li>
-<li><p>安装<code>Git</code>部署的插件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure></li>
-<li><p>输入以下命令，完成博客在<code>GitHub</code>上的部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<code>tankmanbeta.github.io</code>，成功访问</p>
-<p><strong>注：每次部署都需要输入<code>GitHub</code>账号密码的解决方法：修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>的<code>deploy</code>属性：（需要先设置<code>SSH-key</code>）</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="博客主题更改"><a href="#博客主题更改" class="headerlink" title="博客主题更改"></a>博客主题更改</h3><ol>
-<li><p>主题选取地址：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
-</li>
-<li><p>在博客根目录下的<code>themes</code>文件夹下克隆主题：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next</span><br></pre></td></tr></table></figure></li>
-<li><p>打开本地<code>Hexo</code>目录下文件<code>_config.yml</code>，修改<code>theme</code>属性：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">hexo-theme-next</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_8.png" alt="pic_8"></p>
-</li>
-<li><p>输入以下命令，更新博客在<code>GitHub</code>上的部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<code>tankmanbeta.github.io</code>，可以看到主题更新成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_9.png" alt="pic_9"></p>
-</li>
-</ol>
-<h3 id="Next主题切换"><a href="#Next主题切换" class="headerlink" title="Next主题切换"></a>Next主题切换</h3><ol>
-<li>打开<code>next</code>主题下的<code>_config.yml</code>文件，修改<code>theme</code>属性，将其选择成自己想要的</li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="中英文切换"><a href="#中英文切换" class="headerlink" title="中英文切换"></a>中英文切换</h3><ol>
-<li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>Site</code>属性下的<code>language</code>，将其改成<code>zh-CN</code>即可</li>
-<li>重新部署，步骤同上</li>
-<li>同理可以更改<code>title</code>、<code>author</code>等</li>
-</ol>
-<h3 id="添加标签页面"><a href="#添加标签页面" class="headerlink" title="添加标签页面"></a>添加标签页面</h3><ol>
-<li><p>在博客根目录下打开<code>cmd</code>，使用<code>hexo new page tags</code>新建一个页面</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_10.png" alt="pic_10"></p>
-</li>
-<li><p>打开新建的页面，将页面的类型设置为<code>tags</code></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">title: tags</span></span><br><span class="line"><span class="section">date: 2021-03-31 11:20:38</span></span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改Next主题下的<code>_config.yml</code>，将<code>tags</code>添加到<code>menu</code>属性当中</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-<li><p>重新部署，步骤同上，刷新页面后的结果</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_11.png" alt="pic_11"></p>
-</li>
-<li><p><code>home</code>、<code>categories</code>、<code>archives</code>等操作也是相同的</p>
-</li>
-</ol>
-<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><ol>
-<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
-<p>安装成功：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_12.png" alt="pic_12"></p>
-</li>
-<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置（有教程说新版的<code>hexo</code>中，<code>search.xml</code>需要改成<code>search.json</code>，否则部署到服务器搜索图标不能正常显示）</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search Config</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改Next主题下的<code>_config.yml</code>，修改<code>local_search</code>属性下的<code>enable</code>，将其改为<code>true</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If auto, trigger search by changing input.</span></span><br><span class="line">  <span class="comment"># If manual, trigger search by pressing enter key or search button.</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="使用外链图片"><a href="#使用外链图片" class="headerlink" title="使用外链图片"></a>使用外链图片</h3><ol>
-<li><p>注册腾讯云账号，选择对象存储</p>
-</li>
-<li><p>创建存储桶</p>
-</li>
-<li><p>创建成功之后上传文件</p>
-</li>
-<li><p>修改安全管理中的防盗链设置</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_13.png" alt="pic_13"></p>
-</li>
-<li><p>修改权限管理中的存储桶访问权限</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_14.png" alt="pic_14"></p>
-</li>
-<li><p>上传图片至存储桶，复制详情中的对象地址</p>
-</li>
-<li><p>在文章中使用外链</p>
-</li>
-<li><p>重新部署，步骤同上</p>
-</li>
-</ol>
-<h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
-<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span> <span class="comment"># 文章字数</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span> <span class="comment"># 阅读时长</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span> <span class="comment"># 所有文章总字数</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span> <span class="comment"># 所有文章阅读中时长</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">separated_meta:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">item_text_total:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">item_text_post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="使用PicGo上传图片至图床"><a href="#使用PicGo上传图片至图床" class="headerlink" title="使用PicGo上传图片至图床"></a>使用PicGo上传图片至图床</h3><ol>
-<li><p>下载PicGo，下载地址<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases </a> </p>
-</li>
-<li><p>腾讯云新建密钥：[访问密钥]—&gt;[API密钥管理]—&gt;[新建密钥]</p>
-</li>
-<li><p>打开安装完成后的PicGo，进行图床设置，设置后的结果为</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_15.png" alt="pic_15"></p>
-</li>
-<li><p>点击确定并设置为默认图床，拖动本地图片上传，即可成功</p>
-</li>
-<li>文章中可以直接使用刚刚产生的外链</li>
-<li>重新部署，步骤同上</li>
-</ol>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>hexo</tag>
-        <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
   </entry>
   <entry>
     <title>毕设知识点总结</title>
@@ -800,107 +800,6 @@
       </tags>
   </entry>
   <entry>
-    <title>算法Tricks</title>
-    <url>/2022/11/22/%E7%AE%97%E6%B3%95Tricks/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在刷题过程中遇到的一些常用的算法，便于后续复习。</p>
-<a id="more"></a>
-<h1 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h1><h2 id="短除法"><a href="#短除法" class="headerlink" title="短除法"></a>短除法</h2><p>思路：逐步找出两个数的所有公约数，再将这些公约数累乘起来，就能得到最大公约数。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    t = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">while</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            t *= i</span><br><span class="line">            m /= i</span><br><span class="line">            n /= i</span><br><span class="line">    <span class="keyword">return</span> t</span><br></pre></td></tr></table></figure>
-<h2 id="欧几里得算法（辗转相除法）"><a href="#欧几里得算法（辗转相除法）" class="headerlink" title="欧几里得算法（辗转相除法）"></a>欧几里得算法（辗转相除法）</h2><p>思路：以除数和余数反复做除法运算，当余数为 $0$ 时，取当前算式除数为最大公约数。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 非递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">while</span> n:</span><br><span class="line">        m, n = n, m % n</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> m</span><br><span class="line">    <span class="keyword">return</span> gcd(n, m % n)</span><br></pre></td></tr></table></figure>
-<h2 id="更相减损术"><a href="#更相减损术" class="headerlink" title="更相减损术"></a>更相减损术</h2><p>思路：任意给定两个正整数；判断它们是否都是偶数。若是，则用 $2$ 约简。以较大的数减较小的数，接着把所得的差与较小的数比较，并以大数减小数。继续这个操作，直到所得的减数和差相等为止。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        m //= <span class="number">2</span></span><br><span class="line">        n //= <span class="number">2</span></span><br><span class="line">    r = m-n</span><br><span class="line">    <span class="keyword">while</span> r != n:</span><br><span class="line">        m = <span class="built_in">max</span>(r, n)</span><br><span class="line">        n = <span class="built_in">min</span>(r, n)</span><br><span class="line">        r = m - n</span><br><span class="line">    <span class="keyword">return</span> n * <span class="number">2</span>**count</span><br></pre></td></tr></table></figure>
-<h2 id="穷举法"><a href="#穷举法" class="headerlink" title="穷举法"></a>穷举法</h2><p>思路：最大公约数肯定在 $1$ ~两者之间最小数之间，只需要从大到小穷举即可。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h2 id="Stein算法"><a href="#Stein算法" class="headerlink" title="Stein算法"></a>Stein算法</h2><p>思路：欧几里德算法是计算两个数最大公约数的传统算法，无论从理论还是从实际效率上都是很好的。但当出现大素数时，欧几里德法则存在较大的缺陷。计算 $\mbox{gcd}(m,n)=\mbox{gcd}(m−n,n)$ 的时候，实际上在描述的是 $\mbox{gcd}(2b,a+b)$ 。可以注意到它的第二参数本来就是一个奇数，因此按<code>Stein</code>算法可以提前将第一个参数里面的 $2$ 除掉变成 $\mbox{gcd}(b,a+b)$ 。再考虑第二参数比第一参数大，相减一下，立即就可以得到 $\mbox{gcd}(m,n)=\mbox{gcd}(a,b)=\mbox{gcd}(\frac{m+n}{2},\frac{m−n}{2})$ 。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> a &lt; b:</span><br><span class="line">        a, b = b, a</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> == b:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * gcd(a//<span class="number">2</span>, b//<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a//<span class="number">2</span>, b)</span><br><span class="line">    <span class="keyword">if</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a, b//<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 传统Stein算法</span></span><br><span class="line">    <span class="keyword">return</span> gcd(a-b, b)</span><br><span class="line">    <span class="comment"># 改进Stein算法（某些情况下可以降低复杂度）</span></span><br><span class="line">    <span class="comment"># return gcd((a+b)//2, (a-b)//2)</span></span><br></pre></td></tr></table></figure>
-<h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><p> 并查集是一种树型的数据结构，用于处理一些不相交集合<code>(disjoint sets)</code>的合并及查询问题。并查集最常用的操作是查找和合并。</p>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>初始时，每个元素都位于一个单独的集合，表示为一棵只有根节点的树。方便起见，我们将根节点的父亲设为自己。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br></pre></td></tr></table></figure>
-<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>我们需要沿着树向上移动，直至找到根节点。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x <span class="keyword">if</span> self.pa[x] == x <span class="keyword">else</span> self.find(self.pa[x])</span><br></pre></td></tr></table></figure>
-<h3 id="路径压缩"><a href="#路径压缩" class="headerlink" title="路径压缩"></a>路径压缩</h3><p>查找过程中经过的每个元素都属于该集合，我们可以将其直接连到根节点以加快后续查询。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> self.pa[x] != x:</span><br><span class="line">        self.pa[x] = self.find(self.pa[x])</span><br><span class="line">    <span class="keyword">return</span> self.pa[x]</span><br></pre></td></tr></table></figure>
-<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>要合并两棵树，我们只需要将一棵树的根节点连到另一棵树的根节点。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">    self.pa[self.find(x)] = self.find(y)</span><br></pre></td></tr></table></figure>
-<h3 id="启发式合并"><a href="#启发式合并" class="headerlink" title="启发式合并"></a>启发式合并</h3><p>合并时，选择哪棵树的根节点作为新树的根节点会影响未来操作的复杂度。我们可以将节点较少或深度较小的树连到另一棵，以免发生退化。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br><span class="line">        self.size = [<span class="number">1</span>] * size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">        x, y = self.find(x), self.find(y)</span><br><span class="line">        <span class="keyword">if</span> x == y:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> self.size[x] &lt; self.size[y]:</span><br><span class="line">            x, y = y, x</span><br><span class="line">        self.pa[y] = x</span><br><span class="line">        self.size[x] += self.size[y]</span><br></pre></td></tr></table></figure>
-<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><p>字符串<code>A</code>是否为字符串<code>B</code>的子串？如果是，出现在<code>B</code>的什么位置？这个问题就是字符串匹配问题。字符串<code>A</code>称为模式串，字符串<code>B</code>称为主串。</p>
-<h2 id="暴力匹配"><a href="#暴力匹配" class="headerlink" title="暴力匹配"></a>暴力匹配</h2><p>从主串的第一个字符开始与模式串的第一个字符比较，如果相同则模式串往后移动一个位置和主串的下一个位置再比较，如果不同，则主串移动到下一个字符，模式串移动到第一个字符，开始重新比较，以此类推。这种方法很简单，但效率很低，假设主串的长度为<code>m</code>，模式串的长度为<code>n</code>，最差的情况是主串移动<code>m-n+1</code>次才能匹配到，时间复杂度为<code>O(mn)</code>。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; m <span class="keyword">and</span> j &lt; n:</span><br><span class="line">        <span class="keyword">if</span> str1[i] == str2[j]:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = i - j + <span class="number">1</span></span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> j == n:</span><br><span class="line">        <span class="keyword">return</span> i - j</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h2 id="KMP算法-1"><a href="#KMP算法-1" class="headerlink" title="KMP算法"></a>KMP算法</h2><p><code>KMP</code>的核心思想是：某个位置匹配失败时，移动到这个位置之前的字符串的最长前缀的下一个字符继续匹配。简单来说，就是再已经匹配的模式串中找出最长的前缀和后缀相等的情况，然后将模式串从这个新位置开始匹配。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216211311.png" alt=""></p>
-<p>拿上图而言，目前能够匹配到的模式串为<code>ABCAB</code>，下次应该开始匹配的地方不是从头开始匹配，而是应该从<code>ABCAB</code>中的最长前后缀开始匹配。因为<code>ABCAB</code>的前缀和后缀（不包含字符串本身）分别为{<code>A</code>,<code>AB</code>,<code>ABC</code>,<code>ABCA</code>}和{<code>B</code>,<code>AB</code>,<code>CAB</code>,<code>BCAB</code>}，最长的前缀应该是<code>AB</code>。</p>
-<h3 id="next数组"><a href="#next数组" class="headerlink" title="next数组"></a>next数组</h3><p>接下来的问题就是如何计算这个最长前缀的长度。最朴素的方式就是从前往后和从后往前每次增加一个长度截取字符串，然后看前缀和后缀是否相同，但是计算量太大。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216215017.png" alt=""></p>
-<p>先看上图左边部分，箭头所指蓝色位置之前的字符串的最长前缀是<code>AB</code>，长度是<code>2</code>，我们对比这个最长前缀的下一个字符<code>A</code>和蓝色位置<code>A</code>相同，那么整个字符串的前后缀就变成了<code>ABA</code>，长度为<code>2+1=3</code>。仔细想想看：蓝色的<code>A</code>之前是最长后缀，白色的<code>A</code>之前是最长前缀，而这个最长前后缀是相同的，都是<code>AB</code>，那么如果第三个字符也相同，这三个字符连起来不是也相同吗？长度就是<code>2+1=3</code>！也就是说，如果要计算到某个位置字符串的最长前缀长度，我们只需要将这个字符和它之前字符串的最长前缀的下一个字符对比，如果相同，则它的最长前缀长度就是前面字符串的最长前缀长度+1。</p>
-<p>如果不相同呢？看上图右边部分，蓝色的<code>A</code>不等于最长前缀的下一个字符<code>C</code>，我们应该往前回溯，字符<code>C</code>前面的字符串<code>AB</code>的最长前缀长度是0（即后面代码里的<code>k=next[k]</code>），我们就用这个前缀的下一个字符，即第1个字符<code>A</code>和当前字符比较，如果相同，则整个字符串的最长前缀长度为0+1，如果不同，则继续往前回溯，直到第一个字符。也就是，不断往前回溯，用前面字符串的最长前缀的下一个字符和当前字符对比。</p>
-<p>注意：next数组保存的不是最长前缀的长度，而是对应的下标，也就是长度-1，如果长度是0，则保存-1。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_next</span>(<span class="params">p</span>):</span></span><br><span class="line">    n = <span class="built_in">len</span>(p)</span><br><span class="line">    <span class="built_in">next</span> = [<span class="number">0</span>] * n</span><br><span class="line">    <span class="built_in">next</span>[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">    k = -<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        <span class="comment"># 当前字符和最长前缀下一个字符不同，则往前回溯；因为next[k]就是用来记录子串的最长公共前后缀的尾坐标</span></span><br><span class="line">        <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> p[i] != p[k + <span class="number">1</span>]:</span><br><span class="line">            k = <span class="built_in">next</span>[k]</span><br><span class="line">        <span class="comment"># 当前字符和当前字符前面字符串的最长前缀的下一个字符相同，则 k + 1</span></span><br><span class="line">        <span class="keyword">if</span> p[i] == p[k + <span class="number">1</span>]:</span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">        <span class="built_in">next</span>[i] = k</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">next</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    index = -<span class="number">1</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    <span class="keyword">if</span> n &lt;= m:</span><br><span class="line">        <span class="built_in">next</span> = get_next(str2)</span><br><span class="line">        k = -<span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> str1[i] != str2[k + <span class="number">1</span>]:</span><br><span class="line">                k = <span class="built_in">next</span>[k]</span><br><span class="line">            <span class="keyword">if</span> str1[i] == str2[k + <span class="number">1</span>]:</span><br><span class="line">                k += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> k == n-<span class="number">1</span>:</span><br><span class="line">                    index = i - n + <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> index</span><br></pre></td></tr></table></figure>
-<h1 id="字典树（前缀树）"><a href="#字典树（前缀树）" class="headerlink" title="字典树（前缀树）"></a>字典树（前缀树）</h1><p>Trie，又称前缀树或字典树，是一棵有根树，其每个节点包含以下字段：</p>
-<ul>
-<li>指向子节点的数组 children 。</li>
-<li>布尔字段 isEnd，表示该节点是否为字符串的结尾。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize your data structure here.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.children = [<span class="literal">None</span>] * <span class="number">26</span></span><br><span class="line">        self.isEnd = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-<h2 id="插入字符串"><a href="#插入字符串" class="headerlink" title="插入字符串"></a>插入字符串</h2><p>我们从字典树的根开始，插入字符串。对于当前字符对应的子节点，有两种情况：</p>
-<ul>
-<li>子节点存在。沿着指针移动到子节点，继续处理下一个字符。</li>
-<li>子节点不存在。创建一个新的子节点，记录在 children 数组的对应位置上，然后沿着指针移动到子节点，继续搜索下一个字符。</li>
-</ul>
-<p>重复以上步骤，直到处理字符串的最后一个字符，然后将当前节点标记为字符串的结尾。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Inserts a word into the trie.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    node = self</span><br><span class="line">    <span class="keyword">for</span> ch <span class="keyword">in</span> word:</span><br><span class="line">        offset = <span class="built_in">ord</span>(ch) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> node.children[offset]:</span><br><span class="line">            node.children[offset] = Trie()</span><br><span class="line">        node = node.children[offset]</span><br><span class="line">    node.isEnd = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<h2 id="查找前缀"><a href="#查找前缀" class="headerlink" title="查找前缀"></a>查找前缀</h2><p>我们从字典树的根开始，查找前缀。对于当前字符对应的子节点，有两种情况：</p>
-<ul>
-<li>子节点存在。沿着指针移动到子节点，继续搜索下一个字符。</li>
-<li>子节点不存在。说明字典树中不包含该前缀，返回空指针。</li>
-</ul>
-<p>重复以上步骤，直到返回空指针或搜索完前缀的最后一个字符。</p>
-<p>若搜索到了前缀的末尾，就说明字典树中存在该前缀。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">startsWith</span>(<span class="params">self, prefix: <span class="built_in">str</span></span>) -&gt; bool:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Returns if there is any word in the trie that starts with the given prefix.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    cur = self</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> prefix:</span><br><span class="line">        od = <span class="built_in">ord</span>(c) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> cur.<span class="built_in">next</span>[od] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        cur = cur.<span class="built_in">next</span>[od]</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<h2 id="查找字符串"><a href="#查找字符串" class="headerlink" title="查找字符串"></a>查找字符串</h2><p>和查找前缀相同，多了一个判断 isEnd 的步骤，若前缀末尾对应节点的 isEnd 为真，则说明字典树中存在该字符串。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; bool:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Returns if the word is in the trie.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    cur = self</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> word:</span><br><span class="line">        od = <span class="built_in">ord</span>(c) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> cur.<span class="built_in">next</span>[od] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    	cur = cur.<span class="built_in">next</span>[od]</span><br><span class="line">    <span class="keyword">return</span> cur.isend == <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<h1 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h1><p>线段树是算法竞赛中常用的用来维护<strong>区间信息</strong>的数据结构。线段树可以在<code>O(logN)</code>的时间复杂度内实现单点修改、区间修改、区间查询（区间求和，求区间最大值，求区间最小值）等操作。</p>
-<p>线段树将每个长度不为 $1$ 的区间划分成左右两个区间递归求解，把整个线段划分为一个树形结构，通过合并左右两区间信息来求得该区间的信息。这种数据结构可以方便的进行大部分的区间操作。</p>
-<p><strong>适合场景</strong>：</p>
-<ul>
-<li>满足区间加法：区间的和，区间的差。</li>
-<li>满足区间乘法：区间的乘积。</li>
-<li>满足区间最值：区间最大值，区间最小值</li>
-</ul>
-<p><strong>不适合场景</strong>：</p>
-<ul>
-<li>区间的众数</li>
-<li>区间最长连续问题</li>
-<li>最长不下降问题</li>
-</ul>
-<h2 id="定义节点类"><a href="#定义节点类" class="headerlink" title="定义节点类"></a>定义节点类</h2><p>首先，我们需要定义一个节点类来表示线段树中的节点。每个节点包含一个左右子节点、区间起始和结束位置以及一些其他信息（如区间和、区间最大值、最小值等）。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SegmentTreeNode</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, start, end</span>):</span></span><br><span class="line">        self.start = start  <span class="comment"># 区间起始位置</span></span><br><span class="line">        self.end = end  <span class="comment"># 区间结束位置</span></span><br><span class="line">        self.left = <span class="literal">None</span>  <span class="comment"># 左子节点</span></span><br><span class="line">        self.right = <span class="literal">None</span>  <span class="comment"># 右子节点</span></span><br><span class="line">        self.<span class="built_in">sum</span> = <span class="number">0</span>  <span class="comment"># 区间和</span></span><br><span class="line">        <span class="comment"># 其他信息（例如区间最大值、最小值等）可以根据需要添加</span></span><br></pre></td></tr></table></figure>
-<h2 id="构建线段树"><a href="#构建线段树" class="headerlink" title="构建线段树"></a>构建线段树</h2><p>构建线段树的过程可以使用递归的方式实现。首先，定义一个 build 函数，该函数接收一个数组以及区间起始和结束位置，返回构建好的线段树的根节点。在函数内部，首先创建一个新节点表示当前区间，然后递归构建左右子树，最后将左右子树的区间和相加作为当前节点的区间和。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span>(<span class="params">nums, start, end</span>):</span></span><br><span class="line">    <span class="keyword">if</span> start &gt; end:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    root = SegmentTreeNode(start, end)</span><br><span class="line">    <span class="keyword">if</span> start == end:</span><br><span class="line">        root.<span class="built_in">sum</span> = nums[start]</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    mid = (start + end) // <span class="number">2</span></span><br><span class="line">    root.left = build(nums, start, mid)</span><br><span class="line">    root.right = build(nums, mid + <span class="number">1</span>, end)</span><br><span class="line">    root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br><span class="line">    <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
-<h2 id="区间查询"><a href="#区间查询" class="headerlink" title="区间查询"></a>区间查询</h2><p>线段树最常见的用途就是区间查询。例如，查询一个区间的和、最大值、最小值等。函数接收一个根节点、区间起始和结束位置，返回区间和。如果当前节点的区间完全被包含在查询区间内，则直接返回当前节点的区间和；否则，将查询区间分别递归到左右子树中查询，并将左右子树的查询结果相加作为最终结果。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query</span>(<span class="params">root, start, end</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= root.start <span class="keyword">and</span> end &gt;= root.end:</span><br><span class="line">        <span class="keyword">return</span> root.<span class="built_in">sum</span></span><br><span class="line">    mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">    res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= mid:</span><br><span class="line">        res += query(root.left, start, end)</span><br><span class="line">    <span class="keyword">if</span> end &gt; mid:</span><br><span class="line">        res += query(root.right, start, end)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-<h2 id="单点修改"><a href="#单点修改" class="headerlink" title="单点修改"></a>单点修改</h2><p>更新某个位置的值时，需要对所有包含这个位置的结点的值重新计算。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_single</span>(<span class="params">root, k, val</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">if</span> root.start == k <span class="keyword">and</span> root.end == k:</span><br><span class="line">        root.<span class="built_in">sum</span> = val</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> k &lt;= mid:</span><br><span class="line">        update_single(root.left, k, val)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        update_single(root.right, k, val)</span><br><span class="line">    root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br></pre></td></tr></table></figure>
-<h2 id="区间修改"><a href="#区间修改" class="headerlink" title="区间修改"></a>区间修改</h2><p>除了区间查询之外，线段树还可以用来实现区间修改。例如，修改一个区间中的数值，或者给一个区间加上一个定值。对于区间修改而言，我们需要引入一个<code>lazy</code>标记，<code>lazy</code>标记的作用是：将此区间标记，表示这个区间的值已经更新，但是它的子区间却没有更新，更新的信息就是标记保存的值。具体步骤如下：</p>
-<ol>
-<li>如果要修改的区间完全覆盖当前区间，则直接更新这个区间，打上<code>lazy</code>标记；</li>
-<li>如果没有完全覆盖且当前节点不是叶子节点，如果当前区间有<code>lazy</code>标记，先下传<code>lazy</code>标记到子区间，再清除当前区间的<code>lazy</code>标记；</li>
-<li>如果修改区间和左孩子有交集，就搜索左孩子；</li>
-<li>如果修改区间和右孩子有交集，就搜索右孩子；</li>
-<li>最后将当前区间的值更新。</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_some</span>(<span class="params">root, start, end, val</span>):</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= root.start <span class="keyword">and</span> end &gt;= root.end:</span><br><span class="line">        root.<span class="built_in">sum</span> += val * (root.end - root.start + <span class="number">1</span>)</span><br><span class="line">        root.flag = val</span><br><span class="line">    <span class="keyword">if</span> root.start != root.end:</span><br><span class="line">        <span class="keyword">if</span> root.flag:</span><br><span class="line">            root.left.flag = val</span><br><span class="line">            root.right.flag = val</span><br><span class="line">            root.flag = <span class="number">0</span></span><br><span class="line">        mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> start &lt;= mid &lt;= end:</span><br><span class="line">            update_some(root.left, start, end, val)</span><br><span class="line">        <span class="keyword">if</span> start &lt;= mid+<span class="number">1</span> &lt;= end:</span><br><span class="line">            update_some(root.right, start, end, val)</span><br><span class="line">        root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>刷题</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>机器学习总结</title>
     <url>/2021/04/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>小白上路啦！</p>
@@ -1165,6 +1064,107 @@
       <tags>
         <tag>总结</tag>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法Tricks</title>
+    <url>/2022/11/22/%E7%AE%97%E6%B3%95Tricks/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在刷题过程中遇到的一些常用的算法，便于后续复习。</p>
+<a id="more"></a>
+<h1 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h1><h2 id="短除法"><a href="#短除法" class="headerlink" title="短除法"></a>短除法</h2><p>思路：逐步找出两个数的所有公约数，再将这些公约数累乘起来，就能得到最大公约数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    t = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">while</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            t *= i</span><br><span class="line">            m /= i</span><br><span class="line">            n /= i</span><br><span class="line">    <span class="keyword">return</span> t</span><br></pre></td></tr></table></figure>
+<h2 id="欧几里得算法（辗转相除法）"><a href="#欧几里得算法（辗转相除法）" class="headerlink" title="欧几里得算法（辗转相除法）"></a>欧几里得算法（辗转相除法）</h2><p>思路：以除数和余数反复做除法运算，当余数为 $0$ 时，取当前算式除数为最大公约数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 非递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">while</span> n:</span><br><span class="line">        m, n = n, m % n</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> m</span><br><span class="line">    <span class="keyword">return</span> gcd(n, m % n)</span><br></pre></td></tr></table></figure>
+<h2 id="更相减损术"><a href="#更相减损术" class="headerlink" title="更相减损术"></a>更相减损术</h2><p>思路：任意给定两个正整数；判断它们是否都是偶数。若是，则用 $2$ 约简。以较大的数减较小的数，接着把所得的差与较小的数比较，并以大数减小数。继续这个操作，直到所得的减数和差相等为止。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        m //= <span class="number">2</span></span><br><span class="line">        n //= <span class="number">2</span></span><br><span class="line">    r = m-n</span><br><span class="line">    <span class="keyword">while</span> r != n:</span><br><span class="line">        m = <span class="built_in">max</span>(r, n)</span><br><span class="line">        n = <span class="built_in">min</span>(r, n)</span><br><span class="line">        r = m - n</span><br><span class="line">    <span class="keyword">return</span> n * <span class="number">2</span>**count</span><br></pre></td></tr></table></figure>
+<h2 id="穷举法"><a href="#穷举法" class="headerlink" title="穷举法"></a>穷举法</h2><p>思路：最大公约数肯定在 $1$ ~两者之间最小数之间，只需要从大到小穷举即可。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="Stein算法"><a href="#Stein算法" class="headerlink" title="Stein算法"></a>Stein算法</h2><p>思路：欧几里德算法是计算两个数最大公约数的传统算法，无论从理论还是从实际效率上都是很好的。但当出现大素数时，欧几里德法则存在较大的缺陷。计算 $\mbox{gcd}(m,n)=\mbox{gcd}(m−n,n)$ 的时候，实际上在描述的是 $\mbox{gcd}(2b,a+b)$ 。可以注意到它的第二参数本来就是一个奇数，因此按<code>Stein</code>算法可以提前将第一个参数里面的 $2$ 除掉变成 $\mbox{gcd}(b,a+b)$ 。再考虑第二参数比第一参数大，相减一下，立即就可以得到 $\mbox{gcd}(m,n)=\mbox{gcd}(a,b)=\mbox{gcd}(\frac{m+n}{2},\frac{m−n}{2})$ 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> a &lt; b:</span><br><span class="line">        a, b = b, a</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> == b:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * gcd(a//<span class="number">2</span>, b//<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a//<span class="number">2</span>, b)</span><br><span class="line">    <span class="keyword">if</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a, b//<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 传统Stein算法</span></span><br><span class="line">    <span class="keyword">return</span> gcd(a-b, b)</span><br><span class="line">    <span class="comment"># 改进Stein算法（某些情况下可以降低复杂度）</span></span><br><span class="line">    <span class="comment"># return gcd((a+b)//2, (a-b)//2)</span></span><br></pre></td></tr></table></figure>
+<h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><p> 并查集是一种树型的数据结构，用于处理一些不相交集合<code>(disjoint sets)</code>的合并及查询问题。并查集最常用的操作是查找和合并。</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>初始时，每个元素都位于一个单独的集合，表示为一棵只有根节点的树。方便起见，我们将根节点的父亲设为自己。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br></pre></td></tr></table></figure>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>我们需要沿着树向上移动，直至找到根节点。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x <span class="keyword">if</span> self.pa[x] == x <span class="keyword">else</span> self.find(self.pa[x])</span><br></pre></td></tr></table></figure>
+<h3 id="路径压缩"><a href="#路径压缩" class="headerlink" title="路径压缩"></a>路径压缩</h3><p>查找过程中经过的每个元素都属于该集合，我们可以将其直接连到根节点以加快后续查询。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> self.pa[x] != x:</span><br><span class="line">        self.pa[x] = self.find(self.pa[x])</span><br><span class="line">    <span class="keyword">return</span> self.pa[x]</span><br></pre></td></tr></table></figure>
+<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>要合并两棵树，我们只需要将一棵树的根节点连到另一棵树的根节点。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">    self.pa[self.find(x)] = self.find(y)</span><br></pre></td></tr></table></figure>
+<h3 id="启发式合并"><a href="#启发式合并" class="headerlink" title="启发式合并"></a>启发式合并</h3><p>合并时，选择哪棵树的根节点作为新树的根节点会影响未来操作的复杂度。我们可以将节点较少或深度较小的树连到另一棵，以免发生退化。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br><span class="line">        self.size = [<span class="number">1</span>] * size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">        x, y = self.find(x), self.find(y)</span><br><span class="line">        <span class="keyword">if</span> x == y:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> self.size[x] &lt; self.size[y]:</span><br><span class="line">            x, y = y, x</span><br><span class="line">        self.pa[y] = x</span><br><span class="line">        self.size[x] += self.size[y]</span><br></pre></td></tr></table></figure>
+<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><p>字符串<code>A</code>是否为字符串<code>B</code>的子串？如果是，出现在<code>B</code>的什么位置？这个问题就是字符串匹配问题。字符串<code>A</code>称为模式串，字符串<code>B</code>称为主串。</p>
+<h2 id="暴力匹配"><a href="#暴力匹配" class="headerlink" title="暴力匹配"></a>暴力匹配</h2><p>从主串的第一个字符开始与模式串的第一个字符比较，如果相同则模式串往后移动一个位置和主串的下一个位置再比较，如果不同，则主串移动到下一个字符，模式串移动到第一个字符，开始重新比较，以此类推。这种方法很简单，但效率很低，假设主串的长度为<code>m</code>，模式串的长度为<code>n</code>，最差的情况是主串移动<code>m-n+1</code>次才能匹配到，时间复杂度为<code>O(mn)</code>。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; m <span class="keyword">and</span> j &lt; n:</span><br><span class="line">        <span class="keyword">if</span> str1[i] == str2[j]:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = i - j + <span class="number">1</span></span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> j == n:</span><br><span class="line">        <span class="keyword">return</span> i - j</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="KMP算法-1"><a href="#KMP算法-1" class="headerlink" title="KMP算法"></a>KMP算法</h2><p><code>KMP</code>的核心思想是：某个位置匹配失败时，移动到这个位置之前的字符串的最长前缀的下一个字符继续匹配。简单来说，就是再已经匹配的模式串中找出最长的前缀和后缀相等的情况，然后将模式串从这个新位置开始匹配。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216211311.png" alt=""></p>
+<p>拿上图而言，目前能够匹配到的模式串为<code>ABCAB</code>，下次应该开始匹配的地方不是从头开始匹配，而是应该从<code>ABCAB</code>中的最长前后缀开始匹配。因为<code>ABCAB</code>的前缀和后缀（不包含字符串本身）分别为{<code>A</code>,<code>AB</code>,<code>ABC</code>,<code>ABCA</code>}和{<code>B</code>,<code>AB</code>,<code>CAB</code>,<code>BCAB</code>}，最长的前缀应该是<code>AB</code>。</p>
+<h3 id="next数组"><a href="#next数组" class="headerlink" title="next数组"></a>next数组</h3><p>接下来的问题就是如何计算这个最长前缀的长度。最朴素的方式就是从前往后和从后往前每次增加一个长度截取字符串，然后看前缀和后缀是否相同，但是计算量太大。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216215017.png" alt=""></p>
+<p>先看上图左边部分，箭头所指蓝色位置之前的字符串的最长前缀是<code>AB</code>，长度是<code>2</code>，我们对比这个最长前缀的下一个字符<code>A</code>和蓝色位置<code>A</code>相同，那么整个字符串的前后缀就变成了<code>ABA</code>，长度为<code>2+1=3</code>。仔细想想看：蓝色的<code>A</code>之前是最长后缀，白色的<code>A</code>之前是最长前缀，而这个最长前后缀是相同的，都是<code>AB</code>，那么如果第三个字符也相同，这三个字符连起来不是也相同吗？长度就是<code>2+1=3</code>！也就是说，如果要计算到某个位置字符串的最长前缀长度，我们只需要将这个字符和它之前字符串的最长前缀的下一个字符对比，如果相同，则它的最长前缀长度就是前面字符串的最长前缀长度+1。</p>
+<p>如果不相同呢？看上图右边部分，蓝色的<code>A</code>不等于最长前缀的下一个字符<code>C</code>，我们应该往前回溯，字符<code>C</code>前面的字符串<code>AB</code>的最长前缀长度是0（即后面代码里的<code>k=next[k]</code>），我们就用这个前缀的下一个字符，即第1个字符<code>A</code>和当前字符比较，如果相同，则整个字符串的最长前缀长度为0+1，如果不同，则继续往前回溯，直到第一个字符。也就是，不断往前回溯，用前面字符串的最长前缀的下一个字符和当前字符对比。</p>
+<p>注意：next数组保存的不是最长前缀的长度，而是对应的下标，也就是长度-1，如果长度是0，则保存-1。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_next</span>(<span class="params">p</span>):</span></span><br><span class="line">    n = <span class="built_in">len</span>(p)</span><br><span class="line">    <span class="built_in">next</span> = [<span class="number">0</span>] * n</span><br><span class="line">    <span class="built_in">next</span>[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">    k = -<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        <span class="comment"># 当前字符和最长前缀下一个字符不同，则往前回溯；因为next[k]就是用来记录子串的最长公共前后缀的尾坐标</span></span><br><span class="line">        <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> p[i] != p[k + <span class="number">1</span>]:</span><br><span class="line">            k = <span class="built_in">next</span>[k]</span><br><span class="line">        <span class="comment"># 当前字符和当前字符前面字符串的最长前缀的下一个字符相同，则 k + 1</span></span><br><span class="line">        <span class="keyword">if</span> p[i] == p[k + <span class="number">1</span>]:</span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">        <span class="built_in">next</span>[i] = k</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">next</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    index = -<span class="number">1</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    <span class="keyword">if</span> n &lt;= m:</span><br><span class="line">        <span class="built_in">next</span> = get_next(str2)</span><br><span class="line">        k = -<span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> str1[i] != str2[k + <span class="number">1</span>]:</span><br><span class="line">                k = <span class="built_in">next</span>[k]</span><br><span class="line">            <span class="keyword">if</span> str1[i] == str2[k + <span class="number">1</span>]:</span><br><span class="line">                k += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> k == n-<span class="number">1</span>:</span><br><span class="line">                    index = i - n + <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> index</span><br></pre></td></tr></table></figure>
+<h1 id="字典树（前缀树）"><a href="#字典树（前缀树）" class="headerlink" title="字典树（前缀树）"></a>字典树（前缀树）</h1><p>Trie，又称前缀树或字典树，是一棵有根树，其每个节点包含以下字段：</p>
+<ul>
+<li>指向子节点的数组 children 。</li>
+<li>布尔字段 isEnd，表示该节点是否为字符串的结尾。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize your data structure here.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.children = [<span class="literal">None</span>] * <span class="number">26</span></span><br><span class="line">        self.isEnd = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="插入字符串"><a href="#插入字符串" class="headerlink" title="插入字符串"></a>插入字符串</h2><p>我们从字典树的根开始，插入字符串。对于当前字符对应的子节点，有两种情况：</p>
+<ul>
+<li>子节点存在。沿着指针移动到子节点，继续处理下一个字符。</li>
+<li>子节点不存在。创建一个新的子节点，记录在 children 数组的对应位置上，然后沿着指针移动到子节点，继续搜索下一个字符。</li>
+</ul>
+<p>重复以上步骤，直到处理字符串的最后一个字符，然后将当前节点标记为字符串的结尾。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Inserts a word into the trie.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    node = self</span><br><span class="line">    <span class="keyword">for</span> ch <span class="keyword">in</span> word:</span><br><span class="line">        offset = <span class="built_in">ord</span>(ch) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> node.children[offset]:</span><br><span class="line">            node.children[offset] = Trie()</span><br><span class="line">        node = node.children[offset]</span><br><span class="line">    node.isEnd = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="查找前缀"><a href="#查找前缀" class="headerlink" title="查找前缀"></a>查找前缀</h2><p>我们从字典树的根开始，查找前缀。对于当前字符对应的子节点，有两种情况：</p>
+<ul>
+<li>子节点存在。沿着指针移动到子节点，继续搜索下一个字符。</li>
+<li>子节点不存在。说明字典树中不包含该前缀，返回空指针。</li>
+</ul>
+<p>重复以上步骤，直到返回空指针或搜索完前缀的最后一个字符。</p>
+<p>若搜索到了前缀的末尾，就说明字典树中存在该前缀。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">startsWith</span>(<span class="params">self, prefix: <span class="built_in">str</span></span>) -&gt; bool:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Returns if there is any word in the trie that starts with the given prefix.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    cur = self</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> prefix:</span><br><span class="line">        od = <span class="built_in">ord</span>(c) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> cur.<span class="built_in">next</span>[od] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        cur = cur.<span class="built_in">next</span>[od]</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="查找字符串"><a href="#查找字符串" class="headerlink" title="查找字符串"></a>查找字符串</h2><p>和查找前缀相同，多了一个判断 isEnd 的步骤，若前缀末尾对应节点的 isEnd 为真，则说明字典树中存在该字符串。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; bool:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Returns if the word is in the trie.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    cur = self</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> word:</span><br><span class="line">        od = <span class="built_in">ord</span>(c) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> cur.<span class="built_in">next</span>[od] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    	cur = cur.<span class="built_in">next</span>[od]</span><br><span class="line">    <span class="keyword">return</span> cur.isend == <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h1 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h1><p>线段树是算法竞赛中常用的用来维护<strong>区间信息</strong>的数据结构。线段树可以在<code>O(logN)</code>的时间复杂度内实现单点修改、区间修改、区间查询（区间求和，求区间最大值，求区间最小值）等操作。</p>
+<p>线段树将每个长度不为 $1$ 的区间划分成左右两个区间递归求解，把整个线段划分为一个树形结构，通过合并左右两区间信息来求得该区间的信息。这种数据结构可以方便的进行大部分的区间操作。</p>
+<p><strong>适合场景</strong>：</p>
+<ul>
+<li>满足区间加法：区间的和，区间的差。</li>
+<li>满足区间乘法：区间的乘积。</li>
+<li>满足区间最值：区间最大值，区间最小值</li>
+</ul>
+<p><strong>不适合场景</strong>：</p>
+<ul>
+<li>区间的众数</li>
+<li>区间最长连续问题</li>
+<li>最长不下降问题</li>
+</ul>
+<h2 id="定义节点类"><a href="#定义节点类" class="headerlink" title="定义节点类"></a>定义节点类</h2><p>首先，我们需要定义一个节点类来表示线段树中的节点。每个节点包含一个左右子节点、区间起始和结束位置以及一些其他信息（如区间和、区间最大值、最小值等）。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SegmentTreeNode</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, start, end</span>):</span></span><br><span class="line">        self.start = start  <span class="comment"># 区间起始位置</span></span><br><span class="line">        self.end = end  <span class="comment"># 区间结束位置</span></span><br><span class="line">        self.left = <span class="literal">None</span>  <span class="comment"># 左子节点</span></span><br><span class="line">        self.right = <span class="literal">None</span>  <span class="comment"># 右子节点</span></span><br><span class="line">        self.<span class="built_in">sum</span> = <span class="number">0</span>  <span class="comment"># 区间和</span></span><br><span class="line">        <span class="comment"># 其他信息（例如区间最大值、最小值等）可以根据需要添加</span></span><br></pre></td></tr></table></figure>
+<h2 id="构建线段树"><a href="#构建线段树" class="headerlink" title="构建线段树"></a>构建线段树</h2><p>构建线段树的过程可以使用递归的方式实现。首先，定义一个 build 函数，该函数接收一个数组以及区间起始和结束位置，返回构建好的线段树的根节点。在函数内部，首先创建一个新节点表示当前区间，然后递归构建左右子树，最后将左右子树的区间和相加作为当前节点的区间和。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span>(<span class="params">nums, start, end</span>):</span></span><br><span class="line">    <span class="keyword">if</span> start &gt; end:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    root = SegmentTreeNode(start, end)</span><br><span class="line">    <span class="keyword">if</span> start == end:</span><br><span class="line">        root.<span class="built_in">sum</span> = nums[start]</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    mid = (start + end) // <span class="number">2</span></span><br><span class="line">    root.left = build(nums, start, mid)</span><br><span class="line">    root.right = build(nums, mid + <span class="number">1</span>, end)</span><br><span class="line">    root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br><span class="line">    <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
+<h2 id="区间查询"><a href="#区间查询" class="headerlink" title="区间查询"></a>区间查询</h2><p>线段树最常见的用途就是区间查询。例如，查询一个区间的和、最大值、最小值等。函数接收一个根节点、区间起始和结束位置，返回区间和。如果当前节点的区间完全被包含在查询区间内，则直接返回当前节点的区间和；否则，将查询区间分别递归到左右子树中查询，并将左右子树的查询结果相加作为最终结果。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query</span>(<span class="params">root, start, end</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= root.start <span class="keyword">and</span> end &gt;= root.end:</span><br><span class="line">        <span class="keyword">return</span> root.<span class="built_in">sum</span></span><br><span class="line">    mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">    res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= mid:</span><br><span class="line">        res += query(root.left, start, end)</span><br><span class="line">    <span class="keyword">if</span> end &gt; mid:</span><br><span class="line">        res += query(root.right, start, end)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="单点修改"><a href="#单点修改" class="headerlink" title="单点修改"></a>单点修改</h2><p>更新某个位置的值时，需要对所有包含这个位置的结点的值重新计算。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_single</span>(<span class="params">root, k, val</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">if</span> root.start == k <span class="keyword">and</span> root.end == k:</span><br><span class="line">        root.<span class="built_in">sum</span> = val</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> k &lt;= mid:</span><br><span class="line">        update_single(root.left, k, val)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        update_single(root.right, k, val)</span><br><span class="line">    root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br></pre></td></tr></table></figure>
+<h2 id="区间修改"><a href="#区间修改" class="headerlink" title="区间修改"></a>区间修改</h2><p>除了区间查询之外，线段树还可以用来实现区间修改。例如，修改一个区间中的数值，或者给一个区间加上一个定值。对于区间修改而言，我们需要引入一个<code>lazy</code>标记，<code>lazy</code>标记的作用是：将此区间标记，表示这个区间的值已经更新，但是它的子区间却没有更新，更新的信息就是标记保存的值。具体步骤如下：</p>
+<ol>
+<li>如果要修改的区间完全覆盖当前区间，则直接更新这个区间，打上<code>lazy</code>标记；</li>
+<li>如果没有完全覆盖且当前节点不是叶子节点，如果当前区间有<code>lazy</code>标记，先下传<code>lazy</code>标记到子区间，再清除当前区间的<code>lazy</code>标记；</li>
+<li>如果修改区间和左孩子有交集，就搜索左孩子；</li>
+<li>如果修改区间和右孩子有交集，就搜索右孩子；</li>
+<li>最后将当前区间的值更新。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_some</span>(<span class="params">root, start, end, val</span>):</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= root.start <span class="keyword">and</span> end &gt;= root.end:</span><br><span class="line">        root.<span class="built_in">sum</span> += val * (root.end - root.start + <span class="number">1</span>)</span><br><span class="line">        root.flag = val</span><br><span class="line">    <span class="keyword">if</span> root.start != root.end:</span><br><span class="line">        <span class="keyword">if</span> root.flag:</span><br><span class="line">            root.left.flag = val</span><br><span class="line">            root.right.flag = val</span><br><span class="line">            root.flag = <span class="number">0</span></span><br><span class="line">        mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> start &lt;= mid &lt;= end:</span><br><span class="line">            update_some(root.left, start, end, val)</span><br><span class="line">        <span class="keyword">if</span> start &lt;= mid+<span class="number">1</span> &lt;= end:</span><br><span class="line">            update_some(root.right, start, end, val)</span><br><span class="line">        root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>刷题</tag>
       </tags>
   </entry>
   <entry>
@@ -2988,7 +2988,7 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101504342.png" alt=""></p>
 <p>而<code>LSTM</code>之所以能够解决<code>RNN</code>的长期依赖问题，是因为<code>LSTM</code>引入了门<code>(gate)</code>机制用于控制特征的流通和损失。对于上面的例子，<code>LSTM</code>可以做到在 $t_{9}$ 时刻将 $t_{2}$ 时刻的特征传过来，这样就可以非常有效的判断 $t_{9}$ 时刻使用单数还是复数了。<code>LSTM</code>是由一系列<code>LSTM</code>单元<code>(LSTM Unit)</code>组成，其链式结构如下图。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101504156.png" alt=""></p>
-<p><code>LSTM</code>的核心部分是在上图最上边类似于传送带的部分，这一部分一般叫做单元状态<code>(cell state)</code>它自始至终存在于<code>LSTM</code>的整个链式系统中。其中 $C_{t}=f_{t} \times C_{t-1} + i_{t} \times \tilde{C}_{t-1}$ ，其中 $f_{t}$ 叫做遗忘门，表示 $C_{t-1}$ 的哪些特征被用于计算 $C_{t}$ 。 $f_{t}$ 是一个向量，向量的每个元素均位于 $[0,1]$ 范围内。通常我们使用<code>Sigmoid</code>作为激活函数，<code>Sigmoid</code>的输出是一个介于 $[0,1]$ 区间内的值，但是当你观察一个训练好的<code>LSTM</code>时，你会发现门的值绝大多数都非常接近 $0$ 或者 $1$ ，其余的值少之又少。其中 $\otimes$ 是<code>LSTM</code>最重要的门机制，表示 $f_{t}$ 和 $C_{t-1}$ 之间的单位乘的关系。</p>
+<p><code>LSTM</code>的核心部分是在上图最上边类似于传送带的部分，这一部分一般叫做单元状态<code>(cell state)</code>它自始至终存在于<code>LSTM</code>的整个链式系统中。其中 $C_{t}=f_{t} \times C_{t-1} + i_{t} \times \tilde{C}_{t}$ ，其中 $f_{t}$ 叫做遗忘门，表示 $C_{t-1}$ 的哪些特征被用于计算 $C_{t}$ 。 $f_{t}$ 是一个向量，向量的每个元素均位于 $[0,1]$ 范围内。通常我们使用<code>Sigmoid</code>作为激活函数，<code>Sigmoid</code>的输出是一个介于 $[0,1]$ 区间内的值，但是当你观察一个训练好的<code>LSTM</code>时，你会发现门的值绝大多数都非常接近 $0$ 或者 $1$ ，其余的值少之又少。其中 $\otimes$ 是<code>LSTM</code>最重要的门机制，表示 $f_{t}$ 和 $C_{t-1}$ 之间的单位乘的关系。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101539655.png" alt=""></p>
 <p> $\tilde{C}_{t}$ 表示单元状态更新值，由输入数据 $x_{t}$ 和隐节点 $h_{t-1}$ 经由一个神经网络层得到，单元状态更新值的激活函数通常使用<code>tanh</code>。 $i_{t}$ 叫做输入门，同 $f_{t}$ 一样也是一个元素介于 $[0,1]$ 区间内的向量，同样由 $x_{t}$ 和 $h_{t-1}$ 经由<code>Sigmoid</code>激活函数计算而成。 $i_{t}$ 用于控制 $\tilde{C}_{t}$ 的哪些特征用于更新 $C_{t}$ ，使用方式和 $f_t$ 相同。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101545859.png" alt=""></p>
@@ -2998,7 +2998,14 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303302227637.png" alt=""></p>
 <p>当我输入一个文本的时候，该文本数据会先经过一个叫<code>Encoders</code>的模块，对该文本进行编码，然后将编码后的数据再传入一个叫<code>Decoders</code>的模块进行解码，解码后就得到了翻译后的文本，对应的我们称<code>Encoders</code>为编码器，<code>Decoders</code>为解码器。一般情况下，<code>Encoders</code>里边有 $6$ 个小编码器<code>(Encoder)</code>，<code>Decoders</code>里边有 $6$ 个小解码器<code>(Decoder)</code>。我们看到，在编码部分，每一个的小编码器的输入是前一个小编码器的输出，而每一个小解码器的输入不光是它的前一个解码器的输出，还包括了整个编码部分的输出。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303302042116.png" alt=""></p>
-<h2 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h2><h2 id="编码器-Encoder"><a href="#编码器-Encoder" class="headerlink" title="编码器(Encoder)"></a>编码器(Encoder)</h2><p>我们放大一个<code>Encoder</code>，发现里边的结构是一个多头自注意力机制加上一个前馈神经网络。</p>
+<h2 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h2><h3 id="Self-attention"><a href="#Self-attention" class="headerlink" title="Self-attention"></a>Self-attention</h3><p>Self-Attention属于Attention，要求QKV必须同源，依然代表X，本质上可以看作是相等的，只是对同一个词向量X乘上了参数矩阵，作了空间上的变换。</p>
+<h3 id="Cross-attention"><a href="#Cross-attention" class="headerlink" title="Cross-attention"></a>Cross-attention</h3><ul>
+<li>Transformer架构中混合两种不同嵌入序列的注意机制</li>
+<li>两个序列<strong>必须具有相同的维度</strong></li>
+<li>两个序列可以是不同的模式形态（如：文本、声音、图像）</li>
+<li>一个序列作为输入的Q，定义了输出的序列长度，另一个序列提供输入的K&amp;V</li>
+</ul>
+<h2 id="编码器-Encoder"><a href="#编码器-Encoder" class="headerlink" title="编码器(Encoder)"></a>编码器(Encoder)</h2><p>我们放大一个<code>Encoder</code>，发现里边的结构是一个多头自注意力机制加上一个前馈神经网络。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303302053360.png" alt=""></p>
 <p>像大部分<code>NLP</code>应用一样，我们首先将每个输入单词通过词嵌入算法转换为词向量，每个单词都被嵌入为 $512$ 维的向量。</p>
 <ul>
@@ -3921,7 +3928,52 @@
 <p>具体的，在初始化树结构的时候，首先借助商品的类别信息进行排序，将相同类别的商品放到一起，然后递归的将同类别中的商品等量的分到两个子类中，直到集合中只包含一项，利用这种自顶向下的方式来初始化一棵树。基于该树采样生成深度模型训练所需的样本，然后进一步训练模型，训练结束之后可以得到每个树节点对应的Embedding向量，利用节点的Embedding向量，采用K-Means聚类方法来重新构建一颗树，最后基于这颗新生成的树，重新训练深层网络。</p>
 </li>
 </ol>
-<h2 id="经典排序模型"><a href="#经典排序模型" class="headerlink" title="经典排序模型"></a>经典排序模型</h2><h3 id="GBDT-LR"><a href="#GBDT-LR" class="headerlink" title="GBDT+LR"></a>GBDT+LR</h3><p>pass</p>
+<h2 id="经典排序模型"><a href="#经典排序模型" class="headerlink" title="经典排序模型"></a>经典排序模型</h2><h3 id="GBDT-LR"><a href="#GBDT-LR" class="headerlink" title="GBDT+LR"></a>GBDT+LR</h3><p>前面介绍的协同过滤和矩阵分解存在的劣势就是仅利用了用户与物品相互行为信息进行推荐，忽视了用户自身特征，物品自身特征以及上下文信息等，导致生成的结果往往会比较片面。而这次介绍的这个模型是2014年由Facebook提出的GBDT+LR模型，该模型利用GBDT自动进行特征筛选和组合，进而生成新的离散特征向量，再把该特征向量当做LR模型的输入，来产生最后的预测结果，该模型能够综合利用用户、物品和上下文等多种不同的特征，生成较为全面的推荐结果，在CTR点击率预估场景下使用较为广泛。</p>
+<h4 id="逻辑回归模型"><a href="#逻辑回归模型" class="headerlink" title="逻辑回归模型"></a>逻辑回归模型</h4><p>逻辑回归是在线性回归的基础上加了一个 Sigmoid 函数（非线形）映射，使得逻辑回归成为了一个优秀的分类算法，学习逻辑回归模型，首先应该记住一句话：<strong>逻辑回归假设数据服从伯努利分布,通过极大化似然函数的方法，运用梯度下降来求解参数，来达到将数据二分类的目的。</strong>  </p>
+<p>相比于协同过滤和矩阵分解利用用户的物品“相似度”进行推荐， 逻辑回归模型将问题看成了一个分类问题， 通过预测正样本的概率对物品进行排序。这里的正样本可以是用户“点击”了某个商品或者“观看”了某个视频， 均是推荐系统希望用户产生的“正反馈”行为， 因此<strong>逻辑回归模型将推荐问题转化成了一个点击率预估问题</strong>。而点击率预测就是一个典型的二分类， 正好适合逻辑回归进行处理， 那么逻辑回归是如何做推荐的呢？ 过程如下：</p>
+<ol>
+<li>将用户年龄、性别、物品属性、物品描述、当前时间、当前地点等特征转成数值型向量</li>
+<li>确定逻辑回归的优化目标，比如把点击率预测转换成二分类问题， 这样就可以得到分类问题常用的损失作为目标， 训练模型</li>
+<li>在预测的时候， 将特征向量输入模型产生预测， 得到用户“点击”物品的概率</li>
+<li>利用点击概率对候选物品排序， 得到推荐列表</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221652189.png" alt=""></p>
+<p>这里的关键就是每个特征的权重参数$w$， 我们一般是使用梯度下降的方式， 首先会先随机初始化参数$w$， 然后将特征向量（也就是我们上面数值化出来的特征）输入到模型， 就会通过计算得到模型的预测概率， 然后通过对目标函数求导得到每个$w$的梯度， 然后进行更新$w$ ，这里的目标函数长下面这样：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221654279.png" alt=""></p>
+<p>求导之后的方式长这样：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221655094.png" alt=""></p>
+<p><strong>优点：</strong></p>
+<ol>
+<li>LR模型形式简单，可解释性好，从特征的权重可以看到不同的特征对最后结果的影响。</li>
+<li>训练时便于并行化，在预测时只需要对特征进行线性加权，所以<strong>性能比较好</strong>，往往适合处理<strong>海量id类特征</strong>，用id类特征有一个很重要的好处，就是<strong>防止信息损失</strong>（相对于范化的 CTR 特征），对于头部资源会有更细致的描述</li>
+<li>资源占用小,尤其是内存。在实际的工程应用中只需要存储权重比较大的特征及特征对应的权重。</li>
+<li>方便输出结果调整。逻辑回归可以很方便的得到最后的分类结果，因为输出的是每个样本的概率分数，我们可以很容易的对这些概率分数进行cutoff，也就是划分阈值(大于某个阈值的是一类，小于某个阈值的是一类)</li>
+</ol>
+<p><strong>当然， 逻辑回归模型也有一定的局限性</strong></p>
+<ol>
+<li>表达能力不强， 无法进行特征交叉， 特征筛选等一系列“高级“操作（这些工作都得人工来干， 这样就需要一定的经验， 否则会走一些弯路）， 因此可能造成信息的损失</li>
+<li>准确率并不是很高。因为这毕竟是一个线性模型加了个sigmoid， 形式非常的简单(非常类似线性模型)，很难去拟合数据的真实分布</li>
+<li>处理非线性数据较麻烦。逻辑回归在不引入其他方法的情况下，只能处理线性可分的数据， 如果想处理非线性， 首先对连续特征的处理需要先进行<strong>离散化</strong>（离散化的目的是为了引入非线性），如上文所说，人工分桶的方式会引入多种问题。</li>
+<li>LR 需要进行<strong>人工特征组合</strong>，这就需要开发者有非常丰富的领域经验，才能不走弯路。这样的模型迁移起来比较困难，换一个领域又需要重新进行大量的特征工程。</li>
+</ol>
+<p>所以如何<strong>自动发现有效的特征、特征组合，弥补人工经验不足，缩短LR特征实验周期</strong>，是亟需解决的问题， 而GBDT模型， 正好可以<strong>自动发现特征并进行有效组合</strong></p>
+<h4 id="GBDT-1"><a href="#GBDT-1" class="headerlink" title="GBDT"></a>GBDT</h4><p>GBDT全称梯度提升决策树，在传统机器学习算法里面是对真实分布拟合的最好的几种算法之一，在前几年深度学习还没有大行其道之前，gbdt在各种竞赛是大放异彩。原因大概有几个，一是效果确实挺不错。二是即可以用于分类也可以用于回归。三是可以筛选特征， 所以这个模型依然是一个非常重要的模型。 </p>
+<h4 id="GBDT-LR模型"><a href="#GBDT-LR模型" class="headerlink" title="GBDT+LR模型"></a>GBDT+LR模型</h4><p>2014年， Facebook提出了一种利用GBDT自动进行特征筛选和组合， 进而生成新的离散特征向量， 再把该特征向量当做LR模型的输入， 来产生最后的预测结果， 这就是著名的GBDT+LR模型了。GBDT+LR 使用最广泛的场景是CTR点击率预估，即预测当给用户推送的广告会不会被用户点击，模型的总体结构长下面这样：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221737318.png" alt=""></p>
+<p><strong>训练时</strong>，GBDT 建树的过程相当于自动进行的特征组合和离散化，然后从根结点到叶子节点的这条路径就可以看成是不同特征进行的特征组合，用叶子节点可以唯一的表示这条路径，并作为一个离散特征传入 LR 进行<strong>二次训练</strong>。</p>
+<p>比如上图中， 有两棵树，x为一条输入样本，遍历两棵树后，x样本分别落到两颗树的叶子节点上，每个叶子节点对应LR一维特征，那么通过遍历树，就得到了该样本对应的所有LR特征。构造的新特征向量是取值0/1的。 比如左树有三个叶子节点，右树有两个叶子节点，最终的特征即为五维的向量。对于输入x，假设他落在左树第二个节点，编码[0,1,0]，落在右树第二个节点则编码[0,1]，所以整体的编码为[0,1,0,0,1]，这类编码作为特征，输入到线性分类模型（LR or FM）中进行分类。</p>
+<p><strong>预测时</strong>，会先走 GBDT 的每棵树，得到某个叶子节点对应的一个离散特征(即一组特征组合)，然后把该特征以 one-hot 形式传入 LR 进行线性加权预测。</p>
+<p>这个方案应该比较简单了， 下面有几个关键的点我们需要了解：</p>
+<ol>
+<li><strong>通过GBDT进行特征组合之后得到的离散向量是和训练数据的原特征一块作为逻辑回归的输入， 而不仅仅全是这种离散特征</strong></li>
+<li>建树的时候用ensemble建树的原因就是一棵树的表达能力很弱，不足以表达多个有区分性的特征组合，多棵树的表达能力更强一些。GBDT每棵树都在学习前面棵树尚存的不足，迭代多少次就会生成多少棵树。</li>
+<li>RF也是多棵树，但从效果上有实践证明不如GBDT。且GBDT前面的树，特征分裂主要体现对多数样本有区分度的特征；后面的树，主要体现的是经过前N颗树，残差仍然较大的少数样本。优先选用在整体上有区分度的特征，再选用针对少数样本有区分度的特征，思路更加合理，这应该也是用GBDT的原因。</li>
+<li>在CRT预估中， GBDT一般会建立两类树(非ID特征建一类， ID类特征建一类)， AD，ID类特征在CTR预估中是非常重要的特征，直接将AD，ID作为feature进行建树不可行，故考虑为每个AD，ID建GBDT树。<ol>
+<li>非ID类树：不以细粒度的ID建树，此类树作为base，即便曝光少的广告、广告主，仍可以通过此类树得到有区分性的特征、特征组合</li>
+<li>ID类树：以细粒度 的ID建一类树，用于发现曝光充分的ID对应有区分性的特征、特征组合</li>
+</ol>
+</li>
+</ol>
 <h3 id="特征交叉"><a href="#特征交叉" class="headerlink" title="特征交叉"></a>特征交叉</h3><h4 id="FM模型"><a href="#FM模型" class="headerlink" title="FM模型"></a>FM模型</h4><p><code>FM(Factorization Machine)</code>，即因式分解机。</p>
 <h5 id="为什么需要FM模型"><a href="#为什么需要FM模型" class="headerlink" title="为什么需要FM模型"></a>为什么需要FM模型</h5><ol>
 <li>特征组合是许多机器学习建模过程中遇到的问题，如果对特征直接建模，很有可能会忽略掉特征与特征之间的关联信息，因此，可以通过构建新的交叉特征这一特征组合方式提高模型的效果。</li>
@@ -3980,7 +4032,293 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304201707323.png" alt=""></p>
 <p>不难看出，<code>FM</code>中有 $w_{1}$ ， $w_{2}$ ， $w_{3}$ ， $w_{4}$ ，$w_{5}$ 五个隐向量，但到了<code>FFM</code>中有 $4\times5=20$ 个，选 $x_{i}$ 与 $x_{j}$ 对应的域 $f_{j}$ 对应的隐向量 $v_{i,f_{j}}$ 进行交叉。</p>
 <h5 id="FFM模型的应用场景"><a href="#FFM模型的应用场景" class="headerlink" title="FFM模型的应用场景"></a>FFM模型的应用场景</h5><p>和<code>FM</code>算法一样，<code>FFM</code>主要应用在推荐算法中的<code>CTR</code>点击率预估（排序）问题，推荐系统一般可以分成两个模块，召回和排序。比如对于电影推荐，召回模块会针对用户生成一个推荐电影列表，而排序模块则负责对这个电影列表根据用户的兴趣做排序。当把<code>FFM</code>算法应用到推荐系统中时，具体地是应用在排序模块。</p>
-<h3 id="Wide-amp-Deep系列"><a href="#Wide-amp-Deep系列" class="headerlink" title="Wide&amp;Deep系列"></a>Wide&amp;Deep系列</h3><p>pass</p>
+<h4 id="PNN"><a href="#PNN" class="headerlink" title="PNN"></a>PNN</h4><p>在特征交叉的相关模型中FM, FFM都证明了特征交叉的重要性，FNN将神经网络的高阶隐式交叉加到了FM的二阶特征交叉上，一定程度上说明了DNN做特征交叉的有效性。但是对于DNN这种“add”操作的特征交叉并不能充分挖掘类别特征的交叉效果。PNN虽然也用了DNN来对特征进行交叉组合，但是并不是直接将低阶特征放入DNN中，而是设计了Product层先对低阶特征进行充分的交叉组合之后再送入到DNN中去。</p>
+<p>PNN模型其实是对IPNN和OPNN的总称，两者分别对应的是不同的Product实现方法，前者采用的是inner product，后者采用的是outer product。在PNN的算法方面，比较重要的部分就是Product Layer的简化实现方法，需要在数学和代码上都能够比较深入的理解。</p>
+<h5 id="模型结构及原理"><a href="#模型结构及原理" class="headerlink" title="模型结构及原理"></a>模型结构及原理</h5><p>PNN模型的整体架构如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221912175.png" alt=""></p>
+<p>一共分为五层，其中除了Product Layer别的layer都是比较常规的处理方法，均可以从前面的章节进一步了解。模型中最重要的部分就是通过Product层对embedding特征进行交叉组合，也就是上图中红框所显示的部分。</p>
+<p>Product层主要有线性部分和非线性部分组成，分别用$l_z$和$l_p$来表示，</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221914930.png" alt=""></p>
+<ol>
+<li>线性模块，一阶特征(未经过显示特征交叉处理)，对应论文中的$l_z=(l_z^1,l_z^2, …, l_z^{D_1})$</li>
+<li>非线性模块，高阶特征(经过显示特征交叉处理)，对应论文中的$l_p=(l_p^1,l_p^2, …, l_p^{D_1})$</li>
+</ol>
+<p><strong>线性部分</strong></p>
+<p>先来解释一下$l_z$是如何计算得到的，在介绍计算$l_z$之前先介绍一下矩阵内积计算, 如下公式所示，用一句话来描述就是两个矩阵对应元素相称，然后将相乘之后的所有元素相加</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221916770.png" alt=""></p>
+<p>$l_z^n$的计算就是矩阵内积，而$l_z$是有$D_1$个$l_z^n$组成，所以需要$D_1$个矩阵求得，但是在代码实现的时候不一定是定义$D_1$个矩阵，可以将这些矩阵Flatten。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221917878.png" alt=""></p>
+<p>总之这一波操作就是将所有的embedding向量中的所有元素都乘以一个矩阵的对应元素，最后相加即可，这一部分比较简单(N表示的是特征的数量，M表示的是所有特征转化为embedding之后维度，也就是N*emb_dim)</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221919755.png" alt=""></p>
+<p><strong>非线性部分</strong></p>
+<p>上面介绍了线性部分$l_p$的计算，非线性部分的计算相比线性部分要复杂很多，先从整体上看$l_p$的计算</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221925847.png" alt=""></p>
+<p>从上述公式中可以发现，$l_p^n$和$l_z^n$类似需要$D_1$个$W_p^n$矩阵计算内积得到，重点就是如何求这个$p$，这里作者提出了两种方式，一种是使用内积计算，另一种是使用外积计算。</p>
+<ul>
+<li>IPNN</li>
+</ul>
+<p>使用内积实现特征交叉就和FM是类似的(两两向量计算内积)，下面将向量内积操作表示如下表达式</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221951440.png" alt=""></p>
+<p>将内积的表达式带入$l_p^n$的计算表达式中有：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221951074.png" alt=""></p>
+<p>上面就提到了这里使用的内积是计算两两特征之间的内积，然而向量a和向量b的内积与向量b和向量a的内积是相同的，其实是没必要计算的，看一下下面FM的计算公式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221952139.png" alt=""></p>
+<p>也就是说计算的内积矩阵$p$是对称的，那么与其对应元素做矩阵内积的矩阵$W_p^n$也是对称的，对于可学习的权重来说如果是对称的是不是可以只使用其中的一半就行了呢，所以基于这个思考，对Inner Product的权重定义及内积计算进行优化，首先将权重矩阵分解$W_p^n=\theta^n \theta^{nT}$,此时$\theta^n \in R^N$（参数从原来的$N^2$变成了$N$）,将分解后的$W_p^n$带入$l_p^n$的计算公式有：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221952937.png" alt=""></p>
+<p>所以优化后的$l_p$的计算公式为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221952743.png" alt=""></p>
+<p>这里为了好理解不做过多的解释，其实这里对于矩阵分解省略了一些细节，感兴趣的可以去看原文，最后模型实现的时候就是基于上面的这个公式计算的（给出的代码也是基于优化之后的实现）。</p>
+<ul>
+<li>OPNN</li>
+</ul>
+<p>使用外积实现相比于使用内积实现，唯一的区别就是使用向量的外积来计算矩阵$p$,首先定义向量的外积计算</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221953919.png" alt=""></p>
+<p>从外积公式可以发现两个向量的外积得到的是一个矩阵，与上面介绍的内积计算不太相同，内积得到的是一个数值。内积实现的Product层是将计算得到的内积矩阵，乘以一个与其大小一样的权重矩阵，然后求和，按照这个思路的话，通过外积得到的$p$计算$W_p^n \odot{p}$相当于之前的内积值乘以权重矩阵对应位置的值求和就变成了，外积矩阵乘以权重矩阵中对应位置的子矩阵然后将整个相乘得到的大矩阵对应元素相加，用公式表示如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221953829.png" alt=""></p>
+<p>需要注意的是此时的$(W_p^n)_{i,j}$表示的是一个矩阵，而不是一个值，此时计算$l_p$的复杂度是$O(D_1<em>N^2</em>M^2)$, 其中$N^2$表示的是特征的组合数量，$M^2$表示的是计算外积的复杂度。这样的复杂度肯定是无法接受的，所以为了优化复杂度，PNN的作者重新定义了$p$的计算方式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221954360.png" alt=""></p>
+<p>需要注意，这里新定义的外积计算与传统的外积计算时不等价的，这里是为了优化计算效率重新定义的计算方式，从公式中可以看出，相当于先将原来的embedding向量在特征维度上先求和，变成一个向量之后再计算外积。加入原embedding向量表示为$E \in R^{N\times M}$，其中$N$表示特征的数量，M表示的是所有特征的总维度，即$N*emb_dim$, 在特征维度上进行求和就是将$E \in R^{N\times M}$矩阵压缩成了$E \in R^M$, 然后两个$M$维的向量计算外积得到最终所有特征的外积交叉结果$p\in R^{M\times M}$，最终的$l_p^n$可以表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305221954996.png" alt=""></p>
+<p>最终的计算方式和$l_z$的计算方式看起来差不多，但是需要注意外积优化后的$W_p^n$的维度是$R^{M \times M}$的，$M$表示的是特征矩阵的维度，即$N*emb_dim$。</p>
+<h4 id="DCN"><a href="#DCN" class="headerlink" title="DCN"></a>DCN</h4><p>Wide&amp;Deep模型的提出不仅综合了“记忆能力”和“泛化能力”， 而且开启了不同网络结构融合的新思路。 所以后面就有各式各样的模型改进Wide部分或者Deep部分， 而Deep&amp;Cross模型(DCN)就是其中比较典型的一个，这是2017年斯坦福大学和谷歌的研究人员在ADKDD会议上提出的， 该模型针对W&amp;D的wide部分进行了改进， 因为Wide部分有一个不足就是需要人工进行特征的组合筛选， 过程繁琐且需要经验， 而2阶的FM模型在线性的时间复杂度中自动进行特征交互，但是这些特征交互的表现能力并不够，并且随着阶数的上升，模型复杂度会大幅度提高。于是乎，作者用一个Cross Network替换掉了Wide部分，来自动进行特征之间的交叉，并且网络的时间和空间复杂度都是线性的。 通过与Deep部分相结合，构成了深度交叉网络（Deep &amp; Cross Network），简称DCN。</p>
+<h5 id="模型结构及原理-1"><a href="#模型结构及原理-1" class="headerlink" title="模型结构及原理"></a>模型结构及原理</h5><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222002416.png" alt=""></p>
+<h5 id="Embedding和Stacking-层"><a href="#Embedding和Stacking-层" class="headerlink" title="Embedding和Stacking 层"></a>Embedding和Stacking 层</h5><p>Embedding层我们已经非常的熟悉了吧， 这里的作用依然是把稀疏离散的类别型特征变成低维密集型。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222003410.png" alt=""></p>
+<p>其中对于某一类稀疏分类特征（如id），$X_{embed, i}$是第个$i$分类值（id序号）的embedding向量。$W_{embed,i}$是embedding矩阵， $n_e\times n_v$维度， $n_e$是embedding维度， $n_v$是该类特征的唯一取值个数。$x_i$属于该特征的二元稀疏向量(one-hot)编码的。 【实质上就是在训练得到的Embedding参数矩阵中找到属于当前样本对应的Embedding向量】。其实绝大多数基于深度学习的推荐模型都需要Embedding操作，参数学习是通过神经网络进行训练。</p>
+<p>最后，该层需要将所有的密集型特征与通过embedding转换后的特征进行联合（Stacking）：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222003825.png" alt=""></p>
+<p>一共$k$个类别特征， dense是数值型特征， 两者在特征维度拼在一块。 上面的这两个操作如果是看了前面的模型的话，应该非常容易理解了。</p>
+<h5 id="Cross-Network"><a href="#Cross-Network" class="headerlink" title="Cross Network"></a>Cross Network</h5><p>这个就是本模型最大的亮点了【Cross网络】， 这个思路感觉非常Nice。设计该网络的目的是增加特征之间的交互力度。交叉网络由多个交叉层组成， 假设第$l$层的输出向量$x_l$， 那么对于第$l+1$层的输出向量$x_{l+1}$表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222005263.png" alt=""></p>
+<p>可以看到， 交叉层的二阶部分非常类似PNN提到的外积操作， 在此基础上增加了外积操作的权重向量$w_l$， 以及原输入向量$x_l$和偏置向量$b_l$。 交叉层的可视化如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222006335.png" alt=""></p>
+<p>可以看到， 每一层增加了一个$n$维的权重向量$w_l$（n表示输入向量维度）， 并且在每一层均保留了输入向量， 因此输入和输出之间的变化不会特别明显。关于这一层， 原论文里面有个具体的证明推导Cross Network为啥有效， 不过比较复杂，这里我拿一个式子简单的解释下上面这个公式的伟大之处：</p>
+<p><strong>我们根据上面这个公式， 尝试的写前面几层看看:</strong></p>
+<p>$l=0:\mathbf{x}_{1} =\mathbf{x}_{0} \mathbf{x}_{0}^{T} \mathbf{w}_{0}+ \mathbf{b}_{0}+\mathbf{x}_{0}$</p>
+<p>$l=1:\mathbf{x}_{2} =\mathbf{x}_{0} \mathbf{x}_{1}^{T} \mathbf{w}_{1}+ \mathbf{b}_{1}+\mathbf{x}_{1}=\mathbf{x}_{0} [\mathbf{x}_{0} \mathbf{x}_{0}^{T} \mathbf{w}_{0}+ \mathbf{b}_{0}+\mathbf{x}_{0}]^{T}\mathbf{w}_{1}+\mathbf{b}_{1}+\mathbf{x}_{1}$</p>
+<p>$l=2:\mathbf{x}_{3} =\mathbf{x}_{0} \mathbf{x}_{2}^{T} \mathbf{w}_{2}+ \mathbf{b}_{2}+\mathbf{x}_{2}=\mathbf{x}_{0} [\mathbf{x}_{0} [\mathbf{x}_{0} \mathbf{x}_{0}^{T} \mathbf{w}_{0}+ \mathbf{b}_{0}+\mathbf{x}_{0}]^{T}\mathbf{w}_{1}+\mathbf{b}_{1}+\mathbf{x}_{1}]^{T}\mathbf{w}_{2}+\mathbf{b}_{2}+\mathbf{x}_{2}$</p>
+<p>我们暂且写到第3层的计算， 我们会发现什么结论呢？  给大家总结一下：</p>
+<ol>
+<li><p>$\mathrm{x}_1$中包含了所有的$\mathrm{x}_0$的1,2阶特征的交互， $\mathrm{x}_2$包含了所有的$\mathrm{x}_1, \mathrm{x}_0$的1、2、3阶特征的交互，$\mathrm{x}_3$中包含了所有的$\mathrm{x}_2$, $\mathrm{x}_1$与$\mathrm{x}_0$的交互，$\mathrm{x}_0$的1、2、3、4阶特征交互。 因此， 交叉网络层的叉乘阶数是有限的。 <strong>第$l$层特征对应的最高的叉乘阶数$l+1$</strong></p>
+</li>
+<li><p>Cross网络的参数是共享的， 每一层的这个权重特征之间共享， 这个可以使得模型泛化到看不见的特征交互作用， 并且对噪声更具有鲁棒性。 例如两个稀疏的特征$x_i,x_j$， 它们在数据中几乎不发生交互， 那么学习$x_i,x_j$的权重对于预测没有任何的意义。</p>
+</li>
+<li><p>计算交叉网络的参数数量。 假设交叉层的数量是$L_c$， 特征$x$的维度是$n$， 那么总共的参数是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222009493.png" alt=""></p>
+<p>这个就是每一层会有$w$和$b$。且$w$维度和$x$的维度是一致的。</p>
+</li>
+<li><p>交叉网络的时间和空间复杂度是线性的。这是因为， 每一层都只有$w$和$b$， 没有激活函数的存在，相对于深度学习网络， 交叉网络的复杂性可以忽略不计。</p>
+</li>
+<li><p>Cross网络是FM的泛化形式， 在FM模型中， 特征$x_i$的权重$v_i$， 那么交叉项$x_i,x_j$的权重为$<x_i,x_j>$。在DCN中， $x_i$的权重为${W_K^{(i)}}_{k=1}^l$, 交叉项$x_i,x_j$的权重是参数${W_K^{(i)}}_{k=1}^l$和${W_K^{(j)}}_{k=1}^l$的乘积，这个看上面那个例子展开感受下。因此两个模型都各自学习了独立于其他特征的一些参数，并且交叉项的权重是相应参数的某种组合。FM只局限于2阶的特征交叉(一般)，而DCN可以构建更高阶的特征交互， 阶数由网络深度决定，并且交叉网络的参数只依据输入的维度线性增长。</p>
+</li>
+<li><p>还有一点我们也要了解，对于每一层的计算中， 都会跟着$\mathrm{x}_0$, 这个是咱们的原始输入， 之所以会乘以一个这个，是为了保证后面不管怎么交叉，都不能偏离我们的原始输入太远，别最后交叉交叉都跑偏了。</p>
+</li>
+<li><p>$\mathbf{x}_{l+1}=f\left(\mathbf{x}_{l}, \mathbf{w}_{l}, \mathbf{b}_{l}\right)+\mathbf{x}_{l}$, 这个东西其实有点跳远连接的意思，也就是和ResNet也有点相似，无形之中还能有效的缓解梯度消失现象。</p>
+</li>
+</ol>
+<p>好了， 关于本模型的交叉网络的细节就介绍到这里了。这应该也是本模型的精华之处了，后面就简单了。</p>
+<h5 id="Deep-Network"><a href="#Deep-Network" class="headerlink" title="Deep Network"></a>Deep Network</h5><p>这个就和上面的D&amp;W的全连接层原理一样。这里不再过多的赘述。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222013355.png" alt=""></p>
+<p>具体的可以参考W&amp;D模型。</p>
+<h5 id="组合输出层"><a href="#组合输出层" class="headerlink" title="组合输出层"></a>组合输出层</h5><p>这个层负责将两个网络的输出进行拼接， 并且通过简单的Logistics回归完成最后的预测：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222014011.png" alt=""></p>
+<p>其中$\mathbf{x}_{L_{1}}^{T}$和$\mathbf{h}_{L_{2}}^{T}$分别表示交叉网络和深度网络的输出。<br>最后二分类的损失函数依然是交叉熵损失：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222014360.png" alt=""></p>
+<p>Cross&amp;Deep模型的原理就是这些了，其核心部分就是Cross Network， 这个可以进行特征的自动交叉， 避免了更多基于业务理解的人工特征组合。 该模型相比于W&amp;D，Cross部分表达能力更强， 使得模型具备了更强的非线性学习能力。</p>
+<h4 id="AutoInt"><a href="#AutoInt" class="headerlink" title="AutoInt"></a>AutoInt</h4><h5 id="动机和原理"><a href="#动机和原理" class="headerlink" title="动机和原理"></a>动机和原理</h5><p>这篇文章的前言部分依然是说目前模型的不足，以引出模型的动机所在， 简单的来讲，就是两句话：</p>
+<ol>
+<li>浅层的模型会受到交叉阶数的限制，没法完成高阶交叉</li>
+<li>深层模型的DNN在学习高阶隐性交叉的效果并不是很好， 且不具有可解释性</li>
+</ol>
+<p>于是乎：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222018983.png" alt=""></p>
+<p>那么是如何做到的呢？ 引入了transformer， 做成了一个特征交互层， 原理如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222018848.png" alt=""></p>
+<h5 id="AutoInt模型的前向过程梳理"><a href="#AutoInt模型的前向过程梳理" class="headerlink" title="AutoInt模型的前向过程梳理"></a>AutoInt模型的前向过程梳理</h5><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222019899.png" alt=""></p>
+<h6 id="Input-Layer"><a href="#Input-Layer" class="headerlink" title="Input Layer"></a>Input Layer</h6><p>输入层这里， 用到的特征主要是离散型特征和连续性特征， 这里不管是哪一类特征，都会过embedding层转成低维稠密的向量，是的， <strong>连续性特征，这里并没有经过分桶离散化，而是直接走embedding</strong>。这个是怎么做到的呢？就是就是类似于预训练时候的思路，先通过item_id把连续型特征与类别特征关联起来，最简单的，就是把item_id拿过来，过完embedding层取出对应的embedding之后，再乘上连续值即可， 所以这个连续值事先一定要是归一化的。 当然，这个玩法，我也是第一次见。 学习到了， 所以模型整体的输入如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222021880.png" alt=""></p>
+<p>这里的$M$表示特征的个数, $X_1, X_2$这是离散型特征， one-hot的形式， 而$X_M$在这里是连续性特征。过embedding层的细节应该是我上面说的那样。</p>
+<h6 id="Embedding-Layer"><a href="#Embedding-Layer" class="headerlink" title="Embedding Layer"></a>Embedding Layer</h6><p>embedding层的作用是把高维稀疏的特征转成低维稠密， 离散型的特征一般是取出对应的embedding向量即可， 具体计算是这样：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222024864.png" alt=""></p>
+<p>对于第$i$个离散特征，直接第$i$个嵌入矩阵$V_i$乘one-hot向量就取出了对应位置的embedding。 当然，如果输入的时候不是个one-hot， 而是个multi-hot的形式，那么对应的embedding输出是各个embedding求平均得到的。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222023574.png" alt=""></p>
+<p>比如， 推荐里面用户的历史行为item。过去点击了多个item，最终的输出就是这多个item的embedding求平均。<br>而对于连续特征， 我上面说的那样， 也是过一个embedding矩阵取相应的embedding， 不过，最后要乘一个连续值</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222025480.png" alt=""></p>
+<p>这样，不管是连续特征，离散特征还是变长的离散特征，经过embedding之后，都能得到等长的embedding向量。 我们把这个向量拼接到一块，就得到了交互层的输入。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222025399.png" alt=""></p>
+<h6 id="Interacting-Layer"><a href="#Interacting-Layer" class="headerlink" title="Interacting Layer"></a>Interacting Layer</h6><p>这个是本篇论文的核心了，其实这里说的就是transformer块的前向传播过程，所以这里我就直接用比较白话的语言简述过程了，不按照论文中的顺序展开了。</p>
+<p>通过embedding层， 我们会得到M个向量$e_1, …e_M$，假设向量的维度是$d$维， 那么这个就是一个$d\times M$的矩阵， 我们定一个符号$X$。 接下来我们基于这个矩阵$X$，做三次变换，也就是分别乘以三个矩阵$W_k^{(h)}, W_q^{(h)},W_v^{(h)}$， 这三个矩阵的维度是$d’\times d$的话， 那么我们就会得到三个结果：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222028818.png" alt=""></p>
+<p>这三个矩阵都是$d’\times M$的。这其实就完成了一个Head的操作。所谓的自注意力， 就是$X$通过三次变换得到的结果之间，通过交互得到相关性，并通过相关性进行加权汇总，全是$X$自发的。 那么是怎么做到的呢？首先， 先进行这样的操作：</p>
+<script type="math/tex; mode=display">Score(Q^h,K^h)=Q^h \times {K^h}^T</script><p>这个结果得到的是一个$d’\times d’$的矩阵， 那么这个操作到底是做了一个什么事情呢？</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222029092.png" alt=""></p>
+<p>假设这里的$c_1..c_6$是我们的6个特征， 而每一行代表每个特征的embedding向量，这样两个矩阵相乘，相当于得到了当前特征与其它特征两两之间的內积值， 而內积可以表示两个向量之间的相似程度。所以得到的结果每一行，就代表当前这个特征与其它特征的相似性程度。</p>
+<p>接下来，我们对$Score(Q^h,K^h)$， 在最后一个维度上进行softmax，就根据相似性得到了权重信息，这其实就是把相似性分数归一化到了0-1之间<script type="math/tex">Attention(Q^h,K^h)=Softmax(Score(Q^h,K^h))</script><br>接下来， 我们再进行这样的一步操作<script type="math/tex">E^{(h)}=Attention(Q^h,K^h) \times V</script><br>这样就得到了$d’\times M$的矩阵$E$， 这步操作，其实就是一个加权汇总的过程， 对于每个特征， 先求与其它特征的相似度，然后得到一个权重，再回乘到各自的特征向量再求和。 只不过这里的特征是经过了一次线性变化的过程，降维到了$d’$。</p>
+<p>上面是我从矩阵的角度又过了一遍， 这个是直接针对所有的特征向量一部到位。 论文里面的从单个特征的角度去描述的，只说了一个矩阵向量过多头注意力的操作。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222030271.png" alt=""></p>
+<p>这里会更好懂一些， 就是相当于上面矩阵的每一行操作拆开了， 首先，整个拼接起来的embedding矩阵还是过三个参数矩阵得到$Q,K,V$， 然后是每一行单独操作的方式，对于某个特征向量$e_k$，与其它的特征两两內积得到权重，然后在softmax，回乘到对应向量，然后进行求和就得到了融合其它特征信息的新向量。 具体过程如图：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222030314.png" alt=""></p>
+<p>上面的过程是用了一个头，理解的话就类似于从一个角度去看特征之间的相关关系，用论文里面的话讲，这是从一个子空间去看， 如果是想从多个角度看，这里可以用多个头，即换不同的矩阵$W_q,W_k,W_v$得到不同的$Q,K,V$然后得到不同的$e_m$， 每个$e_m$是$d’\times 1$的。</p>
+<p>然后，多个头的结果concat起来</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222031199.png" alt=""></p>
+<p>这是一个$d’\times H$的向量， 假设有$H$个头。 </p>
+<p>接下来， 过一个残差网络层，这是为了保留原始的特征信息</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222031359.png" alt=""></p>
+<p>这里的$e_m$是$d\times 1$的向量， $W_{Res}$是$d’H\times d$的矩阵， 最后得到的$e_m^{Res}$是$d’H\times 1$的向量， 这是其中的一个特征，如果是$M$个特征堆叠的话，最终就是$d’HM\times 1$的矩阵， 这个就是Interacting Layer的结果输出。</p>
+<h6 id="Output-Layer"><a href="#Output-Layer" class="headerlink" title="Output Layer"></a>Output Layer</h6><p>输出层就非常简单了，加一层全连接映射出输出值即可：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222032295.png" alt=""></p>
+<p>这里的$W$是$d’HM\times 1$的， 这样最终得到的是一个概率值了， 接下来交叉熵损失更新模型参数即可。</p>
+<h5 id="AutoInt的分析"><a href="#AutoInt的分析" class="headerlink" title="AutoInt的分析"></a>AutoInt的分析</h5><p>这里论文里面分析了为啥AutoInt能建模任意的高阶交互以及时间复杂度和空间复杂度的分析。我们一一来看。</p>
+<p>关于建模任意的高阶交互， 我们这里拿一个transformer块看下， 对于一个transformer块， 我们发现特征之间完成了一个2阶的交互过程，得到的输出里面我们还保留着1阶的原始特征。 </p>
+<p>那么再经过一个transformer块呢？ 这里面就会有2阶和1阶的交互了， 也就是会得到3阶的交互信息。而此时的输出，会保留着第一个transformer的输出信息特征。再过一个transformer块的话，就会用4阶的信息交互信息， 其实就相当于， 第$n$个transformer里面会建模出$n+1$阶交互来， 这个与CrossNet其实有异曲同工之妙的，无法是中间交互时的方式不一样。 前者是bit-wise级别的交互，而后者是vector-wise的交互。 </p>
+<p>所以， AutoInt是可以建模任意高阶特征的交互的，并且这种交互还是显性。</p>
+<p>关于时间复杂度和空间复杂度，空间复杂度是$O(Ldd’H)$级别的， 这个也很好理解，看参数量即可， 3个W矩阵， H个head，再假设L个transformer块的话，参数量就达到这了。 时间复杂度的话是$O(MHd’(M+d))$的，论文说如果d和d’很小的话，其实这个模型不算复杂。</p>
+<h4 id="FiBiNet"><a href="#FiBiNet" class="headerlink" title="FiBiNet"></a>FiBiNet</h4><h5 id="模型原理及细节"><a href="#模型原理及细节" class="headerlink" title="模型原理及细节"></a>模型原理及细节</h5><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222035784.png" alt=""></p>
+<h6 id="Embedding-Layer-1"><a href="#Embedding-Layer-1" class="headerlink" title="Embedding Layer"></a>Embedding Layer</h6><p>这个不多讲， 整理这个是为了后面统一符号。</p>
+<p>假设我们有$f$个离散特征，经过embedding层之后，会得到$E=\left[e_{1}, e_{2}, \cdots, e_{i}, \cdots, e_{f}\right]$， 其中$e_{i} \in R^{k}$，表示第$i$个离散特征对应的embedding向量，$k$维。</p>
+<h6 id="SENET-Layer"><a href="#SENET-Layer" class="headerlink" title="SENET Layer"></a>SENET Layer</h6><p>这是第一个重点，首先这个网络接收的输入是上面的$E=\left[e_{1}, e_{2}, \cdots, e_{i}, \cdots, e_{f}\right]$， 网络的输出也是个同样大小的张量<code>(None, f, k)</code>矩阵。 结构如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222038251.png" alt=""></p>
+<p>SENet由自动驾驶公司Momenta在2017年提出，在当时，是一种应用于图像处理的新型网络结构。它基于CNN结构，<strong>通过对特征通道间的相关性进行建模，对重要特征进行强化来提升模型准确率，本质上就是针对CNN中间层卷积核特征的Attention操作</strong>。SENet仍然是效果最好的图像处理网络结构之一。</p>
+<p>把SENet放在Embedding层之上，通过SENet网络，动态地学习这些特征的重要性。<strong>对于每个特征学会一个特征权重，然后再把学习到的权重乘到对应特征的Embedding里，这样就可以动态学习特征权重，通过小权重抑制噪音或者无效低频特征，通过大权重放大重要特征影响的目的</strong>。在推荐系统里面， 结构长这个样子：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222040735.png" alt=""></p>
+<p>下面看下这个网络里面的具体计算过程， SENET主要分为三个步骤Squeeze, Excitation, Re-weight。</p>
+<ul>
+<li><p><strong>在Squeeze阶段</strong>，我们对每个特征的Embedding向量进行数据压缩与信息汇总，如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222041255.png" alt=""></p>
+<p>假设某个特征$v_i$是$k$维大小的$Embedding$，那么我们对$Embedding$里包含的$k$维数字求均值，得到能够代表这个特征汇总信息的数值 $z_i$，也就是说，把第$i$个特征的$Embedding$里的信息压缩到一个数值。原始版本的SENet，在这一步是对CNN的二维卷积核进行$Max$操作的，这里等于对某个特征Embedding元素求均值。我们试过，在推荐领域均值效果比$Max$效果好，这也很好理解，因为<strong>图像领域对卷积核元素求$Max$，等于找到最强的那个特征，而推荐领域的特征$Embedding$，每一位的数字都是有意义的，所以求均值能更好地保留和融合信息</strong>。通过Squeeze阶段，对于每个特征$v_i$ ，都压缩成了单个数值$z_i$，假设特征Embedding层有$f$个特征，就形成Squeeze向量$Z$，向量大小$f$。</p>
+</li>
+<li><p><strong>Excitation阶段</strong>，这个阶段引入了中间层比较窄的两层MLP网络，作用在Squeeze阶段的输出向量$Z$上，如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222042251.png" alt=""></p>
+<p>$\sigma$非线性激活函数，一般$relu$。本质上，这是在做特征的交叉，也就是说，每个特征以一个$Bit$来表征，通过MLP来进行交互，通过交互，得出这么个结果：对于当前所有输入的特征，通过相互发生关联，来动态地判断哪些特征重要，哪些特征不重要。</p>
+<p>其中，第一个MLP的作用是做特征交叉，第二个MLP的作用是为了保持输出的大小维度。因为假设Embedding层有$f$个特征，那么我们需要保证输出$f$个权重值，而第二个MLP就是起到将大小映射到$f$个数值大小的作用。</p>
+<p>这样，经过两层MLP映射，就会产生$f$个权重数值，第$i$个数值对应第$i$个特征Embedding的权重$a_i$ 。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222043024.png" alt=""></p>
+<p>下面再分析下维度， SENet的输入是$E$，这个是<code>(None, f, k)</code>的维度， 通过Squeeze阶段，得到了<code>(None, f)</code>的矩阵，这个也就相当于Layer L1的输入(当然这里没有下面的偏置哈)，接下来过MLP1， 这里的$W_{1} \in R^{f \times \frac{f}{r}}, W_{2} \in R^{\frac{f}{r} \times f}$, 这里的$r$叫做reduction<br>ratio， $\frac{f}{r}$这个就是中间层神经元的个数， $r$表示了压缩的程度。</p>
+</li>
+</ul>
+<ul>
+<li><strong>Re-Weight</strong>，我们把Excitation阶段得到的每个特征对应的权重$a_i$，再乘回到特征对应的Embedding里，就完成了对特征重要性的加权操作。<script type="math/tex; mode=display">V=F_{\text {ReWeight }}(A, E)=\left[a_{1} \cdot e_{1}, \cdots, a_{f} \cdot e_{f}\right]=\left[v_{1}, \cdots, v_{f}\right]</script>$a_{i} \in R, e_{i} \in R^{k}$, and $v_{i} \in R^{k}$。$a_i$数值大，说明SENet判断这个特征在当前输入组合里比较重要， $a_i$数值小，说明SENet判断这个特征在当前输入组合里没啥用。如果非线性函数用Relu，会发现大量特征的权重会被Relu搞成0，也就是说，其实很多特征是没啥用的。</li>
+</ul>
+<p>这样，就可以将SENet引入推荐系统，用来对特征重要性进行动态判断。注意，<strong>所谓动态，指的是比如对于某个特征，在某个输入组合里可能是没用的，但是换一个输入组合，很可能是重要特征。它重要不重要，不是静态的，而是要根据当前输入，动态变化的</strong>。</p>
+<p>这里正确的理解，算是一种特征重要性选择的思路， SENET和AFM的Attention网络是起着同样功效的一个网络。只不过那个是在特征交互之后进行特征交互重要性的选择，而这里是从embedding这里先压缩，再交互，再选择，去掉不太重要的特征。 <strong>考虑特征重要性上的两种考虑思路，难以说孰好孰坏，具体看应用场景</strong>。 不过如果分析下这个东西为啥会有效果， 就像张俊林老师提到的那样， 在Excitation阶段， 各个特征过了一个MLP进行了特征组合， 这样就真有可能过滤掉对于当前的交互不太重要的特征。 至于是不是， 那神经网络这东西就玄学了，让网络自己去学吧。</p>
+<h6 id="Bilinear-Interaction-Layer"><a href="#Bilinear-Interaction-Layer" class="headerlink" title="Bilinear-Interaction Layer"></a>Bilinear-Interaction Layer</h6><p>特征重要性选择完事， 接下来就是研究特征交互， 这里作者直接就列出了目前的两种常用交互以及双线性交互:</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222048779.png" alt=""></p>
+<p>这个图其实非常了然了。以往模型用的交互， 内积的方式(FM,FFM)这种或者哈达玛积的方式(NFM,AFM)这种。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222048554.png" alt=""></p>
+<p>所谓的双线性，其实就是组合了内积和哈达玛积的操作，看上面的右图。就是在$v_i$和$v_j$之间先加一个$W$矩阵， 这个$W$矩阵的维度是$(f,f)$, $v_i, v_j$是$(1,f)$的向量。 先让$v_i$与$W$内积，得到$(1,f)$的向量，这时候先仔细体会下这个<strong>新向量的每个元素，相当于是原来向量$v_i$在每个维度上的线性组合了</strong>。这时候再与$v_j$进行哈达玛积得到结果。</p>
+<p>这里我不由自主的考虑了下双线性的功效，也就是为啥作者会说双线性是细粒度，下面是我自己的看法哈。</p>
+<ul>
+<li>如果我们单独先看内积操作，特征交互如果是两个向量直接内积，这时候， 结果大的，说明两个向量相似或者特征相似， 但向量内积，其实是相当于向量的各个维度先对应位置元素相乘再相加求和。 这个过程中认为的是向量的各个维度信息的重要性是一致的。类似于$v_1+v_2+..v_k$， 但真的一致吗？ —- <strong>内积操作没有考虑向量各个维度的重要性</strong></li>
+<li>如果我们单独看哈达玛积操作， 特征交互如果是两个向量哈达玛积，这时候，是各个维度对应位置元素相乘得到一个向量， 而这个向量往往后面会进行线性或者非线性交叉的操作， 最后可能也会得到具体某个数值，但是这里经过了线性或者非线性交叉操作之后， 有没有感觉把向量各个维度信息的重要性考虑了进来？   就类似于$w_1v_{i1j1}+w_2k_{v2j2},…w_kv_{vkjk}$。 如果模型认为重要性相同，那么哈达玛积还有希望退化成内积，所以哈达玛积感觉考虑的比内积就多了一些。 —- <strong>哈达玛积操作自身也没有考虑各个维度重要性，但通过后面的线性或者非线性操作，有一定的维度重要性在里面</strong></li>
+<li>再看看这个双线性， 是先内积再哈达玛积。这个内积操作不是直接$v_i$和$v_j$内积，而是中间引入了个$W$矩阵，参数可学习。 那么$v_i$和$W$做内积之后，虽然得到了同样大小的向量，但是这个向量是$v_i$各个维度元素的线性组合，相当于$v_i$变成了$[w_{11}v_{i1}+…w_{1k}v_{ik}, w_{21}v_{i1}+..w_{2k}v_{ik}, …., w_{k1}v_{i1}+…w_{kk}v_{ik}]$， 这时候再与$v_j$哈达玛积的功效，就变成了$[(w_{11}v_{i1}+…w_{1k}v_{ik})v_{j1}, (w_{21}v_{i1}+..w_{2k}v_{ik})v_{j2}, …., (w_{k1}v_{i1}+…w_{kk}v_{ik})v_{j_k}]$， 这时候，就可以看到，如果这里的$W$是个对角矩阵，那么这里就退化成了哈达玛积。  所以双线性感觉考虑的又比哈达玛积多了一些。如果后面再走一个非线性操作的话，就会发现这里同时考虑了两个交互向量各个维度上的重要性。—-<strong>双线性操作同时可以考虑交互的向量各自的各个维度上的重要性信息， 这应该是作者所说的细粒度，各个维度上的重要性</strong></li>
+</ul>
+<p><strong>当然思路是思路，双线性并不一定见得一定比哈达玛积有效， SENET也不一定就会比原始embedding要好，一定要辩证看问题</strong></p>
+<p>这里还有个厉害的地方在于这里的W有三种选择方式，也就是三种类型的双线性交互方式。</p>
+<ol>
+<li>Field-All Type</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222049946.png" alt=""></p>
+<p>也就是所有的特征embedding共用一个$W$矩阵，这也是Field-All的名字来源。$W \in R^{k \times k}, \text { and } v_{i}, v_{j} \in R^{k}$。这种方式最简单</p>
+<ol>
+<li>Field-Each Type</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222050330.png" alt=""></p>
+<p>每个特征embedding共用一个$W$矩阵， 那么如果有$f$个特征的话，这里的$W_i$需要$f$个。所以这里的参数个数$f-1\times k\times k$， 这里的$f-1$是因为两两组合之后，比如<code>[0,1,2]</code>， 两两组合<code>[0,1], [0,2], [1,2]</code>。 这里用到的域是0和1。</p>
+<ol>
+<li>Field-Interaction Type</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222050837.png" alt=""></p>
+<p>每组特征交互的时候，用一个$W$矩阵， 那么这里如果有$f$个特征的话，需要$W_{ij}$是$\frac{f(f-1)}{2}$个。参数个数$\frac{f(f-1)}{2}\times k\times k$个。</p>
+<p>不知道看到这里，这种操作有没有种似曾相识的感觉， 有没有想起FM和FFM， 反正我是不自觉的想起了哈哈，不知道为啥。总感觉FM的风格和上面的Field-All很像， 而FFM和下面的Field-Interaction很像。</p>
+<p>我们的原始embedding和SKNET-like embedding都需要过这个层，那么得到的就是一个双线性两两组合的矩阵， 维度是$(\frac{f(f-1)}{2}, k)$的矩阵。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222051074.png" alt=""></p>
+<h6 id="Combination-Layer"><a href="#Combination-Layer" class="headerlink" title="Combination Layer"></a>Combination Layer</h6><p>这个层的作用就是把目前得到的特征拼起来</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222051287.png" alt=""></p>
+<p>这里他直拼了上面得到的两个离散特征通过各种交互之后的形式，如果是还有连续特征的话，也可以在这里拼起来，然后过DNN，不过这里其实还省略了一步操作就是Flatten，先展平再拼接。</p>
+<h6 id="DNN和输出层"><a href="#DNN和输出层" class="headerlink" title="DNN和输出层"></a>DNN和输出层</h6><p> DNN的话普通的全连接网络， 再捕捉一波高阶的隐性交互。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222052753.png" alt=""></p>
+<p>而输出层</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222052222.png" alt=""></p>
+<p>分类问题损失函数：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222053977.png" alt=""></p>
+<h3 id="Wide-amp-Deep系列"><a href="#Wide-amp-Deep系列" class="headerlink" title="Wide&amp;Deep系列"></a>Wide&amp;Deep系列</h3><h4 id="Wide-amp-Deep"><a href="#Wide-amp-Deep" class="headerlink" title="Wide&amp;Deep"></a>Wide&amp;Deep</h4><h5 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h5><p>在CTR预估任务中利用手工构造的交叉组合特征来使线性模型具有“记忆性”，使模型记住共现频率较高的特征组合，往往也能达到一个不错的baseline，且可解释性强。但这种方式有着较为明显的缺点：</p>
+<ol>
+<li>特征工程需要耗费太多精力。</li>
+<li>模型是强行记住这些组合特征的，对于未曾出现过的特征组合，权重系数为0，无法进行泛化。</li>
+</ol>
+<p>为了加强模型的泛化能力，研究者引入了DNN结构，将高维稀疏特征编码为低维稠密的Embedding vector，这种基于Embedding的方式能够有效提高模型的泛化能力。但是，基于Embedding的方式可能因为数据长尾分布，导致长尾的一些特征值无法被充分学习，其对应的Embedding vector是不准确的，这便会造成模型泛化过度。</p>
+<p>Wide&amp;Deep模型就是围绕记忆性和泛化性进行讨论的，模型能够从历史数据中学习到高频共现的特征组合的能力，称为是模型的Memorization。能够利用特征之间的传递性去探索历史数据中从未出现过的特征组合，称为是模型的Generalization。Wide&amp;Deep兼顾Memorization与Generalization并在Google Play store的场景中成功落地。</p>
+<h5 id="模型结构及原理-2"><a href="#模型结构及原理-2" class="headerlink" title="模型结构及原理"></a>模型结构及原理</h5><p>其实wide&amp;deep模型本身的结构是非常简单的，对于有点机器学习基础和深度学习基础的人来说都非常的容易看懂，但是如何根据自己的场景去选择那些特征放在Wide部分，哪些特征放在Deep部分就需要理解这篇论文提出者当时对于设计该模型不同结构时的意图了，所以这也是用好这个模型的一个前提。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222057071.png" alt=""></p>
+<p><strong>如何理解Wide部分有利于增强模型的“记忆能力”，Deep部分有利于增强模型的“泛化能力”？</strong></p>
+<ul>
+<li><p>wide部分是一个广义的线性模型，输入的特征主要有两部分组成，一部分是原始的部分特征，另一部分是原始特征的交叉特征(cross-product transformation)，对于交互特征可以定义为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222059178.png" alt=""></p>
+<p>$c_{ki}$是一个布尔变量，当第i个特征属于第k个特征组合时，$c_{ki}$的值为1，否则为0，$x_i$是第i个特征的值，大体意思就是两个特征都同时为1这个新的特征才能为1，否则就是0，说白了就是一个特征组合。</p>
+<p>对于wide部分训练时候使用的优化器是带$L_1$正则的FTRL算法(Follow-the-regularized-leader)，而L1 FTLR是非常注重模型稀疏性质的，也就是说W&amp;D模型采用L1 FTRL是想让Wide部分变得更加的稀疏，即Wide部分的大部分参数都为0，这就大大压缩了模型权重及特征向量的维度。<strong>Wide部分模型训练完之后留下来的特征都是非常重要的，那么模型的“记忆能力”就可以理解为发现”直接的”，“暴力的”，“显然的”关联规则的能力。</strong>例如Google W&amp;D期望wide部分发现这样的规则：<strong>用户安装了应用A，此时曝光应用B，用户安装应用B的概率大。</strong></p>
+</li>
+<li><p>Deep部分是一个DNN模型，输入的特征主要分为两大类，一类是数值特征(可直接输入DNN)，一类是类别特征(需要经过Embedding之后才能输入到DNN中)，Deep部分的数学形式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222100079.png" alt=""></p>
+<p><strong>我们知道DNN模型随着层数的增加，中间的特征就越抽象，也就提高了模型的泛化能力。</strong>对于Deep部分的DNN模型作者使用了深度学习常用的优化器AdaGrad，这也是为了使得模型可以得到更精确的解。</p>
+</li>
+</ul>
+<p><strong>Wide部分与Deep部分的结合</strong></p>
+<p>W&amp;D模型是将两部分输出的结果结合起来联合训练，将deep和wide部分的输出重新使用一个逻辑回归模型做最终的预测，输出概率值。联合训练的数学形式如下：需要注意的是，因为Wide侧的数据是高维稀疏的，所以作者使用了FTRL算法优化，而Deep侧使用的是 Adagrad。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222100694.png" alt=""></p>
+<h4 id="NFM"><a href="#NFM" class="headerlink" title="NFM"></a>NFM</h4><h5 id="动机-1"><a href="#动机-1" class="headerlink" title="动机"></a>动机</h5><p>NFM(Neural Factorization Machines)是2017年由新加坡国立大学的何向南教授等人在SIGIR会议上提出的一个模型，传统的FM模型仅局限于线性表达和二阶交互， 无法胜任生活中各种具有复杂结构和规律性的真实数据， 针对FM的这点不足， 作者提出了一种将FM融合进DNN的策略，通过引进了一个特征交叉池化层的结构，使得FM与DNN进行了完美衔接，这样就组合了FM的建模低阶特征交互能力和DNN学习高阶特征交互和非线性的能力，形成了深度学习时代的神经FM模型(NFM)。</p>
+<p>那么NFM具体是怎么做的呢？ 首先看一下NFM的公式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222103700.png" alt=""></p>
+<p>我们对比FM， 就会发现变化的是第三项，前两项还是原来的， 因为我们说FM的一个问题，就是只能到二阶交叉， 且是线性模型， 这是他本身的一个局限性， 而如果想突破这个局限性， 就需要从他的公式本身下点功夫， 于是乎，作者在这里改进的思路就是<strong>用一个表达能力更强的函数来替代原FM中二阶隐向量内积的部分</strong>。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222104051.png" alt=""></p>
+<h5 id="模型结构与原理"><a href="#模型结构与原理" class="headerlink" title="模型结构与原理"></a>模型结构与原理</h5><h6 id="Input-和Embedding层"><a href="#Input-和Embedding层" class="headerlink" title="Input 和Embedding层"></a>Input 和Embedding层</h6><p>输入层的特征， 文章指定了稀疏离散特征居多， 这种特征我们也知道一般是先one-hot, 然后会通过embedding，处理成稠密低维的。 所以这两层还是和之前一样，假设$\mathbf{v}_{\mathbf{i}} \in \mathbb{R}^{k}$为第$i$个特征的embedding向量， 那么$\mathcal{V}_{x}=\left\{x_{1} \mathbf{v}_{1}, \ldots, x_{n} \mathbf{v}_{n}\right\}$表示的下一层的输入特征。这里带上了$x_i$是因为很多$x_i$转成了One-hot之后，出现很多为0的， 这里的$\{x_iv_i\}$是$x_i$不等于0的那些特征向量。  </p>
+<h6 id="Bi-Interaction-Pooling-layer"><a href="#Bi-Interaction-Pooling-layer" class="headerlink" title="Bi-Interaction Pooling layer"></a>Bi-Interaction Pooling layer</h6><p>在Embedding层和神经网络之间加入了特征交叉池化层是本网络的核心创新了，正是因为这个结构，实现了FM与DNN的无缝连接， 组成了一个大的网络，且能够正常的反向传播。假设$\mathcal{V}_{x}$是所有特征embedding的集合， 那么在特征交叉池化层的操作：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222106689.png" alt=""></p>
+<p>$\odot$表示两个向量的元素积操作，即两个向量对应维度相乘得到的元素积向量（可不是点乘呀），其中第$k$维的操作：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222106134.png" alt=""></p>
+<p>这便定义了在embedding空间特征的二阶交互，这个不仔细看会和感觉FM的最后一项很像，但是不一样，一定要注意这个地方不是两个隐向量的内积，而是元素积，也就是这一个交叉完了之后k个维度不求和，最后会得到一个$k$维向量，而FM那里内积的话最后得到一个数， 在进行两两Embedding元素积之后，对交叉特征向量取和， 得到该层的输出向量， 很显然， 输出是一个$k$维的向量。</p>
+<p>注意， 之前的FM到这里其实就完事了， 上面就是输出了，而这里很大的一点改进就是加入特征池化层之后， 把二阶交互的信息合并， 且上面接了一个DNN网络， 这样就能够增强FM的表达能力了， 因为FM只能到二阶， 而这里的DNN可以进行多阶且非线性，只要FM把二阶的学习好了， DNN这块学习来会更加容易， 作者在论文中也说明了这一点，且通过后面的实验证实了这个观点。</p>
+<p>如果不加DNN， NFM就退化成了FM，所以改进的关键就在于加了一个这样的层，组合了一下二阶交叉的信息，然后又给了DNN进行高阶交叉的学习，成了一种“加强版”的FM。</p>
+<p>Bi-Interaction层不需要额外的模型学习参数，更重要的是它在一个线性的时间内完成计算，和FM一致的，即时间复杂度为$O\left(k N_{x}\right)$，$N_x$为embedding向量的数量。参考FM，可以将上式转化为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222107108.png" alt=""></p>
+<h6 id="隐藏层"><a href="#隐藏层" class="headerlink" title="隐藏层"></a>隐藏层</h6><p>这一层就是全连接的神经网络， DNN在进行特征的高层非线性交互上有着天然的学习优势，公式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222109689.png" alt=""></p>
+<p>这里的$\sigma_i$是第$i$层的激活函数，可不要理解成sigmoid激活函数。</p>
+<h6 id="预测层"><a href="#预测层" class="headerlink" title="预测层"></a>预测层</h6><p>这个就是最后一层的结果直接过一个隐藏层，但注意由于这里是回归问题，没有加sigmoid激活：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222110388.png" alt=""></p>
+<p>所以， NFM模型的前向传播过程总结如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222111207.png" alt=""></p>
+<p>这就是NFM模型的全貌， NFM相比较于其他模型的核心创新点是特征交叉池化层，基于它，实现了FM和DNN的无缝连接，使得DNN可以在底层就学习到包含更多信息的组合特征，这时候，就会减少DNN的很多负担，只需要很少的隐藏层就可以学习到高阶特征信息。NFM相比之前的DNN， 模型结构更浅，更简单，但是性能更好，训练和调参更容易。集合FM二阶交叉线性和DNN高阶交叉非线性的优势，非常适合处理稀疏数据的场景任务。在对NFM的真实训练过程中，也会用到像Dropout和BatchNormalization这样的技术来缓解过拟合和在过大的改变数据分布。</p>
+<h4 id="AFM"><a href="#AFM" class="headerlink" title="AFM"></a>AFM</h4><h5 id="AFM提出的动机"><a href="#AFM提出的动机" class="headerlink" title="AFM提出的动机"></a>AFM提出的动机</h5><p>AFM的全称是Attentional Factorization Machines, 从模型的名称上来看是在FM的基础上加上了注意力机制，FM是通过特征隐向量的内积来对交叉特征进行建模，从公式中可以看出所有的交叉特征都具有相同的权重也就是1，没有考虑到不同的交叉特征的重要性程度：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222115177.png" alt=""></p>
+<p>如何让不同的交叉特征具有不同的重要性就是AFM核心的贡献，在谈论AFM交叉特征注意力之前，对于FM交叉特征部分的改进还有FFM，其是考虑到了对于不同的其他特征，某个指定特征的隐向量应该是不同的（相比于FM对于所有的特征只有一个隐向量，FFM对于一个特征有多个不同的隐向量）。</p>
+<h5 id="AFM模型原理"><a href="#AFM模型原理" class="headerlink" title="AFM模型原理"></a>AFM模型原理</h5><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222115513.png" alt=""></p>
+<p>上图表示的就是AFM交叉特征部分的模型结构(非交叉部分与FM是一样的，图中并没有给出)。AFM最核心的两个点分别是Pair-wise Interaction Layer和Attention-based Pooling。前者将输入的非零特征的隐向量两两计算element-wise product(哈达玛积，两个向量对应元素相乘，得到的还是一个向量)，假如输入的特征中的非零向量的数量为m，那么经过Pair-wise Interaction Layer之后输出的就是$\frac{m(m-1)}{2}$个向量，再将前面得到的交叉特征向量组输入到Attention-based Pooling，该pooling层会先计算出每个特征组合的自适应权重(通过Attention Net进行计算)，通过加权求和的方式将向量组压缩成一个向量，由于最终需要输出的是一个数值，所以还需要将前一步得到的向量通过另外一个向量将其映射成一个值，得到最终的基于注意力加权的二阶交叉特征的输出。(对于这部分如果不是很清楚，可以先看下面对两个核心层的介绍)</p>
+<h3 id="Pair-wise-Interaction-Layer"><a href="#Pair-wise-Interaction-Layer" class="headerlink" title="Pair-wise Interaction Layer"></a>Pair-wise Interaction Layer</h3><p>FM二阶交叉项：所有非零特征对应的隐向量两两点积再求和，输出的是一个数值</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222116327.png" alt=""></p>
+<p>AFM二阶交叉项(无attention)：所有非零特征对应的隐向量两两对应元素乘积，然后再向量求和，输出的还是一个向量。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222116575.png" alt=""></p>
+<p>上述写法是为了更好的与FM进行对比，下面将公式变形方便与原论文中保持一致。首先是特征的隐向量。从上图中可以看出，作者对数值特征也对应了一个隐向量，不同的数值乘以对应的隐向量就可以得到不同的隐向量，相对于onehot编码的特征乘以1还是其本身(并没有什么变化)，其实就是为了将公式进行统一。</p>
+<p>按照论文的意思，特征的embedding可以表示为：$\varepsilon = {v_ix_i}$，经过Pair-wise Interaction Layer输出可得：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222116226.png" alt=""></p>
+<p>$R_x$表示的是有效特征集合。此时的$f_{PI}(\varepsilon)$表示的是一个向量集合，所以需要先将这些向量集合聚合成一个向量，然后在转换成一个数值：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222117210.png" alt=""></p>
+<p>上式中的求和部分就是将向量集合聚合成一个维度与隐向量维度相同的向量，通过向量$p$再将其转换成一个数值，b表示的是偏置。</p>
+<p>从开始介绍Pair-wise Interaction Layer到现在解决的一个问题是，如何将使用哈达玛积得到的交叉特征转换成一个最终输出需要的数值，到目前为止交叉特征之间的注意力权重还没有出现。在没有详细介绍注意力之前先感性的认识一下如果现在已经有了每个交叉特征的注意力权重，那么交叉特征的输出可以表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222117026.png" alt=""></p>
+<p>就是在交叉特征得到的新向量前面乘以一个注意力权重$\alpha_{ij}$, 那么这个注意力权重如何计算得到呢？</p>
+<h3 id="Attention-based-Pooling"><a href="#Attention-based-Pooling" class="headerlink" title="Attention-based Pooling"></a>Attention-based Pooling</h3><p>对于神经网络注意力相关的基础知识大家可以去看一下邱锡鹏老师的《神经网络与深度学习》第8章注意力机制与外部记忆。这里简单的叙述一下使用MLP实现注意力机制的计算。假设现在有n个交叉特征(假如维度是k)，将nxk的数据输入到一个kx1的全连接网络中，输出的张量维度为nx1，使用softmax函数将nx1的向量的每个维度进行归一化，得到一个新的nx1的向量，这个向量所有维度加起来的和为1，每个维度上的值就可以表示原nxk数据每一行(即1xk的数据)的权重。用公式表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222117989.png" alt=""></p>
+<p>使用softmax归一化可得：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222118339.png" alt=""></p>
+<p>这样就得到了AFM二阶交叉部分的注意力权重，如果将AFM的一阶项写在一起，AFM模型用公式表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222118174.png" alt=""></p>
+<h3 id="AFM模型训练"><a href="#AFM模型训练" class="headerlink" title="AFM模型训练"></a>AFM模型训练</h3><p>AFM从最终的模型公式可以看出与FM的模型公式是非常相似的，所以也可以和FM一样应用于不同的任务，例如分类、回归及排序（不同的任务的损失函数是不一样的），AFM也有对防止过拟合进行处理：</p>
+<ol>
+<li>在Pair-wise Interaction Layer层的输出结果上使用dropout防止过拟合，因为并不是所有的特征组合对预测结果都有用，所以随机的去除一些交叉特征，让剩下的特征去自适应的学习可以更好的防止过拟合。</li>
+<li>对Attention-based Pooling层中的权重矩阵$W$使用L2正则，作者没有在这一层使用dropout的原因是发现同时在特征交叉层和注意力层加dropout会使得模型训练不稳定，并且性能还会下降。</li>
+</ol>
+<p>加上正则参数之后的回归任务的损失函数表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222119465.png" alt=""></p>
 <h3 id="序列模型"><a href="#序列模型" class="headerlink" title="序列模型"></a>序列模型</h3><p>pass</p>
 <h3 id="多任务模型"><a href="#多任务模型" class="headerlink" title="多任务模型"></a>多任务模型</h3><p>pass</p>
 ]]></content>
