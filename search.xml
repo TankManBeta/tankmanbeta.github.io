@@ -2216,7 +2216,14 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221122193746.png" alt=""></p>
 <p>从选定的函数空间中采样u后，采用龙格-库塔(4,5)法求解ODE系统，采用二阶有限差分法求解pde系统，得到参考解。我们注意到一个数据点是三元组 $(u,y,G(u)(y))  $ ，因此一个特定的输入 $u$ 可能出现在具有不同 $y$ 值的多个数据点中。例如，一个10000大小的数据集可能只由100个 $u$ 轨迹生成，每个轨迹对100个 $y$ 位置计算 $G(u)(y)$ 。</p>
 <h2 id="Conclusion-1"><a href="#Conclusion-1" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>在本文中，我们在一个更一般的设置中提出了算子学习的问题，并提出了学习非线性算子的DeepONets。在DeepONets中，我们首先构建两个子网络分别编码输入函数和位置变量，然后将它们合并在一起计算输出。我们在四个常/偏微分方程问题上测试了DeepONets，并表明DeepONets可以通过使用这种归纳偏差实现小的泛化误差。在仿真中，我们系统地研究了不同因素对测试误差的影响，包括传感器数量、最大预测时间、输入函数空间复杂度、训练数据集大小和网络规模。我们观察到与训练数据集大小相关的不同阶多项式甚至指数误差收敛。据我们所知，这是第一次在深度学习中观察到指数收敛。此外，从理论上推导了近似误差对不同因素的依赖性，这与我们的计算结果一致。尽管取得了上述成就，但还需要进行更多的理论和计算工作。例如，算子近似的网络大小还没有任何理论结果，类似于函数近似的宽度和深度界限。我们还不明白为什么DeepONets会导致小的泛化误差。另一方面，在本文中，我们对两个子网络使用了完全连接的神经网络，但正如我们在2.1节中讨论的那样，我们也可以使用其他网络架构，如卷积神经网络或“注意”机制。这些修改可能会进一步提高DeepONets的准确性。</p>
-<h1 id="FOURIER-NEURAL-OPERATOR-FOR-PARAMETRIC-PARTIAL-DIFFERENTIAL-EQUATIONS"><a href="#FOURIER-NEURAL-OPERATOR-FOR-PARAMETRIC-PARTIAL-DIFFERENTIAL-EQUATIONS" class="headerlink" title="FOURIER NEURAL OPERATOR FOR PARAMETRIC PARTIAL DIFFERENTIAL EQUATIONS"></a>FOURIER NEURAL OPERATOR FOR PARAMETRIC PARTIAL DIFFERENTIAL EQUATIONS</h1><h2 id="Abstract-10"><a href="#Abstract-10" class="headerlink" title="Abstract"></a>Abstract</h2><p>神经网络的经典发展主要集中在有限维欧几里得空间之间的学习映射。最近，这已被推广到学习函数空间之间映射的神经算子。对于偏微分方程(PDEs)，神经算子直接学习从任何泛函参数依赖到解的映射。因此，他们学习了一整套的偏微分方程，而不是求解一个方程实例的经典方法。在这项工作中，我们通过在傅里叶空间中直接参数化积分核来构造一种新的神经算子，从而实现了一种具有表达性和效率的体系结构。我们对Burgers方程、Darcy flow和N-S方程进行了实验。傅里叶神经算子是第一个基于机器学习的零射超分辨率湍流模型。与传统的PDE求解器相比，它的速度快了3个数量级。此外，与以前的基于学习的固定分辨率求解器相比，它具有更高的精度。</p>
+<h1 id="FOURIER-NEURAL-OPERATOR-FOR-PARAMETRIC-PARTIAL-DIFFERENTIAL-EQUATIONS"><a href="#FOURIER-NEURAL-OPERATOR-FOR-PARAMETRIC-PARTIAL-DIFFERENTIAL-EQUATIONS" class="headerlink" title="FOURIER NEURAL OPERATOR FOR PARAMETRIC PARTIAL DIFFERENTIAL EQUATIONS"></a>FOURIER NEURAL OPERATOR FOR PARAMETRIC PARTIAL DIFFERENTIAL EQUATIONS</h1><p>傅里叶神经算子最大贡献是做傅里叶变换时过滤了高频的噪声信号。</p>
+<p>FNO的一些优点：</p>
+<ul>
+<li>Fourier Filter是global的，而如果只使用CNN filter的话，感受是local的。</li>
+<li>FNO的一个设计目的就是要与分辨率无关，而传统的偏微分方程求解方法之一的谱方法也有可借鉴的思路。因为从傅立叶空间中学习参数，相当于将物理空间投影在以 $e^{2\pi i<x,k>}$ 为基的空间下，而这个空间下是处处well-defined，与离散无关。</li>
+<li>除此之外，使用FFT之后，计算复杂度变成了准线性的，为大规模计算提供了可能。</li>
+</ul>
+<h2 id="Abstract-10"><a href="#Abstract-10" class="headerlink" title="Abstract"></a>Abstract</h2><p>神经网络的经典发展主要集中在有限维欧几里得空间之间的学习映射。最近，这已被推广到学习函数空间之间映射的神经算子。对于偏微分方程(PDEs)，神经算子直接学习从任何泛函参数依赖到解的映射。因此，他们学习了一整套的偏微分方程，而不是求解一个方程实例的经典方法。在这项工作中，我们通过在傅里叶空间中直接参数化积分核来构造一种新的神经算子，从而实现了一种具有表达性和效率的体系结构。我们对Burgers方程、Darcy flow和N-S方程进行了实验。傅里叶神经算子是第一个基于机器学习的零射超分辨率湍流模型。与传统的PDE求解器相比，它的速度快了3个数量级。此外，与以前的基于学习的固定分辨率求解器相比，它具有更高的精度。</p>
 <h2 id="Introduction-13"><a href="#Introduction-13" class="headerlink" title="Introduction"></a>Introduction</h2><p>科学和工程中的许多问题都涉及到求解复杂的偏微分方程(PDE)系统重复对某些参数的不同值。分子动力学、微观力学和湍流流动中都有例子。通常这样的系统需要精细的离散化，以便捕捉被建模的现象。因此，传统的数值求解很慢，有时效率很低。例如，在设计机翼等材料时，需要解决相关的逆向问题，其中需要对正向模型进行数千次评估。一个快速的方法可以使这些问题变得可行。</p>
 <h3 id="Conventional-solvers-vs-Data-driven-methods"><a href="#Conventional-solvers-vs-Data-driven-methods" class="headerlink" title="Conventional solvers vs. Data-driven methods."></a>Conventional solvers vs. Data-driven methods.</h3><p>传统的求解方法如有限元法和有限差分法是通过对空间离散化来求解方程的。因此，它们对分辨率进行了权衡：粗糙的网格速度快，但准确性较低；精细的网格是准确的，但速度慢。如上所述，复杂的PDE系统通常需要非常精细的离散化，因此对于传统的求解器来说非常具有挑战性和耗时。另一方面，数据驱动方法可以直接从数据中学习方程组族的轨迹。因此，基于学习的方法可以比传统的求解器快几个数量级。通过提供近似或增强传统算法的快速求解器，机器学习方法可能是科学学科革命的关键。然而，经典的神经网络在有限维空间之间映射，因此只能学习与特定离散化相关的解。这往往是实际应用的一个限制，因此需要开发网格不变神经网络。我们首先概述了两种主流的基于神经网络的方法有限维算子和神经有限元。</p>
 <h3 id="Finite-dimensional-operators"><a href="#Finite-dimensional-operators" class="headerlink" title="Finite-dimensional operators."></a>Finite-dimensional operators.</h3><p>这些方法将解算子参数化为有限维欧氏空间之间的深度卷积神经网络。根据定义，这样的方法是依赖于网格的，并且需要针对不同的分辨率和离散化进行修改和调优，以便实现一致的误差（如果可能的话）。此外，这些方法受限于训练数据的离散化大小和几何形状，因此不可能在域中的新点查询解。相反，对于我们的方法，我们展示了误差对网格分辨率的不变性，以及在网格之间传递解的能力。</p>
@@ -2571,12 +2578,32 @@
 <h3 id="Error-analysis-for-cPINN"><a href="#Error-analysis-for-cPINN" class="headerlink" title="Error analysis for cPINN"></a>Error analysis for cPINN</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305292208610.png" alt=""></p>
 <p>cPINN中的总误差定义为：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305292208510.png" alt=""></p>
-<h1 id="ADAPTIVE-FOURIER-NEURAL-OPERATORS-EFFICIENT-TOKEN-MIXERS-FOR-TRANSFORMERS"><a href="#ADAPTIVE-FOURIER-NEURAL-OPERATORS-EFFICIENT-TOKEN-MIXERS-FOR-TRANSFORMERS" class="headerlink" title="ADAPTIVE FOURIER NEURAL OPERATORS: EFFICIENT TOKEN MIXERS FOR TRANSFORMERS"></a>ADAPTIVE FOURIER NEURAL OPERATORS: EFFICIENT TOKEN MIXERS FOR TRANSFORMERS</h1><h2 id="Abstract-23"><a href="#Abstract-23" class="headerlink" title="Abstract"></a>Abstract</h2><p>ViT在表示学习方向取得了巨大的成功，主要是由于借助自注意力的token mixing。但是随着像素点的增加会有一个平方倍地缩减，这就使得其对于高精度输入不可行。为了解决的这个问题，文章提出了AFNO(Adaptive Fourier Neural Operator)，核心思想是在傅里叶空间做token mixing。AFNO的理论基础是算子学习，将token mixing看作是一个与输入分辨率无关的连续全局卷积。为了应对视觉表征学习中的挑战，如图像不连续和高分辨率输入，我们提出了FNO的原则性架构修改，从而提高了内存和计算效率。主要包括在不同通道之间的mixing weights使用了一个块对角结构，token之间动态地共享权重，通过软阈值和收缩对频率模式进行稀疏化。</p>
-<h2 id="Introduction-26"><a href="#Introduction-26" class="headerlink" title="Introduction"></a>Introduction</h2><p>ViT在为识别和生成任务生成丰富的上下文表示方面做出了很大的贡献。然而，一个主要的挑战是来自高分辨率图像和视频的长序列。在这里，远程和多向依赖关系对于理解场景中对象之间的组合性和关系至关重要。Transformer有效性的一个关键组成部分归因于token的适当混合。然而，找到一个好的mixer是具有挑战性的，因为它需要随序列大小缩放，并系统地推广到下游任务。</p>
+<h1 id="ADAPTIVE-FOURIER-NEURAL-OPERATORS-EFFICIENT-TOKEN-MIXERS-FOR-TRANSFORMERS"><a href="#ADAPTIVE-FOURIER-NEURAL-OPERATORS-EFFICIENT-TOKEN-MIXERS-FOR-TRANSFORMERS" class="headerlink" title="ADAPTIVE FOURIER NEURAL OPERATORS: EFFICIENT TOKEN MIXERS FOR TRANSFORMERS"></a>ADAPTIVE FOURIER NEURAL OPERATORS: EFFICIENT TOKEN MIXERS FOR TRANSFORMERS</h1><h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>ViT在表示学习方向取得了巨大的成功，主要是由于借助自注意力的token mixing。但是随着像素点的增加会有一个平方倍地缩减，这就使得其对于高精度输入不可行。为了解决的这个问题，文章提出了AFNO(Adaptive Fourier Neural Operator)，核心思想是在傅里叶空间做token mixing。AFNO的理论基础是算子学习，将token mixing看作是一个与输入分辨率无关的连续全局卷积。为了应对视觉表征学习中的挑战，如图像不连续和高分辨率输入，我们提出了FNO的原则性架构修改，从而提高了内存和计算效率。主要包括在不同通道之间的mixing weights使用了一个块对角结构，token之间动态地共享权重，通过软阈值和收缩对频率模式进行稀疏化。</p>
+<h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>ViT在为识别和生成任务生成丰富的上下文表示方面做出了很大的贡献。然而，一个主要的挑战是来自高分辨率图像和视频的长序列。在这里，远程和多向依赖关系对于理解场景中对象之间的组合性和关系至关重要。Transformer有效性的一个关键组成部分归因于token的适当混合。然而，找到一个好的mixer是具有挑战性的，因为它需要随序列大小缩放，并系统地推广到下游任务。</p>
 <p>原始的自注意力施加图结构，并使用标记之间的相似性来捕获长期依赖关系；它具有参数高效和自适应的特点，但在序列大小上具有二次复杂度。为了实现与线性复杂性的有效混合，引入了几个自注意力的近似。这些近似通常会为了效率而牺牲精度。例如，long-short Transformer聚集了具有动态投影的远程注意力来模拟远距离相关性，并聚集了短期注意力来捕捉局部相关性。长距离依赖关系是在低维中建模的，这可能会限制表达性。</p>
 <p>最近，引入了自注意力的替代方案，放宽了图假设以实现有效混合。相反，他们利用傅里叶变换来利用几何结构。例如，Global Filter Networks (GFN)提出了用于token mixing的深度全局卷积，该卷积在傅里叶域中得到了有效的实现。GFN主要包括三个步骤：(i)通过快速傅里叶变换(FFT)进行空间标记混合；(ii)频率门控；(iii)用于令牌分离的逆FFT。然而，GFN在高分辨率下缺乏自适应性和表达性，因为参数数量随着序列大小而增长，并且在(ii)中不涉及channel mixing。</p>
 <p>为了解决这些缺点，我们将token mixing作为学习无限维空间中连续函数之间映射的算子学习。我们将token视为函数空间中的连续元素，并将token mixing建模为连续的全局卷积，以捕获几何空间中的全局关系。一种有效解决全局卷积的方法是通过FFT。更一般地，我们将这样的全局卷积运算与非线性（如ReLU）组合在一起，以学习任何一般的非线性算子。这构成了设计傅里叶神经算子(FNOs)的基础，FNOs在解决PDEs方面显示出希望。因此，我们采用FNO作为设计高效token mixing的起点。</p>
 <p>从PDE中调整FNO到视觉需要几个设计修改。图像具有由于边缘和其他结构而不连续性的高分辨率内容。标准FNO中的channel mixing导致channel大小的二次复杂度。为了控制这种复杂性，我们对token mixing权重施加块对角结构。为了增强泛化能力，受稀疏回归的启发，通过软阈值化对频率进行稀疏化。此外，为了参数效率，我们的MLP层在token之间共享权重。我们将由此产生的模型称为自适应FNO (AFNO)。</p>
+<h2 id="RELATED-WORKS"><a href="#RELATED-WORKS" class="headerlink" title="RELATED WORKS"></a>RELATED WORKS</h2><p>提升自注意力的方法：</p>
+<ul>
+<li>基于图的Mixer：核心是找到合适的代理来近似自注意力。稀疏attention；低秩attention；核方法；聚类方法。</li>
+<li>基于MLP的Mixer：利用MLP投影放宽自注意力和空间混合标记的图相似性约束。</li>
+<li>基于傅里叶的Mixer：将傅里叶变换作用于空间混合标记。</li>
+</ul>
+<p>算子学习处理函数到函数的映射问题，并且经常用于PDEs。算子学习也可以被应用于计算机视觉当中，因为图像是二维平面上的RGB值函数。</p>
+<h2 id="PRELIMINARIES-AND-PROBLEM-STATEMENT"><a href="#PRELIMINARIES-AND-PROBLEM-STATEMENT" class="headerlink" title="PRELIMINARIES AND PROBLEM STATEMENT"></a>PRELIMINARIES AND PROBLEM STATEMENT</h2><p>将一个二维图像分成 $h \times w$ 的patch，每个patch都是d维的，所以每一个token tensor就被表示为 $X \in \mathbb{R}^{h \times w \times d}$ 。</p>
+<p>一些背景知识。</p>
+<h3 id="Discrete-FNO"><a href="#Discrete-FNO" class="headerlink" title="Discrete FNO"></a>Discrete FNO</h3><p>受FNO的启发，对于离散网格上有限维的图像，我们的想法是使用离散傅里叶变换(DFT)混合标记。对于输入变量$X \in \mathbb{R}^{h \times w \times d}$，定义复值权重张量 $W:=DFT(k) \in \mathbb{C}^{h \times w \times d \times d}$ 来参数化核。然后，FNO混合需要对每个token进行以下操作：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151113163.png" alt=""></p>
+<h3 id="Local-Features"><a href="#Local-Features" class="headerlink" title="Local Features"></a>Local Features</h3><p>DFT假设在周期性图像上应用了一个全局卷积，这对于真实世界的图像来说通常是不成立的。为了补偿局部特征和非周期边界，我们可以在FNO中的token分解步骤3中添加残差项 $x_{m,n}$ （也可以参数化为简单的局部卷积）。</p>
+<h3 id="Resolution-Invariance"><a href="#Resolution-Invariance" class="headerlink" title="Resolution Invariance"></a>Resolution Invariance</h3><p>FNO模型对离散的 $h,w$ 是不变的，它是通过对潜在分辨率不变的傅里叶基来参数化token函数的。因此，在一个分辨率上训练后，可以直接在另一个分辨率上进行评估（zero-shot 超分辨率）。</p>
+<h2 id="ADAPTIVE-FOURIER-NEURAL-OPERATORS-FOR-TRANSFORMERS"><a href="#ADAPTIVE-FOURIER-NEURAL-OPERATORS-FOR-TRANSFORMERS" class="headerlink" title="ADAPTIVE FOURIER NEURAL OPERATORS FOR TRANSFORMERS"></a>ADAPTIVE FOURIER NEURAL OPERATORS FOR TRANSFORMERS</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151156212.png" alt=""></p>
+<h3 id="Block-Diagonal-Structure-on-W"><a href="#Block-Diagonal-Structure-on-W" class="headerlink" title="Block-Diagonal Structure on W"></a>Block-Diagonal Structure on W</h3><p>FNO对每个token都涉及一个 $k \times k$ 的权重矩阵，这就导致了 $O(Nd^{2})$ 的参数量。为了减少参数量，我们采用了块对角结构，权重矩阵被分成 $k$ 个大小维 $d/k \times d/k$ 的权重块。其实可以看成是多头自注意力，它投射到数据的一个子空间。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151134329.png" alt=""></p>
+<h3 id="Weight-Sharing"><a href="#Weight-Sharing" class="headerlink" title="Weight Sharing"></a>Weight Sharing</h3><p>FNO的另一个不足之处在于权重是静态的，一旦学习，它们将不会自适应地改变新的样本。受自注意力的启发，我们希望tokens具有适应性。此外，静态权重在tokens之间是独立的，但我们希望tokens相互作用并决定传递某些低频和高频模式。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151152897.png" alt=""></p>
+<h3 id="Soft-Thresholding-and-Shrinkage"><a href="#Soft-Thresholding-and-Shrinkage" class="headerlink" title="Soft-Thresholding and Shrinkage"></a>Soft-Thresholding and Shrinkage</h3><p>图像在傅里叶空间是天然稀疏的，大部分都集中在低频模式中。因此，我们可以动态地根据它们对终端任务的重要性对tokens进行掩码。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151155277.png" alt=""></p>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -2607,6 +2634,17 @@
 <li>隐藏层神经元数量错误。</li>
 <li>数据集标签的设置有错误。</li>
 </ol>
+<h1 id="特征归一化"><a href="#特征归一化" class="headerlink" title="特征归一化"></a>特征归一化</h1><ul>
+<li><p>训练数据集归一化很好理解，用于训练模型。</p>
+</li>
+<li><p>不能直接对测试数据集按公式进行归一化，而是要使用训练数据集的均值和方差对测试数据集归一化。</p>
+<ul>
+<li>原因1：真实的环境中，数据会源源不断输出进模型，无法求取均值和方差的；</li>
+<li>原因2：训练数据集是模拟真实环境中的数据，不能直接使用自身的均值和方差；</li>
+<li>原因3：真实环境中，无法对单个数据进行归一化；</li>
+</ul>
+</li>
+</ul>
 <h1 id="加快模型训练速度的方法"><a href="#加快模型训练速度的方法" class="headerlink" title="加快模型训练速度的方法"></a>加快模型训练速度的方法</h1><ul>
 <li>合理的超参数设计</li>
 <li>权值共享</li>
@@ -2969,6 +3007,7 @@
 <li><code>SVM</code>算法对大规模训练样本难以实施。</li>
 <li>用<code>SVM</code>解决多分类问题存在困难。</li>
 </ol>
+<h1 id="Top-1-Accuracy和Top-5-Accuracy"><a href="#Top-1-Accuracy和Top-5-Accuracy" class="headerlink" title="Top-1 Accuracy和Top-5 Accuracy"></a>Top-1 Accuracy和Top-5 Accuracy</h1><p>Top-1：就是你预测的label取最后概率向量里面最大的那一个作为预测结果 ，如过预测结果中概率最大的那个分类正确，则预测正确，否则预测错误。<br>Top-5：就是最后概率向量最大的前五名中，只要出现了正确概率即为预测正确，否则预测错误。</p>
 <h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h1><h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><p>卷积的作用是<strong>提取特征</strong>，图像的空间联系是局部的像素联系较为紧密，而距离较远的像素相关性则较弱。因而，每个神经元其实没有必要对全局图像进行感知，只需要对局部进行感知，然后在更高层将局部的信息综合起来就得到了全局的信息。同时卷积通过权重共享降低参数量。</p>
 <p>常见的卷积核选择都是<code>3x3</code>、<code>5x5</code>、<code>7x7</code>的，为什么很少见到偶数的卷积核呢？</p>
 <ul>
@@ -2986,7 +3025,11 @@
 <h3 id="卷积结果"><a href="#卷积结果" class="headerlink" title="卷积结果"></a>卷积结果</h3><p>假设 $W_{1}$ 、 $H_{1}$ 表示输入的宽度和长度， $W_{2}$ 、 $H_{2}$ 表示输出特征图的的宽度和长度， $F$ 表示卷积核长和宽的大小， $S$ 表示滑动窗口的步长， $P$ 表示边界填充。那么输出特征图的宽度和长度分别为： $W_{2}=\frac{W_{1}-F_{W}+2P}{S}+1$ ， $H_{2}=\frac{H_{1}-F_{H}+2P}{S}+1$ 。</p>
 <h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><p>池化的作用是进行<strong>特征压缩（下采样）</strong>，池化层是当前卷积神经网络中常用组件之一，它最早见于<code>LeNet</code>一文，称之为<code>Subsample</code>。自<code>AlexNet</code>之后采用<code>Pooling</code>命名。池化层是模仿人的视觉系统对数据进行降维，用更高层次的特征表示图像。</p>
 <p>实施池化的目的：(1) 降低信息冗余；(2) 提升模型的尺度不变性、旋转不变性；(3) 降低特征维数，防止过拟合。</p>
-<h3 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h3><p>padding的主要作用是使得图像边界的特征也能够被充分利用。</p>
+<h2 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h2><p>padding的主要作用是使得图像边界的特征也能够被充分利用。</p>
+<h2 id="CNN中的等变和不变"><a href="#CNN中的等变和不变" class="headerlink" title="CNN中的等变和不变"></a>CNN中的等变和不变</h2><p>简单的来说，CNN中的卷积操作中的参数共享使得它对平移操作有等变性，而一些池化操作对平移有近似不变性。先来说前者， 我们举个很简单的例子，我们都知道CNN的第一层往往可以解释为一些简单的线条处理，比如竖直/水平线条检测等等，那么如果图像平移，显然并不会影响到这一层线条检测的功能，但是其输出也会做相应平移。后者的之所以说是近似不变性，是因为池化层并非能保持完全不变，例如我们使用max池化，只要变换不影响到最大值，我们的池化结果不会收到影响，对于一个NxN的filter，只有一个值的变动会影响到输出， 其他的变换都不会造成扰动。 平均池化的近似不变性就稍弱些。这里池化的其实是一个非常强的先验，等于是忽视了这一步维数约简带来的信息损失而保证了近似不变性。</p>
+<p>我们换个角度来说，CNN是既具有不变性，又具有等变性。 可以这么理解，如果我们的输出是给出图片中猫的位置，那么我们将图片中的猫从左边移到右边，这种平移也会反应在输出上，我们输出的位置也是从左边到右边，那么我们则可以说CNN有等变性；如果我们只是输出图片中是否有猫，那么我们无论把猫怎么移动，我们的输出都保持”有猫”的判定，因此体现了CNN的不变性。</p>
+<h3 id="等变性"><a href="#等变性" class="headerlink" title="等变性"></a>等变性</h3><p>等变性 equivariant，对于一个函数，如果你对其输入施加的变换也会同样反应在输出上，那么这个函数就对该变换具有等变性。</p>
+<h3 id="不变性"><a href="#不变性" class="headerlink" title="不变性"></a>不变性</h3><p>不变性 invraiant，对于一个函数，如果对其输入施加的某种操作丝毫不会影响到输出，那么这个函数就对该变换具有不变性。</p>
 <h2 id="神经网络中权值共享的理解？"><a href="#神经网络中权值共享的理解？" class="headerlink" title="神经网络中权值共享的理解？"></a>神经网络中权值共享的理解？</h2><p>所谓权值共享就是说给定一张输入图片，用一个卷积核来卷积这张图，卷积核里的值叫做权重，这张图的每个位置是被同一个卷积核扫的，即卷积的时候所用的权重是一样的。其实权值共享这个词说全了就是整张图片在使用同一个卷积核内的参数，比如一个 $3\times 3 \times 1$ 的卷积核，这个卷积核内 $9$ 个的参数被整张图共享，而不会因为图像内位置的不同而改变卷积核内的权系数。说的再直白一些，就是用一个卷积核不改变其内权系数的情况下卷积处理整张图片（当然<code>CNN</code>中每一层不会只有一个卷积核的，这样说只是为了方便解释而已）。<br>作用：大大减少网络训练参数的同时，还可以实现并行训练。</p>
 <h2 id="对微调-fine-tuning-的理解，为什么要修改最后几层神经网络权值？"><a href="#对微调-fine-tuning-的理解，为什么要修改最后几层神经网络权值？" class="headerlink" title="对微调(fine-tuning)的理解，为什么要修改最后几层神经网络权值？"></a>对微调(fine-tuning)的理解，为什么要修改最后几层神经网络权值？</h2><p>使用预训练模型的好处，在于利用训练好的<code>SOTA</code>模型权重去做特征提取，可以节省我们训练模型和调参的时间。</p>
 <p>为什么只微调最后几层神经网络权重，是因为：</p>
@@ -3047,10 +3090,22 @@
 <h3 id="BatchNormalization"><a href="#BatchNormalization" class="headerlink" title="BatchNormalization"></a>BatchNormalization</h3><p><strong>BatchNormalization就是在深度神经网络训练过程中使得每一层神经网络的输入保持相同分布。</strong></p>
 <p>在神经网络中, 数据分布对训练会产生影响。比如某个神经元 $x$ 的值为 $1$ ，某个 <code>Weights</code> 的初始值为 $0.1$ ，这样后一层神经元计算结果就是 $Wx = 0.1$ ；又或者 $x = 20$ ，这样 $Wx$ 的结果就为 $2$ 。现在还不能看出什么问题,，但是，当我们加上一层激活函数，激活这个  $Wx$ 值的时候，问题就来了。如果使用像 <code>tanh</code> 的激活函数， $Wx$ 的激活值就变成了 $\approx 0.1$ 和 $\approx 1$, 接近于 $1$ 的部已经处在了激活函数的饱和阶段, 也就是 $x$ 无论再怎么扩大， <code>tanh</code> 激励函数输出值也还是接近 $1$ 。</p>
 <p>我们为了避免这种情况，就会对数据进行归一化，<strong>对于每个隐层神经元，把逐渐向非线性函数映射后向取值区间极限饱和区靠拢的输入分布强制拉回到均值为0​，方差为1的比较标准的正态分布，使得非线性变换函数的输入值落入对输入比较敏感的区域，以此避免梯度消失问题。</strong>同时了为了恢复出原始的某一层所学到的特征，我们引入了这个可学习重构参数 $\gamma$ 、$\beta$ ，让我们的网络可以学习恢复出原始网络所要学习的特征分布。</p>
+<h3 id="LayerNormalization"><a href="#LayerNormalization" class="headerlink" title="LayerNormalization"></a>LayerNormalization</h3><ul>
+<li>BN在mini-batch较小的情况下不太适用。BN是对整个mini-batch的样本统计均值和方差，当训练样本数很少时，样本的均值和方差不能反映全局的统计分布信息，从而导致效果下降。</li>
+<li>BN无法应用于RNN。<ul>
+<li>RNN实际是共享的MLP，在时间维度上展开，每个step的输出是(bsz, hidden_dim)。由于不同句子的同一位置的分布大概率是不同的，所以应用BN来约束是没意义的。注：而BN应用在CNN可以的原因是同一个channel的特征图都是由同一个卷积核产生的。</li>
+<li>LN原文的说法是：在训练时，对BN来说需要保存每个step的统计信息（均值和方差）。在测试时，由于变长句子的特性，测试集可能出现比训练集更长的句子，所以对于后面位置的step，是没有训练的统计量使用的。（不过实践中的话都是固定了max len，然后padding的。）</li>
+<li>当然还有一种说法是，不同句子的长度不一样，对所有的样本统计均值是无意义的，因为某些样本在后面的timestep时其实是padding。</li>
+<li>还有一种说法是（Normalization helps training of quantized lstm.）：应用BN层的话，每个timestep都需要去保存和计算batch统计量，耗时又耗力，后面就有人提出across timestep去shared BN的统计量，这明显不对，因为不同timestep的分布明显是不同的。</li>
+<li>最后，大家发现LN的效果还很不错，比BN好，所以就变成NLP data里面的default config了。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151052109.png" alt=""></p>
 <h3 id="ResNet为什么不用Dropout？"><a href="#ResNet为什么不用Dropout？" class="headerlink" title="ResNet为什么不用Dropout？"></a>ResNet为什么不用Dropout？</h3><p><code>Dropout</code>与<code>BN</code>不兼容。<code>BN</code>在训练过程对每个单个样本的<code>forward</code>均引入多个样本的统计信息，相当于自带一定噪音，起到正则效果，所以也就基本消除了<code>Dropout</code>的必要。</p>
 <h2 id="DenseNet"><a href="#DenseNet" class="headerlink" title="DenseNet"></a>DenseNet</h2><p>每个层从前面的所有层获得额外的输入，并将自己的特征映射传递到后续的所有层，使用级联<code>(Concatenation)</code>方式，每一层都在接受来自前几层的“集体知识”<code>(collective knowledge)</code>。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303222332494.png" alt=""></p>
-<p>如图所示，第<code>i</code>层的输入不仅与<code>i-1</code>层的输出相关，还有所有之前层的输出有关，记作： $X_{l}=H_{l}([X_{0},\cdots,X_{l-1}])$ 。第<code>l</code>层产生 $k_{0}+(l-1)k$ 个<code>feature maps</code>，其中 $k$ 称为称为网络的增长率。</p>
+<p>如图所示，第<code>i</code>层的输入不仅与<code>i-1</code>层的输出相关，还有所有之前层的输出有关，记作： $X_{l}=H_{l}([X_{0},\cdots,X_{l-1}])$ 。第<code>l</code>层产生 $k_{0}+(l-1)k$ 个<code>feature maps</code>，其中 $k$ 称为网络的增长率。</p>
 <h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>循环神经网络<code>(Recurrent Neural Network, RNN)</code>是一类以序列<code>(sequence)</code>数据为输入，在序列的演进方向进行递归<code>(recursion)</code>且所有节点（循环单元）按链式连接的递归神经网络<code>(recursive neural network)</code> 。</p>
 <p>对循环神经网络的研究始于二十世纪八九十年代，并在二十一世纪初发展为深度学习算法之一 ，其中双向循环神经网络<code>(Bidirectional RNN, Bi-RNN)</code>和长短期记忆网络<code>(Long Short-Term Memory networks, LSTM)</code>是常见的循环神经网络。</p>
 <h2 id="为什么需要RNN？"><a href="#为什么需要RNN？" class="headerlink" title="为什么需要RNN？"></a>为什么需要RNN？</h2><p>在<code>CNN</code>网络中的训练样本的数据为<code>IID</code>数据（独立同分布数据），所解决的问题也是分类问题或者回归问题或者是特征表达问题。<strong>但更多的数据是不满足IID的</strong>，如语言翻译，自动文本生成。它们是一个序列问题，包括时间序列和空间序列。比如时间序列数据，这类数据是在不同时间点上收集到的数据，反映了某一事物、现象等随时间的变化状态或程度。一般的神经网络，在训练数据足够、算法模型优越的情况下，给定特定的 $x$ ，就能得到期望 $y$ 。其一般处理单个的输入，前一个输入和后一个输入完全无关，但实际应用中，某些任务需要能够更好的处理序列的信息，即前面的输入和后面的输入是有关系的。 这时就要用到<code>RNN</code>网络，<code>RNN</code>的结构图如下所示：</p>
@@ -3159,6 +3214,15 @@
 </ol>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303302156146.png" alt=""></p>
 <p>为了解决梯度消失的问题，在<code>Encoder</code>和<code>Decoder</code>中都是用了<strong>残差神经网络</strong>的结构，即每一个前馈神经网络的输入不光包含上述<code>self-attention</code>的输出，还包含最原始的输入。</p>
+<h3 id="为什么选择除以-sqrt-d"><a href="#为什么选择除以-sqrt-d" class="headerlink" title="为什么选择除以$\sqrt{d}$"></a>为什么选择除以$\sqrt{d}$</h3><ol>
+<li><p>防止softmax输入值过大，当embedding的维度越大，矩阵乘法的数值越大，所以防止softmax输入值过大，偏导数趋于0，有益于训练稳定；</p>
+</li>
+<li><p>$\frac{qk}{\sqrt{d}}$服从均值为0，方差为1的分布，作归一化；</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151023478.png" alt=""></p>
+</li>
+<li><p>类似softmax加温度系数，温度系数根号d越大，softmax输出越平滑（而非尖锐），如果不除以$\sqrt{d}$，相当于softmax输出更尖锐，进而导致梯度稀疏。</p>
+</li>
+</ol>
 <h2 id="解码器-Decoder"><a href="#解码器-Decoder" class="headerlink" title="解码器(Decoder)"></a>解码器(Decoder)</h2><p>同样的，在<code>Decoder</code>中使用的也是同样的结构。也是首先对输出计算自注意力得分，不同的地方在于，进行过自注意力机制后，将<code>self-attention</code>的输出再与<code>Encoder</code>模块的输出计算一遍注意力机制得分之后，再进入前馈神经网络模块。</p>
 <h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>解码器输出本来是一个浮点型的向量，怎么转化成这两个词呢？解决办法是在最后的线性层接上一个<code>softmax</code>，其中线性层是一个简单的全连接神经网络，它将解码器产生的向量投影到一个更高维度的向量<code>(logits)</code>上，假设我们模型的词汇表是 $10000$ 个词，那么<code>logits</code>就有 $10000$ 个维度，每个维度对应一个唯一的词的得分。之后的<code>softmax</code>层将这些分数转换为概率。选择概率最大的维度，并对应地生成与之关联的单词作为此时间步的输出就是最终的输出。</p>
 <h2 id="位置编码-Positional-Encoding"><a href="#位置编码-Positional-Encoding" class="headerlink" title="位置编码(Positional Encoding)"></a>位置编码(Positional Encoding)</h2><p><code>Transformer</code>中没有考虑顺序信息，那怎么办呢，我们可以在输入中做手脚，把输入变得有位置信息。我们可以给每个词向量加上一个有顺序特征的向量，发现<code>sin</code>函数和<code>cos</code>函数能够很好的表达这种特征，所以通常位置向量用以下公式来表示：</p>
