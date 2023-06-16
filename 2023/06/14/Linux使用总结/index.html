@@ -31,7 +31,7 @@
 <meta property="og:description" content="前言记录一下使用Linux系统过程中遇到的知识点">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-14T05:55:34.000Z">
-<meta property="article:modified_time" content="2023-06-14T08:33:16.052Z">
+<meta property="article:modified_time" content="2023-06-16T06:37:39.533Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="Linux">
@@ -187,7 +187,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">修改密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E8%A1%A5%E5%85%A8"><span class="nav-number">3.</span> <span class="nav-text">快捷补全</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E7%9B%AE%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">切换目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">6.</span> <span class="nav-text">查看工作目录下的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%85%E5%B1%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">7.</span> <span class="nav-text">清屏命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7GPU%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">监控GPU命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">9.</span> <span class="nav-text">创建虚拟环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E8%AF%A2python%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84"><span class="nav-number">9.1.</span> <span class="nav-text">如何查询python安装路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">10.</span> <span class="nav-text">激活虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">11.</span> <span class="nav-text">退出虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">12.</span> <span class="nav-text">删除虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85GPU%E7%89%88%E6%9C%AC%E7%9A%84PyTorch"><span class="nav-number">13.</span> <span class="nav-text">安装GPU版本的PyTorch</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">修改密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E8%A1%A5%E5%85%A8"><span class="nav-number">3.</span> <span class="nav-text">快捷补全</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E7%9B%AE%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">切换目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">6.</span> <span class="nav-text">查看工作目录下的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%85%E5%B1%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">7.</span> <span class="nav-text">清屏命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7GPU%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">监控GPU命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">9.</span> <span class="nav-text">创建虚拟环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E8%AF%A2python%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84"><span class="nav-number">9.1.</span> <span class="nav-text">如何查询python安装路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">10.</span> <span class="nav-text">激活虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">11.</span> <span class="nav-text">退出虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">12.</span> <span class="nav-text">删除虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85GPU%E7%89%88%E6%9C%AC%E7%9A%84PyTorch"><span class="nav-number">13.</span> <span class="nav-text">安装GPU版本的PyTorch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">14.</span> <span class="nav-text">多个项目使用同一个数据集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E4%B8%AD%E6%96%AD%E7%9A%84%E6%81%A2%E5%A4%8D"><span class="nav-number">15.</span> <span class="nav-text">连接中断的恢复</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -276,10 +276,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-06-14 13:55:34 / 修改时间：16:33:16" itemprop="dateCreated datePublished" datetime="2023-06-14T13:55:34+08:00">2023-06-14</time>
+      <time title="创建时间：2023-06-14 13:55:34" itemprop="dateCreated datePublished" datetime="2023-06-14T13:55:34+08:00">2023-06-14</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2023-06-16 14:37:39" itemprop="dateModified" datetime="2023-06-16T14:37:39+08:00">2023-06-16</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -298,7 +304,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>1.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -318,29 +324,48 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Linux</code>系统过程中遇到的知识点</p>
 <a id="more"></a>
-<h1 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h1><p><code>passwd</code>命令，然后输入当前的登录密码，再输入两次新密码即可。</p>
-<h1 id="快捷补全"><a href="#快捷补全" class="headerlink" title="快捷补全"></a>快捷补全</h1><p>按<code>Tab</code>键即可快捷补全，同<code>Windows</code>系统。</p>
-<h1 id="切换目录"><a href="#切换目录" class="headerlink" title="切换目录"></a>切换目录</h1><p><code>cd</code>命令，同<code>Windows</code>系统。</p>
-<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><p><code>mkdir Environment</code>命令，创建一个名为<code>Environment</code>的目录。</p>
-<h1 id="查看工作目录下的内容"><a href="#查看工作目录下的内容" class="headerlink" title="查看工作目录下的内容"></a>查看工作目录下的内容</h1><p><code>ls [-alrtAFR] [name...]</code></p>
-<ul>
-<li><code>ls -l</code>：以长格式的形式查看当前目录下所有可见文件的详细属性，其中<code>rwx</code>、<code>r-x</code>、<code>r-x</code>各有功能。</li>
-<li><code>ls -a</code>：显示当前目录中的所有文件和目录，包括隐藏文件。</li>
-</ul>
-<h1 id="清屏命令"><a href="#清屏命令" class="headerlink" title="清屏命令"></a>清屏命令</h1><ul>
-<li><code>clear</code>：这个命令将会刷新屏幕，本质上只是让终端显示页向后翻了一页,如果向上滚动屏幕还可以看到之前的操作信息。</li>
-<li><code>reset</code>：这个命令将完全刷新终端屏幕，之前的终端输入操作信息将都会被清空，整个命令过程速度有点慢，使用较少。</li>
-</ul>
-<h1 id="监控GPU命令"><a href="#监控GPU命令" class="headerlink" title="监控GPU命令"></a>监控GPU命令</h1><p><code>nvidia-smi</code>命令，同<code>windows</code>系统。</p>
-<h1 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h1><p><code>virtualenv -p /usr/local/bin/python env1</code>命令，创建一个名为<code>env1</code>的虚拟环境目录，<code>/usr/local/bin/python</code>是<code>Python</code>的安装路径，创建的虚拟环境中的<code>Python</code>版本与路径中的<code>Python</code>版本一致。</p>
-<h2 id="如何查询python安装路径"><a href="#如何查询python安装路径" class="headerlink" title="如何查询python安装路径"></a>如何查询python安装路径</h2><ul>
-<li><code>whereis python</code>命令，可以在输出信息中查看出所有<code>python</code>的安装目录。</li>
-<li><code>which python</code>命令，可以查看出当前使用的<code>python</code>的安装目录。</li>
-</ul>
-<h1 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h1><p><code>source env1/bin/activate</code>命令，激活虚拟环境，激活成功之后命令行前面会出现<code>(env1)</code>。</p>
-<h1 id="退出虚拟环境"><a href="#退出虚拟环境" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h1><p><code>deactivate</code>命令，退出虚拟环境。</p>
-<h1 id="删除虚拟环境"><a href="#删除虚拟环境" class="headerlink" title="删除虚拟环境"></a>删除虚拟环境</h1><p><code>rm -rf env1</code>命令，删除名为<code>env1</code>的虚拟环境。</p>
-<h1 id="安装GPU版本的PyTorch"><a href="#安装GPU版本的PyTorch" class="headerlink" title="安装GPU版本的PyTorch"></a>安装GPU版本的PyTorch</h1><p>建议先进入<code>torch</code>的<code>wheel</code>下载网站<a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/torch_stable.html查看版本对应的情况。拿我自己举例，服务器下安装的`CUDA`的版本是`12.1`，但是`PyTorch`的[官网](https://pytorch.org/get-started/locally/)上显示目前支持的`CUDA`版本为`11.7`和`11.8`，秉持着用新不用旧的原则，就打算安装官网提供的`11.8`的`Command`，但是没有安装成功，然后找了半天发现自己的`python`版本是`3.7`，在`wheel`网站里发现`3.7`版本的`python`最高支持的`CUDA`版本为`11.7`，于是在官网中的`Compute">https://download.pytorch.org/whl/torch_stable.html查看版本对应的情况。拿我自己举例，服务器下安装的`CUDA`的版本是`12.1`，但是`PyTorch`的[官网](https://pytorch.org/get-started/locally/)上显示目前支持的`CUDA`版本为`11.7`和`11.8`，秉持着用新不用旧的原则，就打算安装官网提供的`11.8`的`Command`，但是没有安装成功，然后找了半天发现自己的`python`版本是`3.7`，在`wheel`网站里发现`3.7`版本的`python`最高支持的`CUDA`版本为`11.7`，于是在官网中的`Compute</a> Platform<code>这一项选择了</code>CUDA 11.7<code>，然后在命令行运行官网提供的</code>Command<code>，安装完成之后执行</code>torch.cuda.is_available()<code>，返回</code>True`。</p>
+<h1 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h1><p>修改当前用户密码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+<h1 id="快捷补全"><a href="#快捷补全" class="headerlink" title="快捷补全"></a>快捷补全</h1><p>按<code>Tab</code>键即可快捷补全。</p>
+<h1 id="切换目录"><a href="#切换目录" class="headerlink" title="切换目录"></a>切换目录</h1><p>切换到<code>xxx</code>目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd xxx</span><br></pre></td></tr></table></figure>
+<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><p>创建一个名为<code>Environment</code>的目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir Environment</span><br></pre></td></tr></table></figure>
+<h1 id="查看工作目录下的内容"><a href="#查看工作目录下的内容" class="headerlink" title="查看工作目录下的内容"></a>查看工作目录下的内容</h1><p>以长格式的形式查看当前目录下所有可见文件的详细属性（其中<code>rwx</code>、<code>r-x</code>、<code>r-x</code>各有功能）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
+<p>显示当前目录中的所有文件和目录（包括隐藏文件）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -a</span><br></pre></td></tr></table></figure>
+<h1 id="清屏命令"><a href="#清屏命令" class="headerlink" title="清屏命令"></a>清屏命令</h1><p>刷新屏幕（本质上只是让终端显示页向后翻了一页，如果向上滚动屏幕还可以看到之前的操作信息）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clear</span><br></pre></td></tr></table></figure>
+<p>完全刷新终端屏幕（之前的终端输入操作信息将都会被清空，整个命令过程速度有点慢，使用较少）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reset</span><br></pre></td></tr></table></figure>
+<h1 id="监控GPU命令"><a href="#监控GPU命令" class="headerlink" title="监控GPU命令"></a>监控GPU命令</h1><p>监控<code>GPU</code>的使用情况：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+<h1 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h1><p>创建一个名为<code>env1</code>的虚拟环境目录（<code>/usr/local/bin/python</code>是<code>Python</code>的安装路径，创建的虚拟环境中的<code>Python</code>版本与路径中的<code>Python</code>版本一致）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualenv -p /usr/local/bin/python env1</span><br></pre></td></tr></table></figure>
+<h2 id="如何查询python安装路径"><a href="#如何查询python安装路径" class="headerlink" title="如何查询python安装路径"></a>如何查询python安装路径</h2><p>查看所有<code>python</code>的安装目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis python</span><br></pre></td></tr></table></figure>
+<p>查看当前使用的<code>python</code>的安装目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">which python</span><br></pre></td></tr></table></figure>
+<h1 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h1><p>激活虚拟环境（激活成功之后命令行前面会出现<code>(env1)</code>）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source env1/bin/activate</span><br></pre></td></tr></table></figure>
+<h1 id="退出虚拟环境"><a href="#退出虚拟环境" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h1><p>退出虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+<h1 id="删除虚拟环境"><a href="#删除虚拟环境" class="headerlink" title="删除虚拟环境"></a>删除虚拟环境</h1><p>删除名为<code>env1</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf env1</span><br></pre></td></tr></table></figure>
+<h1 id="安装GPU版本的PyTorch"><a href="#安装GPU版本的PyTorch" class="headerlink" title="安装GPU版本的PyTorch"></a>安装GPU版本的PyTorch</h1><p>建议先进入<code>torch</code>的<code>wheel</code>下载网站<a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/torch_stable.html查看版本对应的情况。">https://download.pytorch.org/whl/torch_stable.html查看版本对应的情况。</a></p>
+<p>拿我自己举例，服务器下安装的<code>CUDA</code>的版本是<code>12.1</code>，但是<code>PyTorch</code>的<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">官网</a>上显示目前支持的<code>CUDA</code>版本为<code>11.7</code>和<code>11.8</code>，秉持着用新不用旧的原则，就运行了官网提供的<code>CUDA 11.8</code>的<code>Command</code>，但是没有安装成功，然后找了半天发现自己的<code>python</code>版本是<code>3.7</code>，在上面<code>wheel</code>网站里发现<code>3.7</code>版本的<code>python</code>最高支持的<code>CUDA</code>版本为<code>11.7</code>，于是在官网中的<code>Compute Platform</code>这一项选择了<code>CUDA 11.7</code>，然后在运行官网提供的新<code>Command</code>，待安装完成之后执行<code>torch.cuda.is_available()</code>，返回<code>True</code>。</p>
+<h1 id="多个项目使用同一个数据集"><a href="#多个项目使用同一个数据集" class="headerlink" title="多个项目使用同一个数据集"></a>多个项目使用同一个数据集</h1><p>在训练深度学习模型时，很多模型需要用到同一个数据集，而很多模型都要求在当前算法文件夹中存放数据集，为了减少内存浪费，可以在当前文件夹下使用软连接来连接到数据集源文件，就可以不需要复制多个数据集了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s source_file link_file</span><br></pre></td></tr></table></figure>
+<h1 id="连接中断的恢复"><a href="#连接中断的恢复" class="headerlink" title="连接中断的恢复"></a>连接中断的恢复</h1><ol>
+<li><p>第一次连接的时候使用<code>screen -S</code>命令对<code>session</code>进行记录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -S test</span><br></pre></td></tr></table></figure></li>
+<li><p>在要执行的命令后加<code>&amp;</code>，让命令放到服务器端后台运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py &amp;</span><br></pre></td></tr></table></figure></li>
+<li><p>如果连接中断，则使用<code>screen</code>命令恢复上次的会话，继续监控命令执行的情况：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -r test</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
     </div>
 
