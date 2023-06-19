@@ -133,6 +133,8 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">reset</span><br></pre></td></tr></table></figure>
 <h1 id="监控GPU命令"><a href="#监控GPU命令" class="headerlink" title="监控GPU命令"></a>监控GPU命令</h1><p>监控<code>GPU</code>的使用情况：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+<h1 id="杀死进程"><a href="#杀死进程" class="headerlink" title="杀死进程"></a>杀死进程</h1><p>杀死<code>pid</code>为<code>88888</code>的进程</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 88888</span><br></pre></td></tr></table></figure>
 <h1 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h1><p>创建一个名为<code>env1</code>的虚拟环境目录（<code>/usr/local/bin/python</code>是<code>Python</code>的安装路径，创建的虚拟环境中的<code>Python</code>版本与路径中的<code>Python</code>版本一致）：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">virtualenv -p /usr/local/bin/python env1</span><br></pre></td></tr></table></figure>
 <h2 id="如何查询python安装路径"><a href="#如何查询python安装路径" class="headerlink" title="如何查询python安装路径"></a>如何查询python安装路径</h2><p>查看所有<code>python</code>的安装目录：</p>
@@ -155,7 +157,13 @@
 <li><p>在要执行的命令后加<code>&amp;</code>，让命令放到服务器端后台运行：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python main.py &amp;</span><br></pre></td></tr></table></figure></li>
 <li><p>如果连接中断，则使用<code>screen</code>命令恢复上次的会话，继续监控命令执行的情况：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -r test</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -r test</span><br></pre></td></tr></table></figure></li>
+<li><p>查看所有<code>session</code>的<code>id</code>，名称以及状态：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -ls</span><br></pre></td></tr></table></figure></li>
+<li><p>删除名称为<code>test</code>的<code>session</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -S test -X quit</span><br></pre></td></tr></table></figure></li>
+<li><p>进入名称<code>jeeby</code>的<code>session</code>，若<code>session</code>不存在则新建：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -R jeeby</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 ]]></content>
@@ -1707,6 +1715,14 @@
 <h3 id="functools"><a href="#functools" class="headerlink" title="functools"></a>functools</h3><p><strong>cmp_to_key</strong></p>
 <p>可以将一个cmp函数变成一个key函数，从而支持自定义排序。具体用法是，定义一个函数，接受两个变量x和y，然后返回值如果大于1说明在排序的数组中x在y后面。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">nums = [<span class="number">3</span>, <span class="number">30</span>, <span class="number">34</span>, <span class="number">5</span>, <span class="number">9</span>]</span><br><span class="line">new_nums = <span class="built_in">sorted</span>(nums, key=cmp_to_key(<span class="keyword">lambda</span> x, y: y - x))</span><br><span class="line">new_nums2 = <span class="built_in">sorted</span>(nums, key=cmp_to_key(<span class="keyword">lambda</span> x, y: x - y))</span><br><span class="line">print(new_nums)</span><br><span class="line">print(new_nums2)</span><br><span class="line"><span class="comment"># [34, 30, 9, 5, 3]</span></span><br><span class="line"><span class="comment"># [3, 5, 9, 30, 34]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nums = [<span class="number">3</span>, <span class="number">30</span>, <span class="number">34</span>, <span class="number">5</span>, <span class="number">9</span>]</span><br><span class="line">nums2 = <span class="built_in">map</span>(<span class="built_in">str</span>, nums)</span><br><span class="line">new_nums2 = <span class="built_in">sorted</span>(nums2, key=cmp_to_key(<span class="keyword">lambda</span> x, y: <span class="built_in">int</span>(x + y) - <span class="built_in">int</span>(y + x)))</span><br><span class="line">print(new_nums2)</span><br><span class="line"><span class="comment"># [&#x27;30&#x27;, &#x27;3&#x27;, &#x27;34&#x27;, &#x27;5&#x27;, &#x27;9&#x27;]</span></span><br></pre></td></tr></table></figure>
+<h3 id="argparse"><a href="#argparse" class="headerlink" title="argparse"></a>argparse</h3><p>argparse模块是Python内置的用于命令项选项与参数解析的模块，argparse模块可以让人轻松编写用户友好的命令行接口，能够帮助程序员为模型定义参数。</p>
+<h4 id="argparse定义四个步骤"><a href="#argparse定义四个步骤" class="headerlink" title="argparse定义四个步骤"></a>argparse定义四个步骤</h4><ol>
+<li>导入argparse包 ——import argparse</li>
+<li>创建一个命令行解析器对象 ——创建 ArgumentParser() 对象</li>
+<li>给解析器添加命令行参数 ——调用add_argument() 方法添加参数</li>
+<li>解析命令行的参数 ——使用 parse_args() 解析添加的参数</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个命令行解析对象</span></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">&#x27;demo&#x27;</span>)</span><br><span class="line"><span class="comment"># 添加命令行参数</span></span><br><span class="line">parser.add_argument(<span class="string">&quot;--epochs&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">100</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--batch&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">4</span>)</span><br><span class="line"><span class="comment"># 从命令行中结构化解析参数</span></span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(args)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -2658,9 +2674,9 @@
 </li>
 <li><p>不能直接对测试数据集按公式进行归一化，而是要使用训练数据集的均值和方差对测试数据集归一化。</p>
 <ul>
-<li>原因1：真实的环境中，数据会源源不断输出进模型，无法求取均值和方差的；</li>
-<li>原因2：训练数据集是模拟真实环境中的数据，不能直接使用自身的均值和方差；</li>
-<li>原因3：真实环境中，无法对单个数据进行归一化；</li>
+<li>原因1：真实的环境中，数据会源源不断输出进模型，无法求取均值和方差的。</li>
+<li>原因2：训练数据集是模拟真实环境中的数据，不能直接使用自身的均值和方差。</li>
+<li>原因3：真实环境中，无法对单个数据进行归一化。</li>
 </ul>
 </li>
 </ul>
@@ -2671,6 +2687,15 @@
 <li>多卡训练、数据并行</li>
 <li>混合精度训练</li>
 </ul>
+<h1 id="Pytorch多卡训练"><a href="#Pytorch多卡训练" class="headerlink" title="Pytorch多卡训练"></a>Pytorch多卡训练</h1><p>对于pytorch而言，有两种方式进行并行：数据并行（DataParallel，DP）和分布式数据并行（DistributedDataParallel，DDP）。</p>
+<p>在多卡训练的实现上，DP与DDP的思路是相似的：</p>
+<ol>
+<li>每张卡都复制一个有相同参数的模型副本。</li>
+<li>每次迭代，每张卡分别输入不同批次数据，分别计算梯度。</li>
+<li>DP与DDP的主要不同在于接下来的多卡通信：</li>
+</ol>
+<p>DP的多卡交互实现在一个进程之中，它将一张卡视为主卡，维护单独模型优化器。所有卡计算完梯度后，主卡汇聚其它卡的梯度进行平均并用优化器更新模型参数，再将模型参数更新至其它卡上。</p>
+<p>DDP则分别为每张卡创建一个进程，每个进程相应的卡上都独立维护模型和优化器。在每次每张卡计算完梯度之后，进程之间以NCLL（NVIDIA GPU通信）为通信后端，使各卡获取其它卡的梯度。各卡对获取的梯度进行平均，然后执行后续的参数更新。由于每张卡上的模型与优化器参数在初始化时就保持一致，而每次迭代的平均梯度也保持一致，那么即使没有进行参数复制，所有卡的模型参数也是保持一致的。</p>
 <h1 id="提升模型泛化能力的方法"><a href="#提升模型泛化能力的方法" class="headerlink" title="提升模型泛化能力的方法"></a>提升模型泛化能力的方法</h1><ul>
 <li>从数据角度上来说。可以通过数据增强、扩充训练集等方法提高泛化能力。</li>
 <li>在训练策略上，可以增加每个<code>Batch Size</code>的大小，进而让模型每次迭代时见到更多数据，防止过拟合。</li>
@@ -3026,7 +3051,24 @@
 <li><code>SVM</code>算法对大规模训练样本难以实施。</li>
 <li>用<code>SVM</code>解决多分类问题存在困难。</li>
 </ol>
-<h1 id="Top-1-Accuracy和Top-5-Accuracy"><a href="#Top-1-Accuracy和Top-5-Accuracy" class="headerlink" title="Top-1 Accuracy和Top-5 Accuracy"></a>Top-1 Accuracy和Top-5 Accuracy</h1><p>Top-1：就是你预测的label取最后概率向量里面最大的那一个作为预测结果 ，如过预测结果中概率最大的那个分类正确，则预测正确，否则预测错误。<br>Top-5：就是最后概率向量最大的前五名中，只要出现了正确概率即为预测正确，否则预测错误。</p>
+<h1 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h1><h2 id="Top-1-Accuracy和Top-5-Accuracy"><a href="#Top-1-Accuracy和Top-5-Accuracy" class="headerlink" title="Top-1 Accuracy和Top-5 Accuracy"></a>Top-1 Accuracy和Top-5 Accuracy</h2><p>Top-1：就是你预测的label取最后概率向量里面最大的那一个作为预测结果 ，如过预测结果中概率最大的那个分类正确，则预测正确，否则预测错误。<br>Top-5：就是最后概率向量最大的前五名中，只要出现了正确概率即为预测正确，否则预测错误。</p>
+<h2 id="DICE"><a href="#DICE" class="headerlink" title="DICE"></a>DICE</h2><p>用来衡量预测结果<code>pred</code>和标签<code>label</code>的相似度（和评价指标<code>F1</code>是相同的）</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306191056073.png" alt=""></p>
+<h2 id="IoU"><a href="#IoU" class="headerlink" title="IoU"></a>IoU</h2><p><code>IoU</code>全称<code>Intersection-over-Union</code>，即交并比，在目标检测领域中，定义为两个矩形框面积的交集和并集的比值，$IoU=\frac{A\cap B}{A\cup B}$。</p>
+<ul>
+<li>如果完全重叠，则<code>IoU</code>等于1，是最理想的情况。一般在检测任务中，<code>IoU</code>大于等于<code>0.5</code>就认为召回，如果设置更高的<code>IoU</code>阈值，则召回率下降，同时定位框也越更加精确。</li>
+<li>在图像分割中也会经常使用<code>IoU</code>，此时就不必限定为两个矩形框的面积。比如对于二分类的前背景分割，那么$IoU=\frac{真实前景像素面积\cap预测前景像素面积}{真实前景像素面积\cup预测前景像素面积}$，这一个指标，通常比直接计算每一个像素的分类正确概率要低，也对错误分类更加敏感。</li>
+</ul>
+<h2 id="MIoU"><a href="#MIoU" class="headerlink" title="MIoU"></a>MIoU</h2><p>均交并比，语义分割的标准度量。计算两个集合的交集与并集之比，在语义分割中，这两个集合为真实值和预测值。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306191111890.png" alt=""></p>
+<p>上述公式和下面的公式是等价的：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306191113911.png" alt=""></p>
+<p>计算<code>MIoU</code>的三个步骤：</p>
+<ol>
+<li>计算混淆矩阵</li>
+<li>计算每个类别的<code>IoU</code></li>
+<li>对每个类别的<code>IoU</code>取平均</li>
+</ol>
 <h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h1><h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><p>卷积的作用是<strong>提取特征</strong>，图像的空间联系是局部的像素联系较为紧密，而距离较远的像素相关性则较弱。因而，每个神经元其实没有必要对全局图像进行感知，只需要对局部进行感知，然后在更高层将局部的信息综合起来就得到了全局的信息。同时卷积通过权重共享降低参数量。</p>
 <p>常见的卷积核选择都是<code>3x3</code>、<code>5x5</code>、<code>7x7</code>的，为什么很少见到偶数的卷积核呢？</p>
 <ul>
@@ -3242,7 +3284,7 @@
 <li><p>类似softmax加温度系数，温度系数根号d越大，softmax输出越平滑（而非尖锐），如果不除以$\sqrt{d}$，相当于softmax输出更尖锐，进而导致梯度稀疏。</p>
 </li>
 </ol>
-<h2 id="解码器-Decoder"><a href="#解码器-Decoder" class="headerlink" title="解码器(Decoder)"></a>解码器(Decoder)</h2><p>同样的，在<code>Decoder</code>中使用的也是同样的结构。也是首先对输出计算自注意力得分，不同的地方在于，进行过自注意力机制后，将<code>self-attention</code>的输出再与<code>Encoder</code>模块的输出计算一遍注意力机制得分之后，再进入前馈神经网络模块。</p>
+<h2 id="解码器-Decoder"><a href="#解码器-Decoder" class="headerlink" title="解码器(Decoder)"></a>解码器(Decoder)</h2><p>同样的，在<code>Decoder</code>中使用的也是类似的结构。不同的地方在于，<code>Decoder</code>不是并行的，而是像<code>RNN</code>一样是一个一个产生的，有时序概念，在这个前提之下，<code>Encoder</code>的第一个模块是一个<code>Masked Multi-Head Attention</code>（就是生产第一步只有一个词，自己做<code>self-attention</code>，第二步生成两个词的时候，就做两个词的<code>self-attetion</code>,那么每一步在该层有一个输出，假设为<code>Q</code>，那么送入到中间的<code>Multi-Head Attention</code>层，和<code>encncoder</code>部分的<code>K</code>，<code>V</code>做<code>attention</code>）。进行过自注意力机制后，将<code>self-attention</code>的输出再与<code>Encoder</code>模块的输出计算一遍注意力机制得分之后，再进入前馈神经网络模块。</p>
 <h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>解码器输出本来是一个浮点型的向量，怎么转化成这两个词呢？解决办法是在最后的线性层接上一个<code>softmax</code>，其中线性层是一个简单的全连接神经网络，它将解码器产生的向量投影到一个更高维度的向量<code>(logits)</code>上，假设我们模型的词汇表是 $10000$ 个词，那么<code>logits</code>就有 $10000$ 个维度，每个维度对应一个唯一的词的得分。之后的<code>softmax</code>层将这些分数转换为概率。选择概率最大的维度，并对应地生成与之关联的单词作为此时间步的输出就是最终的输出。</p>
 <h2 id="位置编码-Positional-Encoding"><a href="#位置编码-Positional-Encoding" class="headerlink" title="位置编码(Positional Encoding)"></a>位置编码(Positional Encoding)</h2><p><code>Transformer</code>中没有考虑顺序信息，那怎么办呢，我们可以在输入中做手脚，把输入变得有位置信息。我们可以给每个词向量加上一个有顺序特征的向量，发现<code>sin</code>函数和<code>cos</code>函数能够很好的表达这种特征，所以通常位置向量用以下公式来表示：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303310947858.png" alt=""></p>
