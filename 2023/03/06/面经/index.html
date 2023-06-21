@@ -32,6 +32,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303222347197.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303222349037.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211132940.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211055521.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211059473.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211251919.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101955821.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304102004442.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101950246.png">
@@ -374,7 +378,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222213526.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222213378.png">
 <meta property="article:published_time" content="2023-03-06T14:04:43.000Z">
-<meta property="article:modified_time" content="2023-06-21T01:25:32.673Z">
+<meta property="article:modified_time" content="2023-06-21T04:52:43.127Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="面试">
@@ -628,7 +632,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-06-21 09:25:32" itemprop="dateModified" datetime="2023-06-21T09:25:32+08:00">2023-06-21</time>
+        <time title="修改时间：2023-06-21 12:52:43" itemprop="dateModified" datetime="2023-06-21T12:52:43+08:00">2023-06-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -655,7 +659,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1:46</span>
+      <span>1:47</span>
     </span>
 </div>
 
@@ -801,9 +805,15 @@
 <p><code>L2</code>对 $x$ 的导数，与 $x$ 成<strong>正比关系</strong>。也就是当 $x$ 增大时，对 $x$ 的导数也线性增大。这就导致在训练初期，预测值与 <code>groud truth</code> 差异过于大时，损失函数对预测值的梯度十分大，<strong>训练初期不稳定</strong>。</p>
 <p><code>L1</code>对 $x$ 的导数为常数，始终为 $1$ 或 $-1$ 。这就导致训练后期，预测值与<code>ground truth</code>差异很小时，损失对预测值的导数的绝对值仍然为 $1$ ，而 <code>learning rate</code>如果不变，损失函数将在稳定值附近波动，难以继续收敛以达到更高精度。</p>
 <p><code>Smooth L1</code> 在 $x$ 较小时，也就是 $[-1,1]$ 区间，对 $x$ 的梯度也会变小；而在 $x$ 很大时，对 $x$ 的梯度的绝对值达到上限 $1$ ，也不会太大以至于破坏网络参数。 完美地避开了<code>L1</code> 和 <code>L2</code>损失的缺陷。</p>
-<h2 id="Cross-Entropy-Loss"><a href="#Cross-Entropy-Loss" class="headerlink" title="Cross Entropy Loss"></a>Cross Entropy Loss</h2><p>多分类任务。设标签为 $y$ ，网络预测结果为 $\sigma(x)=\frac{1}{1+e^{-x}}$ ，<code>CE</code>损失函数为：</p>
-<h2 id="Binary-Cross-Entropy-Loss"><a href="#Binary-Cross-Entropy-Loss" class="headerlink" title="Binary Cross Entropy Loss"></a>Binary Cross Entropy Loss</h2><p>多标签分类。设标签为 $y$ ，网络预测结果为 $\sigma(x)=\frac{1}{1+e^{-x}}$ ，<code>BCE</code>损失函数为： $L=-\sum_{i=1}^{N}[y_{i}\ast \log(\sigma(x_{i}))+(1-y_{i})\ast \log(1-\sigma(x_{i}))]$ 。</p>
-<h2 id="Focal-loss"><a href="#Focal-loss" class="headerlink" title="Focal loss"></a>Focal loss</h2><p><strong>Focal Loss的引入主要是为了解决one-stage目标检测中正负样本数量极不平衡问题</strong>。</p>
+<h2 id="Cross-Entropy-Loss"><a href="#Cross-Entropy-Loss" class="headerlink" title="Cross Entropy Loss"></a>Cross Entropy Loss</h2><p>既可用于多分类任务（只有一个能胜出），也可用于二分类任务。设标签为 $y$ （多分类中是one-hot编码），网络预测结果为 $\hat{y}$ ，<code>CE</code>损失函数为（这里只考虑了一个样本，c指的是多分类的类别数目）：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211132940.png" alt=""></p>
+<h2 id="Binary-Cross-Entropy-Loss"><a href="#Binary-Cross-Entropy-Loss" class="headerlink" title="Binary Cross Entropy Loss"></a>Binary Cross Entropy Loss</h2><p>二值交叉熵损失，虽然总是用来学习0/1分布，即二分类问题，但不是0/1两个数，只要在0~1之间的数也都能学习。设标签为 $y$ ，网络预测结果为 $\hat{y}$ ，<code>BCE</code>损失函数为（这里考虑了N个样本，每个样本都是二分类）： </p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211055521.png" alt=""></p>
+<p>某些情况下需要加上权重：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211059473.png" alt=""></p>
+<h2 id="Focal-loss"><a href="#Focal-loss" class="headerlink" title="Focal loss"></a>Focal loss</h2><p>Focal Loss的引入主要是为了解决one-stage目标检测中正负样本数量极不平衡问题。当易区分负样本超级多时，整个训练过程将会围绕着易区分负样本进行，进而淹没正样本，造成大损失。所以这里引入了一个调制因子 ，用来聚焦难分样本，公式如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211251919.png" alt=""></p>
+<p>当 $p_{t}$ 趋向于1，即说明该样本是易区分样本，此时调制因子是趋向于0，说明对损失的贡献较小，即减低了易区分样本的损失比例。当 $p_{t}$ 很小，也就是假如某个样本被分到正样本，但是该样本为前景的概率特别小，即被错分到正样本了，此时调制因子是趋向于1，对loss也没有太大的影响。</p>
 <h1 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h1><h2 id="Sigmoid"><a href="#Sigmoid" class="headerlink" title="Sigmoid"></a>Sigmoid</h2><p><code>Sigmoid</code>是最基础的激活函数，可以将任意数值转换为概率（缩放到 $0 \thicksim 1$ 之间），在分类等场景中有广泛的应用。<code>Sigmoid</code>函数的形式是 $\sigma(z)=\frac{1}{1+e^{-z}}$ 。其对应的函数图像如下图所示：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101955821.png" alt=""></p>
 <h2 id="tanh"><a href="#tanh" class="headerlink" title="tanh"></a>tanh</h2><p>激活函数<code>tanh</code>和<code>Sigmoid</code>类似，都是<code>S</code>形曲线，输出范围是$[-1, 1]$。<code>tanh</code>函数的形式为 $g(z)=\frac{e^{z}-e^{-z}}{e^{z}+e^{-z}}$ 。其对应的函数图像如下所示：</p>
