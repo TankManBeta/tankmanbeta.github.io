@@ -200,7 +200,19 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -S test -X quit</span><br></pre></td></tr></table></figure></li>
 <li><p>进入名称<code>jeeby</code>的<code>session</code>，若<code>session</code>不存在则新建：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -R jeeby</span><br></pre></td></tr></table></figure>
+<h1 id="Pycharm远程连接服务器"><a href="#Pycharm远程连接服务器" class="headerlink" title="Pycharm远程连接服务器"></a>Pycharm远程连接服务器</h1></li>
+<li><p>确保自己的Pycharm版本为professional版本</p>
 </li>
+<li>创建远程连接：Tools—&gt;Deployment—&gt;Configuration—&gt;SFTP协议—&gt;配置服务器的IP、端口、用户名、密码等相关信息</li>
+<li>进行本地项目与远程项目之间的文件夹路径映射：在刚才的SFTP协议中选择Mappings添加映射，例如我们将本地的D:\workspace\PycharmProjects\Code路径映射到远端的/home/jeeby/Code路径</li>
+<li>设置文件自动上传（可选）：Tools—&gt;Deployment—&gt;Automatic Upload，默认是有修改就自动上传，可以在Tools—&gt;Deployment—&gt;Options中设置按了ctrl+s上传</li>
+<li>验证是否连接成功：Tools—&gt;Deployment—&gt;Browse Remote Host，如果能打开服务器文件目录说明连接成功</li>
+<li>配置Python解释器<ol>
+<li>查询服务器中所使用的的Python解释器路径：which python命令，注意虚拟环境的话需要先进入虚拟环境再使用前述命令</li>
+<li>本地Pycharm中配置Python解释器：File—&gt;Settings—&gt;Project—&gt;Project Interpreter—&gt;右上角设置图标Add—&gt;SSH Interpreter—&gt;Existing server configuration—&gt;Move—&gt;配置Interpreter和Sync folders（和前面配置的文件夹路径映射一致即可）</li>
+</ol>
+</li>
+<li>本地启动服务器终端：Tools—&gt;Start SSH session</li>
 </ol>
 ]]></content>
       <categories>
