@@ -83,6 +83,23 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin xxx.git</span><br></pre></td></tr></table></figure></li>
 <li>再次push也可能报错，需要输入用户名密码（由于我配置过<code>ssh</code>私钥，所以未出现这种情况）</li>
 </ul>
+<h1 id="配置用户名和邮箱"><a href="#配置用户名和邮箱" class="headerlink" title="配置用户名和邮箱"></a>配置用户名和邮箱</h1><p>修改全局配置：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global user.email &quot;邮箱&quot;</span><br><span class="line">git config --global user.name &quot;名称&quot;</span><br></pre></td></tr></table></figure>
+<p>修改某个仓库的配置：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config user.name xxx</span><br><span class="line">git config user.email xxx@xxxx.com</span><br></pre></td></tr></table></figure>
+<h1 id="修改远程源"><a href="#修改远程源" class="headerlink" title="修改远程源"></a>修改远程源</h1><p>首先查看远程信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+<p>删除关联的origin的远程仓库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote add origin git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
+<p>添加远程仓库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote add origin git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
+<h1 id="自己的仓库中包含其他仓库的提交方式"><a href="#自己的仓库中包含其他仓库的提交方式" class="headerlink" title="自己的仓库中包含其他仓库的提交方式"></a>自己的仓库中包含其他仓库的提交方式</h1><p>一个仓库有时候会需要引用另一个仓库，来确保能跟踪到仓库的更新。此时提交代码会报错<code>warning: adding embedded git repository: research-contributions</code>，大概就是说会有仓库会有嵌套，具体解决方案是采用<code>submodule</code>：</p>
+<p>首先删除仓库索引，如果执行之后出现<code>error: the following file has staged content different from both the
+file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 如果是文件</span></span><br><span class="line">git rm --cached research-contributions</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果是文件夹</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git rm -r --cached research-contributions</span></span><br><span class="line">git rm -r -f --cached research-contributions</span><br></pre></td></tr></table></figure>
+<p>接着添加仓库索引：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git submodule add &lt;url&gt; project</span><br><span class="line"><span class="meta">#</span><span class="bash"> example(https)</span></span><br><span class="line">git submodule add https://github.com/Project-MONAI/research-contributions.git research-contributions</span><br><span class="line"><span class="meta">#</span><span class="bash"> example(ssh)</span></span><br><span class="line">git submodule add git@github.com:Project-MONAI/research-contributions.git research-contributions</span><br></pre></td></tr></table></figure>
+<p>最后按照正常流程提交即可。</p>
 <h1 id="一些其他命令"><a href="#一些其他命令" class="headerlink" title="一些其他命令"></a>一些其他命令</h1><p>查看日志信息：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305141215648.png" alt=""></p>
@@ -110,12 +127,6 @@
         <tag>总结</tag>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
   </entry>
   <entry>
     <title>Linux使用总结</title>
@@ -192,6 +203,12 @@
         <tag>总结</tag>
         <tag>Linux</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
   </entry>
   <entry>
     <title>搭建个人博客</title>
@@ -2678,6 +2695,19 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151152897.png" alt=""></p>
 <h3 id="Soft-Thresholding-and-Shrinkage"><a href="#Soft-Thresholding-and-Shrinkage" class="headerlink" title="Soft-Thresholding and Shrinkage"></a>Soft-Thresholding and Shrinkage</h3><p>图像在傅里叶空间是天然稀疏的，大部分都集中在低频模式中。因此，我们可以动态地根据它们对终端任务的重要性对tokens进行掩码。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151155277.png" alt=""></p>
+<h1 id="FOURCASTNET-A-GLOBAL-DATA-DRIVEN-HIGH-RESOLUTION-WEATHER-MODEL-USING-ADAPTIVE-FOURIER-NEURAL-OPERATORS"><a href="#FOURCASTNET-A-GLOBAL-DATA-DRIVEN-HIGH-RESOLUTION-WEATHER-MODEL-USING-ADAPTIVE-FOURIER-NEURAL-OPERATORS" class="headerlink" title="FOURCASTNET: A GLOBAL DATA-DRIVEN HIGH-RESOLUTION WEATHER MODEL USING ADAPTIVE FOURIER NEURAL OPERATORS"></a>FOURCASTNET: A GLOBAL DATA-DRIVEN HIGH-RESOLUTION WEATHER MODEL USING ADAPTIVE FOURIER NEURAL OPERATORS</h1><h2 id="Abstract-23"><a href="#Abstract-23" class="headerlink" title="Abstract"></a>Abstract</h2><p>FourCastNet以0.25°分辨率（遥感图像能分辨的最小地物单元为0.25经/纬度）提供准确的短期到中期全球预测。FourCastNet可以准确预测高分辨率、快速的时间尺度变量，如地面风速、降水和大气水蒸气。它对规划风能资源、预测热带气旋、热带外气旋和大气河流等极端天气事件具有重要意义。FourCastNet在短时间内的大尺度变量的预测精度与ECMWF的Integrated Forecasting System (IFS)的精度相当，然而在小尺度变量上的精度高于IFS。FourCastNet在不到2秒的时间内生成一个为期一周的预测，比IFS快了几个数量级。FourCastNet的速度使创建快速和廉价的大型集合预测与数以千计的集合成员，以提高概率预测。我们讨论了数据驱动的深度学习模型(如FourCastNet)如何成为气象工具包的一个有价值的补充，以帮助和增强NWP模型。</p>
+<h2 id="Introduction-27"><a href="#Introduction-27" class="headerlink" title="Introduction"></a>Introduction</h2><p>数值天气预报的重要性以及其发展历程。</p>
+<p>现在数据驱动的深度学习也开始发展起来。</p>
+<p>数据驱动模型克服了NWP模型中存在的模型偏差，能够以较低的计算成本为概率预报和数据同化生成大集合，在改善天气预报方面具有很大的潜力。</p>
+<p>大多数数据驱动的天气模型使用低分辨率数据进行训练。然而，粗化过程会导致关键的、精细的物理信息的丢失。数据驱动的模型要想真正发挥作用，就必须以与当前最先进的数值天气模型相同或更高的分辨率生成预报。</p>
+<p>我们开发了基于傅里叶的神经网络预测模型FourCastNet，以0.25°分辨率生成关键大气变量的全球数据驱动预测，这对应于赤道附近大约30 km × 30km的空间分辨率和720 × 1440像素的全球网格大小。</p>
+<p>我们选择了ViT作为主干网络，因为它能够很好地建模远程依赖关系。将ViT与基于傅立叶的令牌混合相结合，可以产生最先进的高分辨率模型，该模型可以解析细粒度特征，并可以很好地扩展数据集的分辨率和大小。这种方法能够以真正前所未有的分辨率训练高保真的数据驱动模型。</p>
+<h2 id="Training-Methods"><a href="#Training-Methods" class="headerlink" title="Training Methods"></a>Training Methods</h2><p>在这项工作中，我们重点预测了两个重要且具有挑战性的大气变量，即(1)距离地球表面10米的风速和(2)6小时总降水量。由于计算和模型架构的限制，以前基于DL的天气预报工作无法在全ERA5分辨率下对这些变量进行全球预报。近地面风速预报在陆上和海上风电场的储能规划、电网传输和其他操作考虑中发挥着关键作用，因此具有巨大的实用性。正如我们在3.1节中所展示的，近地风预报（以及大气边界层以上的风预报）可以帮助跟踪极端风事件，如飓风，并可用于备灾。我们的第二个重点是预测总降水量，其中DL模型可能显示出很大的潜力。NWP模型，如可操作的IFS，有几种参数化方案来可跟踪地预测降水，由于神经网络在从高分辨率观测数据推断参数化方面具有令人印象深刻的能力，因此它们非常适合这项任务。</p>
+<h3 id="FourCastNet-Model-Description"><a href="#FourCastNet-Model-Description" class="headerlink" title="FourCastNet: Model Description"></a>FourCastNet: Model Description</h3><p>为了产生高分辨率的预测，我们选择了自适应傅立叶神经算子(AFNO)模型。这种特殊的神经网络架构很有吸引力，因为它是专门为高分辨率输入设计的，并将深度学习的几个关键最新进展综合到一个模型中。也就是说，它结合了傅里叶神经的算子学习方法与ViT主干，前者已被证明在建模复杂PDE系统非常有优势。</p>
+<p>ViT架构及其变体在过去几年中已经成为计算机视觉领域的最新技术，在许多任务上表现出卓越的性能，并且随着模型和数据集大小的增加而良好地扩展。这种性能主要归功于这些网络中的多头自注意力机制，该机制允许网络在每一层全局建模特征（在ViT表示术语中称为token）之间的相互作用。然而，通过自注意力进行的空间混合在token数量上是二次的，因此对于高分辨率输入很快变得不可行。</p>
+<p>ViT的一些变体通过找到一些可替代的空间token混合的机制来降低计算复杂度。然而，AFNO模型的独特之处在于，它将混合操作表征为连续的全局卷积，通过FFT在傅里叶域中有效地实现，这允许灵活地、可扩展地跨空间和通道维度建模依赖关系。</p>
+<p>鉴于卷积网络架构的普遍流行，特别是它们在先前预测ERA5变量的工作中的使用，值得将我们的AFNO模型与这些更传统的架构进行比较。首先，AFNO能够很好地随分辨率进行扩展，从而产生直接的实际好处——在我们的720x1440分辨率下，FourCastNet模型的内存占用约为10GB，批处理大小为1。为了对比这一点，我们可以从WeatherBench的先前结果中看到19层的ResNet架构，它以非常粗糙的分辨率（32×64像素）进行训练。将此架构转移到我们的数据集并以720×1440分辨率进行训练，对于批大小为1的数据集将需要83GB。</p>
+<p>除了实际考虑之外，我们初步的非详尽实验表明，在自回归推理中，卷积架构在捕获小尺度上的许多时间步长表现不佳。这些观察结果以及我们对图像去噪、超分辨率和去模糊的高分辨率图像处理当前状态的了解是我们选择ViT架构而不是卷积架构的强烈动机。</p>
 ]]></content>
       <categories>
         <category>总结</category>
