@@ -119,8 +119,8 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p>回滚提交：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git reset 2f6431b1886845d8754fdb1a78dc65a0412cd03c</span><br></pre></td></tr></table></figure>
 <p>将文件还原：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout -- &lt;file&gt;</span><br></pre></td></tr></table></figure>
-<p><strong>注：git checkout — <file>指令应该是从先从缓存区中拉取版本还原，如果没有再到版本库中拉取还原。</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout -- file</span><br></pre></td></tr></table></figure>
+<p><strong>注：git checkout — file指令应该是从先从缓存区中拉取版本还原，如果没有再到版本库中拉取还原。</strong></p>
 <p>创建不同的分支：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git brach dev</span><br><span class="line">git checkout dev</span><br><span class="line"><span class="meta">#</span><span class="bash"> 上面两个命令合并操作</span></span><br><span class="line">git checkout -b dev</span><br><span class="line"><span class="meta">#</span><span class="bash"> 提交的时候不仅提交同时设置远端分支</span></span><br><span class="line">git push --set-upstream origin dev</span><br></pre></td></tr></table></figure>
 <p>合并不同的分支：</p>
