@@ -20,6 +20,13 @@
 <li>命令行中输入<code>git init</code>，此时刚创建的文件夹中出现一个<code>.git</code>文件夹</li>
 <li>先在<code>GitHub</code>中复制<code>URL</code>，然后命令行窗口中输入<code>git clone [URL] [需要新建的文件夹名]</code>，回车，等待下载完成即可</li>
 </ol>
+<h1 id="Fork项目"><a href="#Fork项目" class="headerlink" title="Fork项目"></a>Fork项目</h1><ol>
+<li>点击想要<code>fork</code>的仓库的<code>fork</code>按钮，执行完这个操作后会将这个仓库的文件、提交历史、issues和其余东西的仓库复制到自己的<code>github</code>仓库中，而你本地仓库是不会存在任何更改；</li>
+<li>然后你就可以通过<code>clone</code>对你这个复制的远程仓库进行克隆；</li>
+<li>后续更改任何东西都可以在本地完成，如<code>add</code>、<code>commit</code>一系列的操作，然后通过<code>push</code>命令推到自己的远程仓库；</li>
+<li>如果希望对方接受你的修改，可以通过发送<code>pull requests</code>给对方，如果对方接受。则会将你的修改内容更新到仓库中。</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306271006689.jpg" alt=""></p>
 <h1 id="每次上传需要登陆"><a href="#每次上传需要登陆" class="headerlink" title="每次上传需要登陆"></a>每次上传需要登陆</h1><p><code>git</code>使用<code>https</code>协议，每次<code>pull</code>, <code>push</code>都要输入密码。使用<code>git</code>协议，然后使用<code>SSH</code>密钥，可以不用每次都输密码。</p>
 <ol>
 <li><p>生成<code>SSH</code></p>

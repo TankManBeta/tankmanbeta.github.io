@@ -31,11 +31,12 @@
 <meta property="og:description" content="前言记录一下使用Git过程中遇到的问题">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305141244969.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306271006689.jpg">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305141215648.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305141234277.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305141236671.png">
 <meta property="article:published_time" content="2022-02-25T01:44:48.000Z">
-<meta property="article:modified_time" content="2023-06-27T01:35:55.903Z">
+<meta property="article:modified_time" content="2023-06-27T02:07:09.913Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="Git">
@@ -192,7 +193,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E9%A1%B9%E7%9B%AE%E8%87%B3GitHub%E4%BB%93%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">提交项目至GitHub仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">克隆项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AF%8F%E6%AC%A1%E4%B8%8A%E4%BC%A0%E9%9C%80%E8%A6%81%E7%99%BB%E9%99%86"><span class="nav-number">4.</span> <span class="nav-text">每次上传需要登陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C%E5%BC%80%E5%8F%91"><span class="nav-number">5.</span> <span class="nav-text">多人协作开发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%86%E6%94%AF"><span class="nav-number">6.</span> <span class="nav-text">多个远程仓库或多个分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-idea%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">7.</span> <span class="nav-text">关于.idea文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9Github%E4%BB%93%E5%BA%93%E5%90%8D%E5%90%8E%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">8.</span> <span class="nav-text">修改Github仓库名后的操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1"><span class="nav-number">9.</span> <span class="nav-text">配置用户名和邮箱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%BF%9C%E7%A8%8B%E6%BA%90"><span class="nav-number">10.</span> <span class="nav-text">修改远程源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%93%E5%BA%93%E4%B8%AD%E5%8C%85%E5%90%AB%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E7%9A%84%E6%8F%90%E4%BA%A4%E6%96%B9%E5%BC%8F"><span class="nav-number">11.</span> <span class="nav-text">自己的仓库中包含其他仓库的提交方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4"><span class="nav-number">12.</span> <span class="nav-text">一些其他命令</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E9%A1%B9%E7%9B%AE%E8%87%B3GitHub%E4%BB%93%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">提交项目至GitHub仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">克隆项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fork%E9%A1%B9%E7%9B%AE"><span class="nav-number">4.</span> <span class="nav-text">Fork项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AF%8F%E6%AC%A1%E4%B8%8A%E4%BC%A0%E9%9C%80%E8%A6%81%E7%99%BB%E9%99%86"><span class="nav-number">5.</span> <span class="nav-text">每次上传需要登陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C%E5%BC%80%E5%8F%91"><span class="nav-number">6.</span> <span class="nav-text">多人协作开发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%86%E6%94%AF"><span class="nav-number">7.</span> <span class="nav-text">多个远程仓库或多个分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-idea%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">8.</span> <span class="nav-text">关于.idea文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9Github%E4%BB%93%E5%BA%93%E5%90%8D%E5%90%8E%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">9.</span> <span class="nav-text">修改Github仓库名后的操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1"><span class="nav-number">10.</span> <span class="nav-text">配置用户名和邮箱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%BF%9C%E7%A8%8B%E6%BA%90"><span class="nav-number">11.</span> <span class="nav-text">修改远程源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%93%E5%BA%93%E4%B8%AD%E5%8C%85%E5%90%AB%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E7%9A%84%E6%8F%90%E4%BA%A4%E6%96%B9%E5%BC%8F"><span class="nav-number">12.</span> <span class="nav-text">自己的仓库中包含其他仓库的提交方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4"><span class="nav-number">13.</span> <span class="nav-text">一些其他命令</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -289,7 +290,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-06-27 09:35:55" itemprop="dateModified" datetime="2023-06-27T09:35:55+08:00">2023-06-27</time>
+        <time title="修改时间：2023-06-27 10:07:09" itemprop="dateModified" datetime="2023-06-27T10:07:09+08:00">2023-06-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -309,7 +310,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3k</span>
+      <span>3.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -344,6 +345,13 @@
 <li>命令行中输入<code>git init</code>，此时刚创建的文件夹中出现一个<code>.git</code>文件夹</li>
 <li>先在<code>GitHub</code>中复制<code>URL</code>，然后命令行窗口中输入<code>git clone [URL] [需要新建的文件夹名]</code>，回车，等待下载完成即可</li>
 </ol>
+<h1 id="Fork项目"><a href="#Fork项目" class="headerlink" title="Fork项目"></a>Fork项目</h1><ol>
+<li>点击想要<code>fork</code>的仓库的<code>fork</code>按钮，执行完这个操作后会将这个仓库的文件、提交历史、issues和其余东西的仓库复制到自己的<code>github</code>仓库中，而你本地仓库是不会存在任何更改；</li>
+<li>然后你就可以通过<code>clone</code>对你这个复制的远程仓库进行克隆；</li>
+<li>后续更改任何东西都可以在本地完成，如<code>add</code>、<code>commit</code>一系列的操作，然后通过<code>push</code>命令推到自己的远程仓库；</li>
+<li>如果希望对方接受你的修改，可以通过发送<code>pull requests</code>给对方，如果对方接受。则会将你的修改内容更新到仓库中。</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306271006689.jpg" alt=""></p>
 <h1 id="每次上传需要登陆"><a href="#每次上传需要登陆" class="headerlink" title="每次上传需要登陆"></a>每次上传需要登陆</h1><p><code>git</code>使用<code>https</code>协议，每次<code>pull</code>, <code>push</code>都要输入密码。使用<code>git</code>协议，然后使用<code>SSH</code>密钥，可以不用每次都输密码。</p>
 <ol>
 <li><p>生成<code>SSH</code></p>
