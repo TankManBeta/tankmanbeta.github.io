@@ -171,18 +171,34 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
 <h1 id="杀死进程"><a href="#杀死进程" class="headerlink" title="杀死进程"></a>杀死进程</h1><p>杀死<code>pid</code>为<code>88888</code>的进程</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 88888</span><br></pre></td></tr></table></figure>
-<h1 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h1><p>创建一个名为<code>env1</code>的虚拟环境目录（<code>/usr/local/bin/python</code>是<code>Python</code>的安装路径，创建的虚拟环境中的<code>Python</code>版本与路径中的<code>Python</code>版本一致）：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">virtualenv -p /usr/local/bin/python env1</span><br></pre></td></tr></table></figure>
 <h1 id="如何查询python安装路径"><a href="#如何查询python安装路径" class="headerlink" title="如何查询python安装路径"></a>如何查询python安装路径</h1><p>查看所有<code>python</code>的安装目录：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">whereis python</span><br></pre></td></tr></table></figure>
 <p>查看当前使用的<code>python</code>的安装目录：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which python</span><br></pre></td></tr></table></figure>
-<h1 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h1><p>激活虚拟环境（激活成功之后命令行前面会出现<code>(env1)</code>）：</p>
+<h1 id="虚拟环境管理"><a href="#虚拟环境管理" class="headerlink" title="虚拟环境管理"></a>虚拟环境管理</h1><h2 id="virtualenv"><a href="#virtualenv" class="headerlink" title="virtualenv"></a>virtualenv</h2><h3 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h3><p>创建一个名为<code>env1</code>的虚拟环境目录（<code>/usr/local/bin/python</code>是<code>Python</code>的安装路径，创建的虚拟环境中的<code>Python</code>版本与路径中的<code>Python</code>版本一致）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">virtualenv -p /usr/local/bin/python env1</span><br></pre></td></tr></table></figure>
+<h3 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h3><p>激活虚拟环境（激活成功之后命令行前面会出现<code>(env1)</code>）：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source env1/bin/activate</span><br></pre></td></tr></table></figure>
-<h1 id="退出虚拟环境"><a href="#退出虚拟环境" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h1><p>退出虚拟环境：</p>
+<h3 id="退出虚拟环境"><a href="#退出虚拟环境" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h3><p>退出虚拟环境：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
-<h1 id="删除虚拟环境"><a href="#删除虚拟环境" class="headerlink" title="删除虚拟环境"></a>删除虚拟环境</h1><p>删除名为<code>env1</code>的虚拟环境：</p>
+<h3 id="删除虚拟环境"><a href="#删除虚拟环境" class="headerlink" title="删除虚拟环境"></a>删除虚拟环境</h3><p>删除名为<code>env1</code>的虚拟环境：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -rf env1</span><br></pre></td></tr></table></figure>
+<h2 id="miniconda"><a href="#miniconda" class="headerlink" title="miniconda"></a>miniconda</h2><h3 id="下载miniconda安装包"><a href="#下载miniconda安装包" class="headerlink" title="下载miniconda安装包"></a>下载miniconda安装包</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-py37_23.1.0-1-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<h3 id="安装miniconda"><a href="#安装miniconda" class="headerlink" title="安装miniconda"></a>安装miniconda</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bash Miniconda3-py37_23.1.0-1-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<h3 id="查看所有虚拟环境"><a href="#查看所有虚拟环境" class="headerlink" title="查看所有虚拟环境"></a>查看所有虚拟环境</h3><p>查看已经安装的所有虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda info --envs</span><br></pre></td></tr></table></figure>
+<h3 id="创建虚拟环境-1"><a href="#创建虚拟环境-1" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h3><p>创建一个虚拟环境名为<code>venv</code>，<code>python</code>版本为<code>3.7</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create --name venv python=3.7</span><br></pre></td></tr></table></figure>
+<p>在指定位置创建名为<code>venv</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create --prefix=/home/jeeby/Environment/venv python=3.7</span><br></pre></td></tr></table></figure>
+<p>注意此时<code>conda activate venv</code>会报错，因为虚拟环境虽然创建成功，但是没有名字，我们需要将新建立的环境目录加入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda config --append envs_dirs /home/jeeby/Environment/</span><br></pre></td></tr></table></figure>
+<h3 id="激活虚拟环境-1"><a href="#激活虚拟环境-1" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h3><p>激活名为<code>venv</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda activate venv</span><br></pre></td></tr></table></figure>
+<h3 id="退出虚拟环境-1"><a href="#退出虚拟环境-1" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h3><p>退出当前虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+<h3 id="删除虚拟环境-1"><a href="#删除虚拟环境-1" class="headerlink" title="删除虚拟环境"></a>删除虚拟环境</h3><p>删除名为<code>venv</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda remove -n venv --all</span><br></pre></td></tr></table></figure>
 <h1 id="安装GPU版本的PyTorch"><a href="#安装GPU版本的PyTorch" class="headerlink" title="安装GPU版本的PyTorch"></a>安装GPU版本的PyTorch</h1><p>建议先进入<code>torch</code>的<code>wheel</code><a href="https://download.pytorch.org/whl/torch_stable.html">下载网站</a>查看版本对应的情况。</p>
 <p>拿我自己举例，服务器下安装的<code>CUDA</code>的版本是<code>12.1</code>，但是<code>PyTorch</code>的<a href="https://pytorch.org/get-started/locally/">官网</a>上显示目前支持的<code>CUDA</code>版本为<code>11.7</code>和<code>11.8</code>，秉持着用新不用旧的原则，就运行了官网提供的<code>CUDA 11.8</code>的<code>Command</code>，但是没有安装成功，然后找了半天发现自己的<code>python</code>版本是<code>3.7</code>，在上面<code>wheel</code>网站里发现<code>3.7</code>版本的<code>python</code>最高支持的<code>CUDA</code>版本为<code>11.7</code>，于是在官网中的<code>Compute Platform</code>这一项选择了<code>CUDA 11.7</code>，然后在运行官网提供的新<code>Command</code>，待安装完成之后执行<code>torch.cuda.is_available()</code>，返回<code>True</code>。</p>
 <h1 id="多个项目使用同一个数据集"><a href="#多个项目使用同一个数据集" class="headerlink" title="多个项目使用同一个数据集"></a>多个项目使用同一个数据集</h1><p>在训练深度学习模型时，很多模型需要用到同一个数据集，而很多模型都要求在当前算法文件夹中存放数据集，为了减少内存浪费，可以在当前文件夹下使用软连接来连接到数据集源文件，就可以不需要复制多个数据集了。</p>
