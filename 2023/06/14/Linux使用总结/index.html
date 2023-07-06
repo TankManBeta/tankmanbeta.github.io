@@ -31,7 +31,7 @@
 <meta property="og:description" content="前言记录一下使用Linux系统过程中遇到的知识点">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-14T05:55:34.000Z">
-<meta property="article:modified_time" content="2023-06-29T05:25:54.150Z">
+<meta property="article:modified_time" content="2023-07-06T07:59:55.562Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="Linux">
@@ -284,7 +284,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-06-29 13:25:54" itemprop="dateModified" datetime="2023-06-29T13:25:54+08:00">2023-06-29</time>
+        <time title="修改时间：2023-07-06 15:59:55" itemprop="dateModified" datetime="2023-07-06T15:59:55+08:00">2023-07-06</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -401,19 +401,20 @@
 <li><p>进入名称<code>jeeby</code>的<code>session</code>，若<code>session</code>不存在则新建：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -R jeeby</span><br></pre></td></tr></table></figure>
 <h1 id="Pycharm远程连接服务器"><a href="#Pycharm远程连接服务器" class="headerlink" title="Pycharm远程连接服务器"></a>Pycharm远程连接服务器</h1></li>
-<li><p>确保自己的Pycharm版本为professional版本</p>
-</li>
+</ol>
+<ul>
+<li>确保自己的Pycharm版本为professional版本</li>
 <li>创建远程连接：Tools—&gt;Deployment—&gt;Configuration—&gt;SFTP协议—&gt;配置服务器的IP、端口、用户名、密码等相关信息</li>
 <li>进行本地项目与远程项目之间的文件夹路径映射：在刚才的SFTP协议中选择Mappings添加映射，例如我们将本地的D:\workspace\PycharmProjects\Code路径映射到远端的/home/jeeby/Code路径</li>
 <li>设置文件自动上传（可选）：Tools—&gt;Deployment—&gt;Automatic Upload，默认是有修改就自动上传，可以在Tools—&gt;Deployment—&gt;Options中设置按了ctrl+s上传</li>
 <li>验证是否连接成功：Tools—&gt;Deployment—&gt;Browse Remote Host，如果能打开服务器文件目录说明连接成功</li>
-<li>配置Python解释器<ol>
+<li>配置Python解释器<ul>
 <li>查询服务器中所使用的的Python解释器路径：which python命令，注意虚拟环境的话需要先进入虚拟环境再使用前述命令</li>
 <li>本地Pycharm中配置Python解释器：File—&gt;Settings—&gt;Project—&gt;Project Interpreter—&gt;右上角设置图标Add—&gt;SSH Interpreter—&gt;Existing server configuration—&gt;Move—&gt;配置Interpreter和Sync folders（和前面配置的文件夹路径映射一致即可）</li>
-</ol>
+</ul>
 </li>
 <li>本地启动服务器终端：Tools—&gt;Start SSH session</li>
-</ol>
+</ul>
 
     </div>
 
