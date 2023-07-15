@@ -216,9 +216,9 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -S test -X quit</span><br></pre></td></tr></table></figure></li>
 <li><p>进入名称<code>jeeby</code>的<code>session</code>，若<code>session</code>不存在则新建：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -R jeeby</span><br></pre></td></tr></table></figure>
-<h1 id="Pycharm远程连接服务器"><a href="#Pycharm远程连接服务器" class="headerlink" title="Pycharm远程连接服务器"></a>Pycharm远程连接服务器</h1></li>
+</li>
 </ol>
-<ul>
+<h1 id="Pycharm远程连接服务器"><a href="#Pycharm远程连接服务器" class="headerlink" title="Pycharm远程连接服务器"></a>Pycharm远程连接服务器</h1><ul>
 <li>确保自己的Pycharm版本为professional版本</li>
 <li>创建远程连接：Tools—&gt;Deployment—&gt;Configuration—&gt;SFTP协议—&gt;配置服务器的IP、端口、用户名、密码等相关信息</li>
 <li>进行本地项目与远程项目之间的文件夹路径映射：在刚才的SFTP协议中选择Mappings添加映射，例如我们将本地的D:\workspace\PycharmProjects\Code路径映射到远端的/home/jeeby/Code路径</li>
