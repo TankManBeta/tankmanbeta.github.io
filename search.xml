@@ -231,6 +231,17 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 </li>
 <li>本地启动服务器终端：Tools—&gt;Start SSH session</li>
 </ul>
+<h1 id="VIM编辑器使用"><a href="#VIM编辑器使用" class="headerlink" title="VIM编辑器使用"></a>VIM编辑器使用</h1><ul>
+<li>使用<code>vim</code>命令进入编辑器，例如编辑<code>vim main.py</code>来编辑<code>main.py</code>文件</li>
+<li>进入编辑器之后按<code>i</code>切换到插入状态</li>
+<li>退出编辑器<ul>
+<li>首先按<code>Esc</code>退出插入状态</li>
+<li>输入<code>:</code>，系统会等待输入命令</li>
+<li>输入相应的命令：<code>wq</code>（保存退出，可以直接用<code>x</code>代替）；<code>q</code>（直接退出）；<code>!q</code>（不保存退出）；<code>!</code>（强制退出）</li>
+</ul>
+</li>
+</ul>
+<p>Tips：可以在按了<code>Esc</code>键之后，按<code>shift+zz</code>直接退出，这是最便捷的方式</p>
 ]]></content>
       <categories>
         <category>总结</category>
