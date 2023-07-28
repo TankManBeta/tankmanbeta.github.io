@@ -158,6 +158,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123170408.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123183426.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123184335.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202307272018331.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123184435.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123203344.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123203431.png">
@@ -248,7 +249,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306151155277.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202307271409187.png">
 <meta property="article:published_time" content="2021-11-02T13:40:57.000Z">
-<meta property="article:modified_time" content="2023-07-27T09:33:47.620Z">
+<meta property="article:modified_time" content="2023-07-27T12:43:54.308Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="论文">
@@ -502,7 +503,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-07-27 17:33:47" itemprop="dateModified" datetime="2023-07-27T17:33:47+08:00">2023-07-27</time>
+        <time title="修改时间：2023-07-27 20:43:54" itemprop="dateModified" datetime="2023-07-27T20:43:54+08:00">2023-07-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1050,12 +1051,14 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123152103.png" alt=""></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123170343.png" alt=""></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123170408.png" alt=""></p>
-<p>在这里， $k_{\phi}$ 起着核函数的作用。定义1和2构成了神经网络到无限维空间的泛化。注意，即使积分算符是线性的，神经算符可以通过将线性积分算符与非线性激活函数组合在一起来学习高度非线性的算符，类似于标准神经网络。</p>
+<p>在这里， $k_{\phi}$ 起着核函数的作用。定义1和2构成了神经网络到无限维空间的泛化。注意，即使积分算符是线性的，神经算符可以通过将线性积分算符与非线性激活函数组合在一起来学习高度非线性的算符，类似于标准神经网络。如果我们去掉函数 $\kappa(x,y,a(x),a(y))$ 对 $a$ 的依赖并强加 $\kappa(x,y)=\kappa(x-y)$ ，那么(3)是一个卷积算子（$f_{1} \ast f_{2}=\int_{-\infty}^{\infty}f_{1}(\tau)f_{2}(t-\tau)d\tau$）。</p>
 <h2 id="FOURIER-NEURAL-OPERATOR"><a href="#FOURIER-NEURAL-OPERATOR" class="headerlink" title="FOURIER NEURAL OPERATOR"></a>FOURIER NEURAL OPERATOR</h2><p>我们建议用傅里叶空间中定义的卷积算子替换(3)中的核积分算子。设 $\mathcal{F}$ 表示函数 $f:D\rightarrow \mathbb{R}^{d_{v}}$ 的傅里叶变换和 $\mathcal{F}^{-1}$ 是它的倒数。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123183426.png" alt=""></p>
 <p>取 $\kappa_{\phi}(x, y, a(x), a(y)) = \kappa_{\phi}(x-y)$ ，应用卷积定理，得到</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123184335.png" alt=""></p>
 <p>因此，我们建议在傅里叶空间中直接参数化 $\kappa_{\phi}$ 。</p>
+<p>两函数的傅里叶变换的乘积等于它们卷积后的傅里叶变换，简单证明：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202307272018331.png" alt=""></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123184435.png" alt=""></p>
 <p>对于频率模态 $k \in D$ ，我们有 $(\mathcal{F}v_{t})(k)\in\mathbb{C}^{d_{v}}$ 和 $R_{\phi}(k)\in \mathbb{C}^{d_{v}\times d_{v}}$ 。注意，因为我们假设 $\kappa$ 是周期性的，它允许傅里叶级数展开，所以我们可以用离散模 $k\in \mathbb{Z}^{d}$ 。我们通过在最大模数处截断傅立叶级数来选择有限维参数化 $k_{max}=|Z_{k_{max}}|=|\{k\in\mathbb{Z}^{d}:|k_{j}|\leq k_{max,j}, for \ j=1,\cdots,d\}|$ 。因此，我们将 $R_{\phi}$ 直接参数化为复值 $(k_{max} \times d_{v} \times d_{v})$ - 张量，由截断傅里叶模的集合组成，因此从我们的符号中去掉 $\phi$ 。因为 $\kappa$ 是实值的，我们施加共轭对称性。我们注意到集合 $Z_{k_{max}}$ 不是 $v_{t}$ 的低频模态的规范选择。事实上，低频模态通常是通过在的上限界来定义的 $k\in \mathbb{Z}^{d}$ 的 $l_{1}$ - 范数。我们像上面那样选择 $Z_{k_{max}}$ ，因为它允许高效的实现。</p>
 <h3 id="The-discrete-case-and-the-FFT"><a href="#The-discrete-case-and-the-FFT" class="headerlink" title="The discrete case and the FFT."></a>The discrete case and the FFT.</h3><p>假设域 $D$ 被 $n\in \mathbb{N}$ 个点离散，我们得到 $v_{t} \in \mathbb{R}^{n \times d_{v}}$ 和 $\mathcal{F}(v_{t}) \in \mathbb{C}^{n \times d_{v}}$ 。由于我们将 $v_{t}$ 与一个只有 $k_{max}$ 傅里叶模态的函数进行卷积，我们可以简单地截断更高的模态，从而得到 $\mathcal{F}(v_{t}) \in \mathbb{C}^{k_{max} \times d_{v}}$ 。乘以权重张量 $R \in \mathbb{C}^{k_{max} \times d_{v} \times d_{v}}$ 是</p>
