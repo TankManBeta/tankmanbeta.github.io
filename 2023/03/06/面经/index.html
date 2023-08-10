@@ -36,6 +36,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211055521.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211059473.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211251919.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101255449.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101955821.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304102004442.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101950246.png">
@@ -381,7 +382,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222213526.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222213378.png">
 <meta property="article:published_time" content="2023-03-06T14:04:43.000Z">
-<meta property="article:modified_time" content="2023-07-13T08:11:33.714Z">
+<meta property="article:modified_time" content="2023-08-10T07:39:08.618Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="面试">
@@ -635,7 +636,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-07-13 16:11:33" itemprop="dateModified" datetime="2023-07-13T16:11:33+08:00">2023-07-13</time>
+        <time title="修改时间：2023-08-10 15:39:08" itemprop="dateModified" datetime="2023-08-10T15:39:08+08:00">2023-08-10</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -655,7 +656,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>118k</span>
+      <span>119k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -713,6 +714,20 @@
 <p>Few-Shot Learning（小样本学习）：我们只通过看几张鸭嘴兽的照片，就能认识鸭嘴兽，这个过程就称作小样本学习。</p>
 <p>One-Shot Learning（单样本学习）：Few-Shot Learning的特殊情况，即只看了一张鸭嘴兽的照片，就认识了鸭嘴兽。（人脸识别）</p>
 <h1 id="PyTorch和TensorFlow的区别"><a href="#PyTorch和TensorFlow的区别" class="headerlink" title="PyTorch和TensorFlow的区别"></a>PyTorch和TensorFlow的区别</h1><h2 id="动态图与静态图"><a href="#动态图与静态图" class="headerlink" title="动态图与静态图"></a>动态图与静态图</h2><p><code>TensorFlow</code>最初选择使用静态图，这样的设计带来了较高的性能，但在构建网络时较为烦琐，用户需要专门学习<code>TensorFlow</code>的语法架构才能搭建网络，同时很难调试。<code>PyTorch</code>选择使用动态图，动态图的设计模式更加符合人类的思考过程，方便查看、修改中间变量的值，用户可以轻松地搭建网络进行训练。目前，<code>TensorFlow 2.0</code>之后的版本已经支持动态图的构建，并且提供动态图与静态图的转换功能。</p>
+<ul>
+<li>静态图</li>
+</ul>
+<p>静态图的生成与执行采用先编译后执行的方式，该模式将计算图的定义和执行进行分离。</p>
+<p>静态图只建一次，然后不断复用它，容易在图上做优化，图的效率更高（比如Add操作和ReLU结合在一起优化）。</p>
+<p>静态图可以在磁盘中序列化，可以保存整个网络的结构，可以重载，在部署中很实用。</p>
+<p>静态图中条件和循环需要特定的语法（tf.condition和tf.while_loop）。</p>
+<ul>
+<li>动态图</li>
+</ul>
+<p>动态图采用解析式的执行方式，其核心特点是编译与执行同时发生。</p>
+<p>动态图每次使用时建立，不容易优化。</p>
+<p>动态图需要重复之前的代码。</p>
+<p>只用Python的语法就可以实现条件和循环。</p>
 <h2 id="部署和可扩展性"><a href="#部署和可扩展性" class="headerlink" title="部署和可扩展性"></a>部署和可扩展性</h2><p>如果您的项目范围很大，需要大规模部署，或者项目涉及跨平台，那么您的选择应该是<code>TensorFlow</code>，<code>TensorFlow</code>提供了<code>TensorFlow Serving</code>和<code>TensorFlow Lite</code>，可以便捷地将训练好的模型部署到集群以及移动设备上。如果它只是一个较小规模的研究项目的原型设计或类似的东西，那么<code>PyTorch</code>更好。</p>
 <h2 id="资源优化和利用率"><a href="#资源优化和利用率" class="headerlink" title="资源优化和利用率"></a>资源优化和利用率</h2><p>如果您正在寻找更好的资源利用率和优化，如<code>GPU</code>，那么<code>PyTorch</code>肯定是首选。但是，当涉及到<code>TensorFlow</code>时，它使用当时可用的所有<code>GPU</code>容量，因此，功能略微缓慢。</p>
 <h2 id="学术研究和开源代码"><a href="#学术研究和开源代码" class="headerlink" title="学术研究和开源代码"></a>学术研究和开源代码</h2><p>在学术界<code>PyTorch</code>有很多好评，其中四分之三的论文使用它。而且最早使用<code>TensorFlow</code>的研究人员中，很多人已经迁移到了<code>PyTorch</code>。正因如此，研究会影响教学，从而决定学生学到的是什么。所以如今，大学生对<code>PyTorch</code>了解的相对多一些。</p>
@@ -764,9 +779,10 @@
 <h1 id="解决样本不均衡的方法"><a href="#解决样本不均衡的方法" class="headerlink" title="解决样本不均衡的方法"></a>解决样本不均衡的方法</h1><ul>
 <li>以多种数据组合形式训练模型并做模型融合。顾名思义，这种方法就是将全部的小样本数据和等量的大样本数据分别组合成几批训练数据集，并以此训练出几个不同的模型并做模型融合，这种方法能够有效的解决样本不均衡问题。</li>
 <li>在计算损失函数时改变数据的权重，增加小样本数据的权重，减少大样本的权重。这种方法实际上参考了<code>focal loss</code>的思想，只不过解决的不是难易样本不均衡，而是样本数据量不均衡，同样能保证模型的泛化性能。</li>
-<li>过采样小样本，欠采样大样本。也就是对于训练数据，把那些样本量较小的数据多在<code>load</code>数据时重复几遍，对于那些样本量较大的数据，则尽量减少<code>load</code>它们，以此来达到样本均衡的目的。</li>
+<li>过采样小样本，欠采样大样本。也就是对于训练数据，把那些样本量较小的数据多在<code>load</code>数据时重复几遍，对于那些样本量较大的数据，则尽量减少<code>load</code>它们，以此来达到样本均衡的目的。例如：SMOTE、ADASYN、bSMOTE算法通过插值生成合成样本进行过采样；使用Tomek Links、Cluster Centroids、NearMiss进行欠采样。</li>
+<li>将分类问题看成异常检测问题。</li>
 </ul>
-<h1 id="LabelSmoothing"><a href="#LabelSmoothing" class="headerlink" title="LabelSmoothing"></a>LabelSmoothing</h1><p>传统做图像分类采用的损失是交叉熵损失，具体形式是： $\mathcal{L}=-\sum_{i=1}^{m}t_{i}\log(y_{i})$ 。其中， $m$ 表示类别数， $y_{i}$ 表示<code>softmax</code>之后每个类的预测概率， $t_{i}$ 表示样本的真实标签值。然而，神经网络 有一个坏习惯，就是在训练过程中对预测变得”过于自信“，这可能会降低它们的泛化能力，从而在新的、看不见的未来数据上表现得同样出色。此外，大型数据集通常会包含标签错误的数据，这意味着神经网络在本质上应该对“正确答案”持怀疑态度，以减少一定程度上围绕错误答案的极端情况下的建模。</p>
+<h1 id="LabelSmoothing"><a href="#LabelSmoothing" class="headerlink" title="LabelSmoothing"></a>LabelSmoothing</h1><p>传统做图像分类采用的损失是交叉熵损失，具体形式是： $\mathcal{L}=-\sum_{i=1}^{m}t_{i}\log(y_{i})$ 。其中， $m$ 表示类别数， $y_{i}$ 表示<code>softmax</code>之后每个类的预测概率， $t_{i}$ 表示样本的真实标签值。然而，神经网络有一个坏习惯，就是在训练过程中对预测变得”过于自信“，这可能会降低它们的泛化能力，从而在新的、看不见的未来数据上表现得同样出色。此外，大型数据集通常会包含标签错误的数据，这意味着神经网络在本质上应该对“正确答案”持怀疑态度，以减少一定程度上围绕错误答案的极端情况下的建模。</p>
 <p>因此，标签平滑所做的就是通过训练网络向<code>1-adjustment</code>目标移动，然后在其余的类上除以这个<code>adjustment</code>，从而使它对自己的答案不那么自信，而不是简单的设为 $1$ 。新标签的表现形式为：$T^{\prime}=(1-\varepsilon)*T+\frac{\varepsilon}{N}$。其中， $N$ 表示类别的个数， $T$ 表示真实标签值， $T^{\prime}$ 表示平滑后的标签。</p>
 <p>例如，原来的标签 $T$ 为 $[0,0,1,0,0]$ ， $\varepsilon=0.1$ ，经过<code>LabelSmoothing</code>之后的标签 $T^{\prime}$ 为 $[0.02,0.02,0.92,0.02,0.02]$ 。</p>
 <h1 id="图像处理中平滑和锐化操作是什么？"><a href="#图像处理中平滑和锐化操作是什么？" class="headerlink" title="图像处理中平滑和锐化操作是什么？"></a>图像处理中平滑和锐化操作是什么？</h1><h2 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h2><p>锐化就是通过增强图像的高频信息，也就是纹理边缘来减少图像中的模糊细节，但是在增强纹理的时候也引入了图像噪声。</p>
@@ -775,7 +791,12 @@
 <li>在计算机视觉的一些任务中，涉及到图像重建的、如高精度的深度估计、医学图像分割、三维重建等任务，最终需要得到原始图像分辨率大小的输出，同时对图像的边缘清晰度也有较高的要求，这时候可以通过增强特征图中的高频分量，在计算损失函数的时候放大这些区域的损失，进而放大对应参数的梯度，使得网络往更突出边缘的方向上优化。</li>
 <li>与上相反，如果是一些希望输出更加平滑的任务，则可以考虑对特征图进行平滑操作，进而减小高频区域的损失，减小对应参数的梯度，使得网络往更平滑的方向上优化，通常这种技术都会用在<code>smooth loss</code>中。</li>
 </ul>
-<h1 id="batchsize"><a href="#batchsize" class="headerlink" title="batchsize"></a>batchsize</h1><p>（1）<code>batchsize</code>：批大小。在深度学习中，一般采用<code>SGD</code>训练，即每次训练在训练集中取<code>batchsize</code>个样本训练。<br>（2）<code>iteration</code>：1个<code>iteration</code>等于使用<code>batchsize</code>个样本训练一次。<br>（3）<code>epoch</code>：1个<code>epoch</code>等于使用训练集中的全部样本训练一次。<br>如果数据集比较小，则完全可以采用全数据集的形式。这样做的好处有两点：</p>
+<h1 id="batchsize"><a href="#batchsize" class="headerlink" title="batchsize"></a>batchsize</h1><ul>
+<li><code>batchsize</code>：批大小。在深度学习中，一般采用<code>SGD</code>训练，即每次训练在训练集中取<code>batchsize</code>个样本训练。</li>
+<li><code>iteration</code>：1个<code>iteration</code>等于使用<code>batchsize</code>个样本训练一次。</li>
+<li><code>epoch</code>：1个<code>epoch</code>等于使用训练集中的全部样本训练一次。</li>
+</ul>
+<p>如果数据集比较小，则完全可以采用全数据集的形式。这样做的好处有两点：</p>
 <ol>
 <li>全数据集的方向能够更好的代表样本总体，确定其极值所在。</li>
 <li>由于不同权重的梯度值差别巨大，因此选取一个全局的学习率很困难。</li>
@@ -817,6 +838,8 @@
 <h2 id="Focal-loss"><a href="#Focal-loss" class="headerlink" title="Focal loss"></a>Focal loss</h2><p>Focal Loss的引入主要是为了解决one-stage目标检测中正负样本数量极不平衡问题。当易区分负样本超级多时，整个训练过程将会围绕着易区分负样本进行，进而淹没正样本，造成大损失。所以这里引入了一个调制因子 ，用来聚焦难分样本，公式如下：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211251919.png" alt=""></p>
 <p>当 $p_{t}$ 趋向于1，即说明该样本是易区分样本，此时调制因子是趋向于0，说明对损失的贡献较小，即减低了易区分样本的损失比例。当 $p_{t}$ 很小，也就是假如某个样本被分到正样本，但是该样本为前景的概率特别小，即被错分到正样本了，此时调制因子是趋向于1，对loss也没有太大的影响。</p>
+<p>我们在实验中采用了如下的$\alpha$-平衡变体形式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101255449.png" alt=""></p>
 <h1 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h1><h2 id="Sigmoid"><a href="#Sigmoid" class="headerlink" title="Sigmoid"></a>Sigmoid</h2><p><code>Sigmoid</code>是最基础的激活函数，可以将任意数值转换为概率（缩放到 $0 \thicksim 1$ 之间），在分类等场景中有广泛的应用。<code>Sigmoid</code>函数的形式是 $\sigma(z)=\frac{1}{1+e^{-z}}$ 。其对应的函数图像如下图所示：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202304101955821.png" alt=""></p>
 <h2 id="tanh"><a href="#tanh" class="headerlink" title="tanh"></a>tanh</h2><p>激活函数<code>tanh</code>和<code>Sigmoid</code>类似，都是<code>S</code>形曲线，输出范围是$[-1, 1]$。<code>tanh</code>函数的形式为 $g(z)=\frac{e^{z}-e^{-z}}{e^{z}+e^{-z}}$ 。其对应的函数图像如下所示：</p>
@@ -835,30 +858,30 @@
 <li>避免梯度消失问题。对于深层网络，<code>Sigmoid</code>函数反向传播时，很容易就会出现梯度消失问题（在<code>Sigmoid</code>接近饱和区时，变换太缓慢，导数趋于 $0$ ，这种情况会造成信息丢失），从而无法完成深层网络的训练。例如在<code>RNN</code>当中，随着时间序列的不断深入，小数的累乘就会导致梯度越来越小直到接近于 $0$ ，这就是“梯度消失“现象。此时采用<code>ReLU</code>激活函数就避免了“梯度消失“的发生。</li>
 <li>可以缓解过拟合问题的发生，<code>ReLU</code>会使一部分神经元的输出为 $0$ ，这样就造成了网络的稀疏性，并且减少了参数的相互依存关系，缓解了过拟合问题的发生。</li>
 </ol>
-<h1 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h1><p>记号： $\theta_{t}$ 表示第 $t$ 轮的参数， $\eta$ 表示学习率， $g_{t}$ 表示第 $t$ 轮的梯度即 $\triangledown\hat{\mathcal{L}(\theta_{t})}$ ， $m_{t}$ 表示第 $t$ 轮的一阶动量， $v_{t}$ 表示第 $t$ 轮的二阶动量， $\hat{m}_{t}$ 为偏差纠正后的一阶矩估计， $\hat{v}_{t}$ 为偏差纠正后的二阶矩估计。</p>
+<h1 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h1><p>记号： $\theta_{t}$ 表示第 $t$ 轮的参数， $\eta$ 表示学习率， $g_{t}$ 表示第 $t$ 轮的梯度即 $\triangledown\hat{\mathcal{L}}(\theta_{t})$ ， $m_{t}$ 表示第 $t$ 轮的一阶动量， $v_{t}$ 表示第 $t$ 轮的二阶动量， $\hat{m}_{t}$ 为偏差纠正后的一阶矩估计， $\hat{v}_{t}$ 为偏差纠正后的二阶矩估计。</p>
 <h2 id="SGD"><a href="#SGD" class="headerlink" title="SGD"></a>SGD</h2><p><code>SGD(Stochastic Gradient Descent)</code>，随机梯度下降。每次选择一个<code>mini-batch</code>，而不是全部样本，使用梯度下降来更新模型参数。它解决了随机小批量样本的问题，但仍然有自适应学习率、容易卡在梯度较小点等问题。</p>
 <p>$m_{t}=g_{t}, \ v_{t}=1$</p>
 <p>$\theta_{t+1}=\theta_{t}-\eta \frac{m_{t}}{\sqrt{v_{t}}}=\theta_{t}-\eta g_{t} $</p>
 <p><strong>缺点：</strong>下降速度慢，而且可能会在沟壑的两边持续振荡，停留在一个局部最优点</p>
-<h2 id="SGDM"><a href="#SGDM" class="headerlink" title="SGDM"></a>SGDM</h2><p><code>SGDM(SGD with momentum)</code>，在<code>SGD</code>基础上增加一阶动量。  参数更新时以上一个时刻的一阶动量为主。</p>
+<h2 id="SGDM"><a href="#SGDM" class="headerlink" title="SGDM"></a>SGDM</h2><p><code>SGDM(SGD with momentum)</code>，在<code>SGD</code>基础上增加一阶动量。  参数更新时以上一个时刻的一阶动量为主，其中 $\beta$ 通常取 $0.9$。</p>
 <p>$m_{t} = \beta m_{t-1} + (1-\beta)  g_{t}, \ v_{t} = 1$</p>
 <p>$\theta_{t+1} = \theta_{t} - \eta \frac{m_{t}}{\sqrt{v_{t}}} = \theta_{t} - \eta (\beta m_{t-1} + (1-\beta) g_{t}) $</p>
 <h2 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h2><p>在<code>SGD</code>基础上增加二阶动量，可以对模型中的每个参数分配自适应学习率。</p>
 <p>$m_{t}=g_{t}$</p>
 <p>$v_{t}=\sum_{\tau=1}^{t}g_{\tau}^{2}$</p>
-<p>$\theta_{t+1}=\theta_{t}-\eta \frac{g_{t}}{\sqrt{v_{t}+\epsilon}}=\theta_{t}-\eta \frac{g_{t}}{\sqrt{\sum_{\tau=1}^{t}g_{\tau}^{2}+\epsilon}}$</p>
+<p>$\theta_{t+1}=\theta_{t}-\eta \frac{m_{t}}{\sqrt{v_{t}+\epsilon}}=\theta_{t}-\eta \frac{g_{t}}{\sqrt{\sum_{\tau=1}^{t}g_{\tau}^{2}+\epsilon}}$</p>
 <p><strong>优点：Adagrad在稀疏数据场景下表现最好</strong>，因为对于频繁出现的参数，学习率衰减快；对于稀疏的参数，学习率衰减的更慢</p>
 <p><strong>缺点：</strong>在实际很多情况下，<strong>二阶动量呈单调递增，累积从训练开始的梯度，学习率会很快减至0，导致参数不再更新</strong>，训练过程提前结束</p>
 <h2 id="RMSProp"><a href="#RMSProp" class="headerlink" title="RMSProp"></a>RMSProp</h2><p><code>SGD(Root Mean Square Prop)</code>在<code>SGD</code>基础上增加二阶动量，由于<code>Adagrad</code>的学习率衰减太过激进，改变二阶动量的计算策略：<strong>不累计全部梯度，只关注过去某一窗口内的梯度</strong>。<strong>指数移动平均值</strong>大约是过去一段时间的平均值，反映<strong>局部的</strong>参数信息，用这个方法来计算二阶累积动量。</p>
 <p>$m_{t}=g_{t}$</p>
 <p>$v_{t}=\beta v_{t-1}+(1-\beta)g_{t}^{2}$</p>
-<p>$\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{v_{t}}}g_{t}=\theta_{t}-\frac{\eta}{\sqrt{\beta v_{t-1}+(1-\beta)g_{t}^{2}}}g_{t} $</p>
+<p>$\theta_{t+1}=\theta_{t}-\eta\frac{g_{t}}{\sqrt{v_{t}}}=\theta_{t}-\eta\frac{g_{t}}{\sqrt{\beta v_{t-1}+(1-\beta)g_{t}^{2}}} $</p>
 <h2 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h2><p><code>Adam(Adaptive Moment Estimation)</code>，自适应矩估计。是2014年提出的一种万金油式的优化器，使用起来非常方便，梯度下降速度快，但是容易在最优值附近震荡。竞赛中性能会略逊于<code>SGD</code>，毕竟最简单的才是最有效的。但是超强的易用性使得<code>Adam</code>被广泛使用。是<code>SGDM</code>和<code>RMSProp</code>的结合。</p>
 <p>$m_{t}=\beta_{1}m_{t-1}+(1-\beta_{1})g_{t}$</p>
 <p>$v_{t}=\beta_{2}v_{t-1}+(1-\beta_{2})g_{t}^{2}$</p>
 <p>$\hat{m}_{t}=\frac{m_{t}}{1-\beta_{1}^{t}}$</p>
-<p>$\hat{v}_{t}=\frac{v_{t}}{1-\beta_{w}^{t}}$</p>
-<p>$\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{\hat{v}_{t}}+\epsilon}\hat{m}_t$</p>
+<p>$\hat{v}_{t}=\frac{v_{t}}{1-\beta_{2}^{t}}$</p>
+<p>$\theta_{t+1}=\theta_{t}-\eta\frac{\hat{m}_t}{\sqrt{\hat{v}_{t}}+\epsilon}$</p>
 <p><strong>解释：</strong></p>
 <p>第一项 $m_{t}$ 为t时刻，梯度在动量形式下的一阶矩估计。</p>
 <p>第二项 $v_{t}$ 为梯度在动量形式下的二阶矩估计。</p>
