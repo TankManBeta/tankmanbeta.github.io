@@ -121,11 +121,14 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p>将文件还原：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout -- file</span><br></pre></td></tr></table></figure>
 <p><strong>注：git checkout — file指令应该是从先从缓存区中拉取版本还原，如果没有再到版本库中拉取还原。</strong></p>
+<p>查看所有分支：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 只显示本地分支</span></span><br><span class="line">git branch</span><br><span class="line"><span class="meta">#</span><span class="bash"> 显式本地和远端分支</span></span><br><span class="line">git branch -a</span><br></pre></td></tr></table></figure>
 <p>创建不同的分支：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git brach dev</span><br><span class="line">git checkout dev</span><br><span class="line"><span class="meta">#</span><span class="bash"> 上面两个命令合并操作</span></span><br><span class="line">git checkout -b dev</span><br><span class="line"><span class="meta">#</span><span class="bash"> 提交的时候不仅提交同时设置远端分支</span></span><br><span class="line">git push --set-upstream origin dev</span><br></pre></td></tr></table></figure>
-<p>合并不同的分支：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git branch dev</span><br><span class="line">git checkout dev</span><br><span class="line"><span class="meta">#</span><span class="bash"> 上面两个命令合并操作</span></span><br><span class="line">git checkout -b dev</span><br><span class="line"><span class="meta">#</span><span class="bash"> 提交的时候不仅提交同时设置远端分支</span></span><br><span class="line">git push --set-upstream origin dev</span><br></pre></td></tr></table></figure>
+<p>合并不同的分支：合并出现冲突时，可以使用IDE解决冲突更为方便</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git pull</span><br><span class="line">git merge dev</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
-<p>合并不同的分支出现冲突的解决方式：使用IDE解决冲突更为方便。</p>
+<p>删除某个分支：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git branch -d dev</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -2860,6 +2863,23 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <h3 id="Model-structure"><a href="#Model-structure" class="headerlink" title="Model structure"></a>Model structure</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202307271409187.png" alt=""></p>
 <h3 id="Training-methods"><a href="#Training-methods" class="headerlink" title="Training methods"></a>Training methods</h3><p>模型的训练分为两个阶段：预训练阶段，从x(k)生成x(k+1)，使用x(k+1)和x(k+1)的真实值做损失；微调阶段，从x(k)生成x(k+1)，再用生成的x(k+1)生成x(k+2)，然后使用x(k+1)和x(k+2)的真实值分别做损失。</p>
 <h3 id="Inference"><a href="#Inference" class="headerlink" title="Inference"></a>Inference</h3><p>模型的预测是一个迭代式的方式：先用x(k)生成x(k+1)，再从x(k+1)生成x(k+2)，依此类推，直到我们想要的步长。</p>
+<h1 id="Prediction-of-transonic-flow-over-supercritical-airfoils-using-geometric-encoding-and-deep-learning-strategies"><a href="#Prediction-of-transonic-flow-over-supercritical-airfoils-using-geometric-encoding-and-deep-learning-strategies" class="headerlink" title="Prediction of transonic flow over supercritical airfoils using geometric-encoding and deep-learning strategies"></a>Prediction of transonic flow over supercritical airfoils using geometric-encoding and deep-learning strategies</h1><h2 id="Methods-2"><a href="#Methods-2" class="headerlink" title="Methods"></a>Methods</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101600250.png" alt=""></p>
+<p>输入是翼型和自由流条件的几何信息。首先做一个网格变换来利用结构化网络；接着采用多种方法对几何信息进行编码，选择神经网络的有效特征输入；AI模型方面采用了基于小波变换和梯度分布的各种损失函数，尤其是在激波附近。</p>
+<h3 id="Encoding-of-geometric-information"><a href="#Encoding-of-geometric-information" class="headerlink" title="Encoding of geometric information"></a>Encoding of geometric information</h3><p>机翼周围的边界层附近网格是细化处理的，因为需要保留流动细节。基于CNN和Transformer的模型需要均匀和结构化的输入，通过一元变换将几何信息和流信息从笛卡尔坐标转换为曲线坐标。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101633201.png" alt=""></p>
+<p>文章共采用了四种Encoding的方法：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101641619.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101644169.png" alt=""></p>
+<h3 id="Neural-network-architecture"><a href="#Neural-network-architecture" class="headerlink" title="Neural network architecture"></a>Neural network architecture</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101707037.png" alt=""></p>
+<h3 id="Loss-functions"><a href="#Loss-functions" class="headerlink" title="Loss functions"></a>Loss functions</h3><p>平均绝对误差(MAE)通常用于训练神经网络来预测翼型上的流场。本研究将剧烈变化视为流场的高频信号，并在 $l_{1}$ 损失函数中加入两个损失函数，即多层小波变换的损失函数($l_{wt}$)和梯度分布的损失函数($l_{grad}$)。</p>
+<h4 id="Multilevel-wavelet-transformation"><a href="#Multilevel-wavelet-transformation" class="headerlink" title="Multilevel wavelet transformation"></a>Multilevel wavelet transformation</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101725583.png" alt=""></p>
+<p>其中，$\psi^{H}$为运行k−1次DWT后的高频分量，$\psi^{L}_{k-1}$为运行k−1次DWT后的低频分量。DWT实现后，结合$l_{wt}$得到总损失函数的最终形式为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101735864.png" alt=""></p>
+<p>这些系数是可训练的，可以通过多任务损失优化来学习：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308101735384.png" alt=""></p>
+<h4 id="Gradient-distribution"><a href="#Gradient-distribution" class="headerlink" title="Gradient distribution"></a>Gradient distribution</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308111724017.png" alt=""></p>
+<p>通过中心差分法可以得到 $\xi$ 和 $\eta$ 方向上的梯度。总损失函数表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308111728085.png" alt=""></p>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -2938,6 +2958,20 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 </ol>
 <p>DP的多卡交互实现在一个进程之中，它将一张卡视为主卡，维护单独模型优化器。所有卡计算完梯度后，主卡汇聚其它卡的梯度进行平均并用优化器更新模型参数，再将模型参数更新至其它卡上。</p>
 <p>DDP则分别为每张卡创建一个进程，每个进程相应的卡上都独立维护模型和优化器。在每次每张卡计算完梯度之后，进程之间以NCLL（NVIDIA GPU通信）为通信后端，使各卡获取其它卡的梯度。各卡对获取的梯度进行平均，然后执行后续的参数更新。由于每张卡上的模型与优化器参数在初始化时就保持一致，而每次迭代的平均梯度也保持一致，那么即使没有进行参数复制，所有卡的模型参数也是保持一致的。</p>
+<h1 id="混合精度训练"><a href="#混合精度训练" class="headerlink" title="混合精度训练"></a>混合精度训练</h1><h2 id="FP16"><a href="#FP16" class="headerlink" title="FP16"></a>FP16</h2><p><strong>半精度浮点数 (FP16)</strong> 是一种计算机使用的二进制浮点数数据类型，使用 2 字节 (16 位) 存储，表示范围为 $[-6.5e^{4},-5.9e^{-8}]\cup[5.9e^{-8},6.5e^{4}]$。而 PyTorch 默认使用<strong>单精度浮点数 (FP32)</strong> 来进行网络模型的计算和权重存储。FP32 在内存中用 4 字节 (32 位) 存储，表示范围为 $[-3e^{38},-1e^{-38}]\cup[1e^{-38},3e^{38}]$。可以看到 FP32 能够表示的范围要比 FP16 大的多得多。</p>
+<h2 id="为什么要用FP16"><a href="#为什么要用FP16" class="headerlink" title="为什么要用FP16"></a>为什么要用FP16</h2><ul>
+<li>减少显存占用：FP16 的显存占用只有 FP32 的一半，这使得我们可以用更大的 batch size；</li>
+<li>加速训练：使用 FP16，模型的训练速度几乎可以提升 1 倍。</li>
+</ul>
+<h2 id="为什么只用FP16会有问题"><a href="#为什么只用FP16会有问题" class="headerlink" title="为什么只用FP16会有问题"></a>为什么只用FP16会有问题</h2><ul>
+<li>上/下溢出：FP16 的表示范围不大，超过 $6.5e^{4}$ 的数字会上溢出变成 inf，小于 $5.9e^{-8}$ 的数字会下溢出变成 0。下溢出更加常见，因为在网络训练的后期，模型的梯度往往很小，甚至会小于 FP16 的下限 $5.9e^{-8}$，此时梯度值就会变成 0，模型参数无法更新。</li>
+<li>舍入误差：就算梯度不会上/下溢出，如果梯度值和模型的参数值相差太远，也会发生舍入误差的问题。假设模型参数 $weight=2^{-3}$ ，学习率 $\eta=2^{-2}$ ，梯度 $gradient=2^{-12}$ ，$weight^{‘}=weight+\eta\times gradient=2^{-3}+2^{-2}\times2^{-12}=2^{-3}$ 。</li>
+</ul>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><ul>
+<li>损失缩放 (Loss Scaling)：为了解决下溢出的问题，论文中对计算出来的 loss 值进行缩放 (scale)，由于链式法则的存在，对 loss 的缩放会作用在每个梯度上。缩放后的梯度，就会平移到 FP16 的有效范围内。这样就可以用 FP16 存储梯度而又不会溢出了。此外，在进行更新之前，需要先将缩放后的梯度转化为 FP32，再将梯度反缩放 (unscale) 回去。 <strong>注意这里一定要先转成 FP32，不然 unscale 的时候还是会下溢出。</strong></li>
+<li>FP32 权重备份：为了实现 FP16 的训练，我们需要把模型权重和输入数据都转成 FP16，反向传播的时候就会得到 FP16 的梯度。如果此时直接进行更新，因为<strong>梯度 * 学习率</strong>的值往往较小，和模型权重的差距会很大，可能会出现舍入误差的问题。 所以解决思路是：将<strong>模型权重、激活值、梯度</strong>等数据用 <strong>FP16</strong> 来存储，同时维护一份 <strong>FP32</strong> 的<strong>模型权重副本</strong>用于更新。在反向传播得到 FP16 的梯度以后，<strong>将其转化成 FP32 并 unscale</strong>，最后更新 FP32 的模型权重。因为整个更新过程是在 FP32 的环境中进行的，所以不会出现舍入误差。</li>
+<li>黑名单：对于那些在 FP16 环境中运行不稳定的模块，我们会将其添加到黑名单中，强制它在 FP32 的精度下运行。比如需要计算 batch 均值的 BN 层就应该在 FP32 下运行，否则会发生舍入误差。还有一些函数对于算法精度要求很高，比如 torch.acos()，也应该在 FP32 下运行。论文中的黑名单只包含 BN 层。</li>
+</ul>
 <h1 id="提升模型泛化能力的方法"><a href="#提升模型泛化能力的方法" class="headerlink" title="提升模型泛化能力的方法"></a>提升模型泛化能力的方法</h1><ul>
 <li>从数据角度上来说。可以通过数据增强、扩充训练集等方法提高泛化能力。</li>
 <li>在训练策略上，可以增加每个<code>Batch Size</code>的大小，进而让模型每次迭代时见到更多数据，防止过拟合。</li>
@@ -3093,11 +3127,11 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071559636.png" alt=""></p>
 <p>因此，要得到 $E(g_{i}^{2})$ ，就需要除掉前面的系数 $(1-\beta_{2}^{t})$ 是一个常数</p>
 <h1 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h1><h2 id="Top-1-Accuracy和Top-5-Accuracy"><a href="#Top-1-Accuracy和Top-5-Accuracy" class="headerlink" title="Top-1 Accuracy和Top-5 Accuracy"></a>Top-1 Accuracy和Top-5 Accuracy</h2><p>Top-1：就是你预测的label取最后概率向量里面最大的那一个作为预测结果 ，如过预测结果中概率最大的那个分类正确，则预测正确，否则预测错误。<br>Top-5：就是最后概率向量最大的前五名中，只要出现了正确概率即为预测正确，否则预测错误。</p>
-<h2 id="DICE"><a href="#DICE" class="headerlink" title="DICE"></a>DICE</h2><p>用来衡量预测结果<code>pred</code>和标签<code>label</code>的相似度（和评价指标<code>F1</code>是相同的）</p>
+<h2 id="DICE"><a href="#DICE" class="headerlink" title="DICE"></a>DICE</h2><p>用来度量图像分割结果的精度，可以有效地度量预测结果<code>pred</code>和标签<code>label</code>的相似度（和评价指标<code>F1</code>是相同的）</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306191056073.png" alt=""></p>
-<h2 id="IoU"><a href="#IoU" class="headerlink" title="IoU"></a>IoU</h2><p><code>IoU</code>全称<code>Intersection-over-Union</code>，即交并比，在目标检测领域中，定义为两个矩形框面积的交集和并集的比值，$IoU=\frac{A\cap B}{A\cup B}$。</p>
+<h2 id="IoU"><a href="#IoU" class="headerlink" title="IoU"></a>IoU</h2><p><code>IoU</code>全称<code>Intersection-over-Union</code>，即交并比，在目标检测和语义分割领域都有使用。</p>
 <ul>
-<li>如果完全重叠，则<code>IoU</code>等于1，是最理想的情况。一般在检测任务中，<code>IoU</code>大于等于<code>0.5</code>就认为召回，如果设置更高的<code>IoU</code>阈值，则召回率下降，同时定位框也越更加精确。</li>
+<li>在目标检测领域，定义为两个矩形框面积的交集和并集的比值，$IoU=\frac{A\cap B}{A\cup B}$。如果完全重叠，则<code>IoU</code>等于1，是最理想的情况。一般在检测任务中，<code>IoU</code>大于等于<code>0.5</code>就认为召回，如果设置更高的<code>IoU</code>阈值，则召回率下降，同时定位框也越更加精确。</li>
 <li>在图像分割中也会经常使用<code>IoU</code>，此时就不必限定为两个矩形框的面积。比如对于二分类的前背景分割，那么$IoU=\frac{真实前景像素面积\cap预测前景像素面积}{真实前景像素面积\cup预测前景像素面积}$，这一个指标，通常比直接计算每一个像素的分类正确概率要低，也对错误分类更加敏感。</li>
 </ul>
 <h2 id="MIoU"><a href="#MIoU" class="headerlink" title="MIoU"></a>MIoU</h2><p>均交并比，语义分割的标准度量。计算两个集合的交集与并集之比，在语义分割中，这两个集合为真实值和预测值。</p>
@@ -3110,6 +3144,8 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <li>计算每个类别的<code>IoU</code></li>
 <li>对每个类别的<code>IoU</code>取平均</li>
 </ol>
+<h2 id="AP"><a href="#AP" class="headerlink" title="AP"></a>AP</h2><p>AP为某一类别的目标平均精确度，具体为该类目标在11个不同置信度阈值下计算得到的P-R曲线下方的面积值。</p>
+<h2 id="mAP"><a href="#mAP" class="headerlink" title="mAP"></a>mAP</h2><p>mAP(mean Average Precision)：是多个类别AP的平均值。这个mean的意思是对每个类的AP再求平均，得到的就是mAP的值。mAP的大小一定在[0,1]并且越大越好。</p>
 <h2 id="Box-AP"><a href="#Box-AP" class="headerlink" title="Box AP"></a>Box AP</h2><p>Box AP 即Box Average Precision，用于综合评价目标检测模型效能。要清楚的是AP的计算是先使用<strong>confidence threshold</strong>去除一些置信度过低的框；然后要使用NMS要用到 <strong>nms_boxiou threshold</strong>，去除和置信度最高的框IoU大于阈值的重叠框；接着会使用<strong>box_iou threshold</strong>，将每个框分为TP、FP，对于同一个GT，预测框根据置信度从高到低排列，只有IoU大于阈值且置信度最高的那个算是TP，其余IOU大于阈值的都算是FP；分配好TP、FP以后，所有框按照置信度从高到低排列，计算AP值。</p>
 <ul>
 <li>confidence threshold：置信度阈值，每个输出框都会给出置信度，只有置信度高于某个阈值的框才会被考虑。</li>
@@ -3121,7 +3157,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <h1 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h1><h2 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h2><p><code>Bagging(Bootstrap aggregating)</code>，引导聚集算法，又称装袋算法，是机器学习领域的一种团体学习算法。<code>Bagging</code>算法可与其他分类、回归算法结合，提高其准确率、稳定性的同时，通过降低结果的方差，避免过拟合的发生。</p>
 <p><strong>随机采样（bootstrap sample）</strong>从 $n$ 个数据点中<strong>有放回地重复随机</strong>抽取一个样本（即同一个样本可被多次抽取），共抽取 $n$ 次。创建一个与原数据大小相同得数据集，但有些数据点会缺失（大约 $1/3$ ），有些会重复。</p>
 <p><code>Bagging</code>对于弱学习器没有限制，这和<code>Adaboost</code>一样。但是最常用的一般也是<strong>决策树</strong>和<strong>神经网络</strong>。</p>
-<p><code>Bagging</code>的集合策略也比较简单，对于分类问题，通常使用简单投票法，得到最多票数的类别或者类别之一为最终的模型输出。对于回归问题，通常使用简单平均法，对 $T$ 个弱学习器得到的回归结果进行算术平均得到最终的模型输出。</p>
+<p><code>Bagging</code>的集合策略也比较简单，对于<strong>分类问题</strong>，通常使用<strong>简单投票法</strong>，得到最多票数的类别或者类别之一为最终的模型输出。对于<strong>回归问题</strong>，通常使用<strong>简单平均法</strong>，对 $T$ 个弱学习器得到的回归结果进行算术平均得到最终的模型输出。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303071107979.png" alt=""></p>
 <h3 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h3><p>随机森林以决策树为基本单元，通过集成大量的决策树，就构成了随机森林。其构造过程如下：</p>
 <ol>
@@ -3137,7 +3173,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 </li>
 <li>当对数据进行划分成多个分支，如果存在分支中没有数据（分支为空），将划分前类别数目多的当做类别返回。</li>
 </ol>
-<h5 id="决策树剪枝"><a href="#决策树剪枝" class="headerlink" title="决策树剪枝"></a>决策树剪枝</h5><p>各种准则虽然对决策树的尺寸有较大影响,但<strong>对泛化性能的影响很有限</strong>，<strong>剪枝方法和程度对决策树泛化性能的影响更为显著；剪枝是决策树防止过拟合的手段</strong>。</p>
+<h5 id="决策树剪枝"><a href="#决策树剪枝" class="headerlink" title="决策树剪枝"></a>决策树剪枝</h5><p>各种准则虽然对决策树的尺寸有较大影响，<strong>但对泛化性能的影响很有限，剪枝方法和程度对决策树泛化性能的影响更为显著；剪枝是决策树防止过拟合的手段</strong>。</p>
 <p><strong>预剪枝：</strong>在决策树构造时就进行剪枝。在决策树构造过程中，对节点进行评估，如果对其划分并不能再验证集中提高准确性，那么该节点就不要继续往下划分。这时就会把当前节点作为叶节点。</p>
 <p><strong>后剪枝：</strong>在生成决策树之后再剪枝。通常会从决策树的叶节点开始，逐层向上对每个节点进行评估。如果剪掉该节点，带来的验证集中准确性差别不大或有明显提升，则可以对它进行剪枝，用叶子节点来代填该节点。</p>
 <p><strong>预剪枝vs后剪枝</strong></p>
@@ -3193,8 +3229,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303101613543.jpg" alt=""></p>
 <p>具体的算法步骤：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303101613198.png" alt=""></p>
-<h4 id="Gradient-Boosting-Decision-Tree（梯度提升决策树）"><a href="#Gradient-Boosting-Decision-Tree（梯度提升决策树）" class="headerlink" title="Gradient Boosting Decision Tree（梯度提升决策树）"></a>Gradient Boosting Decision Tree（梯度提升决策树）</h4><p>提升树利用加法模型和前向分步算法实现学习的优化过程。当损失函数时平方损失和指数损失函数时，每一步的优化很简单，如平方损失函数学习残差回归树。</p>
-<p>但对于一般的损失函数，往往每一步优化没那么容易，如上图中的绝对值损失函数和<code>Huber</code>损失函数。针对这一问题，<code>Freidman</code>提出了梯度提升算法：利用最速下降的近似方法，即利用损失函数的负梯度在当前模型的值，作为回归问题中提升树算法的残差的近似值，拟合一个回归树。</p>
+<h4 id="Gradient-Boosting-Decision-Tree（梯度提升决策树）"><a href="#Gradient-Boosting-Decision-Tree（梯度提升决策树）" class="headerlink" title="Gradient Boosting Decision Tree（梯度提升决策树）"></a>Gradient Boosting Decision Tree（梯度提升决策树）</h4><p>提升树利用加法模型和前向分步算法实现学习的优化过程。当损失函数时平方损失和指数损失函数时，每一步的优化很简单，如平方损失函数学习残差回归树。但对于一般的损失函数，往往每一步优化没那么容易。针对这一问题，<code>Freidman</code>提出了梯度提升算法：利用最速下降的近似方法，<strong>即利用损失函数的负梯度在当前模型的值，作为回归问题中提升树算法的残差的近似值</strong>，拟合一个回归树。</p>
 <h3 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h3><h4 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h4><p><strong>原始目标函数</strong></p>
 <p>目标函数，可以分为两个部分，一部分是损失函数，一部分是正则（用于控制模型的复杂度）。</p>
 <p>对于第 $t$ 颗树，第 $i$ 个样本的，模型的预测值是这样的：</p>
@@ -3220,7 +3255,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><strong>树复杂度参数化</strong></p>
 <p>树的复杂度定义如下，其中 $T$ 参数表示当前这棵树叶子节点的个数； $w_{j}^{2}$ 是叶子节点值的 $L_{2}$ 范数：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303101716405.png" alt=""></p>
-<p>进而我们可以对树进行了参数化，带入到目标函数我们可以得到如下式子：</p>
+<p>进而我们可以对树进行参数化，带入到目标函数我们可以得到如下式子：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303101727004.png" alt=""></p>
 <p>最后一步的转化思路是从在这个树中，每个样本落在哪个节点转为了每个节点上有哪些样本。</p>
 <p>叶子节点 $j$ 所包含的样本的一阶导数累加之和为：</p>
@@ -3239,7 +3274,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p>对于每个特征，不去暴力搜索每个值，而是使用分位点</p>
 <ul>
 <li>根据样本数量选择三分位点或者四分位点等</li>
-<li>或者根据二阶导数（也就是梯度）作为权重进行划分</li>
+<li>根据二阶导数（也就是梯度）作为权重进行划分</li>
 </ul>
 <p>也就是说原来是某个特征的所有取值作为候选点，现在是某个特征的分位点作为候选点。</p>
 <h3 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h3><p><code>LightGBM(Light Gradient Boosting Machine)</code>是一种梯度提升框架，它使用决策树作为基学习器。<code>LightGBM</code>为高效并行计算而生，它的<code>Light</code>体现在以下几个点上：</p>
@@ -3269,7 +3304,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <h4 id="带深度限制的Leaf-wise的叶子生长策略"><a href="#带深度限制的Leaf-wise的叶子生长策略" class="headerlink" title="带深度限制的Leaf-wise的叶子生长策略"></a>带深度限制的Leaf-wise的叶子生长策略</h4><p><code>GBDT</code>与<code>XGBoost</code>模型在叶子生长策略上均采用按层<code>level-wise</code>分裂的方式，这种方式在分裂时会针对同一层的每一个节点，即每次迭代都要遍历整个数据集中的全部数据，这种方式虽然可以使每一层的叶子节点并行完成，并控制模型的复杂度，但也会产生许多不必要搜索或分裂，从而消耗更多的运行内存，增加计算成本。</p>
 <p>而<code>LightGBM</code>算法对其进行了改进，使用了按叶子节点<code>leaf-wise</code>分裂的生长方式，即每次是对所有叶子中<strong>分裂增益最大的叶子节点进行分裂</strong>，其他叶子节点则不会分裂。这种分裂方式比按层分裂会带来更小的误差，并且加快算法的学习速度，但由于没有对其他叶子进行分裂，会使得分裂结果不够细化，并且在每层中只对一个叶子不断进行分裂将增大树的深度，造成模型过拟合。因此，<code>LightGBM</code>算法在按叶子节点生长过程中会限制树的深度来避免过拟合。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303102156269.png" alt=""></p>
-<h4 id="支持类别特征"><a href="#支持类别特征" class="headerlink" title="支持类别特征"></a>支持类别特征</h4><p>实际上大多数机器学习工具都无法直接支持类别特征，一般需要把类别特征，转化<code>one-hotting</code>特征，降低了空间和时间的效率。而类别特征的使用是在实践中很常用的。基于这个考虑，<code>LightGBM</code>优化了对类别特征的支持，可以直接输入类别特征，不需要额外的 $0/1$ 展开。并在决策树算法上增加了类别特征的决策规则。决策树在学习节点分裂时，是一种<code>one-vs-rest</code>模式，每次只能根据一个类别做分类，如下图。这种模式效率比较低，而且不利于决策树学习。<code>LightGBM</code>对此进行了优化，采用<code>many-vs-many</code>模式分裂节点，如下图。</p>
+<h4 id="支持类别特征"><a href="#支持类别特征" class="headerlink" title="支持类别特征"></a>支持类别特征</h4><p>实际上大多数机器学习工具都无法直接支持类别特征，一般需要把类别特征，转化<code>one-hot</code>特征，降低了空间和时间的效率。而类别特征的使用是在实践中很常用的。基于这个考虑，<code>LightGBM</code>优化了对类别特征的支持，可以直接输入类别特征，不需要额外的 $0/1$ 展开。并在决策树算法上增加了类别特征的决策规则。决策树在学习节点分裂时，是一种<code>one-vs-rest</code>模式，每次只能根据一个类别做分类，如下图。这种模式效率比较低，而且不利于决策树学习。<code>LightGBM</code>对此进行了优化，采用<code>many-vs-many</code>模式分裂节点，如下图。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303102208969.png" alt=""></p>
 <h4 id="基于梯度的单边采样-GOSS"><a href="#基于梯度的单边采样-GOSS" class="headerlink" title="基于梯度的单边采样(GOSS)"></a>基于梯度的单边采样(GOSS)</h4><p>在<code>AdaBoost</code>中，样本权重指示了数据样本的重要性，而在<code>GBDT</code>上并没有样本权重这一说，可作者发现：在<code>GBDT</code>中，梯度对于每个样本是个很有用的信息，它可以用来帮助采样。为什么这么说呢？让我们打个比方，如果某样本得到的一个小的梯度值，那么说明该样本的训练误差也小，模型在该样本上表现得就很好，那这些小梯度的样本其实是不是不用参与训练了？就好像准备考试时刷题不刷简单题，这样可以吗？不可以！因为如果真的直接剔除它们，数据分布会改变，从而损害模型的准确率。为了处理这个问题，作者提出了<code>GOSS</code>，<code>GOSS</code>全称是<code>Gradient-based One-Side Sampling</code>单边梯度采样，它保留所有大梯度的样本，然后小梯度样本采用随机采样，在不改变原始数据分布的同时，减小了样本数量，提升了模型的训练速度。</p>
 <h4 id="互斥特征绑定"><a href="#互斥特征绑定" class="headerlink" title="互斥特征绑定"></a>互斥特征绑定</h4><p>从特征角度来看，稀疏特征会包含很多 $0$ 元素；从样本角度来看，一个样本的多个稀疏特征经常同时为 $0$ 。<code>EFB(Exclusive Feature Bundling)</code>基于这种想法，对<strong>互斥特征</strong>进行了<strong>捆绑</strong>，整体过程有点类似于<code>One-Hot</code>逆过程。</p>
@@ -3283,7 +3318,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <li>以此类推对所有特征做同样的操作。</li>
 </ol>
 <p><strong>如何捆绑特征</strong></p>
-<p>因为不同特征下的值有不同的量纲，比如：特征<code>A</code>的值范围为 $[0, 10)$ ，特征<code>B</code>的值范围为 $[0, 20)$ ，将特征<code>A</code>和特征<code>B</code>的直方图加起来捆绑一起后，<code>bundle</code>的值范围变为 $[0, 20)$ ，但是我们无法从中辨别哪些是特征<code>A</code>，哪些是特征<code>B</code>。这样对模型是不利的，因为模型这样就没法根据<code>bundle</code>直方图的值范围去很好区分特征，对树生成会带来误差。对于该问题的解决办法就是加偏移量，如果我们对特征<code>B</code>加偏移量 $10$ ，特征<code>B</code>的值范围变为 $[10, 30)$ ，合并后的<code>bundle</code>值范围变为 $[0, 30)$ 。</p>
+<p>因为不同特征下的值有不同的量纲，比如：特征<code>A</code>的值范围为 $[0, 10)$ ，特征<code>B</code>的值范围为 $[0, 20)$ ，将特征<code>A</code>和特征<code>B</code>的直方图加起来捆绑一起后，<code>bundle</code>的值范围变为 $[0, 20)$ ，但是我们无法从中辨别哪些是特征<code>A</code>，哪些是特征<code>B</code>。这样对模型是不利的，因为模型这样就没法根据<code>bundle</code>直方图的值范围去很好区分特征，对树生成会带来误差。对于该问题的解决办法就是<strong>加偏移量</strong>，如果我们对特征<code>B</code>加偏移量 $10$ ，特征<code>B</code>的值范围变为 $[10, 30)$ ，合并后的<code>bundle</code>值范围变为 $[0, 30)$ 。</p>
 <h3 id="CatBoost"><a href="#CatBoost" class="headerlink" title="CatBoost"></a>CatBoost</h3><p><code>CatBoost</code>主要是在类别特征上的处理上做了很多的改进。从用户使用角度来看，相比<code>XGBoost</code>和<code>LightGBM</code>，<code>CatBoost</code>具有如下特点。</p>
 <ul>
 <li><strong>模型精度：</strong><code>XGBoost</code>和<code>LightGBM</code>相当，<code>CatBoost</code>往往略好一些，无需调参即可获取很好的结果。</li>
@@ -3298,7 +3333,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <h4 id="基于类别特征的Ordered-Target-Statistics数值编码方法"><a href="#基于类别特征的Ordered-Target-Statistics数值编码方法" class="headerlink" title="基于类别特征的Ordered Target Statistics数值编码方法"></a>基于类别特征的Ordered Target Statistics数值编码方法</h4><p>对于类别特征，如果类别数目不多，可以使用<code>One-Hot</code>编码。但如果类别数量成百上千，使用<code>One-Hot</code>编码会导致特征数量爆炸。<strong>CatBoost设计了一种基于预测目标统计值的方法可以将类别特征转化为数值特征。</strong>先将样本随机打乱，然后每个样本只使用它排序在它前面的样本来计算其类别特征的数值编码。这样就防止了<code>label</code>的泄露，并且能够较为合理地评估这个特征的真实有效性。具体公式表达为： $i \rightarrow \frac{Current\ Count+a\star P}{Max\ Count + a}$ 。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303111538347.png" alt=""></p>
 <p>对上述例子来说，我们要计算第 $i$ 条数据的<code>label</code>，计算结果就为 $\frac{2+a \star P}{3+a}$ ，如果将第三行的<code>label</code>改为 $1$ ，那么结果就变成了 $\frac{3+a\star P}{3+a}$ 。</p>
-<h4 id="基于贪心策略的特征交叉方法"><a href="#基于贪心策略的特征交叉方法" class="headerlink" title="基于贪心策略的特征交叉方法"></a>基于贪心策略的特征交叉方法</h4><p>使用<code>Ordered Target Statistics</code>方法将类别特征转化成为数值特征以后，会影响到特征交叉，因为数值特征无法有效地进行交叉。为了有效地利用特征交叉，<code>CatBoost</code>在将类别特征转换为数值编码的同时，会自动生成交叉特征。但如果让全部的类别特征之间都进行交叉，两两交叉，三三交叉，四四交叉，这个复杂度是指数级的，特征维度一定会爆炸。<code>CatBoost</code>使用一种贪心的策略来进行特征交叉。生成<code>tree</code>的第一次分裂，<code>CatBoost</code>不使用任何交叉特征。在后面的分裂中，<code>CatBoost</code>会使用生成<code>tree</code>所用到的全部原始特征和交叉特征跟数据集中的全部类别特征进行交叉。</p>
+<h4 id="基于贪心策略的特征交叉方法"><a href="#基于贪心策略的特征交叉方法" class="headerlink" title="基于贪心策略的特征交叉方法"></a>基于贪心策略的特征交叉方法</h4><p>使用<code>Ordered Target Statistics</code>方法将类别特征转化成为数值特征以后，会影响到特征交叉，因为数值特征无法有效地进行交叉。为了有效地利用特征交叉，<code>CatBoost</code>在将类别特征转换为数值编码的同时，会自动生成交叉特征。但如果让全部的类别特征之间都进行交叉，两两交叉，三三交叉，四四交叉，这个复杂度是指数级的，特征维度一定会爆炸。<code>CatBoost</code>使用一种贪心的策略来进行特征交叉。生成<code>tree</code>的第一次分裂，<code>CatBoost</code>不使用任何交叉特征。在后面的分裂中，<code>CatBoost</code>会使用生成<code>tree</code>所用到的<strong>全部原始特征和交叉特征</strong>跟数据集中的<strong>全部类别特征</strong>进行交叉。</p>
 <h4 id="避免预测偏移的Ordered-Boosting方法"><a href="#避免预测偏移的Ordered-Boosting方法" class="headerlink" title="避免预测偏移的Ordered Boosting方法"></a>避免预测偏移的Ordered Boosting方法</h4><p>使用<code>XGBoost</code>或者<code>LightGBM</code>做模型时，我们可能经常会发现模型在训练集上拟合的很好，<code>train_auc</code>甚至达到了 $1.0$ ，但是在验证集上却差了很多，<code>val_auc</code>可能只有 $0.7$ 。这当然有可能是因为<code>tree</code>的数量太多了，或者是每棵<code>tree</code>的<code>leaves</code>太多了，总之模型太复杂了造成了过拟合。</p>
 <p>但也有一些<code>XGBoost</code>和<code>LightGBM</code>自身算法的缺陷因素。我们知道<code>LightGBM</code>在训练下一棵<code>tree</code>的时候，需要计算前面这些<code>tree</code>构成的加法模型在所有样本上的一阶梯度和二阶梯度（<code>Loss</code>对模型预测结果的导数），然后用这些梯度来决定下一棵树的结构和叶子节点取值。</p>
 <p>但是我们计算的这些一阶梯度和二阶梯度值是有问题的。前面的这些<code>tree</code>都是在这些样本上训练的，现在我们又在这些样本上估计模型预测结果的一阶和二阶梯度。我们应该换一些新的样本才更合理。但是我们从哪里找这些新的样本呢？</p>
