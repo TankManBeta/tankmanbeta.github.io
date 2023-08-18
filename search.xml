@@ -174,6 +174,14 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
 <h1 id="杀死进程"><a href="#杀死进程" class="headerlink" title="杀死进程"></a>杀死进程</h1><p>杀死<code>pid</code>为<code>88888</code>的进程</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 88888</span><br></pre></td></tr></table></figure>
+<h1 id="挂起进程"><a href="#挂起进程" class="headerlink" title="挂起进程"></a>挂起进程</h1><p>如何挂起正在执行的进程：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Ctrl+z</span><br></pre></td></tr></table></figure>
+<p>查看被挂起的进程：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jobs</span><br></pre></td></tr></table></figure>
+<p>重新启动前台被中断的任务：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fg [job id]</span><br></pre></td></tr></table></figure>
+<p>把被中断的任务放在后台执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bg [job id]</span><br></pre></td></tr></table></figure>
 <h1 id="如何查询python安装路径"><a href="#如何查询python安装路径" class="headerlink" title="如何查询python安装路径"></a>如何查询python安装路径</h1><p>查看所有<code>python</code>的安装目录：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">whereis python</span><br></pre></td></tr></table></figure>
 <p>查看当前使用的<code>python</code>的安装目录：</p>
