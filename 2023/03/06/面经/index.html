@@ -382,7 +382,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222213526.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202305222213378.png">
 <meta property="article:published_time" content="2023-03-06T14:04:43.000Z">
-<meta property="article:modified_time" content="2023-08-11T09:23:06.742Z">
+<meta property="article:modified_time" content="2023-08-21T13:32:33.119Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="面试">
@@ -636,7 +636,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-08-11 17:23:06" itemprop="dateModified" datetime="2023-08-11T17:23:06+08:00">2023-08-11</time>
+        <time title="修改时间：2023-08-21 21:32:33" itemprop="dateModified" datetime="2023-08-21T21:32:33+08:00">2023-08-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1234,6 +1234,7 @@
 <h3 id="BatchNormalization"><a href="#BatchNormalization" class="headerlink" title="BatchNormalization"></a>BatchNormalization</h3><p><strong>BatchNormalization就是在深度神经网络训练过程中使得每一层神经网络的输入保持相同分布。</strong></p>
 <p>在神经网络中, 数据分布对训练会产生影响。比如某个神经元 $x$ 的值为 $1$ ，某个 <code>Weights</code> 的初始值为 $0.1$ ，这样后一层神经元计算结果就是 $Wx = 0.1$ ；又或者 $x = 20$ ，这样 $Wx$ 的结果就为 $2$ 。现在还不能看出什么问题,，但是，当我们加上一层激活函数，激活这个  $Wx$ 值的时候，问题就来了。如果使用像 <code>tanh</code> 的激活函数， $Wx$ 的激活值就变成了 $\approx 0.1$ 和 $\approx 1$, 接近于 $1$ 的部已经处在了激活函数的饱和阶段, 也就是 $x$ 无论再怎么扩大， <code>tanh</code> 激励函数输出值也还是接近 $1$ 。</p>
 <p>我们为了避免这种情况，就会对数据进行归一化，<strong>对于每个隐层神经元，把逐渐向非线性函数映射后向取值区间极限饱和区靠拢的输入分布强制拉回到均值为0​，方差为1的比较标准的正态分布，使得非线性变换函数的输入值落入对输入比较敏感的区域，以此避免梯度消失问题。</strong>同时了为了恢复出原始的某一层所学到的特征，我们引入了这个可学习重构参数 $\gamma$ 、$\beta$ ，让我们的网络可以学习恢复出原始网络所要学习的特征分布。</p>
+<p>均值的计算，就是在一个批次内，将每个通道中的数字单独加起来，再除以 $N \times H \times W$。举个例子：该批次内有10张图片，每张图片有三个通道RBG，每张图片的高、宽是H、W，那么均值就是计算<strong>10张图片R通道的像素数值总和</strong>除以 $10 \times H \times W$，再计算B通道全部像素值总和除以 $10 \times H \times W$，最后计算G通道的像素值总和除以 $10 \times H \times W$。方差的计算类似。</p>
 <h3 id="LayerNormalization"><a href="#LayerNormalization" class="headerlink" title="LayerNormalization"></a>LayerNormalization</h3><ul>
 <li>BN在mini-batch较小的情况下不太适用。BN是对整个mini-batch的样本统计均值和方差，当训练样本数很少时，样本的均值和方差不能反映全局的统计分布信息，从而导致效果下降。</li>
 <li>BN无法应用于RNN。<ul>
