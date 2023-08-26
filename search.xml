@@ -269,200 +269,6 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 ]]></content>
   </entry>
   <entry>
-    <title>数据库面试题总结</title>
-    <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
-<a id="more"></a>
-<h1 id="事务四大特性"><a href="#事务四大特性" class="headerlink" title="事务四大特性"></a>事务四大特性</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">原子性，要么执行，要么不执行  </span><br><span class="line">隔离性，所有操作全部执行完以前其它会话不能看到过程</span><br><span class="line">一致性，事务前后，数据总额一致</span><br><span class="line">持久性，一旦事务提交，对数据的改变就是永久的</span><br></pre></td></tr></table></figure>
-<h1 id="数据库隔离级别"><a href="#数据库隔离级别" class="headerlink" title="数据库隔离级别"></a>数据库隔离级别</h1><p>数据库事务的隔离级别有4个，由低到高依次为Read uncommitted、Read committed、Repeatable read、Serializable，这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">脏读</th>
-<th style="text-align:center">不可重复读</th>
-<th style="text-align:center">幻读</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Read uncommitted</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td style="text-align:center">Read committed（Sql Server，Oracle）</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td style="text-align:center">Repeatable read（Mysql）</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td style="text-align:center">Serializable</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>脏读：事务 B 去查询了事务 A 修改过的数据，但是此时事务 A 还没提交，所以事务 A 随时会回滚导致事务 B 再次查询就读不到刚才事务 A 修改的数据了，这就是脏读。</p>
-<p>不可重复读：假设一个前提是事务 A 只能在事务 B 提交之后读取到它修改的数据，所以此时必然是不会发生脏读的。事务A事先读取了数据，事务B紧接了更新了数据，并提交了事务，而事务A再次读取该数据时，数据已经发生了改变。</p>
-<p>不可重复读和脏读的区别是，脏读读取到的是一个未提交的数据，而不可重复读读取到的是前一个事务提交的数据。</p>
-<p>幻读：幻读就是你一个事务用一样的 SQL 多次查询，结果每次查询都会发现查到一些之前没看到过的数据。注意，幻读特指的是你查询到了之前查询没看到过的数据。此时说明你是幻读了。</p>
-<p>幻读和不可重复读所不同的是不可重复读查询的都是同一个数据项，而幻读针对的是一批数据整体（比如数据的个数）。</p>
-<h1 id="Mysql的存储引擎以及区别"><a href="#Mysql的存储引擎以及区别" class="headerlink" title="Mysql的存储引擎以及区别"></a>Mysql的存储引擎以及区别</h1><p>Mysql默认支持九种存储引擎（数据用各种不同的技术存储在文件或内存中。这些技术中的每一种技术都使用不同的存储机制、索引技巧、锁定水平并且最终提供广泛的不同的功能和能力。通过选择不同的技术，你能够获得额外的速度或者功能，从而改善你的应用的整体功能。）</p>
-<ol>
-<li>MyISAM：适合读密集的表<ol>
-<li>不支持行锁(MyISAM只有表锁)，读取时对需要读到的所有表加锁，写入时则对表加排他锁；MyISAM表进行读操作时，它不会阻塞其他用户对同一表的读请求，但会阻塞对同一表的写操作；而对MyISAM表的写操作，则会阻塞其他用户对同一表的读和写操作。</li>
-<li>不支持事务</li>
-<li>不支持外键</li>
-<li>不支持崩溃后的安全恢复</li>
-<li>在表有读取查询的同时，支持往表中插入新记录</li>
-<li>支持BLOB和TEXT的前500个字符索引，支持全文索引和空间索引</li>
-<li>支持延迟更新索引，极大地提升了写入性能</li>
-<li>对于不会进行修改的表，支持压缩表，极大地减少了磁盘空间的占用</li>
-<li>存储表的总行数，执行select count(*) from table时只要简单的读出保存好的行数即可</li>
-<li>采用非聚集索引，索引文件的数据域存储指向数据文件的指针。</li>
-</ol>
-</li>
-<li>InnoDB：InnoDB是MySQL的默认数据库引擎（5.5版之后），适合写密集的表<ol>
-<li>支持行锁，采用MVCC来支持高并发，有可能死锁</li>
-<li>支持事务</li>
-<li>支持外键</li>
-<li>支持崩溃后的安全恢复</li>
-<li>不支持全文索引</li>
-<li>不存储表的总行数，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行。注意的是，当count(*)语句包含 where条件时，两种表的操作是一样的</li>
-<li>主键索引采用聚集索引（索引的数据域存储数据文件本身），辅索引的数据域存储主键的值；因此从辅索引查找数据，需要先通过辅索引找到主键值，再访问主键索引；最好使用自增主键，防止插入数据时，为维持B+树结构，文件的大调整。</li>
-<li>DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除</li>
-<li>对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引更好和更快的auto_increment处理</li>
-</ol>
-</li>
-</ol>
-<h1 id="B-索引和hash索引"><a href="#B-索引和hash索引" class="headerlink" title="B+索引和hash索引"></a>B+索引和hash索引</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20181107184452575.png" alt=""></p>
-<p>在MySQL中，只有HEAP/MEMORY引擎表才能显式支持哈希索引（NDB也支持，但这个不常用），InnoDB引擎的自适应哈希索引（adaptive hash index）不在此列，因为这不是创建索引时可指定的。</p>
-<ul>
-<li>如果是等值查询，那么哈希索引明显有绝对优势，因为只需要经过一次算法即可找到相应的键值；当然了，这个前提是，键值都是唯一的。如果键值不是唯一的，就需要先找到该键所在位置，然后再根据链表往后扫描，直到找到相应的数据；</li>
-<li>如果是范围查询检索，这时候哈希索引就毫无用武之地了 ，因为原先是有序的键值，经过哈希算法后，有可能变成不连续的了，就没办法再利用索引完成范围查询检索；</li>
-<li>同理， 哈希索引也没办法利用索引完成排序，以及like ‘xxx%’ 这样的部分模糊查询（这种部分模糊查询，其实本质上也是范围查询）；</li>
-<li>哈希索引也不支持多列联合索引的最左匹配规则；</li>
-<li>B+树索引的关键字检索效率比较平均，不像B树那样波动幅度大， 在有大量重复键值情况下，哈希索引的效率也是极低的，因为存在所谓的哈希碰撞问题 。</li>
-</ul>
-<h1 id="索引的优缺点，什么时候使用索引，什么时候不能使用索引"><a href="#索引的优缺点，什么时候使用索引，什么时候不能使用索引" class="headerlink" title="索引的优缺点，什么时候使用索引，什么时候不能使用索引"></a>索引的优缺点，什么时候使用索引，什么时候不能使用索引</h1><ul>
-<li>索引最大的好处是提高查询速度</li>
-<li>缺点是更新数据时效率低，因为要同时更新索引</li>
-<li>对数据进行频繁查询进建立索引，如果要频繁更改数据不建议使用索引</li>
-</ul>
-<h1 id="InnoDB索引和MyISAM索引的区别"><a href="#InnoDB索引和MyISAM索引的区别" class="headerlink" title="InnoDB索引和MyISAM索引的区别"></a><strong>InnoDB索引</strong>和<strong>MyISAM索引</strong>的区别</h1><p>InnoDB的数据文件本身就是主索引文件。而MyISAM的主索引和数据是分开的。</p>
-<p>InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别。</p>
-<h1 id="索引的底层实现（B-树，为何不采用红黑树，B树）重点"><a href="#索引的底层实现（B-树，为何不采用红黑树，B树）重点" class="headerlink" title="索引的底层实现（B+树，为何不采用红黑树，B树）重点"></a>索引的底层实现（B+树，为何不采用红黑树，B树）重点</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">树</th>
-<th style="text-align:center">区别</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">红黑树</td>
-<td style="text-align:center">增加，删除，红黑树会进行频繁的调整，来保证红黑树的性质，浪费时间</td>
-</tr>
-<tr>
-<td style="text-align:center">B树也就是B-树</td>
-<td style="text-align:center">B树，查询性能不稳定，查询结果高度不致，每个结点保存指向真实数据的指针，相比B+树每一层每屋存储的元素更多，显得更高一点。</td>
-</tr>
-<tr>
-<td style="text-align:center">B+树</td>
-<td style="text-align:center">B+树相比较于另外两种树,显得更矮更宽，查询层次更浅</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h1 id="为什么使用B-树"><a href="#为什么使用B-树" class="headerlink" title="为什么使用B+树"></a>为什么使用B+树</h1><ol>
-<li>B+树是多路平衡查找树（B-Tree）的变种（Plus版本），多路绝对平衡查找树，他拥有B-树的优势</li>
-<li>B+树的扫库扫表能力更强。</li>
-<li>B+树的磁盘读写能力更强。</li>
-<li>B+树的排序能力更强。</li>
-<li>B+树的查询效率更加稳定（仁者见仁，智者见智）</li>
-</ol>
-<h1 id="Sql的优化"><a href="#Sql的优化" class="headerlink" title="Sql的优化"></a>Sql的优化</h1><ol>
-<li>sql尽量使用索引，而且查询要走索引</li>
-<li>对sql语句优化<ul>
-<li>子查询变成left join</li>
-<li>limit 分布优化，先利用ID定位，再分页</li>
-<li>or条件优化，多个or条件可以用union all对结果进行合并（union all结果可能重复）</li>
-<li>不必要的排序</li>
-<li>where代替having,having 检索完所有记录，才进行过滤</li>
-<li>避免嵌套查询</li>
-<li>对多个字段进行等值查询时，联合索引</li>
-</ul>
-</li>
-</ol>
-<h1 id="索引最左前缀问题"><a href="#索引最左前缀问题" class="headerlink" title="索引最左前缀问题"></a>索引最左前缀问题</h1><p>假设你在表的state、city和zip数据列上建立了复合索引。索引中的数据行按照state/city/zip次序排列，因此它们也会自动地按照state/city/zip次序排列。这意味着，即使你在查询中只指定了state值，或者指定state和city值，MySQL也可以使用这个索引。因此，这个索引可以被用于搜索如下所示的数据列组合：state/city/zip；state/city；state。</p>
-<p>MySQL不能利用这个索引来搜索没有包含在最左前缀的内容。例如，如果你按照city或zip来搜索，<br>就不会使用到这个索引。如果你搜索给定的state和具体的ZIP代码（索引的1和3列），该索引也是不能用于这种组合值的，尽管MySQL可以利用索引来查找匹配的state从而缩小搜索的范围。</p>
-<p>explain命令的结果需要考虑属性type：ref就是使用了索引，index是对所有索引树进行扫描，而all是对整个磁盘的数据进行全表扫描。</p>
-<h1 id="索引分类及索引失效条件"><a href="#索引分类及索引失效条件" class="headerlink" title="索引分类及索引失效条件"></a>索引分类及索引失效条件</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">索引类型</th>
-<th style="text-align:center">概念</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">普通索引</td>
-<td style="text-align:center">最基本的索引，没有任何限制</td>
-</tr>
-<tr>
-<td style="text-align:center">唯一索引</td>
-<td style="text-align:center">与”普通索引”类似，不同的就是：索引列的值必须唯一，但允许有空值。</td>
-</tr>
-<tr>
-<td style="text-align:center">主键索引</td>
-<td style="text-align:center">它是一种特殊的唯一索引，不允许有空值。</td>
-</tr>
-<tr>
-<td style="text-align:center">全文索引</td>
-<td style="text-align:center">针对较大的数据，生成全文索引很耗时间空间。</td>
-</tr>
-<tr>
-<td style="text-align:center">组合索引</td>
-<td style="text-align:center">为了更多的提高mysql效率可建立组合索引，遵循”最左前缀“原则</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>失效条件：</p>
-<ol>
-<li>如果条件中有or，即使其中有条件带索引也不会使用</li>
-<li>对于多列索引，不是使用的第一部分，则不会使用索引</li>
-<li>like查询是以%开头</li>
-<li>如果列类型是字符串，那一定要在条件中将数据使用引号引用起来,否则不使用索引</li>
-<li>如果mysql估计使用全表扫描要比使用索引快,则不使用索引</li>
-<li>where中索引列有运算</li>
-<li>where中索引列使用了函数（+，-，*，/，! ）</li>
-<li>当变量采用的是times变量，而表的字段采用的是date变量时</li>
-<li>隐式类型转换导致索引失效</li>
-</ol>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>搭建个人博客</title>
     <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
@@ -706,6 +512,200 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       </tags>
   </entry>
   <entry>
+    <title>数据库面试题总结</title>
+    <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
+<a id="more"></a>
+<h1 id="事务四大特性"><a href="#事务四大特性" class="headerlink" title="事务四大特性"></a>事务四大特性</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">原子性，要么执行，要么不执行  </span><br><span class="line">隔离性，所有操作全部执行完以前其它会话不能看到过程</span><br><span class="line">一致性，事务前后，数据总额一致</span><br><span class="line">持久性，一旦事务提交，对数据的改变就是永久的</span><br></pre></td></tr></table></figure>
+<h1 id="数据库隔离级别"><a href="#数据库隔离级别" class="headerlink" title="数据库隔离级别"></a>数据库隔离级别</h1><p>数据库事务的隔离级别有4个，由低到高依次为Read uncommitted、Read committed、Repeatable read、Serializable，这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">脏读</th>
+<th style="text-align:center">不可重复读</th>
+<th style="text-align:center">幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Read uncommitted</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td style="text-align:center">Read committed（Sql Server，Oracle）</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td style="text-align:center">Repeatable read（Mysql）</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td style="text-align:center">Serializable</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>脏读：事务 B 去查询了事务 A 修改过的数据，但是此时事务 A 还没提交，所以事务 A 随时会回滚导致事务 B 再次查询就读不到刚才事务 A 修改的数据了，这就是脏读。</p>
+<p>不可重复读：假设一个前提是事务 A 只能在事务 B 提交之后读取到它修改的数据，所以此时必然是不会发生脏读的。事务A事先读取了数据，事务B紧接了更新了数据，并提交了事务，而事务A再次读取该数据时，数据已经发生了改变。</p>
+<p>不可重复读和脏读的区别是，脏读读取到的是一个未提交的数据，而不可重复读读取到的是前一个事务提交的数据。</p>
+<p>幻读：幻读就是你一个事务用一样的 SQL 多次查询，结果每次查询都会发现查到一些之前没看到过的数据。注意，幻读特指的是你查询到了之前查询没看到过的数据。此时说明你是幻读了。</p>
+<p>幻读和不可重复读所不同的是不可重复读查询的都是同一个数据项，而幻读针对的是一批数据整体（比如数据的个数）。</p>
+<h1 id="Mysql的存储引擎以及区别"><a href="#Mysql的存储引擎以及区别" class="headerlink" title="Mysql的存储引擎以及区别"></a>Mysql的存储引擎以及区别</h1><p>Mysql默认支持九种存储引擎（数据用各种不同的技术存储在文件或内存中。这些技术中的每一种技术都使用不同的存储机制、索引技巧、锁定水平并且最终提供广泛的不同的功能和能力。通过选择不同的技术，你能够获得额外的速度或者功能，从而改善你的应用的整体功能。）</p>
+<ol>
+<li>MyISAM：适合读密集的表<ol>
+<li>不支持行锁(MyISAM只有表锁)，读取时对需要读到的所有表加锁，写入时则对表加排他锁；MyISAM表进行读操作时，它不会阻塞其他用户对同一表的读请求，但会阻塞对同一表的写操作；而对MyISAM表的写操作，则会阻塞其他用户对同一表的读和写操作。</li>
+<li>不支持事务</li>
+<li>不支持外键</li>
+<li>不支持崩溃后的安全恢复</li>
+<li>在表有读取查询的同时，支持往表中插入新记录</li>
+<li>支持BLOB和TEXT的前500个字符索引，支持全文索引和空间索引</li>
+<li>支持延迟更新索引，极大地提升了写入性能</li>
+<li>对于不会进行修改的表，支持压缩表，极大地减少了磁盘空间的占用</li>
+<li>存储表的总行数，执行select count(*) from table时只要简单的读出保存好的行数即可</li>
+<li>采用非聚集索引，索引文件的数据域存储指向数据文件的指针。</li>
+</ol>
+</li>
+<li>InnoDB：InnoDB是MySQL的默认数据库引擎（5.5版之后），适合写密集的表<ol>
+<li>支持行锁，采用MVCC来支持高并发，有可能死锁</li>
+<li>支持事务</li>
+<li>支持外键</li>
+<li>支持崩溃后的安全恢复</li>
+<li>不支持全文索引</li>
+<li>不存储表的总行数，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行。注意的是，当count(*)语句包含 where条件时，两种表的操作是一样的</li>
+<li>主键索引采用聚集索引（索引的数据域存储数据文件本身），辅索引的数据域存储主键的值；因此从辅索引查找数据，需要先通过辅索引找到主键值，再访问主键索引；最好使用自增主键，防止插入数据时，为维持B+树结构，文件的大调整。</li>
+<li>DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除</li>
+<li>对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引更好和更快的auto_increment处理</li>
+</ol>
+</li>
+</ol>
+<h1 id="B-索引和hash索引"><a href="#B-索引和hash索引" class="headerlink" title="B+索引和hash索引"></a>B+索引和hash索引</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20181107184452575.png" alt=""></p>
+<p>在MySQL中，只有HEAP/MEMORY引擎表才能显式支持哈希索引（NDB也支持，但这个不常用），InnoDB引擎的自适应哈希索引（adaptive hash index）不在此列，因为这不是创建索引时可指定的。</p>
+<ul>
+<li>如果是等值查询，那么哈希索引明显有绝对优势，因为只需要经过一次算法即可找到相应的键值；当然了，这个前提是，键值都是唯一的。如果键值不是唯一的，就需要先找到该键所在位置，然后再根据链表往后扫描，直到找到相应的数据；</li>
+<li>如果是范围查询检索，这时候哈希索引就毫无用武之地了 ，因为原先是有序的键值，经过哈希算法后，有可能变成不连续的了，就没办法再利用索引完成范围查询检索；</li>
+<li>同理， 哈希索引也没办法利用索引完成排序，以及like ‘xxx%’ 这样的部分模糊查询（这种部分模糊查询，其实本质上也是范围查询）；</li>
+<li>哈希索引也不支持多列联合索引的最左匹配规则；</li>
+<li>B+树索引的关键字检索效率比较平均，不像B树那样波动幅度大， 在有大量重复键值情况下，哈希索引的效率也是极低的，因为存在所谓的哈希碰撞问题 。</li>
+</ul>
+<h1 id="索引的优缺点，什么时候使用索引，什么时候不能使用索引"><a href="#索引的优缺点，什么时候使用索引，什么时候不能使用索引" class="headerlink" title="索引的优缺点，什么时候使用索引，什么时候不能使用索引"></a>索引的优缺点，什么时候使用索引，什么时候不能使用索引</h1><ul>
+<li>索引最大的好处是提高查询速度</li>
+<li>缺点是更新数据时效率低，因为要同时更新索引</li>
+<li>对数据进行频繁查询进建立索引，如果要频繁更改数据不建议使用索引</li>
+</ul>
+<h1 id="InnoDB索引和MyISAM索引的区别"><a href="#InnoDB索引和MyISAM索引的区别" class="headerlink" title="InnoDB索引和MyISAM索引的区别"></a><strong>InnoDB索引</strong>和<strong>MyISAM索引</strong>的区别</h1><p>InnoDB的数据文件本身就是主索引文件。而MyISAM的主索引和数据是分开的。</p>
+<p>InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别。</p>
+<h1 id="索引的底层实现（B-树，为何不采用红黑树，B树）重点"><a href="#索引的底层实现（B-树，为何不采用红黑树，B树）重点" class="headerlink" title="索引的底层实现（B+树，为何不采用红黑树，B树）重点"></a>索引的底层实现（B+树，为何不采用红黑树，B树）重点</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">树</th>
+<th style="text-align:center">区别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">红黑树</td>
+<td style="text-align:center">增加，删除，红黑树会进行频繁的调整，来保证红黑树的性质，浪费时间</td>
+</tr>
+<tr>
+<td style="text-align:center">B树也就是B-树</td>
+<td style="text-align:center">B树，查询性能不稳定，查询结果高度不致，每个结点保存指向真实数据的指针，相比B+树每一层每屋存储的元素更多，显得更高一点。</td>
+</tr>
+<tr>
+<td style="text-align:center">B+树</td>
+<td style="text-align:center">B+树相比较于另外两种树,显得更矮更宽，查询层次更浅</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="为什么使用B-树"><a href="#为什么使用B-树" class="headerlink" title="为什么使用B+树"></a>为什么使用B+树</h1><ol>
+<li>B+树是多路平衡查找树（B-Tree）的变种（Plus版本），多路绝对平衡查找树，他拥有B-树的优势</li>
+<li>B+树的扫库扫表能力更强。</li>
+<li>B+树的磁盘读写能力更强。</li>
+<li>B+树的排序能力更强。</li>
+<li>B+树的查询效率更加稳定（仁者见仁，智者见智）</li>
+</ol>
+<h1 id="Sql的优化"><a href="#Sql的优化" class="headerlink" title="Sql的优化"></a>Sql的优化</h1><ol>
+<li>sql尽量使用索引，而且查询要走索引</li>
+<li>对sql语句优化<ul>
+<li>子查询变成left join</li>
+<li>limit 分布优化，先利用ID定位，再分页</li>
+<li>or条件优化，多个or条件可以用union all对结果进行合并（union all结果可能重复）</li>
+<li>不必要的排序</li>
+<li>where代替having,having 检索完所有记录，才进行过滤</li>
+<li>避免嵌套查询</li>
+<li>对多个字段进行等值查询时，联合索引</li>
+</ul>
+</li>
+</ol>
+<h1 id="索引最左前缀问题"><a href="#索引最左前缀问题" class="headerlink" title="索引最左前缀问题"></a>索引最左前缀问题</h1><p>假设你在表的state、city和zip数据列上建立了复合索引。索引中的数据行按照state/city/zip次序排列，因此它们也会自动地按照state/city/zip次序排列。这意味着，即使你在查询中只指定了state值，或者指定state和city值，MySQL也可以使用这个索引。因此，这个索引可以被用于搜索如下所示的数据列组合：state/city/zip；state/city；state。</p>
+<p>MySQL不能利用这个索引来搜索没有包含在最左前缀的内容。例如，如果你按照city或zip来搜索，<br>就不会使用到这个索引。如果你搜索给定的state和具体的ZIP代码（索引的1和3列），该索引也是不能用于这种组合值的，尽管MySQL可以利用索引来查找匹配的state从而缩小搜索的范围。</p>
+<p>explain命令的结果需要考虑属性type：ref就是使用了索引，index是对所有索引树进行扫描，而all是对整个磁盘的数据进行全表扫描。</p>
+<h1 id="索引分类及索引失效条件"><a href="#索引分类及索引失效条件" class="headerlink" title="索引分类及索引失效条件"></a>索引分类及索引失效条件</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">索引类型</th>
+<th style="text-align:center">概念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">普通索引</td>
+<td style="text-align:center">最基本的索引，没有任何限制</td>
+</tr>
+<tr>
+<td style="text-align:center">唯一索引</td>
+<td style="text-align:center">与”普通索引”类似，不同的就是：索引列的值必须唯一，但允许有空值。</td>
+</tr>
+<tr>
+<td style="text-align:center">主键索引</td>
+<td style="text-align:center">它是一种特殊的唯一索引，不允许有空值。</td>
+</tr>
+<tr>
+<td style="text-align:center">全文索引</td>
+<td style="text-align:center">针对较大的数据，生成全文索引很耗时间空间。</td>
+</tr>
+<tr>
+<td style="text-align:center">组合索引</td>
+<td style="text-align:center">为了更多的提高mysql效率可建立组合索引，遵循”最左前缀“原则</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>失效条件：</p>
+<ol>
+<li>如果条件中有or，即使其中有条件带索引也不会使用</li>
+<li>对于多列索引，不是使用的第一部分，则不会使用索引</li>
+<li>like查询是以%开头</li>
+<li>如果列类型是字符串，那一定要在条件中将数据使用引号引用起来,否则不使用索引</li>
+<li>如果mysql估计使用全表扫描要比使用索引快,则不使用索引</li>
+<li>where中索引列有运算</li>
+<li>where中索引列使用了函数（+，-，*，/，! ）</li>
+<li>当变量采用的是times变量，而表的字段采用的是date变量时</li>
+<li>隐式类型转换导致索引失效</li>
+</ol>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>项目部署总结</title>
     <url>/2021/10/09/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下毕设项目部署上线遇见的一些问题</p>
@@ -845,200 +845,6 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       <tags>
         <tag>总结</tag>
         <tag>项目部署</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习Tricks</title>
-    <url>/2022/10/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0Tricks/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在机器学习应用过程中遇到的一些问题，包括理论、代码实践等方面。</p>
-<a id="more"></a>
-<h1 id="One-Hot编码"><a href="#One-Hot编码" class="headerlink" title="One-Hot编码"></a>One-Hot编码</h1><p>One-Hot编码也叫独热编码，又称一位有效编码。方法就是用N位对N个状态进行表示，但是其中只有一位为1，剩下N-1位全为0。例如，特征为性别，就需要变成10和01。</p>
-<p>在回归，分类，聚类等机器学习算法中，特征之间距离的计算或相似度的计算是非常重要的。而常用的距离或相似度的计算都是在欧式空间的相似度计算，计算余弦相似性，基于的就是欧式空间。使用独热编码（One-Hot Encoding），将离散特征的取值扩展到了欧式空间，离散特征的某个取值就对应欧式空间的某个点。将离散型特征使用独热编码（One-Hot Encoding），会让特征之间的距离计算更加合理。</p>
-<p>举个例子，如果我们现在一个特征有五个取值，如果不采用One-Hot编码，则分别表示为演员=0，厨师=1，公务员=2，教师=3，律师=4，那么教师和厨师的距离为2，律师与厨师的距离为3，这显然是不合理的。比较合理的做法是将两个工作之间的距离表示为sqrt(2)，即两个工作之间的距离是一样的。</p>
-<p>总结一下，如果特征的大小表示如果有意义的话，比如我们用1-9表示年龄，这种特征的大小表示就是有意义的，所以这种情况下就不需要进行One-Hot编码；如果特征的大小没有意义，仅仅表示状态时则使用One-Hot编码。</p>
-<p>pandas实现：首先对f3这个特征做One-Hot编码，接着将生成的df和原来的df进行拼接，最后删除原来的f3特征</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1: using get_dummies to encode feature</span></span><br><span class="line">dummy_df = pd.get_dummies(df[<span class="string">&quot;gender&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 2: concat dummy_df with original df</span></span><br><span class="line">df = pd.concat((df, dummy_df), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3: remove original feature</span></span><br><span class="line">df = df.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># simplified form</span></span><br><span class="line"><span class="comment"># df = pd.concat((df, pd.get_dummies(df[&quot;gender&quot;])), axis=1)</span></span><br><span class="line"><span class="comment"># df = df.drop(&quot;gender&quot;, axis=1)</span></span><br></pre></td></tr></table></figure>
-<p>存在问题：</p>
-<ol>
-<li><p>采用这种方法实现会存在问题，比如将性别划分成gender_male和gender_female时，这两种特征其实是冗余的，这个问题在数学中叫做多重共线性(Multicollinearity)，在pandas处理时也有人称之为虚拟变量陷阱(Dummy Varialble Trap)。解决办法就是加入参数drop_first=True，作用是除去第一个虚拟变量，然转化后的虚拟变量从k和变成k-1个。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1: using get_dummies to encode feature</span></span><br><span class="line">dummy_df = pd.get_dummies(df[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 2: concat dummy_df with original df</span></span><br><span class="line">df = pd.concat((df, dummy_df), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3: remove original feature</span></span><br><span class="line">df = df.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># simplified form</span></span><br><span class="line"><span class="comment"># df = pd.concat((df, pd.get_dummies(df[&quot;gender&quot;], drop_first=True)), axis=1)</span></span><br><span class="line"><span class="comment"># df = df.drop(&quot;gender&quot;, axis=1)</span></span><br></pre></td></tr></table></figure></li>
-<li><p>测试集中可能出现训练集中没出现过的变量。解决办法：①将训练集和测试集一起get_dummies，然后再切分；②检测不一致的列，然后在缺少这些列的数据集中加入取值全为0的同名列。③使用sklearn的OneHotEncoder</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">test = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>],</span><br><span class="line">        [<span class="number">1003</span>, <span class="string">&quot;unknown&quot;</span>, <span class="number">88</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">train = pd.concat((train, pd.get_dummies(train[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)), axis=<span class="number">1</span>)</span><br><span class="line">train.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line">test = pd.concat((test, pd.get_dummies(test[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)), axis=<span class="number">1</span>)</span><br><span class="line">test.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">list</span>(test.columns.difference(train.columns)):<span class="comment">#train没有的列</span></span><br><span class="line">    df_obj = pd.DataFrame(&#123;col:np.squeeze(np.zeros((<span class="number">1</span>,train.shape[<span class="number">0</span>])))&#125;)</span><br><span class="line">    train = pd.concat([train,df_obj], axis=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">list</span>(train.columns.difference(test.columns)):<span class="comment">#test没有的列</span></span><br><span class="line">    df_obj = pd.DataFrame(&#123;col:np.squeeze(np.zeros((<span class="number">1</span>,test.shape[<span class="number">0</span>])))&#125;)</span><br><span class="line">    test = pd.concat([test,df_obj], axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>sklearn实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</span><br><span class="line"></span><br><span class="line">train = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">test = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>],</span><br><span class="line">        [<span class="number">1003</span>, <span class="string">&quot;unknown&quot;</span>, <span class="number">88</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># drop:k-1 to represent k; handle_unknown:for missing value</span></span><br><span class="line">encoder = OneHotEncoder(sparse=<span class="literal">False</span>, handle_unknown=<span class="string">&#x27;ignore&#x27;</span>, drop=<span class="string">&quot;first&quot;</span>)</span><br><span class="line"><span class="comment"># fit</span></span><br><span class="line">enc = encoder.fit(train[[<span class="string">&quot;gender&quot;</span>]])</span><br><span class="line"><span class="comment"># 获取新列名</span></span><br><span class="line">columns = enc.get_feature_names_out([<span class="string">&quot;gender&quot;</span>])</span><br><span class="line"><span class="comment"># 转换测试数据</span></span><br><span class="line">enc_arr = enc.transform(test[[<span class="string">&quot;gender&quot;</span>]])</span><br><span class="line"><span class="comment"># 生成dataframe</span></span><br><span class="line">enc_df = pd.DataFrame(enc_arr, columns=columns)</span><br><span class="line">new_data = pd.concat([test, enc_df], axis=<span class="number">1</span>)</span><br><span class="line">new_data.drop([<span class="string">&quot;gender&quot;</span>], axis=<span class="number">1</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">new_data</span><br></pre></td></tr></table></figure>
-<h1 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h1><p>对于某一个特征，比如频率，原始数据可能时low、mid、high这种字符类型，模型是没办法利用这些信息的，所以应当把这种字符类型的变量转变成数值类型的变量。</p>
-<p>pandas实现：</p>
-<p>最常用的是pd.factorize()，返回值为一个元组，分别表示转换之后的数字和原来的index。我们应该取元组的第一个元素作为我们的结果。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">data[<span class="string">&quot;f3&quot;</span>] = pd.factorize(data[<span class="string">&quot;f3&quot;</span>])[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-<p>但是这种方法有个缺点，先出现的编码小，后出现的编码大。比如频率越高，编码的值应该越大，但是pd.factorize()就捕捉不到这个特征，此时我们可以使用map映射。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">col_mapping = &#123;</span><br><span class="line">    <span class="string">&quot;low&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;mid&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&quot;high&quot;</span>: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">data.f3 = data.f3.<span class="built_in">map</span>(col_mapping)</span><br></pre></td></tr></table></figure>
-<p>sklearn实现：和One-Hot编码相似，先fit，然后再transform</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">cat_columns = [<span class="string">&#x27;f3&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> cat_columns:</span><br><span class="line">    lb = LabelEncoder()</span><br><span class="line">    lb.fit(data[col])</span><br><span class="line">    data[col] = lb.transform(data[col])</span><br></pre></td></tr></table></figure>
-<h1 id="PyTorch代码实践"><a href="#PyTorch代码实践" class="headerlink" title="PyTorch代码实践"></a>PyTorch代码实践</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p><strong>Tensor的常见形式有哪些</strong></p>
-<ul>
-<li>0：scalar</li>
-<li>1：vector</li>
-<li>2：matrix</li>
-<li>3：n-dimensional tensor</li>
-</ul>
-<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><p><strong>torch.empty()：新建矩阵</strong></p>
-<p><strong>torch.rand()：生成随机矩阵</strong></p>
-<p><strong>torch.zeros()：生成全0的矩阵</strong></p>
-<p><strong>xxx.size()：展示矩阵大小</strong></p>
-<p><strong>xxx.view()：改变矩阵维度</strong></p>
-<p><strong>xxx.numpy()：将tensor转换为array</strong></p>
-<p><strong>torch.from_numpy()：将array转换为tensor</strong></p>
-<p><strong>xxx.requires_grad=True：定义自动求导</strong></p>
-<h2 id="高阶操作"><a href="#高阶操作" class="headerlink" title="高阶操作"></a>高阶操作</h2><p><strong>nn.Conv2d()：卷积操作</strong></p>
-<ol>
-<li><code>in_channels</code>：输入的四维张量<code>[N, C, H, W]</code>中的<code>C</code>，即输入张量的<code>channels</code>数。这个形参是确定权重等可学习参数的<code>shape</code>所必需的。</li>
-<li><code>out_channels</code>：期望的四维输出张量的<code>channels</code>数。</li>
-<li><code>kernel_size</code>：卷积核的大小，一般我们会使用<code>5x5</code>、<code>3x3</code>这种左右两个数相同的卷积核，因此这种情况只需要写 <code>kernel_size=5</code> 这样的就行了。如果左右两个数不同，比如<code>3x5</code>的卷积核，那么写作 <code>kernel_size=(3,5)</code>，注意需要写一个<code>tuple</code>，而不能写一个<code>list</code>。</li>
-<li><code>stride=1</code>：卷积核在图像窗口上每次平移的间隔，即所谓的步长。</li>
-<li><code>padding=0</code>：<code>padding</code>即所谓的图像填充，后面的int型常数代表填充的多少（行数、列数），默认为<code>0</code>。需要注意的是这里的填充包括图像的上下左右，以<code>padding=1</code>为例，若原始图像大小为<code>32x32</code>，那么<code>padding</code>后的图像大小就变成了<code>34x34</code>，而不是<code>33x33</code>。</li>
-<li><code>dilation=1</code>：这个参数决定了是否采用空洞卷积，默认为<code>1</code>，即不采用。</li>
-<li><code>groups=1</code>：决定了是否采用分组卷积。</li>
-<li><code>bias=True</code>：即是否要添加偏置参数作为可学习参数的一个，默认为<code>True</code>。</li>
-<li><code>padding_mode=&#39;zeros&#39;</code>：<code>padding</code>的模式，默认采用零填充。</li>
-</ol>
-<p><strong>xxx.tranpose()：将维度1和维度2调换位置，该函数只能转换两个维度，若想要转换多个维度则需要使用permute</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = torch.rand(<span class="number">1</span>, <span class="number">22</span>, <span class="number">56</span>, <span class="number">114</span>)</span><br><span class="line">print(a.transpose(<span class="number">2</span>, <span class="number">3</span>).shape)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># torch.Size([1, 22, 114, 59])</span></span><br></pre></td></tr></table></figure>
-<p><strong>xxx.permute()：转换向量维度</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2023/1/7 13:27</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置一个三维数组</span></span><br><span class="line">x = torch.linspace(<span class="number">1</span>, <span class="number">24</span>, steps=<span class="number">24</span>).view(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不改变维度 2*3*4-&gt;2*3*4</span></span><br><span class="line">a = x.permute(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">print(a)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  2.,  3.,  4.],</span></span><br><span class="line"><span class="comment">#          [ 5.,  6.,  7.,  8.],</span></span><br><span class="line"><span class="comment">#          [ 9., 10., 11., 12.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[13., 14., 15., 16.],</span></span><br><span class="line"><span class="comment">#          [17., 18., 19., 20.],</span></span><br><span class="line"><span class="comment">#          [21., 22., 23., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 每一块的行与列进行交换，即每一块做转置 2*3*4-&gt;2*4*3</span></span><br><span class="line">b = x.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">print(b)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  5.,  9.],</span></span><br><span class="line"><span class="comment">#          [ 2.,  6., 10.],</span></span><br><span class="line"><span class="comment">#          [ 3.,  7., 11.],</span></span><br><span class="line"><span class="comment">#          [ 4.,  8., 12.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[13., 17., 21.],</span></span><br><span class="line"><span class="comment">#          [14., 18., 22.],</span></span><br><span class="line"><span class="comment">#          [15., 19., 23.],</span></span><br><span class="line"><span class="comment">#          [16., 20., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和行 2*3*4-&gt;3*2*4</span></span><br><span class="line">c = x.permute(<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">print(c)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  2.,  3.,  4.],</span></span><br><span class="line"><span class="comment">#          [13., 14., 15., 16.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 5.,  6.,  7.,  8.],</span></span><br><span class="line"><span class="comment">#          [17., 18., 19., 20.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 9., 10., 11., 12.],</span></span><br><span class="line"><span class="comment">#          [21., 22., 23., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和列 2*3*4-&gt;4*3*2</span></span><br><span class="line">d = x.permute(<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">print(d)</span><br><span class="line"><span class="comment"># tensor([[[ 1., 13.],</span></span><br><span class="line"><span class="comment">#          [ 5., 17.],</span></span><br><span class="line"><span class="comment">#          [ 9., 21.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 2., 14.],</span></span><br><span class="line"><span class="comment">#          [ 6., 18.],</span></span><br><span class="line"><span class="comment">#          [10., 22.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 3., 15.],</span></span><br><span class="line"><span class="comment">#          [ 7., 19.],</span></span><br><span class="line"><span class="comment">#          [11., 23.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 4., 16.],</span></span><br><span class="line"><span class="comment">#          [ 8., 20.],</span></span><br><span class="line"><span class="comment">#          [12., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和行和列 2*3*4-&gt;4*2*3</span></span><br><span class="line">e = x.permute(<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">print(e)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  5.,  9.],</span></span><br><span class="line"><span class="comment">#          [13., 17., 21.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 2.,  6., 10.],</span></span><br><span class="line"><span class="comment">#          [14., 18., 22.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 3.,  7., 11.],</span></span><br><span class="line"><span class="comment">#          [15., 19., 23.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 4.,  8., 12.],</span></span><br><span class="line"><span class="comment">#          [16., 20., 24.]]])</span></span><br></pre></td></tr></table></figure>
-<p><strong>nn.Linear()：改变最后一维，也就是数据的特征维度，通过调整output_size的尺寸来扩张或者是收缩特征</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2023/1/7 13:27</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 二维数组(2,4)</span></span><br><span class="line">x_2d = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">45</span>, <span class="number">6</span>]])</span><br><span class="line"><span class="comment"># 三维数组（2,3,4）</span></span><br><span class="line">x_3d = np.array([[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>]], [[<span class="number">1</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">5</span>], [<span class="number">3</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转成tensor的形式，因为Linear要求输入是float类型，因此还需要转成float32</span></span><br><span class="line">tensor_x_2d = torch.from_numpy(x_2d.astype(np.float32))</span><br><span class="line">tensor_x_3d = torch.from_numpy(x_3d.astype(np.float32))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用来改变最后数组最后一维的维度</span></span><br><span class="line"><span class="comment"># 用来缩小或者扩展特征维度</span></span><br><span class="line">embedding = nn.Linear(<span class="number">4</span>, <span class="number">3</span>)</span><br><span class="line">tensor_y_2d = embedding(tensor_x_2d)</span><br><span class="line">tensor_y_3d = embedding(tensor_x_3d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">print(tensor_y_2d)</span><br><span class="line"><span class="comment"># tensor([[  4.1090,  -2.4804,  -0.3711],</span></span><br><span class="line"><span class="comment">#         [ 23.7516, -20.5857,   0.4712]], grad_fn=&lt;AddmmBackward0&gt;)</span></span><br><span class="line"></span><br><span class="line">print(tensor_y_3d)</span><br><span class="line"><span class="comment"># tensor([[[ 4.1090, -2.4804, -0.3711],</span></span><br><span class="line"><span class="comment">#          [ 5.7849, -3.5626, -0.5762],</span></span><br><span class="line"><span class="comment">#          [ 6.0937, -3.4730, -1.0961]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 5.7498, -4.5819, -0.0172],</span></span><br><span class="line"><span class="comment">#          [ 5.4060, -4.7207,  0.3439],</span></span><br><span class="line"><span class="comment">#          [ 6.8580, -4.7442, -0.7933]]], grad_fn=&lt;AddBackward0&gt;)</span></span><br></pre></td></tr></table></figure>
-<p><strong>xxx.chunk()：将tensor按维度方向进行分割</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tensor = torch.tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]).reshape(<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">print(tensor)</span><br><span class="line"><span class="comment"># tensor([[1, 2, 3],</span></span><br><span class="line"><span class="comment">#         [4, 5, 6],</span></span><br><span class="line"><span class="comment">#         [7, 8, 9]])</span></span><br><span class="line"></span><br><span class="line">list_of_tensors = torch.chunk(tensor, <span class="number">3</span>, dim=<span class="number">0</span>)</span><br><span class="line">print(list_of_tensors)</span><br><span class="line"><span class="comment"># (tensor([[1, 2, 3]]), tensor([[4, 5, 6]]), tensor([[7, 8, 9]]))</span></span><br></pre></td></tr></table></figure>
-<p><strong>xxx.flatten()：将维度展开为一维的函数，其中dim参数表示从第dim个维度开始展开，将后面的维度转化成一维。</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = torch.rand(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">print(a.shape)</span><br><span class="line"><span class="comment"># torch.Size([2, 3, 4])</span></span><br><span class="line"></span><br><span class="line">d = a.flatten(<span class="number">1</span>)</span><br><span class="line">print(d.shape)</span><br><span class="line"><span class="comment"># torch.Size([2, 12])</span></span><br></pre></td></tr></table></figure>
-<p><strong>rearrange()：rearrange是einops中的一个函数调用方法。可以一次将多个维度转换，类似于permute</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> einops <span class="keyword">import</span> rearrange</span><br><span class="line">input_tensor = torch.randn(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">output_tensor = rearrange(input_tensor, <span class="string">&#x27;h w c -&gt; c h w&#x27;</span>)</span><br><span class="line">print(output_tensor.shape)</span><br><span class="line"><span class="comment"># torch.Size([4, 2, 3])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拆分维度</span></span><br><span class="line">input_tensor = torch.randn(<span class="number">2</span>, <span class="number">9</span>, <span class="number">4</span>)</span><br><span class="line">output_tensor = rearrange(input_tensor, <span class="string">&#x27;h (w c) d -&gt; h w c d&#x27;</span>, c=<span class="number">3</span>)</span><br><span class="line">print(output_tensor.shape)</span><br><span class="line"><span class="comment"># torch.Size([2, 3, 3, 4])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并维度</span></span><br><span class="line">input_tensor = torch.randn(<span class="number">2</span>,<span class="number">9</span>,<span class="number">4</span>)</span><br><span class="line">output_tensor = rearrange(input_tensor, <span class="string">&#x27;h w d -&gt; h (w d)&#x27;</span>)</span><br><span class="line">print(output_tensor.shape)</span><br><span class="line"><span class="comment"># torch.Size([2, 36])</span></span><br></pre></td></tr></table></figure>
-<h2 id="分布式数据训练"><a href="#分布式数据训练" class="headerlink" title="分布式数据训练"></a>分布式数据训练</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>在使用<code>DistributedDataParallel</code>时有一些概念必须掌握。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">单机多卡</th>
-<th style="text-align:center">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">world_size</td>
-<td style="text-align:center">代表机器一共有几块GPU</td>
-</tr>
-<tr>
-<td style="text-align:center">rank</td>
-<td style="text-align:center">第几块GPU</td>
-</tr>
-<tr>
-<td style="text-align:center">local_rank</td>
-<td style="text-align:center">第几块GPU，与rank相同</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">多机多卡</th>
-<th style="text-align:center">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">world_size</td>
-<td style="text-align:center">代表有几台机器，可以理解为几台服务器</td>
-</tr>
-<tr>
-<td style="text-align:center">rank</td>
-<td style="text-align:center">全部机器中的GPU的全局编号</td>
-</tr>
-<tr>
-<td style="text-align:center">local_rank</td>
-<td style="text-align:center">某台机器中的第几块GPU</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h3><ol>
-<li><p>配置基本参数</p>
-</li>
-<li><p>指定进程通讯方式</p>
-</li>
-<li><p>更改数据采样器</p>
-</li>
-<li><p>模型<code>BN</code>层替换，另外可以将<code>loss</code>集成到模型中，进一步提高多卡处理的性能</p>
-</li>
-<li><p><code>loss</code>及指标的同步和打印，模型的保存</p>
-</li>
-<li><p>启动分布式进程</p>
-</li>
-</ol>
-<h4 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h4><p>使用多进程进行分布式训练，我们需要为每个<code>GPU</code>启动一个进程。每个进程需要知道自己运行在哪个<code>GPU</code>上，以及自身在所有进程中的序号。对于多节点，我们需要在每个节点启动脚本。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">&quot;--logdir&quot;</span>, default=<span class="string">&quot;test&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;directory to save the tensorboard logs&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--world-size&quot;</span>, default=<span class="number">1</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;number of distributed processes&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--local_rank&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;rank of distributed processes&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--img_size&quot;</span>, default=<span class="number">384</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;input size&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--batch_size&quot;</span>, default=<span class="number">4</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;batch size&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--optim_lr&quot;</span>, default=<span class="number">1e-4</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, <span class="built_in">help</span>=<span class="string">&quot;optimization learning rate&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--optim_name&quot;</span>, default=<span class="string">&quot;adamw&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;optimization algorithm&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--norm_name&quot;</span>, default=<span class="string">&quot;instance&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;normalization name&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--reg_weight&quot;</span>, default=<span class="number">1e-5</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, <span class="built_in">help</span>=<span class="string">&quot;regularization weight&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--momentum&quot;</span>, default=<span class="number">0.99</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, <span class="built_in">help</span>=<span class="string">&quot;momentum&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--patch_size&quot;</span>, default=<span class="number">16</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&#x27;patch size&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--in_chans&quot;</span>, default=<span class="number">3</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;number of input channels&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--out_chans&quot;</span>, default=<span class="number">3</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;number of output channels&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--embed_dim&quot;</span>, default=<span class="number">256</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;embedding dimension&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--max_epochs&quot;</span>, default=<span class="number">100</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;max number of training epochs&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--distributed&quot;</span>, action=<span class="string">&quot;store_true&quot;</span>, <span class="built_in">help</span>=<span class="string">&quot;start distributed training&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--noamp&quot;</span>, action=<span class="string">&quot;store_true&quot;</span>, <span class="built_in">help</span>=<span class="string">&quot;do NOT use amp for training&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--workers&quot;</span>, default=<span class="number">8</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;number of workers&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--rank&quot;</span>, default=<span class="number">0</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;node rank for distributed training&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--dist-url&quot;</span>, default=<span class="string">&quot;tcp://127.0.0.1:23456&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;distributed url&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--dist-backend&quot;</span>, default=<span class="string">&quot;nccl&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;distributed backend&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--lrschedule&quot;</span>, default=<span class="string">&quot;cosine_anneal&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;type of learning rate scheduler&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--val_every&quot;</span>, default=<span class="number">5</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;validation frequency&quot;</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">args.amp = <span class="keyword">not</span> args.noamp</span><br><span class="line">args.logdir = <span class="string">&quot;./runs/&quot;</span> + args.logdir</span><br><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    args.ngpus_per_node = torch.cuda.device_count()</span><br><span class="line">    print(<span class="string">&quot;total gpus:&quot;</span>, args.ngpus_per_node)</span><br><span class="line">    args.world_size = args.ngpus_per_node * args.world_size</span><br><span class="line">    mp.spawn(main_worker, nprocs=args.ngpus_per_node, args=(args,))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    main_worker(gpu=<span class="number">0</span>, args=args)</span><br></pre></td></tr></table></figure>
-<p>其中<code>args.distributed</code>表示是否启用分布式训练，<code>args.world-size</code>表示进程总数，而<code>args.ngpus_per_node</code>是每个节点的<code>GPU</code>总数。节点总数乘以每个节点的<code>GPU</code>数可以得到<code>args.world-size</code>，也即进程总数。命令行参数<code>--loacl_rank</code>是必须声明的，但<strong>它不是由用户填写的，而是由PyTorch为用户填写</strong>，也就是说这个值是会被自动赋值为当前进程在本机上的<code>rank</code>。</p>
-<h4 id="指定进程通讯方式"><a href="#指定进程通讯方式" class="headerlink" title="指定进程通讯方式"></a>指定进程通讯方式</h4><p>所有的进程需要知道进程<code>0​</code>的<code>IP</code>地址以及端口，这样所有进程可以在开始时同步，一般情况下称进程<code>0</code>是<code>master</code>进程，比如我们会在进程<code>0</code>中打印信息或者保存模型。<code>PyTorch</code>提供了<code>mp.spawn</code>来在一个节点启动该节点所有进程，每个进程运行<code>main_worker(i, args)</code>，其中<code>i</code>从<code>0</code>到<code>args.gpus-1</code>。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    torch.multiprocessing.set_start_method(<span class="string">&quot;fork&quot;</span>, force=<span class="literal">True</span>)</span><br><span class="line">args.gpu = gpu</span><br><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    args.rank = args.rank * args.ngpus_per_node + gpu</span><br><span class="line">    dist.init_process_group(</span><br><span class="line">        backend=args.dist_backend, init_method=args.dist_url, world_size=args.world_size, rank=args.rank</span><br><span class="line">    )</span><br><span class="line">torch.cuda.set_device(args.gpu)</span><br><span class="line">torch.backends.cudnn.benchmark = <span class="literal">True</span></span><br><span class="line">print(<span class="string">&quot;rank:&quot;</span>, args.rank, <span class="string">&quot; gpu:&quot;</span>, args.gpu)</span><br><span class="line"><span class="keyword">if</span> args.rank == <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">&quot;batch size:&quot;</span>, args.batch_size, <span class="string">&quot;epochs:&quot;</span>, args.max_epochs)</span><br><span class="line">model = AFNONet(img_size=(args.img_size, args.img_size), patch_size=(args.patch_size, args.patch_size),</span><br><span class="line">                in_chans=args.in_chans, out_chans=args.out_chans, depth=<span class="number">5</span>, embed_dim=args.embed_dim)</span><br></pre></td></tr></table></figure>
-<h4 id="设置数据采样器"><a href="#设置数据采样器" class="headerlink" title="设置数据采样器"></a>设置数据采样器</h4><ul>
-<li><strong>Dataset</strong> : 从名字可以知道，是数据集的意思。负责对原始训练数据的封装，将其封装成<code>Python</code>可识别的数据结构，<code>Dataset</code>的派生类必须提供接口一边获取单个数据。</li>
-<li><strong>Sampler</strong> : 从名字可知，是采样器，负责采样方式或者说是采样策略，实现某种提取/采样策略从<code>Dataset</code>之中拿到数据索引，供<code>DataLoader</code>使用。可以认为，<code>Sampler</code>是指挥者，负责决定战斗在哪里开展。</li>
-<li><strong>DataLoader</strong> : 负责依据索引来从数据集中加载数据。支持<code>Map-style</code>和<code>Iterable-style</code>两种<code>Dataset</code>，支持单进程/多进程加载。<code>Loader</code>就是具体作战的斗士，负责按照<code>Sampler</code>的命令进行战斗。</li>
-</ul>
-<p><code>DistributedSampler</code>的分配方法是：每段连续的<code>num_replicas</code>个数据被拆成一个一个，分给<code>num_replicas</code>个进程，而且是通过每个<code>worker</code>的<code>rank</code>来获取数据，这样就达到了不重叠不交叉的目的，但也要注意的是：这样每个进程拿到的数据是不连续的。</p>
-<p>每次<code>epoch</code>都会<code>shuffle</code>数据集，<strong>但是不同进程如何保持shuffle之后数据集一致性</strong>？<code>DistributedSampler</code>使用当前的<code>epoch</code>作为随机数种子，在计算<code>index</code>之前就进行配置，从而保证不同进程都使用同样的随机数种子，这样<code>shuffle</code>出来的数据就能确保一致。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data_x = torch.rand(<span class="number">2048</span>, <span class="number">3</span>, <span class="number">384</span>, <span class="number">384</span>)</span><br><span class="line">data_y = data_x**<span class="number">3</span> + <span class="number">0.001</span>*data_x</span><br><span class="line">train_dataset = TensorDataset(data_x, data_y)</span><br><span class="line">train_sampler = DistributedSampler(train_dataset) <span class="keyword">if</span> args.distributed <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line">train_loader = DataLoader(</span><br><span class="line">    train_dataset,</span><br><span class="line">    batch_size=args.batch_size,</span><br><span class="line">    shuffle=(train_sampler <span class="keyword">is</span> <span class="literal">None</span>),</span><br><span class="line">    num_workers=args.workers,</span><br><span class="line">    sampler=train_sampler,</span><br><span class="line">    pin_memory=<span class="literal">True</span>,</span><br><span class="line">)</span><br><span class="line">data_x1 = torch.rand(<span class="number">64</span>, <span class="number">3</span>, <span class="number">384</span>, <span class="number">384</span>)</span><br><span class="line">data_y1 = data_x1**<span class="number">3</span> + <span class="number">0.001</span>*data_x1</span><br><span class="line">val_dataset = TensorDataset(data_x1, data_y1)</span><br><span class="line">val_sampler = DistributedSampler(val_dataset, shuffle=<span class="literal">False</span>) <span class="keyword">if</span> args.distributed <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line">val_loader = DataLoader(</span><br><span class="line">    val_dataset,</span><br><span class="line">    batch_size=args.batch_size,</span><br><span class="line">    shuffle=<span class="literal">False</span>,</span><br><span class="line">    num_workers=args.workers,</span><br><span class="line">    sampler=val_sampler,</span><br><span class="line">    pin_memory=<span class="literal">True</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h4 id="模型加载及替换"><a href="#模型加载及替换" class="headerlink" title="模型加载及替换"></a>模型加载及替换</h4><p>分布式训练需要将<code>bn</code>换成<code>sync_batchnorm</code>进行多卡同步，同时我们必须给<code>DDP</code>提示目前是哪个<code>rank</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">model.cuda(args.gpu)</span><br><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    torch.cuda.set_device(args.gpu)</span><br><span class="line">    <span class="keyword">if</span> args.norm_name == <span class="string">&quot;batch&quot;</span>:</span><br><span class="line">        model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)</span><br><span class="line">    model.cuda(args.gpu)</span><br><span class="line">    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu],output_device=args.gpu,</span><br><span class="line">                                                      find_unused_parameters=<span class="literal">True</span>)</span><br><span class="line">start_epoch = <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<h4 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h4><p>关于梯度回传和参数更新，跟单卡训练无异，这里我们不需要考虑对<code>loss</code>取平均，因为当我们回传<code>loss</code>后，<code>DDP</code>会自动对所有梯度进行平均，也就是说回传后我们更新的梯度和<code>DP</code>或者单卡同样<code>batch</code>训练都是一致的。为了进一步节省显存，可以使用混合精度进行训练<code>PyTorch1.6</code>以下需要自行编译<code>nvidia apex</code>，<code>PyTorch1.6</code>后内置了<code>apex</code>，不同训练方法修改的地方不完全相同</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    train_loader.sampler.set_epoch(epoch)</span><br><span class="line">    torch.distributed.barrier()</span><br><span class="line">    epoch_time = time.time()</span><br><span class="line">    train_loss = train_epoch(model, train_loader, optimizer, scaler=scaler, epoch=epoch,</span><br><span class="line">                             loss_func=loss_func, args=args)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_epoch</span>(<span class="params">model, loader, optimizer, scaler, epoch, loss_func, args</span>):</span></span><br><span class="line">    model.train()</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    run_loss = AverageMeter()</span><br><span class="line">    <span class="keyword">for</span> idx, batch_data <span class="keyword">in</span> <span class="built_in">enumerate</span>(loader):</span><br><span class="line">        data, target = batch_data</span><br><span class="line">        data, target = data.cuda(args.rank), target.cuda(args.rank)</span><br><span class="line">        <span class="keyword">for</span> param <span class="keyword">in</span> model.parameters():</span><br><span class="line">            param.grad = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">with</span> autocast(enabled=args.amp):</span><br><span class="line">            logits = model(data)</span><br><span class="line">            loss = loss_func(logits, target)</span><br><span class="line">        <span class="comment"># 混合精度训练</span></span><br><span class="line">        <span class="keyword">if</span> args.amp:</span><br><span class="line">            scaler.scale(loss).backward()</span><br><span class="line">            scaler.step(optimizer)</span><br><span class="line">            scaler.update()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            loss.backward()</span><br><span class="line">            optimizer.step()</span><br><span class="line">        <span class="keyword">if</span> args.distributed:</span><br><span class="line">            loss_list = distributed_all_gather([loss], out_numpy=<span class="literal">True</span>)</span><br><span class="line">            run_loss.update(</span><br><span class="line">                np.mean(np.mean(np.stack(loss_list, axis=<span class="number">0</span>), axis=<span class="number">0</span>), axis=<span class="number">0</span>), n=args.batch_size * args.world_size</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            run_loss.update(loss.item(), n=args.batch_size)</span><br><span class="line">        <span class="keyword">if</span> args.rank == <span class="number">0</span>:</span><br><span class="line">            print(</span><br><span class="line">                <span class="string">&quot;Epoch &#123;&#125;/&#123;&#125; &#123;&#125;/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(epoch + <span class="number">1</span>, args.max_epochs, idx + <span class="number">1</span>, <span class="built_in">len</span>(loader)),</span><br><span class="line">                <span class="string">&quot;loss: &#123;:.4f&#125;&quot;</span>.<span class="built_in">format</span>(run_loss.avg),</span><br><span class="line">                <span class="string">&quot;time &#123;:.2f&#125;s&quot;</span>.<span class="built_in">format</span>(time.time() - start_time),</span><br><span class="line">            )</span><br><span class="line">        start_time = time.time()</span><br><span class="line">    <span class="keyword">for</span> param <span class="keyword">in</span> model.parameters():</span><br><span class="line">        param.grad = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> run_loss.avg</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">val_epoch</span>(<span class="params">model, loader, epoch, acc_func, args</span>):</span></span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    run_acc = AverageMeter()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> idx, batch_data <span class="keyword">in</span> <span class="built_in">enumerate</span>(loader):</span><br><span class="line">            data, target = batch_data</span><br><span class="line">            data, target = data.cuda(args.rank), target.cuda(args.rank)</span><br><span class="line">            logits = model(data)</span><br><span class="line">            loss = acc_func(logits, target)</span><br><span class="line">            <span class="keyword">if</span> args.distributed:</span><br><span class="line">                loss_list = distributed_all_gather([loss], out_numpy=<span class="literal">True</span>)</span><br><span class="line">                run_acc.update(</span><br><span class="line">                    np.mean(np.mean(np.stack(loss_list, axis=<span class="number">0</span>), axis=<span class="number">0</span>), axis=<span class="number">0</span>), n=args.batch_size * args.world_size</span><br><span class="line">                )</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                run_acc.update(loss.item(), n=args.batch_size)</span><br><span class="line">            <span class="keyword">if</span> args.rank == <span class="number">0</span>:</span><br><span class="line">                print(</span><br><span class="line">                    <span class="string">&quot;Epoch &#123;&#125;/&#123;&#125; &#123;&#125;/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(epoch + <span class="number">1</span>, args.max_epochs, idx + <span class="number">1</span>, <span class="built_in">len</span>(loader)),</span><br><span class="line">                    <span class="string">&quot;val loss: &#123;:.4f&#125;&quot;</span>.<span class="built_in">format</span>(run_acc.avg),</span><br><span class="line">                    <span class="string">&quot;time &#123;:.2f&#125;s&quot;</span>.<span class="built_in">format</span>(time.time() - start_time),</span><br><span class="line">                )</span><br><span class="line">            start_time = time.time()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> run_acc.avg</span><br></pre></td></tr></table></figure>
-<h4 id="模型保存"><a href="#模型保存" class="headerlink" title="模型保存"></a>模型保存</h4><p>模型的保存也需要在主进程进行保存</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_checkpoint</span>(<span class="params">model, epoch, args, filename=<span class="string">&quot;model.pt&quot;</span>, best_acc=<span class="number">0</span></span>):</span></span><br><span class="line">    state_dict = model.state_dict() <span class="keyword">if</span> <span class="keyword">not</span> args.distributed <span class="keyword">else</span> model.module.state_dict()</span><br><span class="line">    save_dict = &#123;<span class="string">&quot;epoch&quot;</span>: epoch, <span class="string">&quot;best_acc&quot;</span>: best_acc, <span class="string">&quot;state_dict&quot;</span>: state_dict&#125;</span><br><span class="line">    filename = os.path.join(args.logdir, filename)</span><br><span class="line">    torch.save(save_dict, filename)</span><br><span class="line">    print(<span class="string">&quot;Saving checkpoint&quot;</span>, filename)</span><br></pre></td></tr></table></figure>
-<h4 id="启动多进程训练"><a href="#启动多进程训练" class="headerlink" title="启动多进程训练"></a>启动多进程训练</h4><p>直接在命令行运行：<code>python my_main.py --distributed</code></p>
-<h1 id="JAX代码实践"><a href="#JAX代码实践" class="headerlink" title="JAX代码实践"></a>JAX代码实践</h1><p>首先介绍一下<code>JAX</code>，<code>JAX</code>简单来说就是一种自动微分的<code>Numpy</code>。<code>JAX</code>并不是一个深度学习的框架，而是一个科学计算的框架，深度学习只是<code>JAX</code>功能的一个子集。<code>JAX</code>的主要功能如下：</p>
-<ul>
-<li>科学计算</li>
-</ul>
-<p>既然是<code>NumPy</code>，那就可以用<code>NumPy</code>接口做各类科学计算。除了之外还带自动微分，科学计算世界中，微分是最常用的一种计算。<code>JAX</code>的自动微分包含了前向微分、反向微分等各种接口。反正各类花式微分，几乎都可以用<code>JAX</code>实现。</p>
-<ul>
-<li><code>JIT</code>编译</li>
-</ul>
-<p>将<code>NumPy</code>接口写的计算转成高效的二进制代码，可以在<code>CPU/GPU/TPU</code>上获得极高加速比。<code>JIT</code>编译主要还是基于<code>XLA(accelerated linear algebra)</code>。<code>XLA</code>是一种编译器，可以将<code>TF/JAX</code>的代码在<code>CPU/GPU/TPU</code>上加速。说到<code>JAX</code>速度快，主要就靠<code>XLA</code>！</p>
-<ul>
-<li>并行化</li>
-</ul>
-<p>比起简单的<code>NumPy</code>，<code>JAX</code>提供了大量接口做并行。无论是<code>tf</code>还是<code>torch</code>，一个简单的并行方法是：<code>batch_size</code>。<code>JAX</code>用<code>vmap</code>做并行, 用户只用实现一条数据的处理，<code>JAX</code>将帮我们做拓展，可以拓展到<code>batch_size</code>大小。<code>vmap</code>的思想与<code>Spark</code>中的<code>map</code>一样。用户关注<code>map</code>里面的一条数据的处理方法，<code>JAX</code>帮我们做并行化。</p>
-<ul>
-<li>函数式编程</li>
-</ul>
-<p><strong>深度学习框架</strong></p>
-<p><code>JAX</code>并不是一个深度学习框架。想要做深度学习，还要再在<code>JAX</code>上套一层。要想在<code>JAX</code>上实现一个全连接网络，要<code>np.dot(w, x) + b</code>，没有现成的<code>nn.Dense</code>或者<code>nn.Linear</code>。于是有了<code>DeepMind</code>的<code>haiku</code>，<code>Google</code>的<code>Flax</code>和其他各种各样的库。<code>JAX</code>是纯函数的，代码写起来和<code>tf</code>、<code>torch</code>不太一样。没有了<code>.fit()</code> 这样傻瓜式的接口，没有<code>MSELoss</code>这样的损失函数。而且要适应数据的不可变：模型参数先初始化<code>init</code>，才能使用。</p>
-<h2 id="网络定义"><a href="#网络定义" class="headerlink" title="网络定义"></a>网络定义</h2><p>主要是需要在<code>__call__</code>函数完成前向计算逻辑，类似<code>Pytorch</code>中的<code>forward</code>函数。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    layer_sizes: Sequence[<span class="built_in">int</span>]</span><br><span class="line">    M: <span class="built_in">int</span></span><br><span class="line">    L: <span class="built_in">float</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setup</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.W1 = nn.Dense(features=layer_sizes[<span class="number">1</span>])</span><br><span class="line">        self.W2 = nn.Dense(features=layer_sizes[<span class="number">1</span>])</span><br><span class="line">        self.Wz = [nn.Dense(features=size) <span class="keyword">for</span> size <span class="keyword">in</span> layer_sizes[<span class="number">1</span>:]]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">input_encoding</span>(<span class="params">self, t, x</span>):</span></span><br><span class="line">        w = <span class="number">2.0</span> * jnp.pi / L</span><br><span class="line">        k = jnp.arange(<span class="number">1</span>, M + <span class="number">1</span>)</span><br><span class="line">        out = jnp.hstack([t, jnp.ones_like(t), jnp.cos(k * w * x), jnp.sin(k * w * x)])</span><br><span class="line">        <span class="keyword">return</span> out</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span>(<span class="params">self, t, x</span>):</span></span><br><span class="line">        X = self.input_encoding(t, x)</span><br><span class="line">        <span class="keyword">for</span> linear <span class="keyword">in</span> self.Wz[:-<span class="number">1</span>]:</span><br><span class="line">            X = nn.tanh(linear(X))</span><br><span class="line">        X = self.Wz[-<span class="number">1</span>](X)</span><br><span class="line">        <span class="keyword">return</span> X</span><br></pre></td></tr></table></figure>
-<h2 id="网络参数初始化"><a href="#网络参数初始化" class="headerlink" title="网络参数初始化"></a>网络参数初始化</h2><p>获取一个<code>PRNGKey</code>，并将其用于参数初始化，然后调用模型的<code>init</code>函数获取整个网络的<code>params</code>。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">M = <span class="number">10</span></span><br><span class="line">L = <span class="number">2.0</span> * jnp.pi</span><br><span class="line">layer_sizes = [<span class="number">2</span> * M + <span class="number">2</span>] + [<span class="number">128</span>] * <span class="number">8</span> + [<span class="number">1</span>]</span><br><span class="line">net = Net(layer_sizes, M, L)</span><br><span class="line"></span><br><span class="line">key = jax.random.PRNGKey(<span class="number">2023</span>)</span><br><span class="line">key, skey = jax.random.split(key)</span><br><span class="line">dummy_x = jax.random.uniform(skey, (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">key, skey = jax.random.split(skey)</span><br><span class="line">params = net.init(skey, dummy_x, dummy_x)</span><br></pre></td></tr></table></figure>
-<h2 id="optimizer定义"><a href="#optimizer定义" class="headerlink" title="optimizer定义"></a>optimizer定义</h2><p><code>optimizer</code>的定义和<code>Pytorch</code>类似。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lr = <span class="number">1e-3</span></span><br><span class="line">optimizer = optax.adam(learning_rate=lr)</span><br></pre></td></tr></table></figure>
-<h2 id="scheduler定义"><a href="#scheduler定义" class="headerlink" title="scheduler定义"></a>scheduler定义</h2><p><code>scheduler</code>的定义和<code>Pytorch</code>类似。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lr = <span class="number">1e-3</span></span><br><span class="line">schedule = optax.exponential_decay(</span><br><span class="line">    init_value=lr,</span><br><span class="line">    transition_steps=<span class="number">5000</span>,</span><br><span class="line">    decay_rate=<span class="number">0.99</span></span><br><span class="line">)</span><br><span class="line">optimizer = optax.adam(learning_rate=schedule)</span><br></pre></td></tr></table></figure>
-<h2 id="训练状态定义"><a href="#训练状态定义" class="headerlink" title="训练状态定义"></a>训练状态定义</h2><p>在<code>JAX</code>当中，比较常用的模式是创建一个单一的数据类，代表整个训练状态，包括步骤数、参数和优化器状态。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">state = train_state.TrainState.create(apply_fn=net.apply, params=params, tx=optimizer)</span><br></pre></td></tr></table></figure>
-<h2 id="模型训练-1"><a href="#模型训练-1" class="headerlink" title="模型训练"></a>模型训练</h2><p>因为<code>JAX</code>是面向函数编程，首先我们需要定义一下整个<code>loss</code>的形式。接着使用<code>grad</code>函数来计算损失函数的梯度。最后使用<code>apply_gradients</code>函数更新模型的参数。使用<code>@jit</code>装饰器来跟踪整个<code>train_step</code>函数，并用<code>XLA</code>将其及时编译成融合的设备操作，在硬件加速器上运行得更快、更有效。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@jax.jit</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span>(<span class="params">state, t_r, x_r, t_i, x_i, u_i</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">loss_fn</span>(<span class="params">params</span>):</span>        </span><br><span class="line">        u = state.apply_fn(params, t_r, x_r)</span><br><span class="line">        u0 = state.apply_fn(params, t_i, x_i)</span><br><span class="line">        u_t = diff(partial(state.apply_fn, params), <span class="number">0</span>)(t_r, x_r)</span><br><span class="line">        u_fn = <span class="keyword">lambda</span> x: state.apply_fn(params, t_r, x)</span><br><span class="line">        _, (u_x, u_xx, _, u_xxxx) = jet(u_fn, (x_r, ), [[<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>]])</span><br><span class="line">        f = jnp.zeros_like(u)</span><br><span class="line">        loss_f = mse_fn(u_t + (<span class="number">100</span>/<span class="number">16</span>) * u * u_x + (<span class="number">100</span>/<span class="number">16</span>**<span class="number">2</span>) * u_xx + (<span class="number">100</span>/<span class="number">16</span>**<span class="number">4</span>) * u_xxxx, f)</span><br><span class="line">        loss_d = mse_fn(u0, u_i)</span><br><span class="line">        loss = loss_f + <span class="number">100</span> * loss_d</span><br><span class="line">        <span class="keyword">return</span> loss, (loss_f, loss_d)</span><br><span class="line"></span><br><span class="line">    grads, (loss_f, loss_d) = jax.grad(loss_fn, argnums=<span class="number">0</span>, has_aux=<span class="literal">True</span>)(state.params)</span><br><span class="line">    state = state.apply_gradients(grads=grads)</span><br><span class="line">    <span class="keyword">return</span> state, loss_f, loss_d</span><br></pre></td></tr></table></figure>
-<h2 id="如何对输入变量求导"><a href="#如何对输入变量求导" class="headerlink" title="如何对输入变量求导"></a>如何对输入变量求导</h2><h3 id="低阶导数的求法"><a href="#低阶导数的求法" class="headerlink" title="低阶导数的求法"></a>低阶导数的求法</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diff</span>(<span class="params">func, argnums</span>):</span></span><br><span class="line">    <span class="keyword">return</span> jax.grad(<span class="keyword">lambda</span> *ar, **kw: jnp.<span class="built_in">sum</span>(func(*ar, **kw)), argnums=argnums)</span><br><span class="line"></span><br><span class="line">u_fn1 = partial(state.apply_fn, params)</span><br><span class="line">u = u_fn1(t_r, x_r)</span><br><span class="line">u_t = diff(u_fn1, <span class="number">0</span>)(t_r, x_r)</span><br></pre></td></tr></table></figure>
-<p>首先介绍一下上面代码段中的<code>partial</code>函数，我们调用函数时需要输入函数的变量，但是对于某些函数，我们可能每次调用的某些变量值是不变的，所以我们就可以将这些参数固定下来。上面代码段中的<code>state.apply_fn</code>函数对应的是<code>net.apply</code>函数（对于<code>net.apply</code>函数来说，如果没有特指就是模型的<code>__call__</code>函数，如果特指可能是模型中的其他函数，也可能是不属于模型的函数），这个函数的第一个参数是<code>params</code>，也就是模型的参数。<code>diff</code>函数是我们定义的对某个函数的某个变量求导的函数。</p>
-<h3 id="高阶导数的求法"><a href="#高阶导数的求法" class="headerlink" title="高阶导数的求法"></a>高阶导数的求法</h3><p>我们既可以采用同低阶导数相同的求法进行嵌套求解，即先求一阶导，再对一阶导数求导就可以得到二阶导，依此类推。同时我们也可以使用<code>Taylor mode</code>求高阶导数，这里主要是<code>jet</code>函数的应用。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">u_fn1 = partial(state.apply_fn, params)</span><br><span class="line">u = u_fn1(t_r, x_r)</span><br><span class="line">u_t = diff(u_fn1, <span class="number">0</span>)(t_r, x_r)</span><br><span class="line">u_x = diff(u_fn1, <span class="number">1</span>)(t_r, x_r)</span><br><span class="line">u_xx = diff(diff(u_fn1, <span class="number">1</span>), <span class="number">1</span>)(t_r, x_r)</span><br><span class="line">u_xxxx = diff(diff(diff(diff(u_fn1, <span class="number">1</span>), <span class="number">1</span>), <span class="number">1</span>), <span class="number">1</span>)(t_r, x_r)</span><br><span class="line"></span><br><span class="line"><span class="comment"># u_fn = lambda x_r: state.apply_fn(params, t_r, x_r) # For using Taylor-mode AD</span></span><br><span class="line"><span class="comment"># _, (u_x, u_xx, _, u_xxxx) = jet(u_fn, (x_r, ), [[1.0, 0.0, 0.0, 0.0]]) #  Taylor-mode AD</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -1299,6 +1105,25 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p>按照定义，AUC即ROC曲线下的面积，而ROC曲线的横轴是FPRate，纵轴是TPRate，当二者相等时，即y=x，表明分类器对于正例和负例毫无区分能力。而我们希望分类器达到的效果是：对于真实类别为1的样本，分类器预测为1的概率（即TPRate），要大于真实类别为0而预测类别为1的概率（即FPRate），即y＞x，因此大部分的ROC曲线长成下面这个样子：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_53.png" alt=""></p>
 <p>最理想的情况下，即没有真实类别为1而错分为0的样本（TPRate一直为1），也没有真实类别为0而错分为1的样本（FPRate一直为0），AUC为1，这便是AUC的极大值。</p>
+<h4 id="AUC曲线的物理意义"><a href="#AUC曲线的物理意义" class="headerlink" title="AUC曲线的物理意义"></a>AUC曲线的物理意义</h4><p>AUC的物理意义可以从两个角度来解释。首先，从物理学角度来看，AUC可以被认为是分类器对于正负样本的区分能力的一种物理量度。它被定义为ROC曲线下的面积，描述了分类器在所有可能的阈值下对正负样本的区分能力。</p>
+<p>其次，在机器学习领域中，AUC被广泛应用于二分类问题中，用于衡量分类器对正负样本的区分能力。AUC越大，表示分类器对于正负样本的区分能力越强，即分类器能够更好地将正样本和负样本分开。而AUC越小，则表示分类器对于正负样本的区分能力越弱，即分类器不能很好地将正样本和负样本分开。</p>
+<p>因此，AUC的物理意义可以被解释为一个物理系统中的能量积分，用于描述该系统的能量积分性能。在物理学中，能量积分是指对于一个物理系统中的所有可能状态，将每个状态的能量乘以该状态出现的概率，然后将所有状态的能量乘以概率的积分。这个积分值就是该物理系统的能量积分。在机器学习中，AUC也可以被解释为分类器对于正负样本的区分能力的一种物理量度。</p>
+<h4 id="AUC的计算公式"><a href="#AUC的计算公式" class="headerlink" title="AUC的计算公式"></a>AUC的计算公式</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308261737231.jpg" alt=""></p>
+<ul>
+<li>对预测概率从高到低排序</li>
+<li>对每一个概率值设一个rank值（最高的概率的rank为n，第二高的为n-1）</li>
+<li>rank实际上代表了该score（预测概率）超过的样本的数目。为了求的组合中正样本的score值大于负样本，如果所有的正样本score值都是大于负样本的，那么第一位与任意的进行组合score值都要大，我们取它的rank值为n，但是n-1中有M-1是正样例和正样例的组合这种是不在统计范围内的（为计算方便我们取n组，相应的不符合的有M个），所以要减掉，那么同理排在第二位的n-1，会有M-1个是不满足的，依次类推，故得到后面的公式 $M\ast(M+1)/2$，我们可以验证在正样本score都大于负样本的假设下，AUC的值为1。如果排序的时候有概率相同的，原则就是相等得分的rank取平均值。</li>
+<li>除以 $M \ast N$</li>
+</ul>
+<p>例子：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308261747231.png" alt=""></p>
+<ul>
+<li>对于正样本A，其rank值为7</li>
+<li>对于正样本B，其rank值为6</li>
+<li>对于正样本E，其rank值为（5+4+3+2）/ 4</li>
+<li>对于正样本F，其rank值为（5+4+3+2）/ 4</li>
+<li>最后的结果就为：$\frac{7+6+(5+4+3+2)/4+(5+4+3+2)/4-4 \ast 5/2}{4 \ast 3}=10/12$</li>
+</ul>
 ]]></content>
       <categories>
         <category>总结</category>
@@ -1915,6 +1740,236 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       </tags>
   </entry>
   <entry>
+    <title>机器学习Tricks</title>
+    <url>/2022/10/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0Tricks/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在机器学习应用过程中遇到的一些问题，包括理论、代码实践等方面。</p>
+<a id="more"></a>
+<h1 id="One-Hot编码"><a href="#One-Hot编码" class="headerlink" title="One-Hot编码"></a>One-Hot编码</h1><p><code>One-Hot</code>编码也叫独热编码，又称一位有效编码。方法就是用 $N$ 位对 $N$ 个状态进行表示，但是其中只有一位为 $1$，剩下 $N-1$ 位全为 $0$。例如，特征为性别，就需要变成 $10$ 和 $01$。</p>
+<p>在回归，分类，聚类等机器学习算法中，特征之间距离的计算或相似度的计算是非常重要的。而常用的距离或相似度的计算都是在欧式空间的相似度计算，计算余弦相似性，基于的就是欧式空间。使用独热编码（One-Hot Encoding），将离散特征的取值扩展到了欧式空间，离散特征的某个取值就对应欧式空间的某个点。将离散型特征使用独热编码（One-Hot Encoding），会让特征之间的距离计算更加合理。</p>
+<p>举个例子，如果我们现在一个特征有五个取值，如果不采用One-Hot编码，则分别表示为演员=0，厨师=1，公务员=2，教师=3，律师=4，那么教师和厨师的距离为2，律师与厨师的距离为3，这显然是不合理的。比较合理的做法是将两个工作之间的距离表示为sqrt(2)，即两个工作之间的距离是一样的。</p>
+<p>总结一下，如果特征的大小表示如果有意义的话，比如我们用1-9表示年龄，这种特征的大小表示就是有意义的，所以这种情况下就不需要进行One-Hot编码；如果特征的大小没有意义，仅仅表示状态时则使用One-Hot编码。</p>
+<p>pandas实现：首先对f3这个特征做One-Hot编码，接着将生成的df和原来的df进行拼接，最后删除原来的f3特征</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1: using get_dummies to encode feature</span></span><br><span class="line">dummy_df = pd.get_dummies(df[<span class="string">&quot;gender&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 2: concat dummy_df with original df</span></span><br><span class="line">df = pd.concat((df, dummy_df), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3: remove original feature</span></span><br><span class="line">df = df.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># simplified form</span></span><br><span class="line"><span class="comment"># df = pd.concat((df, pd.get_dummies(df[&quot;gender&quot;])), axis=1)</span></span><br><span class="line"><span class="comment"># df = df.drop(&quot;gender&quot;, axis=1)</span></span><br></pre></td></tr></table></figure>
+<p>存在问题：</p>
+<ol>
+<li><p>采用这种方法实现会存在问题，比如将性别划分成gender_male和gender_female时，这两种特征其实是冗余的，这个问题在数学中叫做多重共线性(Multicollinearity)，在pandas处理时也有人称之为虚拟变量陷阱(Dummy Varialble Trap)。解决办法就是加入参数drop_first=True，作用是除去第一个虚拟变量，然转化后的虚拟变量从k和变成k-1个。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1: using get_dummies to encode feature</span></span><br><span class="line">dummy_df = pd.get_dummies(df[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 2: concat dummy_df with original df</span></span><br><span class="line">df = pd.concat((df, dummy_df), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3: remove original feature</span></span><br><span class="line">df = df.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># simplified form</span></span><br><span class="line"><span class="comment"># df = pd.concat((df, pd.get_dummies(df[&quot;gender&quot;], drop_first=True)), axis=1)</span></span><br><span class="line"><span class="comment"># df = df.drop(&quot;gender&quot;, axis=1)</span></span><br></pre></td></tr></table></figure></li>
+<li><p>测试集中可能出现训练集中没出现过的变量。解决办法：①将训练集和测试集一起get_dummies，然后再切分；②检测不一致的列，然后在缺少这些列的数据集中加入取值全为0的同名列。③使用sklearn的OneHotEncoder</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">test = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>],</span><br><span class="line">        [<span class="number">1003</span>, <span class="string">&quot;unknown&quot;</span>, <span class="number">88</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">train = pd.concat((train, pd.get_dummies(train[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)), axis=<span class="number">1</span>)</span><br><span class="line">train.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line">test = pd.concat((test, pd.get_dummies(test[<span class="string">&quot;gender&quot;</span>], drop_first=<span class="literal">True</span>)), axis=<span class="number">1</span>)</span><br><span class="line">test.drop(<span class="string">&quot;gender&quot;</span>, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">list</span>(test.columns.difference(train.columns)):<span class="comment">#train没有的列</span></span><br><span class="line">    df_obj = pd.DataFrame(&#123;col:np.squeeze(np.zeros((<span class="number">1</span>,train.shape[<span class="number">0</span>])))&#125;)</span><br><span class="line">    train = pd.concat([train,df_obj], axis=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">list</span>(train.columns.difference(test.columns)):<span class="comment">#test没有的列</span></span><br><span class="line">    df_obj = pd.DataFrame(&#123;col:np.squeeze(np.zeros((<span class="number">1</span>,test.shape[<span class="number">0</span>])))&#125;)</span><br><span class="line">    test = pd.concat([test,df_obj], axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>sklearn实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</span><br><span class="line"></span><br><span class="line">train = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">test = pd.DataFrame(</span><br><span class="line">    [</span><br><span class="line">        [<span class="number">1000</span>, <span class="string">&quot;male&quot;</span>, <span class="number">23</span>],</span><br><span class="line">        [<span class="number">1001</span>, <span class="string">&quot;female&quot;</span>, <span class="number">22</span>],</span><br><span class="line">        [<span class="number">1002</span>, <span class="string">&quot;male&quot;</span>, <span class="number">69</span>],</span><br><span class="line">        [<span class="number">1003</span>, <span class="string">&quot;unknown&quot;</span>, <span class="number">88</span>]</span><br><span class="line">    ],</span><br><span class="line">    columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># drop:k-1 to represent k; handle_unknown:for missing value</span></span><br><span class="line">encoder = OneHotEncoder(sparse=<span class="literal">False</span>, handle_unknown=<span class="string">&#x27;ignore&#x27;</span>, drop=<span class="string">&quot;first&quot;</span>)</span><br><span class="line"><span class="comment"># fit</span></span><br><span class="line">enc = encoder.fit(train[[<span class="string">&quot;gender&quot;</span>]])</span><br><span class="line"><span class="comment"># 获取新列名</span></span><br><span class="line">columns = enc.get_feature_names_out([<span class="string">&quot;gender&quot;</span>])</span><br><span class="line"><span class="comment"># 转换测试数据</span></span><br><span class="line">enc_arr = enc.transform(test[[<span class="string">&quot;gender&quot;</span>]])</span><br><span class="line"><span class="comment"># 生成dataframe</span></span><br><span class="line">enc_df = pd.DataFrame(enc_arr, columns=columns)</span><br><span class="line">new_data = pd.concat([test, enc_df], axis=<span class="number">1</span>)</span><br><span class="line">new_data.drop([<span class="string">&quot;gender&quot;</span>], axis=<span class="number">1</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">new_data</span><br></pre></td></tr></table></figure>
+<h1 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h1><p>对于某一个特征，比如频率，原始数据可能时low、mid、high这种字符类型，模型是没办法利用这些信息的，所以应当把这种字符类型的变量转变成数值类型的变量。</p>
+<p>pandas实现：</p>
+<p>最常用的是pd.factorize()，返回值为一个元组，分别表示转换之后的数字和原来的index。我们应该取元组的第一个元素作为我们的结果。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">data[<span class="string">&quot;f3&quot;</span>] = pd.factorize(data[<span class="string">&quot;f3&quot;</span>])[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>但是这种方法有个缺点，先出现的编码小，后出现的编码大。比如频率越高，编码的值应该越大，但是pd.factorize()就捕捉不到这个特征，此时我们可以使用map映射。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">col_mapping = &#123;</span><br><span class="line">    <span class="string">&quot;low&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;mid&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&quot;high&quot;</span>: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">data.f3 = data.f3.<span class="built_in">map</span>(col_mapping)</span><br></pre></td></tr></table></figure>
+<p>sklearn实现：和One-Hot编码相似，先fit，然后再transform</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&#x27;../dataset/dataTrain.csv&#x27;</span>)</span><br><span class="line">cat_columns = [<span class="string">&#x27;f3&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> cat_columns:</span><br><span class="line">    lb = LabelEncoder()</span><br><span class="line">    lb.fit(data[col])</span><br><span class="line">    data[col] = lb.transform(data[col])</span><br></pre></td></tr></table></figure>
+<h1 id="PyTorch代码实践"><a href="#PyTorch代码实践" class="headerlink" title="PyTorch代码实践"></a>PyTorch代码实践</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p><strong>Tensor的常见形式有哪些</strong></p>
+<ul>
+<li>0：scalar</li>
+<li>1：vector</li>
+<li>2：matrix</li>
+<li>3：n-dimensional tensor</li>
+</ul>
+<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><p><strong>torch.empty()：新建矩阵</strong></p>
+<p><strong>torch.rand()：生成随机矩阵</strong></p>
+<p><strong>torch.zeros()：生成全0的矩阵</strong></p>
+<p><strong>xxx.size()：展示矩阵大小</strong></p>
+<p><strong>xxx.view()：改变矩阵维度</strong></p>
+<p><strong>xxx.numpy()：将tensor转换为array</strong></p>
+<p><strong>torch.from_numpy()：将array转换为tensor</strong></p>
+<p><strong>xxx.requires_grad=True：定义自动求导</strong></p>
+<h2 id="高阶操作"><a href="#高阶操作" class="headerlink" title="高阶操作"></a>高阶操作</h2><p><strong>nn.Conv2d()：卷积操作</strong></p>
+<ol>
+<li><code>in_channels</code>：输入的四维张量<code>[N, C, H, W]</code>中的<code>C</code>，即输入张量的<code>channels</code>数。这个形参是确定权重等可学习参数的<code>shape</code>所必需的。</li>
+<li><code>out_channels</code>：期望的四维输出张量的<code>channels</code>数。</li>
+<li><code>kernel_size</code>：卷积核的大小，一般我们会使用<code>5x5</code>、<code>3x3</code>这种左右两个数相同的卷积核，因此这种情况只需要写 <code>kernel_size=5</code> 这样的就行了。如果左右两个数不同，比如<code>3x5</code>的卷积核，那么写作 <code>kernel_size=(3,5)</code>，注意需要写一个<code>tuple</code>，而不能写一个<code>list</code>。</li>
+<li><code>stride=1</code>：卷积核在图像窗口上每次平移的间隔，即所谓的步长。</li>
+<li><code>padding=0</code>：<code>padding</code>即所谓的图像填充，后面的int型常数代表填充的多少（行数、列数），默认为<code>0</code>。需要注意的是这里的填充包括图像的上下左右，以<code>padding=1</code>为例，若原始图像大小为<code>32x32</code>，那么<code>padding</code>后的图像大小就变成了<code>34x34</code>，而不是<code>33x33</code>。</li>
+<li><code>dilation=1</code>：这个参数决定了是否采用空洞卷积，默认为<code>1</code>，即不采用。</li>
+<li><code>groups=1</code>：决定了是否采用分组卷积。</li>
+<li><code>bias=True</code>：即是否要添加偏置参数作为可学习参数的一个，默认为<code>True</code>。</li>
+<li><code>padding_mode=&#39;zeros&#39;</code>：<code>padding</code>的模式，默认采用零填充。</li>
+</ol>
+<p><strong>xxx.tranpose()：将维度1和维度2调换位置，该函数只能转换两个维度，若想要转换多个维度则需要使用permute</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = torch.rand(<span class="number">1</span>, <span class="number">22</span>, <span class="number">56</span>, <span class="number">114</span>)</span><br><span class="line">print(a.transpose(<span class="number">2</span>, <span class="number">3</span>).shape)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># torch.Size([1, 22, 114, 59])</span></span><br></pre></td></tr></table></figure>
+<p><strong>xxx.permute()：转换向量维度</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2023/1/7 13:27</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置一个三维数组</span></span><br><span class="line">x = torch.linspace(<span class="number">1</span>, <span class="number">24</span>, steps=<span class="number">24</span>).view(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不改变维度 2*3*4-&gt;2*3*4</span></span><br><span class="line">a = x.permute(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">print(a)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  2.,  3.,  4.],</span></span><br><span class="line"><span class="comment">#          [ 5.,  6.,  7.,  8.],</span></span><br><span class="line"><span class="comment">#          [ 9., 10., 11., 12.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[13., 14., 15., 16.],</span></span><br><span class="line"><span class="comment">#          [17., 18., 19., 20.],</span></span><br><span class="line"><span class="comment">#          [21., 22., 23., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 每一块的行与列进行交换，即每一块做转置 2*3*4-&gt;2*4*3</span></span><br><span class="line">b = x.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">print(b)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  5.,  9.],</span></span><br><span class="line"><span class="comment">#          [ 2.,  6., 10.],</span></span><br><span class="line"><span class="comment">#          [ 3.,  7., 11.],</span></span><br><span class="line"><span class="comment">#          [ 4.,  8., 12.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[13., 17., 21.],</span></span><br><span class="line"><span class="comment">#          [14., 18., 22.],</span></span><br><span class="line"><span class="comment">#          [15., 19., 23.],</span></span><br><span class="line"><span class="comment">#          [16., 20., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和行 2*3*4-&gt;3*2*4</span></span><br><span class="line">c = x.permute(<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">print(c)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  2.,  3.,  4.],</span></span><br><span class="line"><span class="comment">#          [13., 14., 15., 16.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 5.,  6.,  7.,  8.],</span></span><br><span class="line"><span class="comment">#          [17., 18., 19., 20.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 9., 10., 11., 12.],</span></span><br><span class="line"><span class="comment">#          [21., 22., 23., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和列 2*3*4-&gt;4*3*2</span></span><br><span class="line">d = x.permute(<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">print(d)</span><br><span class="line"><span class="comment"># tensor([[[ 1., 13.],</span></span><br><span class="line"><span class="comment">#          [ 5., 17.],</span></span><br><span class="line"><span class="comment">#          [ 9., 21.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 2., 14.],</span></span><br><span class="line"><span class="comment">#          [ 6., 18.],</span></span><br><span class="line"><span class="comment">#          [10., 22.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 3., 15.],</span></span><br><span class="line"><span class="comment">#          [ 7., 19.],</span></span><br><span class="line"><span class="comment">#          [11., 23.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 4., 16.],</span></span><br><span class="line"><span class="comment">#          [ 8., 20.],</span></span><br><span class="line"><span class="comment">#          [12., 24.]]])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交换块和行和列 2*3*4-&gt;4*2*3</span></span><br><span class="line">e = x.permute(<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">print(e)</span><br><span class="line"><span class="comment"># tensor([[[ 1.,  5.,  9.],</span></span><br><span class="line"><span class="comment">#          [13., 17., 21.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 2.,  6., 10.],</span></span><br><span class="line"><span class="comment">#          [14., 18., 22.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 3.,  7., 11.],</span></span><br><span class="line"><span class="comment">#          [15., 19., 23.]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 4.,  8., 12.],</span></span><br><span class="line"><span class="comment">#          [16., 20., 24.]]])</span></span><br></pre></td></tr></table></figure>
+<p><strong>nn.Linear()：改变最后一维，也就是数据的特征维度，通过调整output_size的尺寸来扩张或者是收缩特征</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2023/1/7 13:27</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 二维数组(2,4)</span></span><br><span class="line">x_2d = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">45</span>, <span class="number">6</span>]])</span><br><span class="line"><span class="comment"># 三维数组（2,3,4）</span></span><br><span class="line">x_3d = np.array([[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>]], [[<span class="number">1</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">5</span>], [<span class="number">3</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转成tensor的形式，因为Linear要求输入是float类型，因此还需要转成float32</span></span><br><span class="line">tensor_x_2d = torch.from_numpy(x_2d.astype(np.float32))</span><br><span class="line">tensor_x_3d = torch.from_numpy(x_3d.astype(np.float32))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用来改变最后数组最后一维的维度</span></span><br><span class="line"><span class="comment"># 用来缩小或者扩展特征维度</span></span><br><span class="line">embedding = nn.Linear(<span class="number">4</span>, <span class="number">3</span>)</span><br><span class="line">tensor_y_2d = embedding(tensor_x_2d)</span><br><span class="line">tensor_y_3d = embedding(tensor_x_3d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">print(tensor_y_2d)</span><br><span class="line"><span class="comment"># tensor([[  4.1090,  -2.4804,  -0.3711],</span></span><br><span class="line"><span class="comment">#         [ 23.7516, -20.5857,   0.4712]], grad_fn=&lt;AddmmBackward0&gt;)</span></span><br><span class="line"></span><br><span class="line">print(tensor_y_3d)</span><br><span class="line"><span class="comment"># tensor([[[ 4.1090, -2.4804, -0.3711],</span></span><br><span class="line"><span class="comment">#          [ 5.7849, -3.5626, -0.5762],</span></span><br><span class="line"><span class="comment">#          [ 6.0937, -3.4730, -1.0961]],</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#         [[ 5.7498, -4.5819, -0.0172],</span></span><br><span class="line"><span class="comment">#          [ 5.4060, -4.7207,  0.3439],</span></span><br><span class="line"><span class="comment">#          [ 6.8580, -4.7442, -0.7933]]], grad_fn=&lt;AddBackward0&gt;)</span></span><br></pre></td></tr></table></figure>
+<p><strong>xxx.chunk()：将tensor按维度方向进行分割</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tensor = torch.tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]).reshape(<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">print(tensor)</span><br><span class="line"><span class="comment"># tensor([[1, 2, 3],</span></span><br><span class="line"><span class="comment">#         [4, 5, 6],</span></span><br><span class="line"><span class="comment">#         [7, 8, 9]])</span></span><br><span class="line"></span><br><span class="line">list_of_tensors = torch.chunk(tensor, <span class="number">3</span>, dim=<span class="number">0</span>)</span><br><span class="line">print(list_of_tensors)</span><br><span class="line"><span class="comment"># (tensor([[1, 2, 3]]), tensor([[4, 5, 6]]), tensor([[7, 8, 9]]))</span></span><br></pre></td></tr></table></figure>
+<p><strong>xxx.flatten()：将维度展开为一维的函数，其中dim参数表示从第dim个维度开始展开，将后面的维度转化成一维。</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = torch.rand(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">print(a.shape)</span><br><span class="line"><span class="comment"># torch.Size([2, 3, 4])</span></span><br><span class="line"></span><br><span class="line">d = a.flatten(<span class="number">1</span>)</span><br><span class="line">print(d.shape)</span><br><span class="line"><span class="comment"># torch.Size([2, 12])</span></span><br></pre></td></tr></table></figure>
+<p><strong>rearrange()：rearrange是einops中的一个函数调用方法。可以一次将多个维度转换，类似于permute</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> einops <span class="keyword">import</span> rearrange</span><br><span class="line">input_tensor = torch.randn(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">output_tensor = rearrange(input_tensor, <span class="string">&#x27;h w c -&gt; c h w&#x27;</span>)</span><br><span class="line">print(output_tensor.shape)</span><br><span class="line"><span class="comment"># torch.Size([4, 2, 3])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拆分维度</span></span><br><span class="line">input_tensor = torch.randn(<span class="number">2</span>, <span class="number">9</span>, <span class="number">4</span>)</span><br><span class="line">output_tensor = rearrange(input_tensor, <span class="string">&#x27;h (w c) d -&gt; h w c d&#x27;</span>, c=<span class="number">3</span>)</span><br><span class="line">print(output_tensor.shape)</span><br><span class="line"><span class="comment"># torch.Size([2, 3, 3, 4])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并维度</span></span><br><span class="line">input_tensor = torch.randn(<span class="number">2</span>,<span class="number">9</span>,<span class="number">4</span>)</span><br><span class="line">output_tensor = rearrange(input_tensor, <span class="string">&#x27;h w d -&gt; h (w d)&#x27;</span>)</span><br><span class="line">print(output_tensor.shape)</span><br><span class="line"><span class="comment"># torch.Size([2, 36])</span></span><br></pre></td></tr></table></figure>
+<h2 id="自定义Dataset、Dataloader、Sampler"><a href="#自定义Dataset、Dataloader、Sampler" class="headerlink" title="自定义Dataset、Dataloader、Sampler"></a>自定义Dataset、Dataloader、Sampler</h2><p>假设我有 $10000$ 条训练数据，这些训练数据是有时间先后顺序， $0-1000$ 是 $t=0$ 时刻的数据， $1000-2000$ 是 $t=1$ 时刻的数据，依次类推。模型的输入需要保留这种时间的先后顺序，我想每 $1000$ 条数据当中取 $100$ 条，构成一个<code>batch</code>的训练数据，因此我的<code>batch_size</code>就应该是 $1000$，一共有 $10$ 个<code>batch</code>。想要实现这个目标就需要自定义数据的采样方式。</p>
+<p>具体做法是自己实现一个<code>MySampler</code>，继承自<code>Sampler</code>，需要实现<code>__init__</code>、<code>__len__</code>和<code>__iter__</code>方法，在<code>__iter__</code>方法当中需要自定义<code>index</code>的选取方式，比如我这里就是一共要采样 $10$ 次，每次分别在时间间隔中取想要的样本条数，然后返回一个<code>index</code>的可迭代的对象即可：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySampler</span>(<span class="params">Sampler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, data_source, skip_interval</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(data_source)</span><br><span class="line">        self.data_source = data_source</span><br><span class="line">        self.skip_interval = skip_interval</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.data_source)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        n = (<span class="built_in">len</span>(self.data_source) - <span class="number">1</span>) // self.skip_interval + <span class="number">1</span></span><br><span class="line">        indices = []</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(Args.NX // Args.SUB_NX * Args.NY // Args.SUB_NY):</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                indices += random.sample(<span class="built_in">range</span>(i * self.skip_interval, (i + <span class="number">1</span>) * self.skip_interval),</span><br><span class="line">                                         Args.SUB_NX * Args.SUB_NY)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">iter</span>(indices)</span><br></pre></td></tr></table></figure>
+<h3 id="源码解读"><a href="#源码解读" class="headerlink" title="源码解读"></a>源码解读</h3><p>首先了解一下<code>Dataloader</code>类的参数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, dataset: Dataset[T_co], batch_size: Optional[<span class="built_in">int</span>] = <span class="number">1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             shuffle: Optional[<span class="built_in">bool</span>] = <span class="literal">None</span>, sampler: Union[Sampler, Iterable, <span class="literal">None</span>] = <span class="literal">None</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             batch_sampler: Union[Sampler[Sequence], Iterable[Sequence], <span class="literal">None</span>] = <span class="literal">None</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             num_workers: <span class="built_in">int</span> = <span class="number">0</span>, collate_fn: Optional[_collate_fn_t] = <span class="literal">None</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             pin_memory: <span class="built_in">bool</span> = <span class="literal">False</span>, drop_last: <span class="built_in">bool</span> = <span class="literal">False</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             timeout: <span class="built_in">float</span> = <span class="number">0</span>, worker_init_fn: Optional[_worker_init_fn_t] = <span class="literal">None</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             multiprocessing_context=<span class="literal">None</span>, generator=<span class="literal">None</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             *, prefetch_factor: <span class="built_in">int</span> = <span class="number">2</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             persistent_workers: <span class="built_in">bool</span> = <span class="literal">False</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             pin_memory_device: <span class="built_in">str</span> = <span class="string">&quot;&quot;</span></span>):</span></span><br></pre></td></tr></table></figure>
+<p><code>dataset</code>就是我们的数据集，<code>batch_size</code>就是每个<code>batch</code>的大小，<code>shuffle</code>代表是否打乱，这些是我们比较常用的参数，有一些其他参数也需要了解。首先<code>sampler</code>是一个采样器，可以默认也可以自定义，分布式训练的时候可能需要设置为<code>DistributedSampler</code>；<code>batch_sampler</code>用于指定从<code>sampler</code>返回的<code>index</code>当中选<code>batch_size</code>个打包成一个批次的数据，<code>num_workers</code>用于设置用于数据加载的子进程数量；<code>collate_fn</code>用于对数据集的处理，将<code>NumPy arrays</code>转换为<code>PyTorch tensors</code>。</p>
+<p><code>dataset</code>：<code>PyTorch</code>支持两种类型的数据集<code>Map-style Dataset</code>和<code>Iterable-style Dataset</code>，前者本质上构建了<code>index</code>到<code>data</code>的映射，<code>dataset[idx]</code> 返回数据集中第<code>idx</code>个<code>item</code>；后者本质上是一个可迭代对象，通过 <code>next(dataset)</code> 调用 <code>__iter__(self)</code> 方法返回数据集的下一个<code>item</code>。</p>
+<ul>
+<li><p>如果 <code>dataset</code> 使用<code>IterableDataset</code>，则不能指定 <code>sampler</code>, <code>batch_sampler</code></p>
+</li>
+<li><ul>
+<li><code>sampler</code> 将使用 <code>_InfiniteConstantSampler()</code>，这是一个<code>dummy sampler</code>，调用 <code>__iter__(self)</code> 方法永远返回<code>None</code></li>
+<li><code>batch_sampler</code> 将使用内置的<code>BatchSampler</code></li>
+<li>可以指定 <code>batch_size</code>, <code>drop_last</code></li>
+</ul>
+</li>
+</ul>
+<p><code>batch_size</code>：默认是 $1$，定义我们一个批次的训练数据的条数。<code>batch_size</code>参数和<code>batch_sampler</code>参数是相辅相成的。如果我们设置了<code>batch_size</code>参数且未设置<code>batch_sampler</code>参数，<code>PyTorch</code>会给我们生成一个<code>BatchSampler</code>对象<code>BatchSampler(sampler, batch_size, drop_last)</code>，用于从<code>sampler</code>的<code>index</code>当中迭代，到达<code>batch_size</code>个就返回。如果设置了<code>batch_sampler</code>参数，那么<code>batch_size</code>、<code>shuffle</code>、<code>sampler</code>、<code>drop_last</code>就不能再指定了（报错<code>mutually exclusive</code>），因为自己指定的<code>batch_sampler</code>当中就已经暗含了这些信息。</p>
+<p><code>shuffle</code>：每个<code>epoch</code>开始，对数据集进行重新排序。<code>shuffle</code>参数和<code>sampler</code>参数是相辅相成的。如果我们设置了<code>shuffle</code>参数为<code>True</code>并且未设置<code>sampler</code>参数，那么<code>PyTorch</code>就会给我们生成一个<code>RandomSampler</code>对象，通过这个对象我们可以完成随机采样这个操作；如果设置了<code>shuffle</code>为<code>False</code>且未设置<code>sampler</code>参数，那么<code>PyTorch</code>会给我们生成一个<code>SequentialSampler</code>对象，用于顺序取训练样本。如果我们既设置了<code>sampler</code>参数又设置了<code>shuffle</code>参数，<code>PyTorch</code>则会报错（<code>mutually exclusive</code>）。</p>
+<p><code>sampler</code>：默认为<code>None</code>。（其他介绍见<code>shuffle</code>参数）</p>
+<p><code>batch_sampler</code>：默认为<code>None</code>。（其他介绍见<code>batch_size</code>参数）</p>
+<p><code>nun_workers</code>：默认值为 $0$，表示不创建额外的子进程。如果需要启用多进程加载数据，可以通过设置<code>num_workers</code>参数的值为大于 $0$ 的整数来指定创建的子进程数量。通常，根据<code>CPU</code>的核心数量和任务负载情况来选择合适的<code>num_workers</code>值。</p>
+<p><code>collate_fn</code>：该函数会将输入的数据进行拼接，并返回一个批次大小为<code>batch_size</code>的张量。可以根据自己的需求定制。默认值为<code>default_collate</code>函数，<code>collate_fn</code>的输入是来自<code>dataloader</code>取到的数据。具体来说，<code>dataloader</code>会按照<code>batch_sampler</code>指定的方式从数据集中抽取样本，并将每个样本传递给<code>collate_fn</code>函数进行整理。因此，<code>collate_fn</code>的输入是<code>dataloader</code>取到的数据。</p>
+<p>具体内部运行流程（仅考虑最简单的情况）：</p>
+<ol>
+<li>我们调用<code>__iter__</code>方法来返回一个迭代器对象；</li>
+<li><code>__iter__</code>方法会调用<code>self._get_iterator()</code>方法生成一个<code>_BaseDataLoaderIter</code>类型的迭代器对象；</li>
+<li><code>_get_iterator()</code>方法会根据实际情况返回一个<code>_SingleProcessDataLoaderIter</code>类型或<code>_MultiProcessingDataLoaderIter</code>类型的变量（都是<code>_BaseDataLoaderIter</code>的子类）；</li>
+<li>每次获取数据的时候，默认调用的是父类<code>_BaseDataLoaderIter</code>的<code>__next__</code>方法；</li>
+<li><code>__next__</code>方法则会根据当前的子类调用子类<strong>重写过</strong>的<code>_next_data()</code>方法</li>
+<li>子类<code>_SingleProcessDataLoaderIter</code>的<code>_next_data</code>方法调用了<code>_next_index()</code>方法获取<code>index</code>，这个<code>index</code>是从<code>_sampler_iter</code>中获取的，而<code>_sampler_iter</code>是<code>_index_sampler</code>的迭代器对象，根据<code>dataloader</code>的<code>batch_sampler</code>是否为空返回<code>batch_sampler</code>或<code>sampler</code>；</li>
+<li>通过<code>_dataset_fetcher.fetch(index)</code>就可以获取到数据，<code>_dataset_fetcher</code>就是根据<code>dataset</code>的数据类型（<code>Map</code>和<code>Iterable</code>）封装的一个数据获取的类，根据输入的<code>index</code>获取数据；</li>
+<li><code>fetch</code>方法很简单，就是根据<code>index</code>获取数据，最后返回<code>self.collate_fn(data)</code>，即处理过后的最终数据。</li>
+</ol>
+<p><code>pin_memory</code>：否将加载的数据（即张量）存储在<code>pinned</code>内存中，默认为<code>False</code>。在<code>PyTorch</code>中，一些操作需要使用<code>pinned</code>内存，例如将数据从<code>GPU</code>传输到<code>CPU</code>或将数据从<code>CPU</code>传输到<code>GPU</code>。如果数据存储在普通内存中，传输操作可能会导致额外的内存复制和数据移动，从而降低效率。</p>
+<p><code>drop_last</code>：用于设置是否丢弃最后一个批次的数据，默认为<code>False</code>，作为<code>BatchSampler</code>的参数。</p>
+<h2 id="分布式数据训练"><a href="#分布式数据训练" class="headerlink" title="分布式数据训练"></a>分布式数据训练</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>在使用<code>DistributedDataParallel</code>时有一些概念必须掌握。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">单机多卡</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">world_size</td>
+<td style="text-align:center">代表机器一共有几块GPU</td>
+</tr>
+<tr>
+<td style="text-align:center">rank</td>
+<td style="text-align:center">第几块GPU</td>
+</tr>
+<tr>
+<td style="text-align:center">local_rank</td>
+<td style="text-align:center">第几块GPU，与rank相同</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">多机多卡</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">world_size</td>
+<td style="text-align:center">代表有几台机器，可以理解为几台服务器</td>
+</tr>
+<tr>
+<td style="text-align:center">rank</td>
+<td style="text-align:center">全部机器中的GPU的全局编号</td>
+</tr>
+<tr>
+<td style="text-align:center">local_rank</td>
+<td style="text-align:center">某台机器中的第几块GPU</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h3><ol>
+<li><p>配置基本参数</p>
+</li>
+<li><p>指定进程通讯方式</p>
+</li>
+<li><p>更改数据采样器</p>
+</li>
+<li><p>模型<code>BN</code>层替换，另外可以将<code>loss</code>集成到模型中，进一步提高多卡处理的性能</p>
+</li>
+<li><p><code>loss</code>及指标的同步和打印，模型的保存</p>
+</li>
+<li><p>启动分布式进程</p>
+</li>
+</ol>
+<h4 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h4><p>使用多进程进行分布式训练，我们需要为每个<code>GPU</code>启动一个进程。每个进程需要知道自己运行在哪个<code>GPU</code>上，以及自身在所有进程中的序号。对于多节点，我们需要在每个节点启动脚本。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">&quot;--logdir&quot;</span>, default=<span class="string">&quot;test&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;directory to save the tensorboard logs&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--world-size&quot;</span>, default=<span class="number">1</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;number of distributed processes&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--local_rank&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;rank of distributed processes&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--img_size&quot;</span>, default=<span class="number">384</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;input size&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--batch_size&quot;</span>, default=<span class="number">4</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;batch size&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--optim_lr&quot;</span>, default=<span class="number">1e-4</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, <span class="built_in">help</span>=<span class="string">&quot;optimization learning rate&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--optim_name&quot;</span>, default=<span class="string">&quot;adamw&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;optimization algorithm&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--norm_name&quot;</span>, default=<span class="string">&quot;instance&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;normalization name&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--reg_weight&quot;</span>, default=<span class="number">1e-5</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, <span class="built_in">help</span>=<span class="string">&quot;regularization weight&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--momentum&quot;</span>, default=<span class="number">0.99</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, <span class="built_in">help</span>=<span class="string">&quot;momentum&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--patch_size&quot;</span>, default=<span class="number">16</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&#x27;patch size&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--in_chans&quot;</span>, default=<span class="number">3</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;number of input channels&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--out_chans&quot;</span>, default=<span class="number">3</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;number of output channels&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--embed_dim&quot;</span>, default=<span class="number">256</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;embedding dimension&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--max_epochs&quot;</span>, default=<span class="number">100</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;max number of training epochs&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--distributed&quot;</span>, action=<span class="string">&quot;store_true&quot;</span>, <span class="built_in">help</span>=<span class="string">&quot;start distributed training&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--noamp&quot;</span>, action=<span class="string">&quot;store_true&quot;</span>, <span class="built_in">help</span>=<span class="string">&quot;do NOT use amp for training&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--workers&quot;</span>, default=<span class="number">8</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;number of workers&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--rank&quot;</span>, default=<span class="number">0</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;node rank for distributed training&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--dist-url&quot;</span>, default=<span class="string">&quot;tcp://127.0.0.1:23456&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;distributed url&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--dist-backend&quot;</span>, default=<span class="string">&quot;nccl&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;distributed backend&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--lrschedule&quot;</span>, default=<span class="string">&quot;cosine_anneal&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;type of learning rate scheduler&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;--val_every&quot;</span>, default=<span class="number">5</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;validation frequency&quot;</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">args.amp = <span class="keyword">not</span> args.noamp</span><br><span class="line">args.logdir = <span class="string">&quot;./runs/&quot;</span> + args.logdir</span><br><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    args.ngpus_per_node = torch.cuda.device_count()</span><br><span class="line">    print(<span class="string">&quot;total gpus:&quot;</span>, args.ngpus_per_node)</span><br><span class="line">    args.world_size = args.ngpus_per_node * args.world_size</span><br><span class="line">    mp.spawn(main_worker, nprocs=args.ngpus_per_node, args=(args,))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    main_worker(gpu=<span class="number">0</span>, args=args)</span><br></pre></td></tr></table></figure>
+<p>其中<code>args.distributed</code>表示是否启用分布式训练，<code>args.world-size</code>表示进程总数，而<code>args.ngpus_per_node</code>是每个节点的<code>GPU</code>总数。节点总数乘以每个节点的<code>GPU</code>数可以得到<code>args.world-size</code>，也即进程总数。命令行参数<code>--loacl_rank</code>是必须声明的，但<strong>它不是由用户填写的，而是由PyTorch为用户填写</strong>，也就是说这个值是会被自动赋值为当前进程在本机上的<code>rank</code>。</p>
+<h4 id="指定进程通讯方式"><a href="#指定进程通讯方式" class="headerlink" title="指定进程通讯方式"></a>指定进程通讯方式</h4><p>所有的进程需要知道进程<code>0​</code>的<code>IP</code>地址以及端口，这样所有进程可以在开始时同步，一般情况下称进程<code>0</code>是<code>master</code>进程，比如我们会在进程<code>0</code>中打印信息或者保存模型。<code>PyTorch</code>提供了<code>mp.spawn</code>来在一个节点启动该节点所有进程，每个进程运行<code>main_worker(i, args)</code>，其中<code>i</code>从<code>0</code>到<code>args.gpus-1</code>。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    torch.multiprocessing.set_start_method(<span class="string">&quot;fork&quot;</span>, force=<span class="literal">True</span>)</span><br><span class="line">args.gpu = gpu</span><br><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    args.rank = args.rank * args.ngpus_per_node + gpu</span><br><span class="line">    dist.init_process_group(</span><br><span class="line">        backend=args.dist_backend, init_method=args.dist_url, world_size=args.world_size, rank=args.rank</span><br><span class="line">    )</span><br><span class="line">torch.cuda.set_device(args.gpu)</span><br><span class="line">torch.backends.cudnn.benchmark = <span class="literal">True</span></span><br><span class="line">print(<span class="string">&quot;rank:&quot;</span>, args.rank, <span class="string">&quot; gpu:&quot;</span>, args.gpu)</span><br><span class="line"><span class="keyword">if</span> args.rank == <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">&quot;batch size:&quot;</span>, args.batch_size, <span class="string">&quot;epochs:&quot;</span>, args.max_epochs)</span><br><span class="line">model = AFNONet(img_size=(args.img_size, args.img_size), patch_size=(args.patch_size, args.patch_size),</span><br><span class="line">                in_chans=args.in_chans, out_chans=args.out_chans, depth=<span class="number">5</span>, embed_dim=args.embed_dim)</span><br></pre></td></tr></table></figure>
+<h4 id="设置数据采样器"><a href="#设置数据采样器" class="headerlink" title="设置数据采样器"></a>设置数据采样器</h4><ul>
+<li><strong>Dataset</strong> : 从名字可以知道，是数据集的意思。负责对原始训练数据的封装，将其封装成<code>Python</code>可识别的数据结构，<code>Dataset</code>的派生类必须提供接口一边获取单个数据。</li>
+<li><strong>Sampler</strong> : 从名字可知，是采样器，负责采样方式或者说是采样策略，实现某种提取/采样策略从<code>Dataset</code>之中拿到数据索引，供<code>DataLoader</code>使用。可以认为，<code>Sampler</code>是指挥者，负责决定战斗在哪里开展。</li>
+<li><strong>DataLoader</strong> : 负责依据索引来从数据集中加载数据。支持<code>Map-style</code>和<code>Iterable-style</code>两种<code>Dataset</code>，支持单进程/多进程加载。<code>Loader</code>就是具体作战的斗士，负责按照<code>Sampler</code>的命令进行战斗。</li>
+</ul>
+<p><code>DistributedSampler</code>的分配方法是：每段连续的<code>num_replicas</code>个数据被拆成一个一个，分给<code>num_replicas</code>个进程，而且是通过每个<code>worker</code>的<code>rank</code>来获取数据，这样就达到了不重叠不交叉的目的，但也要注意的是：这样每个进程拿到的数据是不连续的。</p>
+<p>每次<code>epoch</code>都会<code>shuffle</code>数据集，<strong>但是不同进程如何保持shuffle之后数据集一致性</strong>？<code>DistributedSampler</code>使用当前的<code>epoch</code>作为随机数种子，在计算<code>index</code>之前就进行配置，从而保证不同进程都使用同样的随机数种子，这样<code>shuffle</code>出来的数据就能确保一致。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data_x = torch.rand(<span class="number">2048</span>, <span class="number">3</span>, <span class="number">384</span>, <span class="number">384</span>)</span><br><span class="line">data_y = data_x**<span class="number">3</span> + <span class="number">0.001</span>*data_x</span><br><span class="line">train_dataset = TensorDataset(data_x, data_y)</span><br><span class="line">train_sampler = DistributedSampler(train_dataset) <span class="keyword">if</span> args.distributed <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line">train_loader = DataLoader(</span><br><span class="line">    train_dataset,</span><br><span class="line">    batch_size=args.batch_size,</span><br><span class="line">    shuffle=(train_sampler <span class="keyword">is</span> <span class="literal">None</span>),</span><br><span class="line">    num_workers=args.workers,</span><br><span class="line">    sampler=train_sampler,</span><br><span class="line">    pin_memory=<span class="literal">True</span>,</span><br><span class="line">)</span><br><span class="line">data_x1 = torch.rand(<span class="number">64</span>, <span class="number">3</span>, <span class="number">384</span>, <span class="number">384</span>)</span><br><span class="line">data_y1 = data_x1**<span class="number">3</span> + <span class="number">0.001</span>*data_x1</span><br><span class="line">val_dataset = TensorDataset(data_x1, data_y1)</span><br><span class="line">val_sampler = DistributedSampler(val_dataset, shuffle=<span class="literal">False</span>) <span class="keyword">if</span> args.distributed <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line">val_loader = DataLoader(</span><br><span class="line">    val_dataset,</span><br><span class="line">    batch_size=args.batch_size,</span><br><span class="line">    shuffle=<span class="literal">False</span>,</span><br><span class="line">    num_workers=args.workers,</span><br><span class="line">    sampler=val_sampler,</span><br><span class="line">    pin_memory=<span class="literal">True</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h4 id="模型加载及替换"><a href="#模型加载及替换" class="headerlink" title="模型加载及替换"></a>模型加载及替换</h4><p>分布式训练需要将<code>bn</code>换成<code>sync_batchnorm</code>进行多卡同步，同时我们必须给<code>DDP</code>提示目前是哪个<code>rank</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">model.cuda(args.gpu)</span><br><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    torch.cuda.set_device(args.gpu)</span><br><span class="line">    <span class="keyword">if</span> args.norm_name == <span class="string">&quot;batch&quot;</span>:</span><br><span class="line">        model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)</span><br><span class="line">    model.cuda(args.gpu)</span><br><span class="line">    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu],output_device=args.gpu,</span><br><span class="line">                                                      find_unused_parameters=<span class="literal">True</span>)</span><br><span class="line">start_epoch = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h4 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h4><p>关于梯度回传和参数更新，跟单卡训练无异，这里我们不需要考虑对<code>loss</code>取平均，因为当我们回传<code>loss</code>后，<code>DDP</code>会自动对所有梯度进行平均，也就是说回传后我们更新的梯度和<code>DP</code>或者单卡同样<code>batch</code>训练都是一致的。为了进一步节省显存，可以使用混合精度进行训练<code>PyTorch1.6</code>以下需要自行编译<code>nvidia apex</code>，<code>PyTorch1.6</code>后内置了<code>apex</code>，不同训练方法修改的地方不完全相同</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> args.distributed:</span><br><span class="line">    train_loader.sampler.set_epoch(epoch)</span><br><span class="line">    torch.distributed.barrier()</span><br><span class="line">    epoch_time = time.time()</span><br><span class="line">    train_loss = train_epoch(model, train_loader, optimizer, scaler=scaler, epoch=epoch,</span><br><span class="line">                             loss_func=loss_func, args=args)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_epoch</span>(<span class="params">model, loader, optimizer, scaler, epoch, loss_func, args</span>):</span></span><br><span class="line">    model.train()</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    run_loss = AverageMeter()</span><br><span class="line">    <span class="keyword">for</span> idx, batch_data <span class="keyword">in</span> <span class="built_in">enumerate</span>(loader):</span><br><span class="line">        data, target = batch_data</span><br><span class="line">        data, target = data.cuda(args.rank), target.cuda(args.rank)</span><br><span class="line">        <span class="keyword">for</span> param <span class="keyword">in</span> model.parameters():</span><br><span class="line">            param.grad = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">with</span> autocast(enabled=args.amp):</span><br><span class="line">            logits = model(data)</span><br><span class="line">            loss = loss_func(logits, target)</span><br><span class="line">        <span class="comment"># 混合精度训练</span></span><br><span class="line">        <span class="keyword">if</span> args.amp:</span><br><span class="line">            scaler.scale(loss).backward()</span><br><span class="line">            scaler.step(optimizer)</span><br><span class="line">            scaler.update()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            loss.backward()</span><br><span class="line">            optimizer.step()</span><br><span class="line">        <span class="keyword">if</span> args.distributed:</span><br><span class="line">            loss_list = distributed_all_gather([loss], out_numpy=<span class="literal">True</span>)</span><br><span class="line">            run_loss.update(</span><br><span class="line">                np.mean(np.mean(np.stack(loss_list, axis=<span class="number">0</span>), axis=<span class="number">0</span>), axis=<span class="number">0</span>), n=args.batch_size * args.world_size</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            run_loss.update(loss.item(), n=args.batch_size)</span><br><span class="line">        <span class="keyword">if</span> args.rank == <span class="number">0</span>:</span><br><span class="line">            print(</span><br><span class="line">                <span class="string">&quot;Epoch &#123;&#125;/&#123;&#125; &#123;&#125;/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(epoch + <span class="number">1</span>, args.max_epochs, idx + <span class="number">1</span>, <span class="built_in">len</span>(loader)),</span><br><span class="line">                <span class="string">&quot;loss: &#123;:.4f&#125;&quot;</span>.<span class="built_in">format</span>(run_loss.avg),</span><br><span class="line">                <span class="string">&quot;time &#123;:.2f&#125;s&quot;</span>.<span class="built_in">format</span>(time.time() - start_time),</span><br><span class="line">            )</span><br><span class="line">        start_time = time.time()</span><br><span class="line">    <span class="keyword">for</span> param <span class="keyword">in</span> model.parameters():</span><br><span class="line">        param.grad = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> run_loss.avg</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">val_epoch</span>(<span class="params">model, loader, epoch, acc_func, args</span>):</span></span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    run_acc = AverageMeter()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> idx, batch_data <span class="keyword">in</span> <span class="built_in">enumerate</span>(loader):</span><br><span class="line">            data, target = batch_data</span><br><span class="line">            data, target = data.cuda(args.rank), target.cuda(args.rank)</span><br><span class="line">            logits = model(data)</span><br><span class="line">            loss = acc_func(logits, target)</span><br><span class="line">            <span class="keyword">if</span> args.distributed:</span><br><span class="line">                loss_list = distributed_all_gather([loss], out_numpy=<span class="literal">True</span>)</span><br><span class="line">                run_acc.update(</span><br><span class="line">                    np.mean(np.mean(np.stack(loss_list, axis=<span class="number">0</span>), axis=<span class="number">0</span>), axis=<span class="number">0</span>), n=args.batch_size * args.world_size</span><br><span class="line">                )</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                run_acc.update(loss.item(), n=args.batch_size)</span><br><span class="line">            <span class="keyword">if</span> args.rank == <span class="number">0</span>:</span><br><span class="line">                print(</span><br><span class="line">                    <span class="string">&quot;Epoch &#123;&#125;/&#123;&#125; &#123;&#125;/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(epoch + <span class="number">1</span>, args.max_epochs, idx + <span class="number">1</span>, <span class="built_in">len</span>(loader)),</span><br><span class="line">                    <span class="string">&quot;val loss: &#123;:.4f&#125;&quot;</span>.<span class="built_in">format</span>(run_acc.avg),</span><br><span class="line">                    <span class="string">&quot;time &#123;:.2f&#125;s&quot;</span>.<span class="built_in">format</span>(time.time() - start_time),</span><br><span class="line">                )</span><br><span class="line">            start_time = time.time()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> run_acc.avg</span><br></pre></td></tr></table></figure>
+<h4 id="模型保存"><a href="#模型保存" class="headerlink" title="模型保存"></a>模型保存</h4><p>模型的保存也需要在主进程进行保存</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_checkpoint</span>(<span class="params">model, epoch, args, filename=<span class="string">&quot;model.pt&quot;</span>, best_acc=<span class="number">0</span></span>):</span></span><br><span class="line">    state_dict = model.state_dict() <span class="keyword">if</span> <span class="keyword">not</span> args.distributed <span class="keyword">else</span> model.module.state_dict()</span><br><span class="line">    save_dict = &#123;<span class="string">&quot;epoch&quot;</span>: epoch, <span class="string">&quot;best_acc&quot;</span>: best_acc, <span class="string">&quot;state_dict&quot;</span>: state_dict&#125;</span><br><span class="line">    filename = os.path.join(args.logdir, filename)</span><br><span class="line">    torch.save(save_dict, filename)</span><br><span class="line">    print(<span class="string">&quot;Saving checkpoint&quot;</span>, filename)</span><br></pre></td></tr></table></figure>
+<h4 id="启动多进程训练"><a href="#启动多进程训练" class="headerlink" title="启动多进程训练"></a>启动多进程训练</h4><p>直接在命令行运行：<code>python my_main.py --distributed</code></p>
+<h1 id="JAX代码实践"><a href="#JAX代码实践" class="headerlink" title="JAX代码实践"></a>JAX代码实践</h1><p>首先介绍一下<code>JAX</code>，<code>JAX</code>简单来说就是一种自动微分的<code>Numpy</code>。<code>JAX</code>并不是一个深度学习的框架，而是一个科学计算的框架，深度学习只是<code>JAX</code>功能的一个子集。<code>JAX</code>的主要功能如下：</p>
+<ul>
+<li>科学计算</li>
+</ul>
+<p>既然是<code>NumPy</code>，那就可以用<code>NumPy</code>接口做各类科学计算。除了之外还带自动微分，科学计算世界中，微分是最常用的一种计算。<code>JAX</code>的自动微分包含了前向微分、反向微分等各种接口。反正各类花式微分，几乎都可以用<code>JAX</code>实现。</p>
+<ul>
+<li><code>JIT</code>编译</li>
+</ul>
+<p>将<code>NumPy</code>接口写的计算转成高效的二进制代码，可以在<code>CPU/GPU/TPU</code>上获得极高加速比。<code>JIT</code>编译主要还是基于<code>XLA(accelerated linear algebra)</code>。<code>XLA</code>是一种编译器，可以将<code>TF/JAX</code>的代码在<code>CPU/GPU/TPU</code>上加速。说到<code>JAX</code>速度快，主要就靠<code>XLA</code>！</p>
+<ul>
+<li>并行化</li>
+</ul>
+<p>比起简单的<code>NumPy</code>，<code>JAX</code>提供了大量接口做并行。无论是<code>tf</code>还是<code>torch</code>，一个简单的并行方法是：<code>batch_size</code>。<code>JAX</code>用<code>vmap</code>做并行, 用户只用实现一条数据的处理，<code>JAX</code>将帮我们做拓展，可以拓展到<code>batch_size</code>大小。<code>vmap</code>的思想与<code>Spark</code>中的<code>map</code>一样。用户关注<code>map</code>里面的一条数据的处理方法，<code>JAX</code>帮我们做并行化。</p>
+<ul>
+<li>函数式编程</li>
+</ul>
+<p><strong>深度学习框架</strong></p>
+<p><code>JAX</code>并不是一个深度学习框架。想要做深度学习，还要再在<code>JAX</code>上套一层。要想在<code>JAX</code>上实现一个全连接网络，要<code>np.dot(w, x) + b</code>，没有现成的<code>nn.Dense</code>或者<code>nn.Linear</code>。于是有了<code>DeepMind</code>的<code>haiku</code>，<code>Google</code>的<code>Flax</code>和其他各种各样的库。<code>JAX</code>是纯函数的，代码写起来和<code>tf</code>、<code>torch</code>不太一样。没有了<code>.fit()</code> 这样傻瓜式的接口，没有<code>MSELoss</code>这样的损失函数。而且要适应数据的不可变：模型参数先初始化<code>init</code>，才能使用。</p>
+<h2 id="网络定义"><a href="#网络定义" class="headerlink" title="网络定义"></a>网络定义</h2><p>主要是需要在<code>__call__</code>函数完成前向计算逻辑，类似<code>PyTorch</code>中的<code>forward</code>函数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    layer_sizes: Sequence[<span class="built_in">int</span>]</span><br><span class="line">    M: <span class="built_in">int</span></span><br><span class="line">    L: <span class="built_in">float</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setup</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.W1 = nn.Dense(features=layer_sizes[<span class="number">1</span>])</span><br><span class="line">        self.W2 = nn.Dense(features=layer_sizes[<span class="number">1</span>])</span><br><span class="line">        self.Wz = [nn.Dense(features=size) <span class="keyword">for</span> size <span class="keyword">in</span> layer_sizes[<span class="number">1</span>:]]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">input_encoding</span>(<span class="params">self, t, x</span>):</span></span><br><span class="line">        w = <span class="number">2.0</span> * jnp.pi / L</span><br><span class="line">        k = jnp.arange(<span class="number">1</span>, M + <span class="number">1</span>)</span><br><span class="line">        out = jnp.hstack([t, jnp.ones_like(t), jnp.cos(k * w * x), jnp.sin(k * w * x)])</span><br><span class="line">        <span class="keyword">return</span> out</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span>(<span class="params">self, t, x</span>):</span></span><br><span class="line">        X = self.input_encoding(t, x)</span><br><span class="line">        <span class="keyword">for</span> linear <span class="keyword">in</span> self.Wz[:-<span class="number">1</span>]:</span><br><span class="line">            X = nn.tanh(linear(X))</span><br><span class="line">        X = self.Wz[-<span class="number">1</span>](X)</span><br><span class="line">        <span class="keyword">return</span> X</span><br></pre></td></tr></table></figure>
+<h2 id="网络参数初始化"><a href="#网络参数初始化" class="headerlink" title="网络参数初始化"></a>网络参数初始化</h2><p>获取一个<code>PRNGKey</code>，并将其用于参数初始化，然后调用模型的<code>init</code>函数获取整个网络的<code>params</code>。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">M = <span class="number">10</span></span><br><span class="line">L = <span class="number">2.0</span> * jnp.pi</span><br><span class="line">layer_sizes = [<span class="number">2</span> * M + <span class="number">2</span>] + [<span class="number">128</span>] * <span class="number">8</span> + [<span class="number">1</span>]</span><br><span class="line">net = Net(layer_sizes, M, L)</span><br><span class="line"></span><br><span class="line">key = jax.random.PRNGKey(<span class="number">2023</span>)</span><br><span class="line">key, skey = jax.random.split(key)</span><br><span class="line">dummy_x = jax.random.uniform(skey, (<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">key, skey = jax.random.split(skey)</span><br><span class="line">params = net.init(skey, dummy_x, dummy_x)</span><br></pre></td></tr></table></figure>
+<h2 id="optimizer定义"><a href="#optimizer定义" class="headerlink" title="optimizer定义"></a>optimizer定义</h2><p><code>optimizer</code>的定义和<code>PyTorch</code>类似。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lr = <span class="number">1e-3</span></span><br><span class="line">optimizer = optax.adam(learning_rate=lr)</span><br></pre></td></tr></table></figure>
+<h2 id="scheduler定义"><a href="#scheduler定义" class="headerlink" title="scheduler定义"></a>scheduler定义</h2><p><code>scheduler</code>的定义和<code>PyTorch</code>类似。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lr = <span class="number">1e-3</span></span><br><span class="line">schedule = optax.exponential_decay(</span><br><span class="line">    init_value=lr,</span><br><span class="line">    transition_steps=<span class="number">5000</span>,</span><br><span class="line">    decay_rate=<span class="number">0.99</span></span><br><span class="line">)</span><br><span class="line">optimizer = optax.adam(learning_rate=schedule)</span><br></pre></td></tr></table></figure>
+<h2 id="训练状态定义"><a href="#训练状态定义" class="headerlink" title="训练状态定义"></a>训练状态定义</h2><p>在<code>JAX</code>当中，比较常用的模式是创建一个单一的数据类，代表整个训练状态，包括步骤数、参数和优化器状态。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">state = train_state.TrainState.create(apply_fn=net.apply, params=params, tx=optimizer)</span><br></pre></td></tr></table></figure>
+<h2 id="模型训练-1"><a href="#模型训练-1" class="headerlink" title="模型训练"></a>模型训练</h2><p>因为<code>JAX</code>是面向函数编程，首先我们需要定义一下整个<code>loss</code>的形式。接着使用<code>grad</code>函数来计算损失函数的梯度。最后使用<code>apply_gradients</code>函数更新模型的参数。使用<code>@jit</code>装饰器来跟踪整个<code>train_step</code>函数，并用<code>XLA</code>将其及时编译成融合的设备操作，在硬件加速器上运行得更快、更有效。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@jax.jit</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span>(<span class="params">state, t_r, x_r, t_i, x_i, u_i</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">loss_fn</span>(<span class="params">params</span>):</span>        </span><br><span class="line">        u = state.apply_fn(params, t_r, x_r)</span><br><span class="line">        u0 = state.apply_fn(params, t_i, x_i)</span><br><span class="line">        u_t = diff(partial(state.apply_fn, params), <span class="number">0</span>)(t_r, x_r)</span><br><span class="line">        u_fn = <span class="keyword">lambda</span> x: state.apply_fn(params, t_r, x)</span><br><span class="line">        _, (u_x, u_xx, _, u_xxxx) = jet(u_fn, (x_r, ), [[<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>]])</span><br><span class="line">        f = jnp.zeros_like(u)</span><br><span class="line">        loss_f = mse_fn(u_t + (<span class="number">100</span>/<span class="number">16</span>) * u * u_x + (<span class="number">100</span>/<span class="number">16</span>**<span class="number">2</span>) * u_xx + (<span class="number">100</span>/<span class="number">16</span>**<span class="number">4</span>) * u_xxxx, f)</span><br><span class="line">        loss_d = mse_fn(u0, u_i)</span><br><span class="line">        loss = loss_f + <span class="number">100</span> * loss_d</span><br><span class="line">        <span class="keyword">return</span> loss, (loss_f, loss_d)</span><br><span class="line"></span><br><span class="line">    grads, (loss_f, loss_d) = jax.grad(loss_fn, argnums=<span class="number">0</span>, has_aux=<span class="literal">True</span>)(state.params)</span><br><span class="line">    state = state.apply_gradients(grads=grads)</span><br><span class="line">    <span class="keyword">return</span> state, loss_f, loss_d</span><br></pre></td></tr></table></figure>
+<h2 id="如何对输入变量求导"><a href="#如何对输入变量求导" class="headerlink" title="如何对输入变量求导"></a>如何对输入变量求导</h2><h3 id="低阶导数的求法"><a href="#低阶导数的求法" class="headerlink" title="低阶导数的求法"></a>低阶导数的求法</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diff</span>(<span class="params">func, argnums</span>):</span></span><br><span class="line">    <span class="keyword">return</span> jax.grad(<span class="keyword">lambda</span> *ar, **kw: jnp.<span class="built_in">sum</span>(func(*ar, **kw)), argnums=argnums)</span><br><span class="line"></span><br><span class="line">u_fn1 = partial(state.apply_fn, params)</span><br><span class="line">u = u_fn1(t_r, x_r)</span><br><span class="line">u_t = diff(u_fn1, <span class="number">0</span>)(t_r, x_r)</span><br></pre></td></tr></table></figure>
+<p>首先介绍一下上面代码段中的<code>partial</code>函数，我们调用函数时需要输入函数的变量，但是对于某些函数，我们可能每次调用的某些变量值是不变的，所以我们就可以将这些参数固定下来。上面代码段中的<code>state.apply_fn</code>函数对应的是<code>net.apply</code>函数（对于<code>net.apply</code>函数来说，如果没有特指就是模型的<code>__call__</code>函数，如果特指可能是模型中的其他函数，也可能是不属于模型的函数），这个函数的第一个参数是<code>params</code>，也就是模型的参数。<code>diff</code>函数是我们定义的对某个函数的某个变量求导的函数。</p>
+<h3 id="高阶导数的求法"><a href="#高阶导数的求法" class="headerlink" title="高阶导数的求法"></a>高阶导数的求法</h3><p>我们既可以采用同低阶导数相同的求法进行嵌套求解，即先求一阶导，再对一阶导数求导就可以得到二阶导，依此类推。同时我们也可以使用<code>Taylor mode</code>求高阶导数，这里主要是<code>jet</code>函数的应用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">u_fn1 = partial(state.apply_fn, params)</span><br><span class="line">u = u_fn1(t_r, x_r)</span><br><span class="line">u_t = diff(u_fn1, <span class="number">0</span>)(t_r, x_r)</span><br><span class="line">u_x = diff(u_fn1, <span class="number">1</span>)(t_r, x_r)</span><br><span class="line">u_xx = diff(diff(u_fn1, <span class="number">1</span>), <span class="number">1</span>)(t_r, x_r)</span><br><span class="line">u_xxxx = diff(diff(diff(diff(u_fn1, <span class="number">1</span>), <span class="number">1</span>), <span class="number">1</span>), <span class="number">1</span>)(t_r, x_r)</span><br><span class="line"></span><br><span class="line"><span class="comment"># u_fn = lambda x_r: state.apply_fn(params, t_r, x_r) # For using Taylor-mode AD</span></span><br><span class="line"><span class="comment"># _, (u_x, u_xx, _, u_xxxx) = jet(u_fn, (x_r, ), [[1.0, 0.0, 0.0, 0.0]]) #  Taylor-mode AD</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>设计模式</title>
     <url>/2021/11/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>设计模式是面向对象语言特有的内容，是面对某一类问题时的固定做法。</p>
@@ -2080,7 +2135,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p>DP的多卡交互实现在一个进程之中，它将一张卡视为主卡，维护单独模型优化器。所有卡计算完梯度后，主卡汇聚其它卡的梯度进行平均并用优化器更新模型参数，再将模型参数更新至其它卡上。</p>
 <p>DDP则分别为每张卡创建一个进程，每个进程相应的卡上都独立维护模型和优化器。在每次每张卡计算完梯度之后，进程之间以NCLL（NVIDIA GPU通信）为通信后端，使各卡获取其它卡的梯度。各卡对获取的梯度进行平均，然后执行后续的参数更新。由于每张卡上的模型与优化器参数在初始化时就保持一致，而每次迭代的平均梯度也保持一致，那么即使没有进行参数复制，所有卡的模型参数也是保持一致的。</p>
 <h1 id="DataLoader-DataSet-Sampler之间的关系"><a href="#DataLoader-DataSet-Sampler之间的关系" class="headerlink" title="DataLoader, DataSet, Sampler之间的关系"></a>DataLoader, DataSet, Sampler之间的关系</h1><p>首先我们看一下DataLoader.next的源代码长什么样,为方便理解只选取了num_works为0的情况（num_works简单理解就是能够并行化地读取数据）。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataLoader</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	...</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__next__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.num_workers == <span class="number">0</span>:  </span><br><span class="line">            indices = <span class="built_in">next</span>(self.sample_iter)  <span class="comment"># Sampler</span></span><br><span class="line">            batch = self.collate_fn([self.dataset[i] <span class="keyword">for</span> i <span class="keyword">in</span> indices]) <span class="comment"># Dataset</span></span><br><span class="line">            <span class="keyword">if</span> self.pin_memory:</span><br><span class="line">                batch = _utils.pin_memory.pin_memory_batch(batch)</span><br><span class="line">            <span class="keyword">return</span> batch</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataLoader</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	...</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__next__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.num_workers == <span class="number">0</span>:  </span><br><span class="line">            indices = <span class="built_in">next</span>(self.sample_iter)  <span class="comment"># Sampler</span></span><br><span class="line">            batch = self.collate_fn([self.dataset[i] <span class="keyword">for</span> i <span class="keyword">in</span> indices]) <span class="comment"># Dataset</span></span><br><span class="line">            <span class="keyword">if</span> self.pin_memory:</span><br><span class="line">                batch = _utils.pin_memory.pin_memory_batch(batch)</span><br><span class="line">            <span class="keyword">return</span> batch</span><br></pre></td></tr></table></figure>
 <p>假设我们的数据是一组图像，每一张图像对应一个index，那么如果我们要读取数据就只需要对应的index即可，即上面代码中的indices，而选取index的方式有多种，有按顺序的，也有乱序的，所以这个工作需要Sampler完成。</p>
 <p>那么Dataset和DataLoader在什么时候产生关系呢？没错就是下面一行。我们已经拿到了indices，那么下一步我们只需要根据index对数据进行读取即可了。</p>
 <p>综上可以知道DataLoader，Sampler和Dataset三者关系如下：</p>
@@ -2173,7 +2228,10 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <li>跑完一次<code>epoch</code>（全数据集）所需迭代次数减少了，但要想达到相同的精度，时间开销太大，参数的修正更加缓慢。</li>
 <li><code>batchsize</code>增大到一定的程度，其确定的下降方向已经基本不再变化。</li>
 </ol>
-<h1 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h1><h2 id="Smooth-L1-Loss"><a href="#Smooth-L1-Loss" class="headerlink" title="Smooth L1 Loss"></a>Smooth L1 Loss</h2><ol>
+<h1 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h1><h2 id="Huber-Loss"><a href="#Huber-Loss" class="headerlink" title="Huber Loss"></a>Huber Loss</h2><p>Huber损失函数是一种在回归问题中常用的损失函数，它对于输入数据的小偏差具有较低的敏感性，对于大偏差具有较高的敏感性。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308261842588.png" alt=""></p>
+<h2 id="Smooth-L1-Loss"><a href="#Smooth-L1-Loss" class="headerlink" title="Smooth L1 Loss"></a>Smooth L1 Loss</h2><p>smooth L1 loss是Huber loss在 $\delta=1$ 条件下的特例。</p>
+<ol>
 <li>当预测框与<code>ground truth</code>差别过大时，梯度值不至于过大；</li>
 <li>当预测框与<code>ground truth</code>差别很小时，梯度值足够小。</li>
 </ol>
@@ -2191,6 +2249,12 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><code>Smooth L1</code> 在 $x$ 较小时，也就是 $[-1,1]$ 区间，对 $x$ 的梯度也会变小；而在 $x$ 很大时，对 $x$ 的梯度的绝对值达到上限 $1$ ，也不会太大以至于破坏网络参数。 完美地避开了<code>L1</code> 和 <code>L2</code>损失的缺陷。</p>
 <h2 id="Cross-Entropy-Loss"><a href="#Cross-Entropy-Loss" class="headerlink" title="Cross Entropy Loss"></a>Cross Entropy Loss</h2><p>既可用于多分类任务（只有一个能胜出），也可用于二分类任务。设标签为 $y$ （多分类中是one-hot编码），网络预测结果为 $\hat{y}$ ，<code>CE</code>损失函数为（这里只考虑了一个样本，c指的是多分类的类别数目）：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211132940.png" alt=""></p>
+<p><strong>分类为什么选择交叉熵而不是MAE：</strong></p>
+<ol>
+<li>稀疏性：交叉熵对于错误分类的样本具有稀疏性，即将一个样本错误分类为另一个类别的损失相对较小。相比之下，MAE对于每一个错误分类的样本都会产生较大的损失。因此，交叉熵在处理不平衡的数据集时表现更好。</li>
+<li>对异常值的鲁棒性：交叉熵对于异常值不太敏感，而MAE对于异常值非常敏感。因此，使用交叉熵的模型对异常值的鲁棒性更强。</li>
+<li>优化性能：对于深度学习模型，使用交叉熵作为损失函数通常会导致更快的优化收敛。这是由于交叉熵损失函数相对于模型参数的梯度具有较小的方差。</li>
+</ol>
 <h2 id="Binary-Cross-Entropy-Loss"><a href="#Binary-Cross-Entropy-Loss" class="headerlink" title="Binary Cross Entropy Loss"></a>Binary Cross Entropy Loss</h2><p>二值交叉熵损失，虽然总是用来学习0/1分布，即二分类问题，但不是0/1两个数，只要在0~1之间的数也都能学习。设标签为 $y$ ，网络预测结果为 $\hat{y}$ ，<code>BCE</code>损失函数为（这里考虑了N个样本，每个样本都是二分类）： </p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202306211055521.png" alt=""></p>
 <p>某些情况下需要加上权重：</p>
@@ -3353,6 +3417,9 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123204243.png" alt=""></p>
 <h3 id="Parameterizations-of-R"><a href="#Parameterizations-of-R" class="headerlink" title="Parameterizations of R."></a>Parameterizations of R.</h3><p>一般情况下，R 可以定义为依赖于 $(\mathcal{F}a)$ 平行于(3)。确实，我们可以定义 $R_{\phi}:\mathbb{Z}^{d} \times \mathbb{R}^{d_{v}} \rightarrow \mathbb{R}^{d_{v} \times d_{v}}$ 作为将 $(k,(\mathcal{F}a)(k))$ 映射到相应的傅里叶模的值的参数函数。我们对 $R_{\phi}$ 进行了线性和神经网络参数化实验。我们发现线性参数化与前面描述的直接参数化具有相似的性能，而神经网络的性能更差。这可能是由于空间 $\mathbb{Z}^{d}$ 的离散结构。</p>
 <h3 id="Invariance-to-discretization"><a href="#Invariance-to-discretization" class="headerlink" title="Invariance to discretization."></a>Invariance to discretization.</h3><p>傅里叶层是离散不变的，因为它们可以从以任意方式离散的函数中学习和求值。由于参数是在傅里叶空间中直接学习的，所以在物理空间中解析函数就相当于在 $\mathbb{R}^{d}$ 上处处定义良好的 $e^{2 \pi i<x,k>}$ 的基础上投影。这允许我们实现如5.4节所示的零射超分辨率。此外，我们的体系结构在输入和输出的任何分辨率上都有一致的错误。另一方面，请注意，在图3中，我们比较的标准CNN方法有一个随着分辨率增加而增加的错误。</p>
+<p>傅里叶神经算子与输入的分辨率无关的原因是因为它利用了傅里叶变换的性质。傅里叶变换是一种在时间和频率域之间转换信号或数据的方法。在傅里叶神经算子中，输入信号经过傅里叶变换后，被转换到频域，而频域的运算不受分辨率的影响。因此，即使输入信号的分辨率改变，傅里叶神经算子的输出结果也不会受到影响。</p>
+<p>具体来说，傅里叶神经算子将输入信号的每个像素值视为一个复数，然后对其进行傅里叶变换，得到频域下的复数系数。这些系数代表了输入信号在不同频率下的贡献。由于傅里叶变换的性质，高频成分对应于图像的细节和边缘信息，而低频成分对应于图像的整体轮廓和形状。因此，傅里叶神经算子对图像进行特征提取时，主要关注的是图像的轮廓和形状信息，而忽略了一些细节和噪声。</p>
+<p>由于傅里叶变换已经将输入信号从时域转换到了频域，所以傅里叶神经算子的运算都是在频域进行的。这种频域运算不受分辨率的影响，因此傅里叶神经算子的输出结果也不受输入分辨率的影响。</p>
 <h3 id="Quasi-linear-complexity"><a href="#Quasi-linear-complexity" class="headerlink" title="Quasi-linear complexity."></a>Quasi-linear complexity.</h3><p>权重张量 $R$ 包含 $k_{max} &lt; n$ 个模态，因此内部乘法的复杂度为 $O(k_{max})$ 。因此，大部分的计算成本在于计算傅里叶变换 $\mathcal{F}(v_{t})$ 及其反变换。一般的傅里叶变换的复杂度是 $O(n^{2})$ ，然而，由于我们截断了级数，复杂度实际上是 $O(nk_{max})$ ，而快速傅里叶变换的复杂度是 $O(n \log n)$ 。通常，我们发现使用快速傅里叶变换非常高效。然而，统一的离散化是必需的。</p>
 <h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><p>假设我们有一个二阶椭圆偏微分方程如下，</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221123210401.png" alt=""></p>
