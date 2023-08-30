@@ -139,6 +139,12 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       </tags>
   </entry>
   <entry>
+    <title>我的第一篇文章</title>
+    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Linux使用总结</title>
     <url>/2023/06/14/Linux%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Linux</code>系统过程中遇到的知识点</p>
@@ -261,12 +267,6 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
         <tag>总结</tag>
         <tag>Linux</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>我的第一篇文章</title>
-    <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
-]]></content>
   </entry>
   <entry>
     <title>搭建个人博客</title>
@@ -2191,6 +2191,26 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <li>在数据中增加一些噪声，从而通过影响损失函数的优化方向避免过拟合。</li>
 <li><code>Dropout</code>，目的也是降低模型的复杂度。</li>
 <li><code>ResNet</code>。是的，<code>ResNet</code>也可以解决过拟合问题，因为<code>ResNet</code>的跳线结构可以让部分参数权重归零，进而达到类似于<code>Dropout</code>的效果。</li>
+</ul>
+<h3 id="L1正则化和L2正则化"><a href="#L1正则化和L2正则化" class="headerlink" title="L1正则化和L2正则化"></a>L1正则化和L2正则化</h3><h4 id="L1正则化"><a href="#L1正则化" class="headerlink" title="L1正则化"></a>L1正则化</h4><p>优点：</p>
+<ul>
+<li>L1正则化可以自动进行特征选择，这对于需要大量特征的模型非常有用。通过将某些参数优化为零，可以降低模型的复杂度，提高模型的泛化能力。</li>
+<li>在L1正则化下，模型的系数向量具有稀疏性，这使得模型解释性更好。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>L1正则化可能会导致模型在零附近的波动较大，因为参数的绝对值可能会受到较大影响。</li>
+<li>在L1正则化下，某些特征可能会被错误地忽略，因为它们可能只是与其他特征有微小的差异。</li>
+</ul>
+<h4 id="L2正则化"><a href="#L2正则化" class="headerlink" title="L2正则化"></a>L2正则化</h4><p>优点：</p>
+<ul>
+<li>L2正则化可以减少模型的复杂性，降低过拟合的风险。</li>
+<li>L2正则化可以使得模型的系数向量的范数较小，这可以防止模型过度拟合训练数据。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>L2正则化不会自动进行特征选择，因此对于需要大量特征的模型可能需要手动选择特征。</li>
+<li>在L2正则化下，所有特征的重要性都是相等的，这可能会导致某些特征被错误地赋予更高的权重。</li>
 </ul>
 <h2 id="欠拟合的解决方案"><a href="#欠拟合的解决方案" class="headerlink" title="欠拟合的解决方案"></a>欠拟合的解决方案</h2><p>欠拟合通常是由于模型表征能力不足、数据量过大导致的，刚好和过拟合相反。</p>
 <ul>
