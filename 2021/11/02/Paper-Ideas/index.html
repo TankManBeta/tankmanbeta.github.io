@@ -259,7 +259,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308111724017.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308111728085.png">
 <meta property="article:published_time" content="2021-11-02T13:40:57.000Z">
-<meta property="article:modified_time" content="2023-09-06T09:32:52.236Z">
+<meta property="article:modified_time" content="2023-09-07T01:24:44.047Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="论文">
@@ -513,7 +513,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-09-06 17:32:52" itemprop="dateModified" datetime="2023-09-06T17:32:52+08:00">2023-09-06</time>
+        <time title="修改时间：2023-09-07 09:24:44" itemprop="dateModified" datetime="2023-09-07T09:24:44+08:00">2023-09-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1106,8 +1106,11 @@
 <li>做FFT，得到x_ft，大小为 $5\ast20\ast130\ast66$</li>
 <li>生成一个同样大小的out_ft，按照需要的modes截断填充</li>
 <li>做IRFFT，得到输出，大小为 $5\ast20\ast130\ast130$</li>
-<li>permutate之后得到输出，大小为 $5\ast20\ast130\ast2$</li>
-<li>反padding，变成 $5\ast20\ast$</li>
+<li>unpadding，大小为 $5\ast20\ast128\ast128$</li>
+<li>permutate之后得到输出，大小为 $5\ast128\ast128\ast20$</li>
+<li>通过fc变换维度，变成 $5\ast20\ast128\ast128\ast128$</li>
+<li>通过fc层转换到输出的维度，变成 $50\ast20\ast128\ast128\ast2$</li>
+<li>通过unsqueeze函数增加时间维度，变成 $50\ast20\ast128\ast128\ast1\ast2$</li>
 </ol>
 <h1 id="A-composite-neural-network-that-learns-from-multi-fidelity-data-Application-to-function-approximation-and-inverse-PDE-problems"><a href="#A-composite-neural-network-that-learns-from-multi-fidelity-data-Application-to-function-approximation-and-inverse-PDE-problems" class="headerlink" title="A composite neural network that learns from multi-fidelity data: Application to function approximation and inverse PDE problems"></a>A composite neural network that learns from multi-fidelity data: Application to function approximation and inverse PDE problems</h1><p>我们提出了一种新的复合神经网络(NN)，可以基于多保真度数据进行训练。它由三个神经网络组成，第一个神经网络使用低保真度数据训练，并与两个高保真度数据耦合为了分别发现和利用低保真度和高保真度数据之间的非线性和线性相关性，一个具有激活函数，另一个没有激活函数。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221205170739.png" alt=""></p>
