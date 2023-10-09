@@ -154,6 +154,14 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
 <p>显示当前目录中的所有文件和目录（包括隐藏文件）：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -a</span><br></pre></td></tr></table></figure>
+<h1 id="获取当前目录的完整路径"><a href="#获取当前目录的完整路径" class="headerlink" title="获取当前目录的完整路径"></a>获取当前目录的完整路径</h1><p>获取当前目录的完整路径（绝对路径）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pwd</span><br></pre></td></tr></table></figure>
+<h1 id="获取文件的绝对路径"><a href="#获取文件的绝对路径" class="headerlink" title="获取文件的绝对路径"></a>获取文件的绝对路径</h1><p>readlink 的最初用途是解析符号链接，不过我们可以用它来显示文件的完整路径，如下为其语法结构：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">readlink -f sample.txt</span><br></pre></td></tr></table></figure>
+<p>realpath 原用于解析绝对文件名，在这里我们也可以用它来显示文件的完整路径，如果使用符号链接，它将显示原始文件的实际路径：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">realpath sample.txt</span><br></pre></td></tr></table></figure>
+<p>可以强制它不跟随符号链接（即显示当前文件的路径）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">realpath -s sample.txt</span><br></pre></td></tr></table></figure>
 <h1 id="友好显示文件大小"><a href="#友好显示文件大小" class="headerlink" title="友好显示文件大小"></a>友好显示文件大小</h1><p>查看文件/目录的大小并且输出我们看得懂的单位（例如<code>K</code>，<code>M</code>，<code>G</code>），<code>-h</code>是<code>--human-readable</code>的意思：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ll -h</span><br></pre></td></tr></table></figure>
 <h1 id="拷贝文件-文件夹"><a href="#拷贝文件-文件夹" class="headerlink" title="拷贝文件/文件夹"></a>拷贝文件/文件夹</h1><p>将<code>test-3ddata</code>目录拷贝到上层<code>Data</code>目录下，<code>-r</code>命令是递归：</p>
@@ -845,6 +853,142 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       <tags>
         <tag>总结</tag>
         <tag>项目部署</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>强化学习</title>
+    <url>/2023/10/08/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>开新坑啦，强化学习搞起！！！</p>
+<a id="more"></a>
+<h1 id="强化学习基础"><a href="#强化学习基础" class="headerlink" title="强化学习基础"></a>强化学习基础</h1><p>强化学习（Reinforcement Learning，简称RL）是机器学习的一种重要方法，它通过智能体（agent）与环境（environment）的交互来实现自主学习和决策。在强化学习中，智能体会采取一系列的行动，环境会根据智能体的行动给出奖励或惩罚，智能体的目标是最大化累积奖励。强化学习在许多实际应用中都有着广泛的应用，例如自动驾驶、机器人控制、金融交易、游戏等。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081106986.png" alt=""></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>智能体（Agent）：在强化学习中，智能体是一个自主决策的实体，它可以观察环境、采取行动、获得奖励。</li>
+<li>环境（Environment）：环境是智能体所处的外部世界，它会根据智能体的行动给出奖励或惩罚，并提供新的状态信息。</li>
+<li>状态（State）：状态是描述环境的信息，它是智能体决策的依据。</li>
+<li>行动（Action）：行动是智能体在某个状态下可以采取的操作。</li>
+<li>奖励（Reward）：奖励是环境根据智能体的行动给出的反馈，它可以是正数（奖励）或负数（惩罚）。</li>
+<li>策略（Policy）：策略是智能体决策的规则，它是一个从状态到行动的映射函数。</li>
+<li>Off-policy：行动策略和目标策略不是同一个策略（）</li>
+<li>On-policy：行动策略和目标策略是同一个策略</li>
+</ul>
+<h2 id="常用算法"><a href="#常用算法" class="headerlink" title="常用算法"></a>常用算法</h2><h3 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h3><p>Q-Learning算法的核心思想是通过学习一个Q值函数（Q-value Function）来估计在某个状态下采取某个行动的长期回报。Q值函数记作：Q(s, a)，其中s表示状态，a表示行动。</p>
+<p>具体更新公式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081137646.png" alt=""></p>
+<p>算法的伪代码：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081152577.png" alt=""></p>
+<p>在每个时刻，智能体（Agent）根据当前状态选择一个行动，并根据环境的反馈获得奖励和下一个状态，然后根据上述公式更新Q值函数。智能体的行动选择可以采用贪婪策略（Greedy Policy）或 $\epsilon$-贪婪策略（$\epsilon$-Greedy Policy）。</p>
+<h3 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h3><p>DQN 是 Deep Q Network的缩写。顾名思义，DQN是Q-Learning的升级版，通常使用深度神经网络来代替经典Q-Learning中的Q表。在经典Q-Learning中，Q表的构建和使用是算法的核心步骤，获取特定状态对应的动作价值需要查Q表，但是当环境过于复杂时，难以用Q表来进行高效的描述和查询，这便需要借助深度神经网络强大的映射能力来构造一个Q函数，这个Q函数的输入通常是某种状态，而输出是所有可能动作所对应的价值。DQN 除了具有更强的学习和映射能力，还引入了一些有趣的技巧，例如 Experience replay 和 Fixed Q-targets，这些技巧加强了DQN对长跨度动作的洞察，使得DQN具有更好的全局视野，以至于在一些游戏（如CartPole）上DQN能够轻而易举地战胜人类。</p>
+<p>算法框架图：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081419935.png" alt=""></p>
+<h4 id="目标网络"><a href="#目标网络" class="headerlink" title="目标网络"></a>目标网络</h4><p>目标网络引入的目的：为了避免在更新Q函数时，一边获取Q值一边更新Q函数带来的不稳定问题，这种只针对一个网络的Q函数，实时更新，会导致轨迹很乱，不好训练。所以，引入一个目标网络，从目标网络获取Q值，然后进行Q函数的更新，一段时间后，使用新的Q函数更新目标网络。</p>
+<p>在强化学习中，自举是指用后继的估算值，来更新现在状态的估算值。在target当中，$r_{t}$是实际观测得到的值，$Q^{\pi}(s_{t+1},\pi(s_{t+1}))$是根据Q函数在$s_{t+1}$时做出的估算值，因此target有部分是来自Q函数的估算，而我们用target来更新Q函数本身，所以这属于自举。计算target的时候，我们是最大化Q值的，即$Q^{\pi}(s_{t+1},\pi(s_{t+1}))=\max_{a}Q^{\pi}(s_{t+1},a)$，这里会引起<strong>高估</strong>的问题，利用<strong>目标网络</strong>可以一定程度避免自举，减缓高估问题。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081424056.png" alt=""></p>
+<h4 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h4><p>引入探索的目的：避免在进行action的选择时，只选择同一动作，而无法变换。解决探索-利用窘境（exploration-exploitation dilemma）问题。解决方法：$\epsilon$-贪心和玻尔兹曼探索。</p>
+<p>$\epsilon$-贪心：我们有 $1-\epsilon$ 的概率会按照 Q 函数来决定动作。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081540233.png" alt=""></p>
+<p>玻尔兹曼探索：<strong>就是计算概率分布，然后根据概率来选择动作。</strong>这个方法就比较像是策略梯度。在策略梯度里面，网络的输出是一个期望的动作空间上面的一个的概率分布，再根据概率分布去做采样。你也可以根据Q值去定一个概率分布，假设某一个动作的Q值越大，代表它越好，我们采取这个动作的概率就越高。但是某一个动作的Q值小，不代表我们不能尝试。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310090924546.png" alt=""></p>
+<h4 id="经验回放"><a href="#经验回放" class="headerlink" title="经验回放"></a>经验回放</h4><p>引入经验回放的目的：用来实现off-policy性质的训练性能提升，经验回放会构建一个<strong>回放缓冲区（replay buffer）</strong>，回放缓冲区又被称为<strong>回放内存（replay memory）</strong>。回放缓冲区是说现在会有某一个策略 $\pi$ 去跟环境做互动，它会去收集数据。</p>
+<p>第一个好处，其实在做强化学习的时候，往往最花时间的步骤是在跟环境做互动，训练网络反而是比较快的。因为我们用 GPU 训练其实很快，真正花时间的往往是在跟环境做互动。用回放缓冲区<strong>可以减少跟环境做互动的次数</strong>，因为在做训练的时候，经验不需要通通来自于某一个策略。一些过去的策略所得到的经验可以放在数据缓冲区里面被使用很多次，被反复的再利用，这样让采样到经验的利用是比较高效的。</p>
+<p>第二个好处，在训练网络的时候，其实我们希望<strong>一个批量里面的数据越多样（diverse）越好</strong>。如果批量里面的数据都是同样性质的，我们训练下去是容易坏掉的。如果批量里面都是一样的数据，训练的时候，性能会比较差。我们希望批量的数据越多样越好。如果数据缓冲区里面的经验通通来自于不同的策略，我们采样到的一个批量里面的数据会是比较多样的。</p>
+<h3 id="DDQN"><a href="#DDQN" class="headerlink" title="DDQN"></a>DDQN</h3><p>引入目标网络可以一定程度减缓高估问题，但是还是有最大化操作，高估问题还是很严重，而Double DQN可以更好地缓解高估问题（但也没有彻底根除高估问题）。</p>
+<p>Double DQN做的改进其实很简单：我们用原始网络$Q(s,a;w)$选出使Q值最大化的那个动作，记为$a^{\ast}$，再用目标网络使用这个$a^{\ast}$计算目标值，得到$y_{t}=r_{t}+\gamma\cdot Q(s_{t+1}, a^{\ast}; w^{-})$。由于$Q(s_{t+1}, a^{\ast}; w^{-}) \leq \max_{a}Q(s_{t+1}, a; w^{-})$，所以进一步减缓了最大化带来的高估问题。</p>
+<h3 id="Dueling-DQN"><a href="#Dueling-DQN" class="headerlink" title="Dueling DQN"></a>Dueling DQN</h3><p>对于某一个确定的$\pi$，我们对这个策略进行策略评估，可以得到动作价值函数和状态价值函数：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081802820.png" alt=""></p>
+<p>当然也可以写成Bellman方程的形式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081803143.png" alt=""></p>
+<p>基于上面的两个值函数，我们可以定义用于评估策略的优势函数：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081805118.png" alt=""></p>
+<p>从上面的定义中很容易得到：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081811253.png" alt=""></p>
+<p>于是我们可以得到：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081812422.png" alt=""></p>
+<p>接下来我们可以定义最优值函数：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091047168.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091047842.png" alt=""></p>
+<p>那么同样的，有最优的优势函数：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091048744.png" alt=""></p>
+<p>我们依旧可以通过 $Q^{\ast}(s,a)$ 得到 $V^{\ast}(s)$ ：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091050987.png" alt=""></p>
+<p>于是有：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091051202.png" alt=""></p>
+<p>其中：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091051920.png" alt=""></p>
+<p>我们对于<strong>用于评估的优势函数</strong>和<strong>用于控制的优势函数</strong>各得到的一个式子：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091056285.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091056136.png" alt=""></p>
+<p>那么，针对策略评估的情形，我们将Q值的表达式改成：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091057874.png" alt=""></p>
+<p>而针对最优控制情形，我们将Q值的表达式改成：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091058155.png" alt=""></p>
+<p>这样就<strong>倒逼</strong> $V(s;\theta,\beta)$ 必须精确的学出Value，从而保证了 $A(s,a^{‘};\theta,\alpha)$ 也是精确的。实验表明，用均值版本的表达式可以在两种情况都适用，因此通常只是用均值形式的。</p>
+<h3 id="Noisy-DQN"><a href="#Noisy-DQN" class="headerlink" title="Noisy DQN"></a>Noisy DQN</h3><p>Noisy DQN（Noisy Deep Q-Network）提出了一种新的有效的增加网络探索性的策略，这与之前大多数DQN系列通常采用的$\varepsilon$-greedy策略有所不同。Noisy DQN在模型训练过程中，会在网络中添加随机噪声以增强最终结果的不确定性，从而达到和$\varepsilon$-greedy策略随机选择动作所类似的效果。Noisy DQN取得了比传统DQN更优越的性能。在强化学习中，探索是指代理尝试新动作以发现潜在的更好策略，而利用是指代理根据目前已知的最佳策略来采取动作。传统的DQN使用$\varepsilon$-greedy策略来平衡探索与利用，但这会受到值的影响，需要经过调整来达到最佳效果。Noisy DQN通过参数噪声的引入，以一种更自适应的方式实现了探索与利用的平衡。<br>有两种引入噪声的方式。一个是独立高斯噪声，每一个权重和偏执都有自己的噪声。一个是分解高斯噪声，以神经元为单位适用同一个噪声。Noisy DQN采用的是第二种分解高斯噪声。权重和偏执的均值从$U[-\frac{1}{\sqrt{p}},+\frac{1}{\sqrt{p}}]$中进行采样，$p$是输入的维度表。而标准差$\frac{\sigma_{0}}{p}$用进行填充式赋值，分子是提前设置的超参数，一般用0.5。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091140788.png" alt=""></p>
+<h3 id="Prioritized-DQN"><a href="#Prioritized-DQN" class="headerlink" title="Prioritized DQN"></a>Prioritized DQN</h3><p>Prioritized DQN（Prioritized Deep Q-Network）是基于DQN（Deep Q-Network）的改进版本，旨在提高学习效率和性能，特别是在处理经验回放时。它引入了一种称为”优先级采样”（Prioritized Experience Replay）的机制，该机制允许算法有选择性地重放经验，更关注那些对训练有重要影响的经验。<br>传统的DQN使用均匀随机采样来选择经验回放中的样本，这意味着所有经验都有相同的机会被选择。然而，某些经验可能对学习更有价值，而其他经验则可能对学习不太重要。Prioritized DQN引入了一个优先级值，用于衡量每个经验的重要性。经验的优先级通常与其导致的TD误差（Temporal Difference Error）有关，TD误差越大，优先级越高。这样，训练时会更多地关注那些有助于降低误差的经验。<br>具体来说，以TD error为criterion，样本的priority要正比于TD loss，再根据normalized priority得到每个样本被采样的概率。每个样本被采样的概率可以表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091405091.png" alt=""></p>
+<p>其中，$p_{i}$是样本$i$的priority，$\alpha$决定优先级化的程度，当$\alpha=0$时，退化成均匀采样。通常可以通过两种方式求得，在proportional prioritization中，我们直接根据TD error的绝对值决定概率：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091407116.png" alt=""></p>
+<p>在rank-based prioritization中，我们根据rank来决定概率，其中$rank(i)$就是第个样本在全体样本中排在多少位，按照对应TD error的绝对值由大到小排列：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091408114.png" alt=""></p>
+<h3 id="Distributional-DQN"><a href="#Distributional-DQN" class="headerlink" title="Distributional DQN"></a>Distributional DQN</h3><p>在DQN中，网络输出的都是状态-动作价值Q的期望预估值。这个期望值其实忽略很多信息。因为不同的的分布可以有相同的均值，假设我们只用值的期望来代表整个奖励，可能会丢失一些信息，无法对奖励的分布进行建模。<br>所以从理论上来说，从分布视角(distributional perspective)来建模深度强化学习模型，可以获得更多有用的信息，从而得到更好、更稳定的结果。Distributional DQN选择直方图来表示对于价值分布的估计，并将价值限定在$[V_{min},V_{max}]$之间。在$[V_{min},V_{max}]$选择$N$个等距的价值采样点。网络的输出便是这$N$个价值采样点的概率。<br>还是延续DQN中的双网络结构，我们会得到估计的价值分布和目标的价值分布（目标价值分布需要进行裁剪和投影），并使用交叉熵损失函数来计算两个分布之间的差距，并通过梯度下降法进行参数的更新。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091436727.png" alt=""></p>
+<h3 id="Multi-Step-Bootstrapping"><a href="#Multi-Step-Bootstrapping" class="headerlink" title="Multi-Step Bootstrapping"></a>Multi-Step Bootstrapping</h3><p>多步自举就是介于MC和TD的一种方法，可以说MC和TD分别是MB方法的两种极端。TD方法的限制在于，单步必须更新，更新的频率是不能控制的，MB方法就解决了这个问题。自举在有重要，可辨识的状态变更的一段时间里，有最好的效果。（bootstrapping works best if it is over a length of time in which a significant and recognizable state change has occurred.）</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091513535.png" alt=""></p>
+<p>迭代规则如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091513060.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091514291.png" alt=""></p>
+<p>我们采用multi-step方法，对于N步的情况，loss公式变为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091517811.png" alt=""></p>
+<h3 id="Rainbow-DQN"><a href="#Rainbow-DQN" class="headerlink" title="Rainbow DQN"></a>Rainbow DQN</h3><p>Rainbow DQN是一种改进的深度强化学习算法，它旨在结合多种强化学习的改进技术，以提高在各种任务上的性能。Rainbow DQN的名称来源于它的多种改进技术（Double DQN、Prioritized experience replay、Dueling network architecture、Multi-step bootstrap、Distributional DQN、Noisy DQN），就像”七彩虹”一样，每个颜色代表一个不同的改进方法。Rainbow DQN的具体改进如下：</p>
+<ul>
+<li><p>首先把TD的一步自举换成$n$步自举，目标分布变成了：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091501870.png" alt=""></p>
+<p>损失函数变成如下的形式，式子中的$\Phi_{z}$表示投影：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091503001.png" alt=""></p>
+</li>
+<li><p>Prioritized experience replay排序的顺序也需要调整，之前依据TD-error排序，现在不再使用Q值函数，因此TD-error应该进化为KL散度：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091503352.png" alt=""></p>
+</li>
+<li><p>Dueling DQN的结构和Distributional DQN的结构需要结合起来，因为这两种方法都对网络结构作出了调整。</p>
+<ul>
+<li><p>我们从Dueling DQN的结构出发，原先是输出一个状态值函数$V(s)$和一组动作的优势函数$A(s,a)$ ，现在我们需要输出分布了。</p>
+</li>
+<li><p>别忘了C51用的是固定的atoms位置，可变的atoms概率表示分布。我们设卷积层的输出是$\phi$，value stream参数是$\eta$，advantage stream的参数是$\psi$，设atoms的个数为$N$。那么value stream $v_{\eta}$的输出应该是一个$N$维的向量，而advantage stream $a_{\psi}$的输出应该是一个$N\times|\mathcal{A}|$的矩阵，最后每个atoms对应的概率可以表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091508292.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>最后把所有全连接层的参数换成带有噪声的参数。</p>
+</li>
+</ul>
+<h3 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h3><p>策略梯度（Policy Gradient）是一种强化学习方法，用于直接学习和优化策略（policy），而不是通过间接学习值函数（value function）来实现。策略表示了在给定状态下选择动作的概率分布，通过调整策略的参数，策略梯度方法旨在最大化累积奖励。<br>策略梯度的核心思想是通过计算奖励的梯度来更新策略的参数，使得策略的期望回报增加。这通常涉及到最大化一个被称为期望回报的目标函数，该目标函数表示在策略下采取一系列动作的预期累积奖励。为了最大化这个目标函数，我们使用梯度上升方法来更新策略参数。具体来说，策略梯度方法通常采用的步骤为：</p>
+<ul>
+<li>选择一个策略表示，通常是一个神经网络，其输出是在给定状态下采取每个动作的概率；</li>
+<li>在环境中与策略交互，收集一系列轨迹（trajectories），每个轨迹包含状态、选择的动作和获得的奖励；</li>
+<li>计算每个动作的梯度，以确定哪些动作对于提高期望回报是有利的。这通常涉及到计算目标函数对于策略参数的梯度，以及将奖励信号乘以梯度来更新策略；</li>
+<li>使用梯度上升方法（如随机梯度上升或Adam等优化算法）来更新策略参数，以使期望回报最大化。</li>
+</ul>
+<p>策略梯度方法的优势在于它们可以处理离散和连续动作空间，以及高度非线性的策略。它们也适用于具有随机性的环境和部分可观测状态（如循环神经网络用于处理部分可观测问题）。</p>
+<h3 id="Actor-Critic"><a href="#Actor-Critic" class="headerlink" title="Actor Critic"></a>Actor Critic</h3><p>Actor-Critic算法结合了策略梯度（Actor）和值函数估计（Critic）的思想，旨在同时学习一个策略和一个值函数来实现更稳定和高效的强化学习。这种方法的主要优点是能够在学习中充分利用策略和值函数之间的互补信息。<br>其中，Actor输出每个Action的概率，有多少个Action就有多少个输出。Critic基于Actor输出的行为评判得分, Actor再根据Critic的评分修改选行为的概率。这是两个神经网络。因此策略梯度可以写成：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091633242.png" alt=""></p>
+<p>公式里的$\pi$指的就是Actor的策略，$\psi$指的就是Critic，评估Actor策略的好坏，它可以表示成很多种形式：</p>
+<ul>
+<li>$\sum_{t=0}^{\infin}r_{t}$：一个轨迹中的Reward相加</li>
+<li>$\sum_{t=t^{‘}}^{\infin}r_{t^{‘}}$：动作后的Reward（从该动作往后算，可以看成前期的对后面没有影响）</li>
+<li>$\sum_{t=t^{‘}}^{\infin}r_{t^{‘}}-b(s_{t})$：动作后的总汇报相加后的Reward减去一个baseline</li>
+<li>$Q^{\pi}(s_{t},a_{t})$：用行为价值函数Q计算</li>
+<li>$A^{\pi}(s_{t},a_{t})$：用优势函数A计算</li>
+<li>$r_{t}+\gamma V^{\pi}(s_{t+1})-V^{\pi}(s_{t+1})$：用TD-error，计算新的状态价值减去原本的状态价值</li>
+</ul>
+<p>前三个都是直接应用轨迹的回报累计回报，这样计算出来的策略梯度不会存在偏差，但是因为需要累计多步的回报，所以方差会很大。后三个是利用动作价值函数，优势函数和TD偏差代替累计回报，其优点是方差小，但是三种方法中都用到了逼近方法，因此计算出来的策略梯度都存在偏差。这三种方法是以牺牲偏差来换取小的方差。</p>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>强化学习</tag>
       </tags>
   </entry>
   <entry>
