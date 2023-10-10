@@ -869,7 +869,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <li>行动（Action）：行动是智能体在某个状态下可以采取的操作。</li>
 <li>奖励（Reward）：奖励是环境根据智能体的行动给出的反馈，它可以是正数（奖励）或负数（惩罚）。</li>
 <li>策略（Policy）：策略是智能体决策的规则，它是一个从状态到行动的映射函数。</li>
-<li>Off-policy：行动策略和目标策略不是同一个策略（）</li>
+<li>Off-policy：行动策略和目标策略不是同一个策略</li>
 <li>On-policy：行动策略和目标策略是同一个策略</li>
 </ul>
 <h2 id="常用算法"><a href="#常用算法" class="headerlink" title="常用算法"></a>常用算法</h2><h3 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h3><p>Q-Learning算法的核心思想是通过学习一个Q值函数（Q-value Function）来估计在某个状态下采取某个行动的长期回报。Q值函数记作：Q(s, a)，其中s表示状态，a表示行动。</p>
@@ -974,14 +974,25 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091633242.png" alt=""></p>
 <p>公式里的$\pi$指的就是Actor的策略，$\psi$指的就是Critic，评估Actor策略的好坏，它可以表示成很多种形式：</p>
 <ul>
-<li>$\sum_{t=0}^{\infin}r_{t}$：一个轨迹中的Reward相加</li>
-<li>$\sum_{t=t^{‘}}^{\infin}r_{t^{‘}}$：动作后的Reward（从该动作往后算，可以看成前期的对后面没有影响）</li>
-<li>$\sum_{t=t^{‘}}^{\infin}r_{t^{‘}}-b(s_{t})$：动作后的总汇报相加后的Reward减去一个baseline</li>
+<li>$\sum_{t=0}^{\infty}r_{t}$：一个轨迹中的Reward相加</li>
+<li>$\sum_{t=t^{‘}}^{\infty}r_{t^{‘}}$：动作后的Reward（从该动作往后算，可以看成前期的对后面没有影响）</li>
+<li>$\sum_{t=t^{‘}}^{\infty}r_{t^{‘}}-b(s_{t})$：动作后的总汇报相加后的Reward减去一个baseline</li>
 <li>$Q^{\pi}(s_{t},a_{t})$：用行为价值函数Q计算</li>
 <li>$A^{\pi}(s_{t},a_{t})$：用优势函数A计算</li>
 <li>$r_{t}+\gamma V^{\pi}(s_{t+1})-V^{\pi}(s_{t+1})$：用TD-error，计算新的状态价值减去原本的状态价值</li>
 </ul>
 <p>前三个都是直接应用轨迹的回报累计回报，这样计算出来的策略梯度不会存在偏差，但是因为需要累计多步的回报，所以方差会很大。后三个是利用动作价值函数，优势函数和TD偏差代替累计回报，其优点是方差小，但是三种方法中都用到了逼近方法，因此计算出来的策略梯度都存在偏差。这三种方法是以牺牲偏差来换取小的方差。</p>
+<h3 id="A2C"><a href="#A2C" class="headerlink" title="A2C"></a>A2C</h3><p>A2C即Advantage Actor-Critic此算法的出现是为了应对AC算法高方差的问题，一个动作轨迹中假如所有的动作回报都为正并不代表所有动作都是好的，它可能只是个次优的动作。因此我们采用引入基线的方式来解决这个问题,基线函数的特点是能在不改变策略梯度的同时降低其方差。这里的基线baseline一般由$V(s_{t})$来代替，原来的Q值就变成：$Q=Q(s_{t},a_{t})-V(s_{t})=r_{t}+\gamma V(s_{t+1})-V(s_{t})$</p>
+<h3 id="A3C"><a href="#A3C" class="headerlink" title="A3C"></a>A3C</h3><p>A3C（Asynchronous Advantage Actor-Critic）算法结合了Actor-Critic方法和异步训练的思想，旨在实现更高效的强化学习。A3C的主要贡献是引入了异步训练，使多个智能体可以并行地与环境交互，从而显著加速了训练过程。<br>A3C算法与AC算法相比，主要在如下方面进行了优化：</p>
+<ul>
+<li><p>异步训练框架：在A3C算法中，global network是公共的神经网络模型，包含了actor网络和critic网络两部分的功能；下面有n个worker线程，每个线程里有和公共的神经网络一样的网络结构，每个线程会独立的和环境进行交互得到经验数据，这些线程之间互不干扰，独立运行。n个worker线程和公共神经网络的更新情况：每个线程和环境交互得到一定的数据之后，就计算在自己线程里的神经网络损失函数的梯度，但是这些梯度并不更新自己线程里的神经网络，而是去更新公共的神经网络。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310101539072.png" alt=""></p>
+</li>
+<li><p>网络结构的优化：在AC算法中，使用了两个不同的网络即actor和critic；在A3C算法中，把两个神经网络放到了一起，即输入状态为s，输出状态为价值v和对应的策略$\pi$。</p>
+</li>
+<li><p>critic评估点的优化：在AC算法中，使用$Q(s,a)$了作为critic的评估点；在A3C算法中，采样更近一步，使用了步采样，以加速收敛，此时A3C算法中的优势函数为$A(s_{0},a)=Q(s_{0},a)-V(s_{0}=r_{0}+\gamma r_{1}+\cdots+\gamma^{n-1}r_{n-1}+\gamma^{n}V(s_{n})-V(s_{0})$。对于Actor和Critic的损失函数部分，和Actor-Critic基本相同。</p>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>总结</category>
