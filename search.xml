@@ -863,14 +863,32 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <h1 id="强化学习基础"><a href="#强化学习基础" class="headerlink" title="强化学习基础"></a>强化学习基础</h1><p>强化学习（Reinforcement Learning，简称RL）是机器学习的一种重要方法，它通过智能体（agent）与环境（environment）的交互来实现自主学习和决策。在强化学习中，智能体会采取一系列的行动，环境会根据智能体的行动给出奖励或惩罚，智能体的目标是最大化累积奖励。强化学习在许多实际应用中都有着广泛的应用，例如自动驾驶、机器人控制、金融交易、游戏等。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081106986.png" alt=""></p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
-<li>智能体（Agent）：在强化学习中，智能体是一个自主决策的实体，它可以观察环境、采取行动、获得奖励。</li>
-<li>环境（Environment）：环境是智能体所处的外部世界，它会根据智能体的行动给出奖励或惩罚，并提供新的状态信息。</li>
-<li>状态（State）：状态是描述环境的信息，它是智能体决策的依据。</li>
-<li>行动（Action）：行动是智能体在某个状态下可以采取的操作。</li>
-<li>奖励（Reward）：奖励是环境根据智能体的行动给出的反馈，它可以是正数（奖励）或负数（惩罚）。</li>
-<li>策略（Policy）：策略是智能体决策的规则，它是一个从状态到行动的映射函数。</li>
-<li>Off-policy：行动策略和目标策略不是同一个策略</li>
-<li>On-policy：行动策略和目标策略是同一个策略</li>
+<li><p>智能体（Agent）：在强化学习中，智能体是一个自主决策的实体，它可以观察环境、采取行动、获得奖励。</p>
+</li>
+<li><p>环境（Environment）：环境是智能体所处的外部世界，它会根据智能体的行动给出奖励或惩罚，并提供新的状态信息。</p>
+</li>
+<li><p>状态（State）：状态是描述环境的信息，它是智能体决策的依据。</p>
+</li>
+<li><p>行动（Action）：行动是智能体在某个状态下可以采取的操作。</p>
+</li>
+<li><p>奖励（Reward）：奖励是环境根据智能体的行动给出的反馈，它可以是正数（奖励）或负数（惩罚）。</p>
+</li>
+<li><p>策略（Policy）：策略是智能体决策的规则，它是一个从状态到行动的映射函数。</p>
+</li>
+<li><p>Off-policy：行动策略和目标策略不是同一个策略</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111028623.png" alt=""></p>
+</li>
+<li><p>On-policy：行动策略和目标策略是同一个策略</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111030228.png" alt=""></p>
+</li>
+<li><p>状态价值函数（动作1概率（策略$\pi(a|s)$） × 动作1的动作价值函数 + 动作2概率 × 动作2的动作价值函数 + 动作i概率 × 动作i的动作价值函数）和动作价值函数（状态转移概率1（$p(s^{‘},r|s,a)$）×（reward1+s1的状态价值函数）+状态转移概率2×（reward2+s2的状态价值函数）+状态转移概率i×（rewardi+si的状态价值函数））：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111500195.png" alt=""></p>
+</li>
+<li><p>贝尔曼方程：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111356360.png" alt=""></p>
+<p>推导过程如下（之所以$G_{t+1}$可以直接变成$S_{t+1}$是因为：等式左边的$v$表示的是具体某个状态下的状态值函数，等式右边的$v$是随机变量的值函数，因为在MDP中，状态转移是不确定的，是按转移概率进行的，因此下个状态是随机变量，所以要对下个状态求期望$E[v(S_{t+1})]$）：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111357823.png" alt=""></p>
+</li>
 </ul>
 <h2 id="常用算法"><a href="#常用算法" class="headerlink" title="常用算法"></a>常用算法</h2><h3 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h3><p>Q-Learning算法的核心思想是通过学习一个Q值函数（Q-value Function）来估计在某个状态下采取某个行动的长期回报。Q值函数记作：Q(s, a)，其中s表示状态，a表示行动。</p>
 <p>具体更新公式：</p>
@@ -882,7 +900,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p>算法框架图：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081419935.png" alt=""></p>
 <h4 id="目标网络"><a href="#目标网络" class="headerlink" title="目标网络"></a>目标网络</h4><p>目标网络引入的目的：为了避免在更新Q函数时，一边获取Q值一边更新Q函数带来的不稳定问题，这种只针对一个网络的Q函数，实时更新，会导致轨迹很乱，不好训练。所以，引入一个目标网络，从目标网络获取Q值，然后进行Q函数的更新，一段时间后，使用新的Q函数更新目标网络。</p>
-<p>在强化学习中，自举是指用后继的估算值，来更新现在状态的估算值。在target当中，$r_{t}$是实际观测得到的值，$Q^{\pi}(s_{t+1},\pi(s_{t+1}))$是根据Q函数在$s_{t+1}$时做出的估算值，因此target有部分是来自Q函数的估算，而我们用target来更新Q函数本身，所以这属于自举。计算target的时候，我们是最大化Q值的，即$Q^{\pi}(s_{t+1},\pi(s_{t+1}))=\max_{a}Q^{\pi}(s_{t+1},a)$，这里会引起<strong>高估</strong>的问题，利用<strong>目标网络</strong>可以一定程度避免自举，减缓高估问题。</p>
+<p><strong>在强化学习中，自举是指用后继的估算值，来更新现在状态的估算值。</strong>在target当中，$r_{t}$是实际观测得到的值，$Q^{\pi}(s_{t+1},\pi(s_{t+1}))$是根据Q函数在$s_{t+1}$时做出的估算值，因此target有部分是来自Q函数的估算，而我们用target来更新Q函数本身，所以这属于自举。计算target的时候，我们是最大化Q值的，即$Q^{\pi}(s_{t+1},\pi(s_{t+1}))=\max_{a}Q^{\pi}(s_{t+1},a)$，这里会引起<strong>高估</strong>的问题，利用<strong>目标网络</strong>可以一定程度避免自举，减缓高估问题。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081424056.png" alt=""></p>
 <h4 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h4><p>引入探索的目的：避免在进行action的选择时，只选择同一动作，而无法变换。解决探索-利用窘境（exploration-exploitation dilemma）问题。解决方法：$\epsilon$-贪心和玻尔兹曼探索。</p>
 <p>$\epsilon$-贪心：我们有 $1-\epsilon$ 的概率会按照 Q 函数来决定动作。</p>
@@ -894,7 +912,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p>第二个好处，在训练网络的时候，其实我们希望<strong>一个批量里面的数据越多样（diverse）越好</strong>。如果批量里面的数据都是同样性质的，我们训练下去是容易坏掉的。如果批量里面都是一样的数据，训练的时候，性能会比较差。我们希望批量的数据越多样越好。如果数据缓冲区里面的经验通通来自于不同的策略，我们采样到的一个批量里面的数据会是比较多样的。</p>
 <h3 id="DDQN"><a href="#DDQN" class="headerlink" title="DDQN"></a>DDQN</h3><p>引入目标网络可以一定程度减缓高估问题，但是还是有最大化操作，高估问题还是很严重，而Double DQN可以更好地缓解高估问题（但也没有彻底根除高估问题）。</p>
 <p>Double DQN做的改进其实很简单：我们用原始网络$Q(s,a;w)$选出使Q值最大化的那个动作，记为$a^{\ast}$，再用目标网络使用这个$a^{\ast}$计算目标值，得到$y_{t}=r_{t}+\gamma\cdot Q(s_{t+1}, a^{\ast}; w^{-})$。由于$Q(s_{t+1}, a^{\ast}; w^{-}) \leq \max_{a}Q(s_{t+1}, a; w^{-})$，所以进一步减缓了最大化带来的高估问题。</p>
-<h3 id="Dueling-DQN"><a href="#Dueling-DQN" class="headerlink" title="Dueling DQN"></a>Dueling DQN</h3><p>对于某一个确定的$\pi$，我们对这个策略进行策略评估，可以得到动作价值函数和状态价值函数：</p>
+<h3 id="Dueling-DQN"><a href="#Dueling-DQN" class="headerlink" title="Dueling DQN"></a>Dueling DQN</h3><p>对于某一个确定的$\pi$，我们对这个策略进行策略评估，可以得到动作价值函数（状态s下采取行动a预计累计回报的期望值）和状态价值函数（状态s下预计累计回报的期望值）：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081802820.png" alt=""></p>
 <p>当然也可以写成Bellman方程的形式：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081803143.png" alt=""></p>
