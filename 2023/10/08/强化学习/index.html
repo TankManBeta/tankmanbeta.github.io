@@ -31,9 +31,14 @@
 <meta property="og:description" content="前言开新坑啦，强化学习搞起！！！">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081106986.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241533701.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241535831.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241550023.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241551667.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111028623.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111030228.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111500195.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241146883.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111356360.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111357823.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081137646.png">
@@ -73,7 +78,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091633242.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310101539072.png">
 <meta property="article:published_time" content="2023-10-08T02:57:25.000Z">
-<meta property="article:modified_time" content="2023-10-11T09:09:00.887Z">
+<meta property="article:modified_time" content="2023-10-25T08:14:06.154Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="强化学习">
@@ -230,7 +235,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">强化学习基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">常用算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-Learning"><span class="nav-number">2.2.1.</span> <span class="nav-text">Q-Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DQN"><span class="nav-number">2.2.2.</span> <span class="nav-text">DQN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E7%BD%91%E7%BB%9C"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">目标网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">探索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C%E5%9B%9E%E6%94%BE"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">经验回放</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDQN"><span class="nav-number">2.2.3.</span> <span class="nav-text">DDQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dueling-DQN"><span class="nav-number">2.2.4.</span> <span class="nav-text">Dueling DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Noisy-DQN"><span class="nav-number">2.2.5.</span> <span class="nav-text">Noisy DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prioritized-DQN"><span class="nav-number">2.2.6.</span> <span class="nav-text">Prioritized DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distributional-DQN"><span class="nav-number">2.2.7.</span> <span class="nav-text">Distributional DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-Step-Bootstrapping"><span class="nav-number">2.2.8.</span> <span class="nav-text">Multi-Step Bootstrapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rainbow-DQN"><span class="nav-number">2.2.9.</span> <span class="nav-text">Rainbow DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Policy-Gradient"><span class="nav-number">2.2.10.</span> <span class="nav-text">Policy Gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Actor-Critic"><span class="nav-number">2.2.11.</span> <span class="nav-text">Actor Critic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A2C"><span class="nav-number">2.2.12.</span> <span class="nav-text">A2C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A3C"><span class="nav-number">2.2.13.</span> <span class="nav-text">A3C</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%AA%E8%AE%BA"><span class="nav-number">2.</span> <span class="nav-text">绪论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">强化学习概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.1.1.</span> <span class="nav-text">强化学习与监督学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-number">2.1.2.</span> <span class="nav-text">强化学习的特征</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%86%B3%E7%AD%96"><span class="nav-number">2.2.</span> <span class="nav-text">序列决策</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E4%BD%93%E5%92%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">2.2.1.</span> <span class="nav-text">智能体和环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%96%E5%8A%B1"><span class="nav-number">2.2.2.</span> <span class="nav-text">奖励</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%86%B3%E7%AD%96-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">序列决策</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="nav-number">2.3.</span> <span class="nav-text">动作空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E7%BB%84%E6%88%90%E6%88%90%E5%88%86%E5%92%8C%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.4.</span> <span class="nav-text">强化学习智能体的组成成分和类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5"><span class="nav-number">2.4.1.</span> <span class="nav-text">策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0"><span class="nav-number">2.4.2.</span> <span class="nav-text">价值函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.4.3.</span> <span class="nav-text">模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.4.4.</span> <span class="nav-text">强化学习智能体的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%BB%B7%E5%80%BC%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%8E%E5%9F%BA%E4%BA%8E%E7%AD%96%E7%95%A5%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93"><span class="nav-number">2.4.4.1.</span> <span class="nav-text">基于价值的智能体与基于策略的智能体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%89%E6%A8%A1%E5%9E%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%8E%E5%85%8D%E6%A8%A1%E5%9E%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%99%BA%E8%83%BD%E4%BD%93"><span class="nav-number">2.4.4.2.</span> <span class="nav-text">有模型强化学习智能体与免模型强化学习智能体</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E4%B8%8E%E8%A7%84%E5%88%92"><span class="nav-number">2.5.</span> <span class="nav-text">学习与规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2%E5%92%8C%E5%88%A9%E7%94%A8"><span class="nav-number">2.6.</span> <span class="nav-text">探索和利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.7.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95"><span class="nav-number">2.8.</span> <span class="nav-text">常用算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-Learning"><span class="nav-number">2.8.1.</span> <span class="nav-text">Q-Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DQN"><span class="nav-number">2.8.2.</span> <span class="nav-text">DQN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E7%BD%91%E7%BB%9C"><span class="nav-number">2.8.2.1.</span> <span class="nav-text">目标网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2"><span class="nav-number">2.8.2.2.</span> <span class="nav-text">探索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C%E5%9B%9E%E6%94%BE"><span class="nav-number">2.8.2.3.</span> <span class="nav-text">经验回放</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDQN"><span class="nav-number">2.8.3.</span> <span class="nav-text">DDQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dueling-DQN"><span class="nav-number">2.8.4.</span> <span class="nav-text">Dueling DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Noisy-DQN"><span class="nav-number">2.8.5.</span> <span class="nav-text">Noisy DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prioritized-DQN"><span class="nav-number">2.8.6.</span> <span class="nav-text">Prioritized DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distributional-DQN"><span class="nav-number">2.8.7.</span> <span class="nav-text">Distributional DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-Step-Bootstrapping"><span class="nav-number">2.8.8.</span> <span class="nav-text">Multi-Step Bootstrapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rainbow-DQN"><span class="nav-number">2.8.9.</span> <span class="nav-text">Rainbow DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Policy-Gradient"><span class="nav-number">2.8.10.</span> <span class="nav-text">Policy Gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Actor-Critic"><span class="nav-number">2.8.11.</span> <span class="nav-text">Actor Critic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A2C"><span class="nav-number">2.8.12.</span> <span class="nav-text">A2C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A3C"><span class="nav-number">2.8.13.</span> <span class="nav-text">A3C</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -327,7 +332,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-10-11 17:09:00" itemprop="dateModified" datetime="2023-10-11T17:09:00+08:00">2023-10-11</time>
+        <time title="修改时间：2023-10-25 16:14:06" itemprop="dateModified" datetime="2023-10-25T16:14:06+08:00">2023-10-25</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -347,14 +352,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>8.4k</span>
+      <span>11k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>8 分钟</span>
+      <span>10 分钟</span>
     </span>
 </div>
 
@@ -367,8 +372,56 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>开新坑啦，强化学习搞起！！！</p>
 <a id="more"></a>
-<h1 id="强化学习基础"><a href="#强化学习基础" class="headerlink" title="强化学习基础"></a>强化学习基础</h1><p>强化学习（Reinforcement Learning，简称RL）是机器学习的一种重要方法，它通过智能体（agent）与环境（environment）的交互来实现自主学习和决策。在强化学习中，智能体会采取一系列的行动，环境会根据智能体的行动给出奖励或惩罚，智能体的目标是最大化累积奖励。强化学习在许多实际应用中都有着广泛的应用，例如自动驾驶、机器人控制、金融交易、游戏等。</p>
+<h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><h2 id="强化学习概述"><a href="#强化学习概述" class="headerlink" title="强化学习概述"></a>强化学习概述</h2><p>强化学习（Reinforcement Learning，简称RL）是机器学习的一种重要方法，它通过智能体（agent）与环境（environment）的交互来实现自主学习和决策。在强化学习中，智能体会采取一系列的行动，环境会根据智能体的行动给出奖励或惩罚，智能体的目标是最大化累积奖励。强化学习在许多实际应用中都有着广泛的应用，例如自动驾驶、机器人控制、金融交易、游戏等。<strong>智能体的目的就是尽可能多地从环境中获取奖励。</strong></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081106986.png" alt=""></p>
+<h3 id="强化学习与监督学习"><a href="#强化学习与监督学习" class="headerlink" title="强化学习与监督学习"></a>强化学习与监督学习</h3><p>监督学习：</p>
+<ul>
+<li>输入的数据应该是没有关联的（独立同分布）</li>
+<li>我们告诉学习器正确的标签是什么</li>
+</ul>
+<p>强化学习：</p>
+<ul>
+<li>观测（observation）不是独立同分布的</li>
+<li>并没有立刻获得反馈</li>
+</ul>
+<h3 id="强化学习的特征"><a href="#强化学习的特征" class="headerlink" title="强化学习的特征"></a>强化学习的特征</h3><ul>
+<li>强化学习会试错探索，它通过探索环境来获取对环境的理解。</li>
+<li>强化学习智能体会从环境里面获得延迟的奖励。</li>
+<li>在强化学习的训练过程中，时间非常重要。</li>
+<li>智能体的动作会影响它随后得到的数据。</li>
+</ul>
+<h2 id="序列决策"><a href="#序列决策" class="headerlink" title="序列决策"></a>序列决策</h2><h3 id="智能体和环境"><a href="#智能体和环境" class="headerlink" title="智能体和环境"></a>智能体和环境</h3><p>强化学习研究的问题是智能体与环境交互的问题。智能体把它的动作输出给环境，环境取得这个动作后会进行下一步，把下一步的观测与这个动作带来的奖励返还给智能体。这样的交互会产生很多观测，智能体的目的是从这些观测之中学到能最大化奖励的策略。</p>
+<h3 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h3><p>奖励是由环境给的一种标量的反馈信号（scalar feedback signal），这种信号可显示智能体在某一步采取某个策略的表现如何。强化学习的目的就是最大化智能体可以获得的奖励，智能体在环境里面存在的目的就是最大化它的期望的累积奖励（expected cumulative reward）。</p>
+<h3 id="序列决策-1"><a href="#序列决策-1" class="headerlink" title="序列决策"></a>序列决策</h3><p>在一个强化学习环境里面，智能体的目的就是选取一系列的动作来最大化奖励，所以这些选取的动作必须有长期的影响。但在这个过程里面，智能体的奖励其实是被延迟了的，就是我们现在选取的某一步动作，可能要等到很久后才知道这一步到底产生了什么样的影响。</p>
+<p><strong>状态</strong>是对世界的完整描述，不会隐藏世界的信息。 <strong>观测</strong>是对状态的部分描述，可能会遗漏一些信息。</p>
+<p>当智能体的状态与环境的状态等价的时候，即当智能体能够观察到环境的所有状态时，我们称这个环境是<strong>完全可观测的（fully observed）</strong>。在这种情况下面，强化学习通常被建模成一个<strong>马尔可夫决策过程（Markov decision process，MDP）</strong>的问题。</p>
+<p>当智能体只能看到部分的观测，我们就称这个环境是<strong>部分可观测的（partially observed）</strong>。在这种情况下，强化学习通常被建模成<strong>部分可观测马尔可夫决策过程（partially observable Markov decision process, POMDP）</strong>的问题。</p>
+<h2 id="动作空间"><a href="#动作空间" class="headerlink" title="动作空间"></a>动作空间</h2><p>在给定的环境中，有效动作的集合经常被称为<strong>动作空间（action space）</strong>。像雅达利游戏和围棋（Go）这样的环境有<strong>离散动作空间（discrete action space）</strong>，在这个动作空间里，智能体的动作数量是有限的。在其他环境，比如在物理世界中控制一个智能体，在这个环境中就有<strong>连续动作空间（continuous action space）</strong>。在连续动作空间中，动作是实值的向量。</p>
+<h2 id="强化学习智能体的组成成分和类型"><a href="#强化学习智能体的组成成分和类型" class="headerlink" title="强化学习智能体的组成成分和类型"></a>强化学习智能体的组成成分和类型</h2><ul>
+<li>策略（policy）：智能体会用策略来选取下一步的动作。</li>
+<li>价值函数（value function）：我们用价值函数来对当前状态进行评估。价值函数用于评估智能体进入某个状态后，可以对后面的奖励带来多大的影响。价值函数值越大，说明智能体进入这个状态越有利。</li>
+<li>模型（model）。模型表示智能体对环境的状态进行理解，它决定了环境中世界的运行方式。</li>
+</ul>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>策略是智能体的动作模型，它决定了智能体的动作。它其实是一个函数，用于把输入的状态变成动作。策略可分为两种：随机性策略和确定性策略。<br><strong>随机性策略（stochastic policy）</strong>就是 $\pi$ 函数，即 $π(a|s) = p (a_{t} = a|s_{t} = s)$ 。输入一个状态 $s$ ，输出一个概率。这个概率是智能体所有动作的概率，然后对这个概率分布进行采样，可得到智能体将采取的动作。比如可能是有 $0.7$ 的概率往左， $0.3$ 的概率往右，那么通过采样就可以得到智能体将采取的动作。<br><strong>确定性策略（deterministic policy）</strong>就是智能体直接采取最有可能的动作，即 $a^{\ast} = \mathop{\mathrm{argmax}}\limits_{a}{\pi(a | s)}$ 。  </p>
+<p>通常情况下，强化学习一般使用随机性策略，随机性策略有很多优点。</p>
+<ul>
+<li>在学习时可以通过引入一定的随机性来更好地探索环境；</li>
+<li>随机性策略的动作具有多样性，这一点在多个智能体博弈时非常重要；</li>
+<li>采用确定性策略的智能体总是对同样的状态采取相同的动作，这会导致它的策略很容易被对手预测。</li>
+</ul>
+<h3 id="价值函数"><a href="#价值函数" class="headerlink" title="价值函数"></a>价值函数</h3><p>价值函数的值是对未来奖励的预测，我们用它来评估状态的好坏。价值函数里面有一个折扣因子（discount factor），我们希望在尽可能短的时间里面得到尽可能多的奖励。</p>
+<p>因此，我们可以把折扣因子放到价值函数的定义里面，价值函数的定义为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241533701.png" alt=""></p>
+<p>我们还有一种价值函数： Q 函数。 Q 函数里面包含两个变量：状态和动作。其定义为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241535831.png" alt=""></p>
+<h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>模型决定了下一步的状态。下一步的状态取决于当前的状态以及当前采取的动作。它由状态转移概率和奖励函数两个部分组成。状态转移概率即：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241550023.png" alt=""></p>
+<p>奖励函数是指我们在当前状态采取了某个动作，可以得到多大的奖励，即：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241551667.png" alt=""></p>
+<h3 id="强化学习智能体的类型"><a href="#强化学习智能体的类型" class="headerlink" title="强化学习智能体的类型"></a>强化学习智能体的类型</h3><h4 id="基于价值的智能体与基于策略的智能体"><a href="#基于价值的智能体与基于策略的智能体" class="headerlink" title="基于价值的智能体与基于策略的智能体"></a>基于价值的智能体与基于策略的智能体</h4><p><strong>基于价值的智能体（value-based agent）</strong>显式地学习价值函数，隐式地学习它的策略。策略是其从学到的价值函数里面推算出来的。<strong>基于策略的智能体（policy-based agent）</strong> 直接学习策略，我们给它一个状态，它就会输出对应动作的概率。基于策略的智能体并没有学习价值函数。把基于价值的智能体和基于策略的智能体结合起来就有了<strong>演员-评论员智能体（actor-critic agent）</strong>。这一类智能体把策略和价值函数都学习了，然后通过两者的交互得到最佳的动作。</p>
+<h4 id="有模型强化学习智能体与免模型强化学习智能体"><a href="#有模型强化学习智能体与免模型强化学习智能体" class="headerlink" title="有模型强化学习智能体与免模型强化学习智能体"></a>有模型强化学习智能体与免模型强化学习智能体</h4><p><strong>有模型（model-based）强化学习智能体</strong>通过学习状态的转移来采取动作。<strong>免模型（model-free）强化学习智能体</strong>没有去直接估计状态的转移，也没有得到环境的具体转移变量，它通过学习价值函数和策略函数进行决策。免模型强化学习智能体的模型里面没有环境转移的模型。</p>
+<h2 id="学习与规划"><a href="#学习与规划" class="headerlink" title="学习与规划"></a>学习与规划</h2><p>在规划中，环境是已知的，智能体被告知了整个环境的运作规则的详细信息。</p>
+<h2 id="探索和利用"><a href="#探索和利用" class="headerlink" title="探索和利用"></a>探索和利用</h2><p><strong>探索</strong>即我们去探索环境，通过尝试不同的动作来得到最佳的策略（带来最大奖励的策略）。<strong>利用</strong>即我们不去尝试新的动作，而是采取已知的可以带来很大奖励的动作。</p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
 <li><p>智能体（Agent）：在强化学习中，智能体是一个自主决策的实体，它可以观察环境、采取行动、获得奖励。</p>
 </li>
@@ -390,6 +443,8 @@
 </li>
 <li><p>状态价值函数（动作1概率（策略$\pi(a|s)$） × 动作1的动作价值函数 + 动作2概率 × 动作2的动作价值函数 + 动作i概率 × 动作i的动作价值函数）和动作价值函数（状态转移概率1（$p(s^{‘},r|s,a)$）×（reward1+s1的状态价值函数）+状态转移概率2×（reward2+s2的状态价值函数）+状态转移概率i×（rewardi+si的状态价值函数））：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111500195.png" alt=""></p>
+<p>递归写法为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241146883.png" alt=""></p>
 </li>
 <li><p>贝尔曼方程：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310111356360.png" alt=""></p>
@@ -448,7 +503,7 @@
 <p>而针对最优控制情形，我们将Q值的表达式改成：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091058155.png" alt=""></p>
 <p>这样就<strong>倒逼</strong> $V(s;\theta,\beta)$ 必须精确的学出Value，从而保证了 $A(s,a^{‘};\theta,\alpha)$ 也是精确的。实验表明，用均值版本的表达式可以在两种情况都适用，因此通常只是用均值形式的。</p>
-<h3 id="Noisy-DQN"><a href="#Noisy-DQN" class="headerlink" title="Noisy DQN"></a>Noisy DQN</h3><p>Noisy DQN（Noisy Deep Q-Network）提出了一种新的有效的增加网络探索性的策略，这与之前大多数DQN系列通常采用的$\varepsilon$-greedy策略有所不同。Noisy DQN在模型训练过程中，会在网络中添加随机噪声以增强最终结果的不确定性，从而达到和$\varepsilon$-greedy策略随机选择动作所类似的效果。Noisy DQN取得了比传统DQN更优越的性能。在强化学习中，探索是指代理尝试新动作以发现潜在的更好策略，而利用是指代理根据目前已知的最佳策略来采取动作。传统的DQN使用$\varepsilon$-greedy策略来平衡探索与利用，但这会受到值的影响，需要经过调整来达到最佳效果。Noisy DQN通过参数噪声的引入，以一种更自适应的方式实现了探索与利用的平衡。<br>有两种引入噪声的方式。一个是独立高斯噪声，每一个权重和偏执都有自己的噪声。一个是分解高斯噪声，以神经元为单位适用同一个噪声。Noisy DQN采用的是第二种分解高斯噪声。权重和偏执的均值从$U[-\frac{1}{\sqrt{p}},+\frac{1}{\sqrt{p}}]$中进行采样，$p$是输入的维度表。而标准差$\frac{\sigma_{0}}{p}$用进行填充式赋值，分子是提前设置的超参数，一般用0.5。</p>
+<h3 id="Noisy-DQN"><a href="#Noisy-DQN" class="headerlink" title="Noisy DQN"></a>Noisy DQN</h3><p>Noisy DQN（Noisy Deep Q-Network）提出了一种新的有效的增加网络探索性的策略，这与之前大多数DQN系列通常采用的$\varepsilon$-greedy策略有所不同。Noisy DQN在模型训练过程中，会在网络中添加随机噪声以增强最终结果的不确定性，从而达到和$\varepsilon$-greedy策略随机选择动作所类似的效果。Noisy DQN取得了比传统DQN更优越的性能。在强化学习中，探索是指代理尝试新动作以发现潜在的更好策略，而利用是指代理根据目前已知的最佳策略来采取动作。传统的DQN使用$\varepsilon$-greedy策略来平衡探索与利用，但这会受到值的影响，需要经过调整来达到最佳效果。Noisy DQN通过参数噪声的引入，以一种更自适应的方式实现了探索与利用的平衡。<br>有两种引入噪声的方式。一个是独立高斯噪声，每一个权重和偏执都有自己的噪声。一个是分解高斯噪声，以神经元为单位适用同一个噪声。Noisy DQN采用的是第二种分解高斯噪声。权重和偏置的均值从$U[-\frac{1}{\sqrt{p}},+\frac{1}{\sqrt{p}}]$中进行采样，$p$是输入的维度表。而标准差$\frac{\sigma_{0}}{p}$用进行填充式赋值，分子是提前设置的超参数，一般用0.5。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091140788.png" alt=""></p>
 <h3 id="Prioritized-DQN"><a href="#Prioritized-DQN" class="headerlink" title="Prioritized DQN"></a>Prioritized DQN</h3><p>Prioritized DQN（Prioritized Deep Q-Network）是基于DQN（Deep Q-Network）的改进版本，旨在提高学习效率和性能，特别是在处理经验回放时。它引入了一种称为”优先级采样”（Prioritized Experience Replay）的机制，该机制允许算法有选择性地重放经验，更关注那些对训练有重要影响的经验。<br>传统的DQN使用均匀随机采样来选择经验回放中的样本，这意味着所有经验都有相同的机会被选择。然而，某些经验可能对学习更有价值，而其他经验则可能对学习不太重要。Prioritized DQN引入了一个优先级值，用于衡量每个经验的重要性。经验的优先级通常与其导致的TD误差（Temporal Difference Error）有关，TD误差越大，优先级越高。这样，训练时会更多地关注那些有助于降低误差的经验。<br>具体来说，以TD error为criterion，样本的priority要正比于TD loss，再根据normalized priority得到每个样本被采样的概率。每个样本被采样的概率可以表示为：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310091405091.png" alt=""></p>
