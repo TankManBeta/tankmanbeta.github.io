@@ -1,138 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Linux使用总结</title>
-    <url>/2023/06/14/Linux%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Linux</code>系统过程中遇到的知识点</p>
-<a id="more"></a>
-<h1 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h1><p>修改当前用户密码：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
-<h1 id="快捷补全"><a href="#快捷补全" class="headerlink" title="快捷补全"></a>快捷补全</h1><p>按<code>Tab</code>键即可快捷补全。</p>
-<h1 id="切换目录"><a href="#切换目录" class="headerlink" title="切换目录"></a>切换目录</h1><p>切换到<code>xxx</code>目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd xxx</span><br></pre></td></tr></table></figure>
-<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><p>创建一个名为<code>Environment</code>的目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir Environment</span><br></pre></td></tr></table></figure>
-<h1 id="查看工作目录下的内容"><a href="#查看工作目录下的内容" class="headerlink" title="查看工作目录下的内容"></a>查看工作目录下的内容</h1><p>以长格式的形式查看当前目录下所有可见文件的详细属性（其中<code>rwx</code>、<code>r-x</code>、<code>r-x</code>各有功能）：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
-<p>显示当前目录中的所有文件和目录（包括隐藏文件）：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -a</span><br></pre></td></tr></table></figure>
-<h1 id="获取当前目录的完整路径"><a href="#获取当前目录的完整路径" class="headerlink" title="获取当前目录的完整路径"></a>获取当前目录的完整路径</h1><p>获取当前目录的完整路径（绝对路径）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pwd</span><br></pre></td></tr></table></figure>
-<h1 id="获取文件的绝对路径"><a href="#获取文件的绝对路径" class="headerlink" title="获取文件的绝对路径"></a>获取文件的绝对路径</h1><p>readlink 的最初用途是解析符号链接，不过我们可以用它来显示文件的完整路径，如下为其语法结构：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">readlink -f sample.txt</span><br></pre></td></tr></table></figure>
-<p>realpath 原用于解析绝对文件名，在这里我们也可以用它来显示文件的完整路径，如果使用符号链接，它将显示原始文件的实际路径：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">realpath sample.txt</span><br></pre></td></tr></table></figure>
-<p>可以强制它不跟随符号链接（即显示当前文件的路径）：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">realpath -s sample.txt</span><br></pre></td></tr></table></figure>
-<h1 id="友好显示文件大小"><a href="#友好显示文件大小" class="headerlink" title="友好显示文件大小"></a>友好显示文件大小</h1><p>查看文件/目录的大小并且输出我们看得懂的单位（例如<code>K</code>，<code>M</code>，<code>G</code>），<code>-h</code>是<code>--human-readable</code>的意思：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ll -h</span><br></pre></td></tr></table></figure>
-<h1 id="拷贝文件-文件夹"><a href="#拷贝文件-文件夹" class="headerlink" title="拷贝文件/文件夹"></a>拷贝文件/文件夹</h1><p>将<code>test-3ddata</code>目录拷贝到上层<code>Data</code>目录下，<code>-r</code>命令是递归：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp test-3ddata/ ../Data -r</span><br></pre></td></tr></table></figure>
-<h1 id="移动文件-文件夹"><a href="#移动文件-文件夹" class="headerlink" title="移动文件/文件夹"></a>移动文件/文件夹</h1><p>将<code>test-3ddata</code>目录移动到上层<code>Data</code>目录下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mv test-3ddata/ ../Data/</span><br></pre></td></tr></table></figure>
-<h1 id="重命名文件-文件夹"><a href="#重命名文件-文件夹" class="headerlink" title="重命名文件/文件夹"></a>重命名文件/文件夹</h1><p>将<code>test-3ddata</code>目录重命名为<code>test-3d</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mv test-3ddata test-3d</span><br></pre></td></tr></table></figure>
-<h1 id="删除文件-文件夹"><a href="#删除文件-文件夹" class="headerlink" title="删除文件/文件夹"></a>删除文件/文件夹</h1><p>删除名为<code>gtc-input-f6cab9.lua</code>和<code>gtcv3-f6cab9.converted.npz</code>的文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -f gtc-input-f6cab9.lua gtcv3-f6cab9.converted.npz</span><br></pre></td></tr></table></figure>
-<p>删除名为<code>aaa</code>的目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -rf aaa</span><br></pre></td></tr></table></figure>
-<h1 id="清屏命令"><a href="#清屏命令" class="headerlink" title="清屏命令"></a>清屏命令</h1><p>刷新屏幕（本质上只是让终端显示页向后翻了一页，如果向上滚动屏幕还可以看到之前的操作信息）：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">clear</span><br></pre></td></tr></table></figure>
-<p>完全刷新终端屏幕（之前的终端输入操作信息将都会被清空，整个命令过程速度有点慢，使用较少）：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">reset</span><br></pre></td></tr></table></figure>
-<h1 id="监控GPU命令"><a href="#监控GPU命令" class="headerlink" title="监控GPU命令"></a>监控GPU命令</h1><p>监控<code>GPU</code>的使用情况：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
-<h1 id="杀死进程"><a href="#杀死进程" class="headerlink" title="杀死进程"></a>杀死进程</h1><p>杀死<code>pid</code>为<code>88888</code>的进程</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 88888</span><br></pre></td></tr></table></figure>
-<h1 id="挂起进程"><a href="#挂起进程" class="headerlink" title="挂起进程"></a>挂起进程</h1><p>如何挂起正在执行的进程：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Ctrl+z</span><br></pre></td></tr></table></figure>
-<p>查看被挂起的进程：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jobs</span><br></pre></td></tr></table></figure>
-<p>重新启动前台被中断的任务：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fg [job id]</span><br></pre></td></tr></table></figure>
-<p>把被中断的任务放在后台执行：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bg [job id]</span><br></pre></td></tr></table></figure>
-<h1 id="如何查询python安装路径"><a href="#如何查询python安装路径" class="headerlink" title="如何查询python安装路径"></a>如何查询python安装路径</h1><p>查看所有<code>python</code>的安装目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">whereis python</span><br></pre></td></tr></table></figure>
-<p>查看当前使用的<code>python</code>的安装目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which python</span><br></pre></td></tr></table></figure>
-<h1 id="虚拟环境管理"><a href="#虚拟环境管理" class="headerlink" title="虚拟环境管理"></a>虚拟环境管理</h1><h2 id="virtualenv"><a href="#virtualenv" class="headerlink" title="virtualenv"></a>virtualenv</h2><h3 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h3><p>创建一个名为<code>env1</code>的虚拟环境目录（<code>/usr/local/bin/python</code>是<code>Python</code>的安装路径，创建的虚拟环境中的<code>Python</code>版本与路径中的<code>Python</code>版本一致）：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">virtualenv -p /usr/local/bin/python env1</span><br></pre></td></tr></table></figure>
-<h3 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h3><p>激活虚拟环境（激活成功之后命令行前面会出现<code>(env1)</code>）：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source env1/bin/activate</span><br></pre></td></tr></table></figure>
-<h3 id="退出虚拟环境"><a href="#退出虚拟环境" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h3><p>退出虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
-<h3 id="删除虚拟环境"><a href="#删除虚拟环境" class="headerlink" title="删除虚拟环境"></a>删除虚拟环境</h3><p>删除名为<code>env1</code>的虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -rf env1</span><br></pre></td></tr></table></figure>
-<h2 id="miniconda"><a href="#miniconda" class="headerlink" title="miniconda"></a>miniconda</h2><h3 id="下载miniconda安装包"><a href="#下载miniconda安装包" class="headerlink" title="下载miniconda安装包"></a>下载miniconda安装包</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-py37_23.1.0-1-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
-<h3 id="安装miniconda"><a href="#安装miniconda" class="headerlink" title="安装miniconda"></a>安装miniconda</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bash Miniconda3-py37_23.1.0-1-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
-<h3 id="查看所有虚拟环境"><a href="#查看所有虚拟环境" class="headerlink" title="查看所有虚拟环境"></a>查看所有虚拟环境</h3><p>查看已经安装的所有虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda info --envs</span><br></pre></td></tr></table></figure>
-<h3 id="创建虚拟环境-1"><a href="#创建虚拟环境-1" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h3><p>创建一个虚拟环境名为<code>venv</code>，<code>python</code>版本为<code>3.7</code>的虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create --name venv python=3.7</span><br></pre></td></tr></table></figure>
-<p>在指定位置创建名为<code>venv</code>的虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create --prefix=/home/jeeby/Environment/venv python=3.7</span><br></pre></td></tr></table></figure>
-<p>注意此时<code>conda activate venv</code>会报错，因为虚拟环境虽然创建成功，但是没有名字，我们需要将新建立的环境目录加入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda config --append envs_dirs /home/jeeby/Environment/</span><br></pre></td></tr></table></figure>
-<h3 id="激活虚拟环境-1"><a href="#激活虚拟环境-1" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h3><p>激活名为<code>venv</code>的虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda activate venv</span><br></pre></td></tr></table></figure>
-<h3 id="退出虚拟环境-1"><a href="#退出虚拟环境-1" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h3><p>退出当前虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
-<h3 id="删除虚拟环境-1"><a href="#删除虚拟环境-1" class="headerlink" title="删除虚拟环境"></a>删除虚拟环境</h3><p>删除名为<code>venv</code>的虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda remove -n venv --all</span><br></pre></td></tr></table></figure>
-<h1 id="安装GPU版本的PyTorch"><a href="#安装GPU版本的PyTorch" class="headerlink" title="安装GPU版本的PyTorch"></a>安装GPU版本的PyTorch</h1><p>建议先进入<code>torch</code>的<code>wheel</code><a href="https://download.pytorch.org/whl/torch_stable.html">下载网站</a>查看版本对应的情况。</p>
-<p>拿我自己举例，服务器下安装的<code>CUDA</code>的版本是<code>12.1</code>，但是<code>PyTorch</code>的<a href="https://pytorch.org/get-started/locally/">官网</a>上显示目前支持的<code>CUDA</code>版本为<code>11.7</code>和<code>11.8</code>，秉持着用新不用旧的原则，就运行了官网提供的<code>CUDA 11.8</code>的<code>Command</code>，但是没有安装成功，然后找了半天发现自己的<code>python</code>版本是<code>3.7</code>，在上面<code>wheel</code>网站里发现<code>3.7</code>版本的<code>python</code>最高支持的<code>CUDA</code>版本为<code>11.7</code>，于是在官网中的<code>Compute Platform</code>这一项选择了<code>CUDA 11.7</code>，然后在运行官网提供的新<code>Command</code>，待安装完成之后执行<code>torch.cuda.is_available()</code>，返回<code>True</code>。</p>
-<h1 id="多个项目使用同一个数据集"><a href="#多个项目使用同一个数据集" class="headerlink" title="多个项目使用同一个数据集"></a>多个项目使用同一个数据集</h1><p>在训练深度学习模型时，很多模型需要用到同一个数据集，而很多模型都要求在当前算法文件夹中存放数据集，为了减少内存浪费，可以在当前文件夹下使用软连接来连接到数据集源文件，就可以不需要复制多个数据集了。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ln -s source_file link_file</span><br></pre></td></tr></table></figure>
-<h1 id="连接中断的恢复"><a href="#连接中断的恢复" class="headerlink" title="连接中断的恢复"></a>连接中断的恢复</h1><ol>
-<li><p>第一次连接的时候使用<code>screen -S</code>命令对<code>session</code>进行记录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -S test</span><br></pre></td></tr></table></figure></li>
-<li><p>在要执行的命令后加<code>&amp;</code>，让命令放到服务器端后台运行：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python main.py &amp;</span><br></pre></td></tr></table></figure></li>
-<li><p>如果连接中断，则使用<code>screen</code>命令恢复上次的会话，继续监控命令执行的情况：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -r test</span><br></pre></td></tr></table></figure></li>
-<li><p>查看所有<code>session</code>的<code>id</code>，名称以及状态：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -ls</span><br></pre></td></tr></table></figure></li>
-<li><p>删除名称为<code>test</code>的<code>session</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -S test -X quit</span><br></pre></td></tr></table></figure></li>
-<li><p>进入名称<code>jeeby</code>的<code>session</code>，若<code>session</code>不存在则新建：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -R jeeby</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="Pycharm远程连接服务器"><a href="#Pycharm远程连接服务器" class="headerlink" title="Pycharm远程连接服务器"></a>Pycharm远程连接服务器</h1><ul>
-<li>确保自己的Pycharm版本为professional版本</li>
-<li>创建远程连接：Tools—&gt;Deployment—&gt;Configuration—&gt;SFTP协议—&gt;配置服务器的IP、端口、用户名、密码等相关信息</li>
-<li>进行本地项目与远程项目之间的文件夹路径映射：在刚才的SFTP协议中选择Mappings添加映射，例如我们将本地的D:\workspace\PycharmProjects\Code路径映射到远端的/home/jeeby/Code路径</li>
-<li>设置文件自动上传（可选）：Tools—&gt;Deployment—&gt;Automatic Upload，默认是有修改就自动上传，可以在Tools—&gt;Deployment—&gt;Options中设置按了ctrl+s上传</li>
-<li>验证是否连接成功：Tools—&gt;Deployment—&gt;Browse Remote Host，如果能打开服务器文件目录说明连接成功</li>
-<li>配置Python解释器<ul>
-<li>查询服务器中所使用的的Python解释器路径：which python命令，注意虚拟环境的话需要先进入虚拟环境再使用前述命令</li>
-<li>本地Pycharm中配置Python解释器：File—&gt;Settings—&gt;Project—&gt;Project Interpreter—&gt;右上角设置图标Add—&gt;SSH Interpreter—&gt;Existing server configuration—&gt;Move—&gt;配置Interpreter和Sync folders（和前面配置的文件夹路径映射一致即可）</li>
-</ul>
-</li>
-<li>本地启动服务器终端：Tools—&gt;Start SSH session</li>
-</ul>
-<h1 id="VIM编辑器使用"><a href="#VIM编辑器使用" class="headerlink" title="VIM编辑器使用"></a>VIM编辑器使用</h1><ul>
-<li>使用<code>vim</code>命令进入编辑器，例如编辑<code>vim main.py</code>来编辑<code>main.py</code>文件</li>
-<li>进入编辑器之后按<code>i</code>切换到插入状态</li>
-<li>退出编辑器<ul>
-<li>首先按<code>Esc</code>退出插入状态</li>
-<li>输入<code>:</code>，系统会等待输入命令</li>
-<li>输入相应的命令：<code>wq</code>（保存退出，可以直接用<code>x</code>代替）；<code>q</code>（直接退出）；<code>!q</code>（不保存退出）；<code>!</code>（强制退出）</li>
-</ul>
-</li>
-</ul>
-<p>Tips：可以在按了<code>Esc</code>键之后，按<code>shift+zz</code>直接退出，这是最便捷的方式</p>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Git使用总结</title>
     <url>/2022/02/25/Git%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Git</code>过程中遇到的问题</p>
@@ -268,6 +136,138 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       <tags>
         <tag>总结</tag>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux使用总结</title>
+    <url>/2023/06/14/Linux%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Linux</code>系统过程中遇到的知识点</p>
+<a id="more"></a>
+<h1 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h1><p>修改当前用户密码：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+<h1 id="快捷补全"><a href="#快捷补全" class="headerlink" title="快捷补全"></a>快捷补全</h1><p>按<code>Tab</code>键即可快捷补全。</p>
+<h1 id="切换目录"><a href="#切换目录" class="headerlink" title="切换目录"></a>切换目录</h1><p>切换到<code>xxx</code>目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd xxx</span><br></pre></td></tr></table></figure>
+<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><p>创建一个名为<code>Environment</code>的目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir Environment</span><br></pre></td></tr></table></figure>
+<h1 id="查看工作目录下的内容"><a href="#查看工作目录下的内容" class="headerlink" title="查看工作目录下的内容"></a>查看工作目录下的内容</h1><p>以长格式的形式查看当前目录下所有可见文件的详细属性（其中<code>rwx</code>、<code>r-x</code>、<code>r-x</code>各有功能）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
+<p>显示当前目录中的所有文件和目录（包括隐藏文件）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -a</span><br></pre></td></tr></table></figure>
+<h1 id="获取当前目录的完整路径"><a href="#获取当前目录的完整路径" class="headerlink" title="获取当前目录的完整路径"></a>获取当前目录的完整路径</h1><p>获取当前目录的完整路径（绝对路径）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pwd</span><br></pre></td></tr></table></figure>
+<h1 id="获取文件的绝对路径"><a href="#获取文件的绝对路径" class="headerlink" title="获取文件的绝对路径"></a>获取文件的绝对路径</h1><p>readlink 的最初用途是解析符号链接，不过我们可以用它来显示文件的完整路径，如下为其语法结构：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">readlink -f sample.txt</span><br></pre></td></tr></table></figure>
+<p>realpath 原用于解析绝对文件名，在这里我们也可以用它来显示文件的完整路径，如果使用符号链接，它将显示原始文件的实际路径：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">realpath sample.txt</span><br></pre></td></tr></table></figure>
+<p>可以强制它不跟随符号链接（即显示当前文件的路径）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">realpath -s sample.txt</span><br></pre></td></tr></table></figure>
+<h1 id="友好显示文件大小"><a href="#友好显示文件大小" class="headerlink" title="友好显示文件大小"></a>友好显示文件大小</h1><p>查看文件/目录的大小并且输出我们看得懂的单位（例如<code>K</code>，<code>M</code>，<code>G</code>），<code>-h</code>是<code>--human-readable</code>的意思：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ll -h</span><br></pre></td></tr></table></figure>
+<h1 id="拷贝文件-文件夹"><a href="#拷贝文件-文件夹" class="headerlink" title="拷贝文件/文件夹"></a>拷贝文件/文件夹</h1><p>将<code>test-3ddata</code>目录拷贝到上层<code>Data</code>目录下，<code>-r</code>命令是递归：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp test-3ddata/ ../Data -r</span><br></pre></td></tr></table></figure>
+<h1 id="移动文件-文件夹"><a href="#移动文件-文件夹" class="headerlink" title="移动文件/文件夹"></a>移动文件/文件夹</h1><p>将<code>test-3ddata</code>目录移动到上层<code>Data</code>目录下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mv test-3ddata/ ../Data/</span><br></pre></td></tr></table></figure>
+<h1 id="重命名文件-文件夹"><a href="#重命名文件-文件夹" class="headerlink" title="重命名文件/文件夹"></a>重命名文件/文件夹</h1><p>将<code>test-3ddata</code>目录重命名为<code>test-3d</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mv test-3ddata test-3d</span><br></pre></td></tr></table></figure>
+<h1 id="删除文件-文件夹"><a href="#删除文件-文件夹" class="headerlink" title="删除文件/文件夹"></a>删除文件/文件夹</h1><p>删除名为<code>gtc-input-f6cab9.lua</code>和<code>gtcv3-f6cab9.converted.npz</code>的文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -f gtc-input-f6cab9.lua gtcv3-f6cab9.converted.npz</span><br></pre></td></tr></table></figure>
+<p>删除名为<code>aaa</code>的目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -rf aaa</span><br></pre></td></tr></table></figure>
+<h1 id="清屏命令"><a href="#清屏命令" class="headerlink" title="清屏命令"></a>清屏命令</h1><p>刷新屏幕（本质上只是让终端显示页向后翻了一页，如果向上滚动屏幕还可以看到之前的操作信息）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">clear</span><br></pre></td></tr></table></figure>
+<p>完全刷新终端屏幕（之前的终端输入操作信息将都会被清空，整个命令过程速度有点慢，使用较少）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">reset</span><br></pre></td></tr></table></figure>
+<h1 id="监控GPU命令"><a href="#监控GPU命令" class="headerlink" title="监控GPU命令"></a>监控GPU命令</h1><p>监控<code>GPU</code>的使用情况：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+<h1 id="杀死进程"><a href="#杀死进程" class="headerlink" title="杀死进程"></a>杀死进程</h1><p>杀死<code>pid</code>为<code>88888</code>的进程</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 88888</span><br></pre></td></tr></table></figure>
+<h1 id="挂起进程"><a href="#挂起进程" class="headerlink" title="挂起进程"></a>挂起进程</h1><p>如何挂起正在执行的进程：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Ctrl+z</span><br></pre></td></tr></table></figure>
+<p>查看被挂起的进程：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jobs</span><br></pre></td></tr></table></figure>
+<p>重新启动前台被中断的任务：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fg [job id]</span><br></pre></td></tr></table></figure>
+<p>把被中断的任务放在后台执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bg [job id]</span><br></pre></td></tr></table></figure>
+<h1 id="如何查询python安装路径"><a href="#如何查询python安装路径" class="headerlink" title="如何查询python安装路径"></a>如何查询python安装路径</h1><p>查看所有<code>python</code>的安装目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">whereis python</span><br></pre></td></tr></table></figure>
+<p>查看当前使用的<code>python</code>的安装目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">which python</span><br></pre></td></tr></table></figure>
+<h1 id="虚拟环境管理"><a href="#虚拟环境管理" class="headerlink" title="虚拟环境管理"></a>虚拟环境管理</h1><h2 id="virtualenv"><a href="#virtualenv" class="headerlink" title="virtualenv"></a>virtualenv</h2><h3 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h3><p>创建一个名为<code>env1</code>的虚拟环境目录（<code>/usr/local/bin/python</code>是<code>Python</code>的安装路径，创建的虚拟环境中的<code>Python</code>版本与路径中的<code>Python</code>版本一致）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">virtualenv -p /usr/local/bin/python env1</span><br></pre></td></tr></table></figure>
+<h3 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h3><p>激活虚拟环境（激活成功之后命令行前面会出现<code>(env1)</code>）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source env1/bin/activate</span><br></pre></td></tr></table></figure>
+<h3 id="退出虚拟环境"><a href="#退出虚拟环境" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h3><p>退出虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+<h3 id="删除虚拟环境"><a href="#删除虚拟环境" class="headerlink" title="删除虚拟环境"></a>删除虚拟环境</h3><p>删除名为<code>env1</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -rf env1</span><br></pre></td></tr></table></figure>
+<h2 id="miniconda"><a href="#miniconda" class="headerlink" title="miniconda"></a>miniconda</h2><h3 id="下载miniconda安装包"><a href="#下载miniconda安装包" class="headerlink" title="下载miniconda安装包"></a>下载miniconda安装包</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-py37_23.1.0-1-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<h3 id="安装miniconda"><a href="#安装miniconda" class="headerlink" title="安装miniconda"></a>安装miniconda</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bash Miniconda3-py37_23.1.0-1-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<h3 id="查看所有虚拟环境"><a href="#查看所有虚拟环境" class="headerlink" title="查看所有虚拟环境"></a>查看所有虚拟环境</h3><p>查看已经安装的所有虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda info --envs</span><br></pre></td></tr></table></figure>
+<h3 id="创建虚拟环境-1"><a href="#创建虚拟环境-1" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h3><p>创建一个虚拟环境名为<code>venv</code>，<code>python</code>版本为<code>3.7</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create --name venv python=3.7</span><br></pre></td></tr></table></figure>
+<p>在指定位置创建名为<code>venv</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create --prefix=/home/jeeby/Environment/venv python=3.7</span><br></pre></td></tr></table></figure>
+<p>注意此时<code>conda activate venv</code>会报错，因为虚拟环境虽然创建成功，但是没有名字，我们需要将新建立的环境目录加入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda config --append envs_dirs /home/jeeby/Environment/</span><br></pre></td></tr></table></figure>
+<h3 id="激活虚拟环境-1"><a href="#激活虚拟环境-1" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h3><p>激活名为<code>venv</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda activate venv</span><br></pre></td></tr></table></figure>
+<h3 id="退出虚拟环境-1"><a href="#退出虚拟环境-1" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h3><p>退出当前虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+<h3 id="删除虚拟环境-1"><a href="#删除虚拟环境-1" class="headerlink" title="删除虚拟环境"></a>删除虚拟环境</h3><p>删除名为<code>venv</code>的虚拟环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda remove -n venv --all</span><br></pre></td></tr></table></figure>
+<h1 id="安装GPU版本的PyTorch"><a href="#安装GPU版本的PyTorch" class="headerlink" title="安装GPU版本的PyTorch"></a>安装GPU版本的PyTorch</h1><p>建议先进入<code>torch</code>的<code>wheel</code><a href="https://download.pytorch.org/whl/torch_stable.html">下载网站</a>查看版本对应的情况。</p>
+<p>拿我自己举例，服务器下安装的<code>CUDA</code>的版本是<code>12.1</code>，但是<code>PyTorch</code>的<a href="https://pytorch.org/get-started/locally/">官网</a>上显示目前支持的<code>CUDA</code>版本为<code>11.7</code>和<code>11.8</code>，秉持着用新不用旧的原则，就运行了官网提供的<code>CUDA 11.8</code>的<code>Command</code>，但是没有安装成功，然后找了半天发现自己的<code>python</code>版本是<code>3.7</code>，在上面<code>wheel</code>网站里发现<code>3.7</code>版本的<code>python</code>最高支持的<code>CUDA</code>版本为<code>11.7</code>，于是在官网中的<code>Compute Platform</code>这一项选择了<code>CUDA 11.7</code>，然后在运行官网提供的新<code>Command</code>，待安装完成之后执行<code>torch.cuda.is_available()</code>，返回<code>True</code>。</p>
+<h1 id="多个项目使用同一个数据集"><a href="#多个项目使用同一个数据集" class="headerlink" title="多个项目使用同一个数据集"></a>多个项目使用同一个数据集</h1><p>在训练深度学习模型时，很多模型需要用到同一个数据集，而很多模型都要求在当前算法文件夹中存放数据集，为了减少内存浪费，可以在当前文件夹下使用软连接来连接到数据集源文件，就可以不需要复制多个数据集了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ln -s source_file link_file</span><br></pre></td></tr></table></figure>
+<h1 id="连接中断的恢复"><a href="#连接中断的恢复" class="headerlink" title="连接中断的恢复"></a>连接中断的恢复</h1><ol>
+<li><p>第一次连接的时候使用<code>screen -S</code>命令对<code>session</code>进行记录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -S test</span><br></pre></td></tr></table></figure></li>
+<li><p>在要执行的命令后加<code>&amp;</code>，让命令放到服务器端后台运行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python main.py &amp;</span><br></pre></td></tr></table></figure></li>
+<li><p>如果连接中断，则使用<code>screen</code>命令恢复上次的会话，继续监控命令执行的情况：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -r test</span><br></pre></td></tr></table></figure></li>
+<li><p>查看所有<code>session</code>的<code>id</code>，名称以及状态：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -ls</span><br></pre></td></tr></table></figure></li>
+<li><p>删除名称为<code>test</code>的<code>session</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -S test -X quit</span><br></pre></td></tr></table></figure></li>
+<li><p>进入名称<code>jeeby</code>的<code>session</code>，若<code>session</code>不存在则新建：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -R jeeby</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Pycharm远程连接服务器"><a href="#Pycharm远程连接服务器" class="headerlink" title="Pycharm远程连接服务器"></a>Pycharm远程连接服务器</h1><ul>
+<li>确保自己的Pycharm版本为professional版本</li>
+<li>创建远程连接：Tools—&gt;Deployment—&gt;Configuration—&gt;SFTP协议—&gt;配置服务器的IP、端口、用户名、密码等相关信息</li>
+<li>进行本地项目与远程项目之间的文件夹路径映射：在刚才的SFTP协议中选择Mappings添加映射，例如我们将本地的D:\workspace\PycharmProjects\Code路径映射到远端的/home/jeeby/Code路径</li>
+<li>设置文件自动上传（可选）：Tools—&gt;Deployment—&gt;Automatic Upload，默认是有修改就自动上传，可以在Tools—&gt;Deployment—&gt;Options中设置按了ctrl+s上传</li>
+<li>验证是否连接成功：Tools—&gt;Deployment—&gt;Browse Remote Host，如果能打开服务器文件目录说明连接成功</li>
+<li>配置Python解释器<ul>
+<li>查询服务器中所使用的的Python解释器路径：which python命令，注意虚拟环境的话需要先进入虚拟环境再使用前述命令</li>
+<li>本地Pycharm中配置Python解释器：File—&gt;Settings—&gt;Project—&gt;Project Interpreter—&gt;右上角设置图标Add—&gt;SSH Interpreter—&gt;Existing server configuration—&gt;Move—&gt;配置Interpreter和Sync folders（和前面配置的文件夹路径映射一致即可）</li>
+</ul>
+</li>
+<li>本地启动服务器终端：Tools—&gt;Start SSH session</li>
+</ul>
+<h1 id="VIM编辑器使用"><a href="#VIM编辑器使用" class="headerlink" title="VIM编辑器使用"></a>VIM编辑器使用</h1><ul>
+<li>使用<code>vim</code>命令进入编辑器，例如编辑<code>vim main.py</code>来编辑<code>main.py</code>文件</li>
+<li>进入编辑器之后按<code>i</code>切换到插入状态</li>
+<li>退出编辑器<ul>
+<li>首先按<code>Esc</code>退出插入状态</li>
+<li>输入<code>:</code>，系统会等待输入命令</li>
+<li>输入相应的命令：<code>wq</code>（保存退出，可以直接用<code>x</code>代替）；<code>q</code>（直接退出）；<code>!q</code>（不保存退出）；<code>!</code>（强制退出）</li>
+</ul>
+</li>
+</ul>
+<p>Tips：可以在按了<code>Esc</code>键之后，按<code>shift+zz</code>直接退出，这是最便捷的方式</p>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -2232,6 +2232,15 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311091108609.png" alt=""></p>
 <p>为了确保蒙特卡洛方法能够有足够的探索，我们使用了 $\varepsilon$-贪心（$\varepsilon$-greedy）探索。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311091120042.png" alt=""></p>
+<h3 id="Sarsa：同策略时序差分控制"><a href="#Sarsa：同策略时序差分控制" class="headerlink" title="Sarsa：同策略时序差分控制"></a>Sarsa：同策略时序差分控制</h3><p>Sarsa 所做出的改变很简单，它将原本时序差分方法更新 V 的过程，变成了更新 Q，即</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131348504.png" alt=""></p>
+<p>算法由于每次更新值函数时需要知道当前的状态（state）、当前的动作（action）、奖励（reward）、下一步的状态（state）、下一步的动作（action），即（$s_{t}$, $a_{t}$, $r_{t+1}$, $s_{t+1}$, $a_{t+1}$）这几个值，因此得名 Sarsa 算法。它走了一步之后，获取了（$s_{t}$, $a_{t}$, $r_{t+1}$, $s_{t+1}$, $a_{t+1}$）之后，就可以做一次更新。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131355382.png" alt=""></p>
+<h3 id="Q学习：异策略时序差分控制"><a href="#Q学习：异策略时序差分控制" class="headerlink" title="Q学习：异策略时序差分控制"></a>Q学习：异策略时序差分控制</h3><p>Sarsa 是一种<strong>同策略（on-policy）</strong>算法，它优化的是它实际执行的策略，它直接用下一步会执行的动作去优化$Q$表格。同策略在学习的过程中，只存在一种策略，它用一种策略去做动作的选取，也用一种策略去做优化。Q 学习是一种<strong>异策略（off-policy）</strong>算法。异策略在学习的过程中，有两种不同的策略：<strong>目标策略（target policy）</strong>和<strong>行为策略（behavior policy）</strong>。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131452578.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131454910.png" alt=""></p>
+<h3 id="同策略与异策略的区别"><a href="#同策略与异策略的区别" class="headerlink" title="同策略与异策略的区别"></a>同策略与异策略的区别</h3><p>$Q$学习是一个非常激进的方法，它希望每一步都获得最大的利益；Sarsa则相对较为保守，它会选择一条相对安全的迭代路线。</p>
+<h1 id="策略梯度"><a href="#策略梯度" class="headerlink" title="策略梯度"></a>策略梯度</h1><h2 id="策略梯度算法"><a href="#策略梯度算法" class="headerlink" title="策略梯度算法"></a>策略梯度算法</h2><p>策略是一个网络；输入是游戏的画面，它通常是由像素组成的；输出是我们可以执行的动作，有几个动作，输出层就有几个神经元。假设我们现在可以执行的动作有 3 个，输出层就有 3 个神经元，每个神经元对应一个可以采取的动作。</p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
 <li><p>智能体（Agent）：在强化学习中，智能体是一个自主决策的实体，它可以观察环境、采取行动、获得奖励。</p>
 </li>
