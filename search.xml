@@ -277,6 +277,179 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 ]]></content>
   </entry>
   <entry>
+    <title>搭建个人博客</title>
+    <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
+<a id="more"></a>
+<h1 id="搭建个人博客"><a href="#搭建个人博客" class="headerlink" title="搭建个人博客"></a>搭建个人博客</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
+<li><p>安装<code>Git</code></p>
+</li>
+<li><p>安装<code>Nodejs</code></p>
+<p>安装完成后查看<code>node</code>版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+<p>查看<code>npm</code>包管理器版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+<p>国内安装镜像源很慢，所以可以利用<code>npm</code>安装<code>cnpm</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Hexo框架搭建博客"><a href="#Hexo框架搭建博客" class="headerlink" title="Hexo框架搭建博客"></a>Hexo框架搭建博客</h2><ol>
+<li><p>安装<code>hexo</code>框架</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
+<li><p>查看是否安装成功</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_1.png" alt="pic_1"></p>
+</li>
+<li><p><code>Hexo</code>框架初始化：选择存放博客所有内容的文件夹，命令行中输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_2.png" alt="pic_2"></p>
+</li>
+<li><p>本地启动博客</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到搭建成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_4.png" alt="pic_4"></p>
+</li>
+</ol>
+<h2 id="博客进阶"><a href="#博客进阶" class="headerlink" title="博客进阶"></a>博客进阶</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><ol>
+<li><p>命令行输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>查看是否新建文章成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_5.png" alt="pic_5"></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
+</li>
+<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
+</li>
+</ol>
+<h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
+<li><p>新建<code>GitHub</code>仓库</p>
+<p>注：一定要以<code>username.github.io</code>创建。假如我没有用<code>tankmanbeta.github.io</code>而是用了<code>jeeby.github.io</code>，那么当我浏览器访问博客的时候会出现404错误。这里并不是没有部署成功，而是把它部署在了这里:<code>http://tankmanbeta.github.io/jeeby.github.io</code>。所以，如果想直接<code>tankmanbeta.github.io</code>访问，那么就需要和用户名保持一致。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_7.png" alt="pic_7"></p>
+</li>
+<li><p>修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>，在最后添加如下代码</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">    <span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+<p>注：2020年10月1日起，<code>GitHub</code>把<code>master</code>分支换成<code>main</code>分支，据说与种族歧视有关。</p>
+</li>
+<li><p>安装<code>Git</code>部署的插件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure></li>
+<li><p>输入以下命令，完成博客在<code>GitHub</code>上的部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<code>tankmanbeta.github.io</code>，成功访问</p>
+<p><strong>注：每次部署都需要输入<code>GitHub</code>账号密码的解决方法：修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>的<code>deploy</code>属性：（需要先设置<code>SSH-key</code>）</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="博客主题更改"><a href="#博客主题更改" class="headerlink" title="博客主题更改"></a>博客主题更改</h3><ol>
+<li><p>主题选取地址：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
+</li>
+<li><p>在博客根目录下的<code>themes</code>文件夹下克隆主题：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next</span><br></pre></td></tr></table></figure></li>
+<li><p>打开本地<code>Hexo</code>目录下文件<code>_config.yml</code>，修改<code>theme</code>属性：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">hexo-theme-next</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_8.png" alt="pic_8"></p>
+</li>
+<li><p>输入以下命令，更新博客在<code>GitHub</code>上的部署</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></li>
+<li><p>浏览器访问<code>tankmanbeta.github.io</code>，可以看到主题更新成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_9.png" alt="pic_9"></p>
+</li>
+</ol>
+<h3 id="Next主题切换"><a href="#Next主题切换" class="headerlink" title="Next主题切换"></a>Next主题切换</h3><ol>
+<li>打开<code>next</code>主题下的<code>_config.yml</code>文件，修改<code>theme</code>属性，将其选择成自己想要的</li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="中英文切换"><a href="#中英文切换" class="headerlink" title="中英文切换"></a>中英文切换</h3><ol>
+<li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>Site</code>属性下的<code>language</code>，将其改成<code>zh-CN</code>即可</li>
+<li>重新部署，步骤同上</li>
+<li>同理可以更改<code>title</code>、<code>author</code>等</li>
+</ol>
+<h3 id="添加标签页面"><a href="#添加标签页面" class="headerlink" title="添加标签页面"></a>添加标签页面</h3><ol>
+<li><p>在博客根目录下打开<code>cmd</code>，使用<code>hexo new page tags</code>新建一个页面</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_10.png" alt="pic_10"></p>
+</li>
+<li><p>打开新建的页面，将页面的类型设置为<code>tags</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">title: tags</span></span><br><span class="line"><span class="section">date: 2021-03-31 11:20:38</span></span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改Next主题下的<code>_config.yml</code>，将<code>tags</code>添加到<code>menu</code>属性当中</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+<li><p>重新部署，步骤同上，刷新页面后的结果</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_11.png" alt="pic_11"></p>
+</li>
+<li><p><code>home</code>、<code>categories</code>、<code>archives</code>等操作也是相同的</p>
+</li>
+</ol>
+<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><ol>
+<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+<p>安装成功：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_12.png" alt="pic_12"></p>
+</li>
+<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置（有教程说新版的<code>hexo</code>中，<code>search.xml</code>需要改成<code>search.json</code>，否则部署到服务器搜索图标不能正常显示）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search Config</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改Next主题下的<code>_config.yml</code>，修改<code>local_search</code>属性下的<code>enable</code>，将其改为<code>true</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If auto, trigger search by changing input.</span></span><br><span class="line">  <span class="comment"># If manual, trigger search by pressing enter key or search button.</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="使用外链图片"><a href="#使用外链图片" class="headerlink" title="使用外链图片"></a>使用外链图片</h3><ol>
+<li><p>注册腾讯云账号，选择对象存储</p>
+</li>
+<li><p>创建存储桶</p>
+</li>
+<li><p>创建成功之后上传文件</p>
+</li>
+<li><p>修改安全管理中的防盗链设置</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_13.png" alt="pic_13"></p>
+</li>
+<li><p>修改权限管理中的存储桶访问权限</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_14.png" alt="pic_14"></p>
+</li>
+<li><p>上传图片至存储桶，复制详情中的对象地址</p>
+</li>
+<li><p>在文章中使用外链</p>
+</li>
+<li><p>重新部署，步骤同上</p>
+</li>
+</ol>
+<h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
+<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span> <span class="comment"># 文章字数</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span> <span class="comment"># 阅读时长</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span> <span class="comment"># 所有文章总字数</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span> <span class="comment"># 所有文章阅读中时长</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">separated_meta:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">item_text_total:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">item_text_post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>重新部署，步骤同上</li>
+</ol>
+<h3 id="使用PicGo上传图片至图床"><a href="#使用PicGo上传图片至图床" class="headerlink" title="使用PicGo上传图片至图床"></a>使用PicGo上传图片至图床</h3><ol>
+<li><p>下载PicGo，下载地址<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases </a> </p>
+</li>
+<li><p>腾讯云新建密钥：[访问密钥]—&gt;[API密钥管理]—&gt;[新建密钥]</p>
+</li>
+<li><p>打开安装完成后的PicGo，进行图床设置，设置后的结果为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_15.png" alt="pic_15"></p>
+</li>
+<li><p>点击确定并设置为默认图床，拖动本地图片上传，即可成功</p>
+</li>
+<li>文章中可以直接使用刚刚产生的外链</li>
+<li>重新部署，步骤同上</li>
+</ol>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>hexo</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据库面试题总结</title>
     <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
@@ -468,179 +641,6 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       <tags>
         <tag>总结</tag>
         <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>搭建个人博客</title>
-    <url>/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新手上路，多多指教</p>
-<a id="more"></a>
-<h1 id="搭建个人博客"><a href="#搭建个人博客" class="headerlink" title="搭建个人博客"></a>搭建个人博客</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
-<li><p>安装<code>Git</code></p>
-</li>
-<li><p>安装<code>Nodejs</code></p>
-<p>安装完成后查看<code>node</code>版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-<p>查看<code>npm</code>包管理器版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-<p>国内安装镜像源很慢，所以可以利用<code>npm</code>安装<code>cnpm</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="Hexo框架搭建博客"><a href="#Hexo框架搭建博客" class="headerlink" title="Hexo框架搭建博客"></a>Hexo框架搭建博客</h2><ol>
-<li><p>安装<code>hexo</code>框架</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
-<li><p>查看是否安装成功</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_1.png" alt="pic_1"></p>
-</li>
-<li><p><code>Hexo</code>框架初始化：选择存放博客所有内容的文件夹，命令行中输入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_2.png" alt="pic_2"></p>
-</li>
-<li><p>本地启动博客</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到搭建成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_4.png" alt="pic_4"></p>
-</li>
-</ol>
-<h2 id="博客进阶"><a href="#博客进阶" class="headerlink" title="博客进阶"></a>博客进阶</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><ol>
-<li><p>命令行输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></li>
-<li><p>查看是否新建文章成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_5.png" alt="pic_5"></p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_6.png" alt="pic_6"></p>
-</li>
-<li><p>接着输入以下命令，浏览器访问<a href="http://localhost:4000">http://localhost:4000</a> ，可以看到新建的文章已经上传</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p><strong>注：如果\source\_posts文件夹下没有任何文章，则访问会报错</strong></p>
-</li>
-</ol>
-<h3 id="博客部署到GitHub"><a href="#博客部署到GitHub" class="headerlink" title="博客部署到GitHub"></a>博客部署到GitHub</h3><ol>
-<li><p>新建<code>GitHub</code>仓库</p>
-<p>注：一定要以<code>username.github.io</code>创建。假如我没有用<code>tankmanbeta.github.io</code>而是用了<code>jeeby.github.io</code>，那么当我浏览器访问博客的时候会出现404错误。这里并不是没有部署成功，而是把它部署在了这里:<code>http://tankmanbeta.github.io/jeeby.github.io</code>。所以，如果想直接<code>tankmanbeta.github.io</code>访问，那么就需要和用户名保持一致。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_7.png" alt="pic_7"></p>
-</li>
-<li><p>修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>，在最后添加如下代码</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">    <span class="attr">repository:</span> <span class="string">https://github.com/TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-<p>注：2020年10月1日起，<code>GitHub</code>把<code>master</code>分支换成<code>main</code>分支，据说与种族歧视有关。</p>
-</li>
-<li><p>安装<code>Git</code>部署的插件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure></li>
-<li><p>输入以下命令，完成博客在<code>GitHub</code>上的部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<code>tankmanbeta.github.io</code>，成功访问</p>
-<p><strong>注：每次部署都需要输入<code>GitHub</code>账号密码的解决方法：修改本地<code>Hexo</code>目录下文件<code>_config.yml</code>的<code>deploy</code>属性：（需要先设置<code>SSH-key</code>）</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:TankManBeta/tankmanbeta.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="博客主题更改"><a href="#博客主题更改" class="headerlink" title="博客主题更改"></a>博客主题更改</h3><ol>
-<li><p>主题选取地址：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
-</li>
-<li><p>在博客根目录下的<code>themes</code>文件夹下克隆主题：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next</span><br></pre></td></tr></table></figure></li>
-<li><p>打开本地<code>Hexo</code>目录下文件<code>_config.yml</code>，修改<code>theme</code>属性：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">hexo-theme-next</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_8.png" alt="pic_8"></p>
-</li>
-<li><p>输入以下命令，更新博客在<code>GitHub</code>上的部署</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问<code>tankmanbeta.github.io</code>，可以看到主题更新成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_9.png" alt="pic_9"></p>
-</li>
-</ol>
-<h3 id="Next主题切换"><a href="#Next主题切换" class="headerlink" title="Next主题切换"></a>Next主题切换</h3><ol>
-<li>打开<code>next</code>主题下的<code>_config.yml</code>文件，修改<code>theme</code>属性，将其选择成自己想要的</li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="中英文切换"><a href="#中英文切换" class="headerlink" title="中英文切换"></a>中英文切换</h3><ol>
-<li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>Site</code>属性下的<code>language</code>，将其改成<code>zh-CN</code>即可</li>
-<li>重新部署，步骤同上</li>
-<li>同理可以更改<code>title</code>、<code>author</code>等</li>
-</ol>
-<h3 id="添加标签页面"><a href="#添加标签页面" class="headerlink" title="添加标签页面"></a>添加标签页面</h3><ol>
-<li><p>在博客根目录下打开<code>cmd</code>，使用<code>hexo new page tags</code>新建一个页面</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_10.png" alt="pic_10"></p>
-</li>
-<li><p>打开新建的页面，将页面的类型设置为<code>tags</code></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">title: tags</span></span><br><span class="line"><span class="section">date: 2021-03-31 11:20:38</span></span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改Next主题下的<code>_config.yml</code>，将<code>tags</code>添加到<code>menu</code>属性当中</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-<li><p>重新部署，步骤同上，刷新页面后的结果</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_11.png" alt="pic_11"></p>
-</li>
-<li><p><code>home</code>、<code>categories</code>、<code>archives</code>等操作也是相同的</p>
-</li>
-</ol>
-<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><ol>
-<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
-<p>安装成功：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_12.png" alt="pic_12"></p>
-</li>
-<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置（有教程说新版的<code>hexo</code>中，<code>search.xml</code>需要改成<code>search.json</code>，否则部署到服务器搜索图标不能正常显示）</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search Config</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改Next主题下的<code>_config.yml</code>，修改<code>local_search</code>属性下的<code>enable</code>，将其改为<code>true</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If auto, trigger search by changing input.</span></span><br><span class="line">  <span class="comment"># If manual, trigger search by pressing enter key or search button.</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="使用外链图片"><a href="#使用外链图片" class="headerlink" title="使用外链图片"></a>使用外链图片</h3><ol>
-<li><p>注册腾讯云账号，选择对象存储</p>
-</li>
-<li><p>创建存储桶</p>
-</li>
-<li><p>创建成功之后上传文件</p>
-</li>
-<li><p>修改安全管理中的防盗链设置</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_13.png" alt="pic_13"></p>
-</li>
-<li><p>修改权限管理中的存储桶访问权限</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_14.png" alt="pic_14"></p>
-</li>
-<li><p>上传图片至存储桶，复制详情中的对象地址</p>
-</li>
-<li><p>在文章中使用外链</p>
-</li>
-<li><p>重新部署，步骤同上</p>
-</li>
-</ol>
-<h3 id="增加统计信息"><a href="#增加统计信息" class="headerlink" title="增加统计信息"></a>增加统计信息</h3><ol>
-<li><p>打开博客根目录，添加博客搜索插件，在<code>cmd</code>中输入以下命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>打开博客根目录下的<code>_config.yml</code>，在任意位置添加以下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span> <span class="comment"># 文章字数</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span> <span class="comment"># 阅读时长</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span> <span class="comment"># 所有文章总字数</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span> <span class="comment"># 所有文章阅读中时长</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>修改Next主题下的<code>_config.yml</code>，修改如下配置</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">separated_meta:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">item_text_total:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">item_text_post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>重新部署，步骤同上</li>
-</ol>
-<h3 id="使用PicGo上传图片至图床"><a href="#使用PicGo上传图片至图床" class="headerlink" title="使用PicGo上传图片至图床"></a>使用PicGo上传图片至图床</h3><ol>
-<li><p>下载PicGo，下载地址<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases </a> </p>
-</li>
-<li><p>腾讯云新建密钥：[访问密钥]—&gt;[API密钥管理]—&gt;[新建密钥]</p>
-</li>
-<li><p>打开安装完成后的PicGo，进行图床设置，设置后的结果为</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_15.png" alt="pic_15"></p>
-</li>
-<li><p>点击确定并设置为默认图床，拖动本地图片上传，即可成功</p>
-</li>
-<li>文章中可以直接使用刚刚产生的外链</li>
-<li>重新部署，步骤同上</li>
-</ol>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>hexo</tag>
-        <tag>博客</tag>
       </tags>
   </entry>
   <entry>
@@ -2241,6 +2241,49 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131454910.png" alt=""></p>
 <h3 id="同策略与异策略的区别"><a href="#同策略与异策略的区别" class="headerlink" title="同策略与异策略的区别"></a>同策略与异策略的区别</h3><p>$Q$学习是一个非常激进的方法，它希望每一步都获得最大的利益；Sarsa则相对较为保守，它会选择一条相对安全的迭代路线。</p>
 <h1 id="策略梯度"><a href="#策略梯度" class="headerlink" title="策略梯度"></a>策略梯度</h1><h2 id="策略梯度算法"><a href="#策略梯度算法" class="headerlink" title="策略梯度算法"></a>策略梯度算法</h2><p>策略是一个网络；输入是游戏的画面，它通常是由像素组成的；输出是我们可以执行的动作，有几个动作，输出层就有几个神经元。假设我们现在可以执行的动作有 3 个，输出层就有 3 个神经元，每个神经元对应一个可以采取的动作。</p>
+<p>环境是一个函数，我们可以把游戏的主机看成一个函数，虽然它不一定是神经网络，可能是基于规则的（rule-based）模型，但我们可以把它看作一个函数。这个函数一开始先“吐”出一个状态（游戏画面 $s_{1}$ ），接下来演员看到游戏画面 $s_{1}$ 以后，它“吐”出动作 $a_{1}$ 。环境把动作 $a_{1}$ 当作它的输入，再“吐”出新的游戏画面 $s_{2}$。演员看到新的游戏画面 $s_{2}$，再采取新的动作 $a_{2}$。环境看到 $a_{2}$，再“吐”出 $s_{3}$ …… 这个过程会一直持续下去，直到环境觉得应该要停止为止。在一场游戏里面，我们把环境输出的 $s$ 与演员输出的动作 $a$ 全部组合起来，就是一个轨迹，即</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311140944102.png" alt=""></p>
+<p>给定演员的参数 $\theta$，我们可以计算某个轨迹 $\tau$ 发生的概率为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311140945562.png" alt=""></p>
+<p>在某一场游戏的某一个回合里面，我们会得到 $R(\tau)$。我们要做的就是调整演员内部的参数 $\theta$，使得 $R(\tau)$ 的值越大越好。但实际上 $R(\tau)$ 并不只是一个标量，它是一个随机变量，因为演员在给定同样的状态下会采取什么样的动作，这是有随机性的。环境在给定同样的观测时要采取什么样的动作，要产生什么样的观测，本身也是有随机性的，所以 $R(\tau)$ 是一个随机变量。我们能够计算的是 $R(\tau)$ 的期望值。给定某一组参数 $\theta$，我们可计算 $r_{\theta}$ 的期望值为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311140955539.png" alt=""></p>
+<p>总奖励使用 $\tau$ 出现的概率进行加权，对所有的 $\tau$ 进行求和，就是期望值。给定一个参数，我们可以计算期望值为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311140958839.png" alt=""></p>
+<p>因为我们要让奖励越大越好，所以可以使用梯度上升来最大化期望奖励。要进行梯度上升，我们先要计算期望奖励 $\bar{R}_{\theta}$ 的梯度。我们对 $\bar{R}_{\theta}$ 做梯度运算</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141002272.png" alt=""></p>
+<p>基于等式 $\nabla f(x)=f(x)\nabla \log f(x)$ ，我们可以得到：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141014067.png" alt=""></p>
+<p>实际上期望值 $E_{\tau \sim p_{\theta}(\tau)} [R(\tau)\nabla \log p_{\theta}(\tau)]$ 无法计算，所以我们用采样的方式采样 $N$ 个 $\tau$ 并计算每一个的值，把每一个的值加起来，就可以得到梯度，即</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141020560.png" alt=""></p>
+<p>策略梯度的具体执行示意图：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141027355.png" alt=""></p>
+<p>更新完模型以后，我们要重新采样数据再更新模型。注意，一般策略梯度采样的数据只会用一次。我们采样这些数据，然后用这些数据更新参数，再丢掉这些数据。接着重新采样数据，才能去更新参数。</p>
+<h2 id="策略梯度实现技巧"><a href="#策略梯度实现技巧" class="headerlink" title="策略梯度实现技巧"></a>策略梯度实现技巧</h2><h3 id="技巧-1：添加基线"><a href="#技巧-1：添加基线" class="headerlink" title="技巧 1：添加基线"></a>技巧 1：添加基线</h3><p>假设我们在某一个状态有 3 个动作 a、 b、 c 可以执行，要把这3 个动作的概率，对数概率都提高。但是它们前面的权重 $R(\tau)$ 是不一样的。权重是有大有小的，权重小的，该动作的概率提高的就少；权重大的，该动作的概率提高的就多。因为对数概率是一个概率，所以动作 a、 b、 c 的对数概率的和是 0。所以提高少的，在做完归一化以后，动作 b 的概率就是下降的；提高多的，该动作的概率才会上升。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141110318.png" alt=""></p>
+<p>这是一个理想的情况，但是实际上，我们是在做采样本来这边应该是一个期望，对所有可能的 s 与 a 的对进行求和。但我们真正在学习的时候，只是采样了少量的 s 与 a 的对。因为我们做的是采样，所以有一些动作可能从来都没有被采样到。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141113629.png" alt=""></p>
+<p>为了解决奖励总是正的的问题，我们可以把奖励减 $b$，即</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141116781.png" alt=""></p>
+<p>$b$ 怎么设置呢？我们可以对 $\tau$ 的值取期望，计算 $\tau$ 的平均值，令 $b \approx E[R(\tau)]$。所以在训练的时候，我们会不断地把 $R(\tau)$ 的值记录下来，会不断地计算 $R(\tau)$ 的平均值，把这个平均值当作 $b$ 来使用。这样就可以让我们在训练的时候， $R(\tau) - b$ 是有正有负的，这是第一个技巧。</p>
+<h3 id="技巧2：分配合适的分数"><a href="#技巧2：分配合适的分数" class="headerlink" title="技巧2：分配合适的分数"></a>技巧2：分配合适的分数</h3><p>第二个技巧：给每一个动作分配合适的分数。只要在同一个回合里面，在同一场游戏里面，所有的状态-动作对就使用同样的奖励项进行加权，这显然是不公平的。一个做法是计算某个状态-动作对的奖励的时候，不把整场游戏得到的奖励全部加起来，只计算从这个动作执行以后得到的奖励。</p>
+<p>分配合适的分数这一技巧可以表达为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141126407.png" alt=""></p>
+<p>更进一步，我们把未来的奖励做一个折扣，因为虽然在某一时刻，执行某一个动作，会影响接下来所有的结果，但在一般的情况下，时间拖得越长，该动作的影响力就越小。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141127305.png" alt=""></p>
+<p>实际上就是这么实现的。 $b$ 可以是依赖状态的，事实上 $b$ 通常是一个网络估计出来的，它是一个网络的输出。我们把 R − b 这一项称为优势函数，用 $A^{\theta}(s_{t}, a_{t})$ 来表示优势函数。优势函数的意义是，假设我们在某一个状态 $s_{t}$ 执行某一个动作 $a_{t}$，相较于其他可能的动作， $a_{t}$ 有多好。优势函数在意的不是绝对的好，而是相对的好，即相对优势。因为在优势函数中，我们会减去一个基线 $b$，所以这个动作是相对的好，不是绝对的好。 $A^{\theta}(s_{t}, a_{t})$ 通常可以由一个网络估计出来，这个网络称为评论员。</p>
+<h2 id="REINFORCE：蒙特卡洛策略梯度"><a href="#REINFORCE：蒙特卡洛策略梯度" class="headerlink" title="REINFORCE：蒙特卡洛策略梯度"></a>REINFORCE：蒙特卡洛策略梯度</h2><p>蒙特卡洛方法可以理解为算法完成一个回合之后，再利用这个回合的数据去学习，做一次更新。因为我们已经获得了整个回合的数据，所以也能够获得每一个步骤的奖励，我们可以很方便地计算每个步骤的未来总奖励，即回报 $G_{t}$ 。 $G_{t}$ 是未来总奖励，代表从这个步骤开始，我们能获得的奖励之和。 $G_{1}$ 代表我们从第一步开始，往后能够获得的总奖励。 $G_{2}$ 代表从第二步开始，往后能够获得的总奖励。</p>
+<p>相比蒙特卡洛方法一个回合更新一次，时序差分方法是每个步骤更新一次，即每走一步，更新一次，时序差分方法的更新频率更高。时序差分方法使用 $Q$ 函数来近似地表示未来总奖励 $G_{t}$。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141151029.png" alt=""></p>
+<p>REINFORCE 用的是回合更新的方式，它在代码上的处理上是先获取每个步骤的奖励，然后计算每个步骤的未来总奖励 $G_{t}$，将每个 $G_{t}$ 代入下式优化每一个动作的输出。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141336604.png" alt=""></p>
+<p>未来总奖励可写成一个递推式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141345612.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141350439.png" alt=""></p>
+<h1 id="近端策略优化"><a href="#近端策略优化" class="headerlink" title="近端策略优化"></a>近端策略优化</h1><h2 id="重要性采样"><a href="#重要性采样" class="headerlink" title="重要性采样"></a>重要性采样</h2><p>策略梯度是同策略的算法，因为在策略梯度中，我们需要一个智能体、一个策略和一个演员。演员去与环境交互搜集数据，搜集很多的轨迹 $\tau$，根据搜集到的数据按照策略梯度的公式更新策略的参数，所以策略梯度是一个同策略的算法。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141356104.png" alt=""></p>
+<p>$E_{\tau \sim p_{\theta}}(\tau)$ 是对策略 $\pi_{\theta}$ 采样的轨迹 $\tau$ 求期望。一旦更新了参数，从 $\theta$ 变成 $\theta^{\prime}$ ，概率 $p_{\theta}(\tau)$ 就不对了，之前采样的数据也不能用了。所以策略梯度是一个会花很多时间来采样数据的算法，其大多数时间都在采样数据。智能体与环境交互以后，接下来就要更新参数。我们只能更新参数一次，然后就要重新采样数据，才能再次更新参数。  </p>
+<p>假设我们有一个函数 $f(x)$ ，要计算从分布 $p$ 采样 $x$ ，再把 $x$ 代入 $f$ ，得到 $f(x)$ 。我们该怎么计算 $f(x)$ 的期望值呢？假设我们不能对分布 $p$ 做积分，但可以从分布 $p$ 采样一些数据 $x^{i}$ 。把 $x^{i}$ 代入 $f(x)$ ，取它的平均值，就可以近似 $f(x)$ 的期望值。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141652913.png" alt=""></p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
 <li><p>智能体（Agent）：在强化学习中，智能体是一个自主决策的实体，它可以观察环境、采取行动、获得奖励。</p>
 </li>
