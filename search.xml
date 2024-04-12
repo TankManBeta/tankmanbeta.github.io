@@ -454,6 +454,22 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <li>Storytelling</li>
 <li>Summarization</li>
 </ul>
+<h2 id="生物医学"><a href="#生物医学" class="headerlink" title="生物医学"></a>生物医学</h2><ul>
+<li>domain corpus：Sci-BERT，BioBERT，clinical BERT</li>
+<li>special pretraining task：MC-BERT，KeBioLM</li>
+</ul>
+<h2 id="法律智能"><a href="#法律智能" class="headerlink" title="法律智能"></a>法律智能</h2><ul>
+<li>Legal Judgement Prediction</li>
+<li>Similar Cases Retrieval</li>
+<li>Legal Documents Generation</li>
+<li>Legal Information Recommendation</li>
+<li>Legal Documents Translation</li>
+<li>Legal Question Answering</li>
+<li>Court View Generation</li>
+<li>Risk Warming</li>
+<li>Legal Text Mining</li>
+<li>Compliance Review</li>
+</ul>
 ]]></content>
       <categories>
         <category>总结</category>
