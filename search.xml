@@ -2318,6 +2318,8 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241533701.png" alt=""></p>
 <p>我们还有一种价值函数： Q 函数。 Q 函数里面包含两个变量：状态和动作。其定义为：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241535831.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404181459777.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404181458188.png" alt=""></p>
 <h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>模型决定了下一步的状态。下一步的状态取决于当前的状态以及当前采取的动作。它由状态转移概率和奖励函数两个部分组成。状态转移概率即：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241550023.png" alt=""></p>
 <p>奖励函数是指我们在当前状态采取了某个动作，可以得到多大的奖励，即：</p>
@@ -2448,6 +2450,8 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131348504.png" alt=""></p>
 <p>算法由于每次更新值函数时需要知道当前的状态（state）、当前的动作（action）、奖励（reward）、下一步的状态（state）、下一步的动作（action），即（$s_{t}$, $a_{t}$, $r_{t+1}$, $s_{t+1}$, $a_{t+1}$）这几个值，因此得名 Sarsa 算法。它走了一步之后，获取了（$s_{t}$, $a_{t}$, $r_{t+1}$, $s_{t+1}$, $a_{t+1}$）之后，就可以做一次更新。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131355382.png" alt=""></p>
+<h4 id="Sarsa-lambda"><a href="#Sarsa-lambda" class="headerlink" title="Sarsa($\lambda$)"></a>Sarsa($\lambda$)</h4><p>$\lambda$ 是脚步衰变值，取值为 $[0, 1]$。通过设定 $\lambda$ 可以让离奖励较近的选择获得较大的奖赏，离奖励较远的选择获得较小的奖赏。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404171543327.png" alt=""></p>
 <h3 id="Q学习：异策略时序差分控制"><a href="#Q学习：异策略时序差分控制" class="headerlink" title="Q学习：异策略时序差分控制"></a>Q学习：异策略时序差分控制</h3><p>Sarsa 是一种<strong>同策略（on-policy）</strong>算法，它优化的是它实际执行的策略，它直接用下一步会执行的动作去优化$Q$表格。同策略在学习的过程中，只存在一种策略，它用一种策略去做动作的选取，也用一种策略去做优化。Q 学习是一种<strong>异策略（off-policy）</strong>算法。异策略在学习的过程中，有两种不同的策略：<strong>目标策略（target policy）</strong>和<strong>行为策略（behavior policy）</strong>。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131452578.png" alt=""></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131454910.png" alt=""></p>
@@ -2484,6 +2488,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141127305.png" alt=""></p>
 <p>实际上就是这么实现的。 $b$ 可以是依赖状态的，事实上 $b$ 通常是一个网络估计出来的，它是一个网络的输出。我们把 R − b 这一项称为优势函数，用 $A^{\theta}(s_{t}, a_{t})$ 来表示优势函数。优势函数的意义是，假设我们在某一个状态 $s_{t}$ 执行某一个动作 $a_{t}$，相较于其他可能的动作， $a_{t}$ 有多好。优势函数在意的不是绝对的好，而是相对的好，即相对优势。因为在优势函数中，我们会减去一个基线 $b$，所以这个动作是相对的好，不是绝对的好。 $A^{\theta}(s_{t}, a_{t})$ 通常可以由一个网络估计出来，这个网络称为评论员。</p>
 <h2 id="REINFORCE：蒙特卡洛策略梯度"><a href="#REINFORCE：蒙特卡洛策略梯度" class="headerlink" title="REINFORCE：蒙特卡洛策略梯度"></a>REINFORCE：蒙特卡洛策略梯度</h2><p>蒙特卡洛方法可以理解为算法完成一个回合之后，再利用这个回合的数据去学习，做一次更新。因为我们已经获得了整个回合的数据，所以也能够获得每一个步骤的奖励，我们可以很方便地计算每个步骤的未来总奖励，即回报 $G_{t}$ 。 $G_{t}$ 是未来总奖励，代表从这个步骤开始，我们能获得的奖励之和。 $G_{1}$ 代表我们从第一步开始，往后能够获得的总奖励。 $G_{2}$ 代表从第二步开始，往后能够获得的总奖励。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404182146893.png" alt=""></p>
 <p>相比蒙特卡洛方法一个回合更新一次，时序差分方法是每个步骤更新一次，即每走一步，更新一次，时序差分方法的更新频率更高。时序差分方法使用 $Q$ 函数来近似地表示未来总奖励 $G_{t}$。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311141151029.png" alt=""></p>
 <p>REINFORCE 用的是回合更新的方式，它在代码上的处理上是先获取每个步骤的奖励，然后计算每个步骤的未来总奖励 $G_{t}$，将每个 $G_{t}$ 代入下式优化每一个动作的输出。</p>
@@ -2592,6 +2597,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p>我们要怎么找到一个 $a$ 来最大化 $Q$ 值呢？因为 $(a −\mu(s))^{T}\Sigma(s)(a −\mu(s))$ 一定是正的，它前面有一个负号，假设我们不看负号，所以第一项 $(a − \mu(s))^{T}\Sigma(s)(a − \mu(s))$ 的值越小，最终的 $Q$ 值就越大。因为我们是把 $V(s)$ 减掉第一项，所以第一项的值越小，最后的 $Q$ 值就越大。怎么让第一项的值最小呢？我们直接令 $\mu(s)$ 等于 $a$，让第一项变成 $0$，就可以让第一项的值最小。因此，令 $\mu(s)$ 等于 $a$，我们就可以得到最大值，解决 $\arg \max$ 操作的问题就变得非常容易。</p>
 <h2 id="方案-4：不使用深度-Q-网络"><a href="#方案-4：不使用深度-Q-网络" class="headerlink" title="方案 4：不使用深度 Q 网络"></a>方案 4：不使用深度 Q 网络</h2><p>第 4 个方案就是不使用深度 $Q$ 网络，用深度 $Q$ 网络处理连续动作是比较麻烦的。我们将基于策略的方法——PPO 和基于价值的方法——深度 $Q$ 网络结合在一起，就可以得到演员-评论员的方法。</p>
 <h1 id="演员-评论员算法"><a href="#演员-评论员算法" class="headerlink" title="演员-评论员算法"></a>演员-评论员算法</h1><p>演员-评论员算法是一种结合策略梯度和时序差分学习的强化学习方法，其中，演员是指策略函数 $\pi_{\theta}(a|s)$，即学习一个策略以得到尽可能高的回报。评论员是指价值函数 $V_{\pi}(s)$，对当前策略的值函数进行估计，即评估演员的好坏。借助于价值函数，演员-评论员算法可以进行单步参数更新，不需要等到回合结束才进行更新。在演员-评论员算法里面，最知名的算法就是异步优势演员-评论员算法。如果我们去掉异步，则为优势演员-评论员（advantage actor-critic，A2C）算法。 A2C 算法又被译作优势演员-评论员算法。如果我们加了异步，变成异步优势演员-评论员算法。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404182238004.png" alt=""></p>
 <h2 id="策略梯度回顾"><a href="#策略梯度回顾" class="headerlink" title="策略梯度回顾"></a>策略梯度回顾</h2><p>在更新策略参数 $\theta$ 的时候，我们可以通过下式来计算梯度：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202312112113051.png" alt=""></p>
 <p>上式表示我们首先通过智能体与环境的交互，可以计算出在某一个状态 $s$ 采取某一个动作 $a$ 的概率 $p_{\theta}(a_{t}|s_{t})$。接下来，我们计算在某一个状态 $s$ 采取某一个动作 $a$ 之后直到游戏结束的累积奖励。</p>
@@ -2617,6 +2623,7 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <p>实现优势演员-评论员算法的时候，有两个一定会用到的技巧。第一个技巧是，我们需要估计两个网络： $V$ 网络和策略的网络（也就是演员）。评论员网络 $V_{\pi}(s)$ 接收一个状态，输出一个标量。演员的策略 $\pi(s)$ 接收一个状态，如果动作是离散的，输出就是一个动作的分布，如果动作是连续的，输出就是一个连续的向量。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202312112250310.png" alt=""></p>
 <p>第二个技巧是我们需要探索的机制。在演员-评论员算法中，有一个常见的探索的方法是对 $\pi$ 输出的分布设置一个约束。这个约束用于使分布的熵（entropy）不要太小，也就是希望不同的动作被采用的概率平均一些。这样在测试的时候，智能体才会多尝试各种不同的动作，才会把环境探索得比较好，从而得到比较好的结果。</p>
+<h3 id="REINFORCE和A2C的区别"><a href="#REINFORCE和A2C的区别" class="headerlink" title="REINFORCE和A2C的区别"></a>REINFORCE和A2C的区别</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404182204930.png" alt=""></p>
 <h2 id="异步优势演员-评论员算法"><a href="#异步优势演员-评论员算法" class="headerlink" title="异步优势演员-评论员算法"></a>异步优势演员-评论员算法</h2><p>异步优势演员-评论员算法同时使用很多个进程（worker），每一个进程就像一个影分身，最后这些影分身会把所有的经验值集合在一起。如果我们没有很多 CPU，不好实现异步优势演员-评论员算法，但可以实现优势演员-评论员算法。</p>
 <p>异步优势演员-评论员算法一开始有一个全局网络（global network）。全局网络包含策略网络和价值网络，这两个网络是绑定在一起的，它们的前几个层会被绑在一起。假设全局网络的参数是 $\theta_{1}$，我们使用多个进程，每个进程用一张 CPU 去跑。接下来演员就与环境交互，每一个演员与环境交互的时候，都要收集到比较多样的数据。每一个演员与环境交互完之后，我们就会计算出梯度。计算出梯度以后，要用梯度去更新参数。我们就计算一下梯度，用梯度去更新全局网络的参数。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202312161337398.png" alt=""></p>
