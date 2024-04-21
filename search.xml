@@ -273,214 +273,6 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       </tags>
   </entry>
   <entry>
-    <title>大语言模型</title>
-    <url>/2024/04/09/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>了解一下大语言模型的相关内容。</p>
-<p>主要参考清华刘知远团队的课程。</p>
-<a id="more"></a>
-<h1 id="NLP基础"><a href="#NLP基础" class="headerlink" title="NLP基础"></a>NLP基础</h1><p>自然语言处理：让计算机理解人类所说的语言。</p>
-<p>相关综述：《Advances in Natural Language Processing》</p>
-<h2 id="基本任务"><a href="#基本任务" class="headerlink" title="基本任务"></a>基本任务</h2><ul>
-<li>词性标注：名词、动词、形容词的识别</li>
-<li>命名实体的识别：人名、地名、机构名、日期的识别</li>
-<li>共指消解：代词指向的是哪个实体</li>
-<li>依赖关系：句子中成分的句法关系</li>
-<li>中文的分词</li>
-</ul>
-<h2 id="词表示"><a href="#词表示" class="headerlink" title="词表示"></a>词表示</h2><h3 id="词表示的目标"><a href="#词表示的目标" class="headerlink" title="词表示的目标"></a>词表示的目标</h3><ul>
-<li>词之间的相似度计算</li>
-<li>词之间的语义关系</li>
-</ul>
-<h3 id="词表示的方法"><a href="#词表示的方法" class="headerlink" title="词表示的方法"></a>词表示的方法</h3><ul>
-<li>相关词表示法：近义词、反义词、上位词（细微差异难以区分、新词义难以处理、主观性、数据吸收、大量人工）</li>
-<li>独热表示法：每个词表示成独立的符号（表示词的时候假设不同的词之间是正交的）</li>
-<li>上下文表示法：词用上下文出现的频度表示（需要大量存储空间、对于不经常出现的词表示变得稀疏）</li>
-<li>词嵌入：将每个词学到低维稠密的向量空间当中</li>
-</ul>
-<h2 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h2><h3 id="语言模型的任务"><a href="#语言模型的任务" class="headerlink" title="语言模型的任务"></a>语言模型的任务</h3><ul>
-<li>计算一个词的序列成为一句合法的话的概率（Joint probability）</li>
-<li>根据前面的词预测后面的词（conditional probability）</li>
-</ul>
-<h3 id="N-gram-model"><a href="#N-gram-model" class="headerlink" title="N-gram model"></a>N-gram model</h3><p>考虑连续出现N个词的概率（马尔可夫假设）：例如 $P(w_{j}|nerver \ too \ late \ to)=\frac{count(too \ late \ to \ w_{j})}{count(too \ late \ to)}$</p>
-<h4 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h4><ul>
-<li>N-gram model在实际使用时很少考虑比较长的上下文，因为前文越长，统计结果会越稀疏</li>
-<li>N-gram model无法计算相似度</li>
-</ul>
-<h3 id="Neural-Language-Model"><a href="#Neural-Language-Model" class="headerlink" title="Neural Language Model"></a>Neural Language Model</h3><p>首先将上下文的每个词表示为低维的向量，然后将这些向量拼接成一个上下文向量，最后经过非线性变换预测下一个词。</p>
-<h1 id="Transformer和预训练语言模型"><a href="#Transformer和预训练语言模型" class="headerlink" title="Transformer和预训练语言模型"></a>Transformer和预训练语言模型</h1><h2 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h2><p>通过求注意力分数来进行加权求和，得到一个与隐向量维度相同的输出向量，该向量包含decoder需要的所有encoder的信息。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101742998.png" alt=""></p>
-<h3 id="注意力机制特点"><a href="#注意力机制特点" class="headerlink" title="注意力机制特点"></a>注意力机制特点</h3><ul>
-<li>解决信息瓶颈问题</li>
-<li>缓解梯度消失问题</li>
-<li>提供了可解释性</li>
-</ul>
-<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><ul>
-<li>RNN当中的顺序计算不利于GPU并行</li>
-<li>RNN需要注意力机制来解决信息瓶颈等问题</li>
-</ul>
-<h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101757934.png" alt=""></p>
-<h3 id="输入编码"><a href="#输入编码" class="headerlink" title="输入编码"></a>输入编码</h3><h4 id="Byte-Pair-Encoding-BPE"><a href="#Byte-Pair-Encoding-BPE" class="headerlink" title="Byte Pair Encoding(BPE)"></a>Byte Pair Encoding(BPE)</h4><p>具体实现过程：</p>
-<ol>
-<li><p>首先统计每个单词的出现的频率；</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101804232.png" alt=""></p>
-</li>
-<li><p>将语料库当中的单词按照字母切分构成最初的词典；</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101806486.png" alt=""></p>
-</li>
-<li><p>统计语料库中每个Byte gram（连续两个相邻位置拼到一起，如lo、ow）出现的数量，把出现频度最高的Byte gram（es）抽象成新的词加入词表；</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101809525.png" alt=""></p>
-</li>
-<li><p>去除不再出现的单词（s）；</p>
-</li>
-<li><p>重复上述步骤</p>
-</li>
-</ol>
-<h4 id="位置编码"><a href="#位置编码" class="headerlink" title="位置编码"></a>位置编码</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101817772.png" alt=""></p>
-<h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><ul>
-<li>2个子层：多头注意力机制和前馈神经网络（2层的MLP）</li>
-<li>2个技巧：残差连接和Layer normalization</li>
-</ul>
-<h3 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h3><ul>
-<li>Masked self-attention：使得第i个位置不参考第i+1个位置的信息</li>
-<li>Encoder-decoder attention：k向量和v向量来自encoder最后一层的输出，q向量来自decoder（decoder的生成关注和整合encoder每个位置的信息）</li>
-</ul>
-<h3 id="Tricks"><a href="#Tricks" class="headerlink" title="Tricks"></a>Tricks</h3><ul>
-<li>Checkpoint averaging</li>
-<li>Adam optimizer</li>
-<li>Dropout</li>
-<li>Label smoothing</li>
-<li>Auto-regressive decoding</li>
-</ul>
-<h2 id="预训练语言模型-PLMs"><a href="#预训练语言模型-PLMs" class="headerlink" title="预训练语言模型(PLMs)"></a>预训练语言模型(PLMs)</h2><h3 id="两种主流方式"><a href="#两种主流方式" class="headerlink" title="两种主流方式"></a>两种主流方式</h3><ul>
-<li>Feature-based approaches：预训练语言模型的输出作为下游任务模型的输入</li>
-<li>Fine-tuning approaches：预训练好的模型作为下游任务的模型</li>
-</ul>
-<h3 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h3><p>只使用Transformer的Decoder进行文本的生成</p>
-<h3 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h3><p>基于Transformer的Encoder，关注的任务是Masked LM和Next Sentence Prediction</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404102043123.png" alt=""></p>
-<h3 id="MoE"><a href="#MoE" class="headerlink" title="MoE"></a>MoE</h3><p>MoE 应用于大模型，GPT-4并不是第一个。在2022年的时候，Google就提出了MoE大模型Switch Transformer，模型大小是1571B，Switch Transformer在预训练任务上显示出比 T5-XXL（11B）模型更高的样本效率。在相同的训练时间和计算资源下，Switch Transformer 能够达到更好的性能。</p>
-<ul>
-<li>稀疏MoE层：这些层代替了传统 Transformer 模型中的前馈网络 (FFN) 层。MoE 层包含若干“专家”(例如 8 个)，每个专家本身是一个独立的神经网络。在实际应用中，这些专家通常是前馈网络 (FFN)，但它们也可以是更复杂的网络结构。</li>
-<li>门控网络或路由：这个部分用于决定哪些 token 被发送到哪个专家。例如，在下图中，“More”这个 token 可能被发送到第二个专家，而“Parameters”这个 token 被发送到第一个专家。有时，一个 token 甚至可以被发送到多个专家。token 的路由方式是 MoE 使用中的一个关键点，因为路由器由学习的参数组成，并且与网络的其他部分一同进行预训练。</li>
-</ul>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404102105511.png" alt=""></p>
-<h3 id="Transformers工具"><a href="#Transformers工具" class="headerlink" title="Transformers工具"></a>Transformers工具</h3><h4 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h4><p>Transformers中的pipeline函数自动使用一个预训练好的模型来执行下游任务</p>
-<h4 id="Tokenization"><a href="#Tokenization" class="headerlink" title="Tokenization"></a>Tokenization</h4><p>不同预训练语言模型有不同的tokenization方式，Transformers中AutoTokenizer.from_pretrained函数可以自动进行tokenization</p>
-<h4 id="Pre-trained-Model"><a href="#Pre-trained-Model" class="headerlink" title="Pre-trained Model"></a>Pre-trained Model</h4><p>AutoModelForSequenceClassification.from_pretrained函数就调用了一个做序列分类的预训练模型，随后我们就可以在这个模型基础之上进行微调</p>
-<h1 id="Advanced-Adaptation"><a href="#Advanced-Adaptation" class="headerlink" title="Advanced Adaptation"></a>Advanced Adaptation</h1><h2 id="Prompt-learning"><a href="#Prompt-learning" class="headerlink" title="Prompt-learning"></a>Prompt-learning</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111510028.png" alt=""></p>
-<p>对于生成式模型而言，prompt需要mask的地方可能在句子最后</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111514918.png" alt=""></p>
-<p>而对于理解类的任务，prompt需要mask的地方可能在句子中间</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111516250.png" alt=""></p>
-<h3 id="Template"><a href="#Template" class="headerlink" title="Template"></a>Template</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111521912.png" alt=""></p>
-<h3 id="Verbalizer"><a href="#Verbalizer" class="headerlink" title="Verbalizer"></a>Verbalizer</h3><p>verbalizer的本质上是将回答映射到不固定的标签</p>
-<ul>
-<li>文本构建</li>
-<li>虚拟token构建</li>
-</ul>
-<h2 id="Delta-Tuning"><a href="#Delta-Tuning" class="headerlink" title="Delta Tuning"></a>Delta Tuning</h2><p>模型本身不变，优化其中一小部分的参数，从而驱动大模型</p>
-<ul>
-<li>Addition-based：引入额外可训练的神经模块</li>
-<li>Specification-based：指定模型中的某些参数是可训练的</li>
-<li>Reparameterization-based：假设模型的微调可以在一个低维子空间或者通过一个低秩的矩阵完成</li>
-</ul>
-<h3 id="Addition-based"><a href="#Addition-based" class="headerlink" title="Addition-based"></a>Addition-based</h3><h4 id="Adapter-Tuning"><a href="#Adapter-Tuning" class="headerlink" title="Adapter-Tuning"></a>Adapter-Tuning</h4><p>主要是在原有的attention当中加入了Adapter，并且只训练这些Adapter</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111645534.png" alt=""></p>
-<h4 id="Prefix-Tuning"><a href="#Prefix-Tuning" class="headerlink" title="Prefix-Tuning"></a>Prefix-Tuning</h4><p>在hidden state前面加入soft token，并且只训练这些soft token</p>
-<h3 id="Specification-based"><a href="#Specification-based" class="headerlink" title="Specification-based"></a>Specification-based</h3><h4 id="BitFit"><a href="#BitFit" class="headerlink" title="BitFit"></a>BitFit</h4><p>只微调所有的bias项</p>
-<h3 id="Reparameterization-based"><a href="#Reparameterization-based" class="headerlink" title="Reparameterization-based"></a>Reparameterization-based</h3><h4 id="Intrinstic-Prompt-Tuning"><a href="#Intrinstic-Prompt-Tuning" class="headerlink" title="Intrinstic Prompt Tuning"></a>Intrinstic Prompt Tuning</h4><p>模型的优化被映射到一个低维的子空间</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111650060.png" alt=""></p>
-<h4 id="LoRA"><a href="#LoRA" class="headerlink" title="LoRA"></a>LoRA</h4><p>不认为模型的优化是低维的，而是低秩的，因此将模型参数进行一个低秩分解</p>
-<h1 id="训练优化"><a href="#训练优化" class="headerlink" title="训练优化"></a>训练优化</h1><h2 id="Data-Parallel"><a href="#Data-Parallel" class="headerlink" title="Data Parallel"></a>Data Parallel</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111743187.png" alt=""></p>
-<h2 id="Model-Parallel"><a href="#Model-Parallel" class="headerlink" title="Model Parallel"></a>Model Parallel</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111749954.png" alt=""></p>
-<h2 id="ZeRO"><a href="#ZeRO" class="headerlink" title="ZeRO"></a>ZeRO</h2><ul>
-<li><p>Stage 1：每张卡只计算部分梯度</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111752088.png" alt=""></p>
-</li>
-<li><p>Stage 2：反向传播的过程中及时移除gradient</p>
-</li>
-<li><p>Stage 3：每张卡只保留部分模型参数</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111758180.png" alt=""></p>
-</li>
-</ul>
-<h2 id="Pipeline-Parallel"><a href="#Pipeline-Parallel" class="headerlink" title="Pipeline Parallel"></a>Pipeline Parallel</h2><p>模型的不同层分给不同的显卡</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111802035.png" alt=""></p>
-<h2 id="Tricks-1"><a href="#Tricks-1" class="headerlink" title="Tricks"></a>Tricks</h2><ul>
-<li>Mixed precision：混合精度训练</li>
-<li>Offloading：把optimizer的参数传给CPU进行计算</li>
-<li>Overlapping：提前获取参数</li>
-<li>Checkpointing：设置检查点</li>
-</ul>
-<h1 id="模型压缩"><a href="#模型压缩" class="headerlink" title="模型压缩"></a>模型压缩</h1><h2 id="Knowledge-Distillation"><a href="#Knowledge-Distillation" class="headerlink" title="Knowledge Distillation"></a>Knowledge Distillation</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111825707.png" alt=""></p>
-<p>让学生模型和教师模型层与层之间的hidden states尽可能接近</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111828103.png" alt=""></p>
-<h2 id="Model-Pruning"><a href="#Model-Pruning" class="headerlink" title="Model Pruning"></a>Model Pruning</h2><ul>
-<li>Weight pruning（unstructured）：随机丢弃参数</li>
-<li>Attention head pruning（structured）：丢弃某个head</li>
-<li>Layer pruning（structured）：丢弃神经网络的某一层</li>
-</ul>
-<h2 id="Model-Quantization"><a href="#Model-Quantization" class="headerlink" title="Model Quantization"></a>Model Quantization</h2><p>浮点计算位数多，将浮点的表示转换为定精度的表示，有一个系数，有一个int值，每次将系数和int值相乘还原成浮点型</p>
-<h2 id="Weight-Sharing"><a href="#Weight-Sharing" class="headerlink" title="Weight Sharing"></a>Weight Sharing</h2><p>不同层用同样的参数计算</p>
-<h2 id="Low-rank-Approximation"><a href="#Low-rank-Approximation" class="headerlink" title="Low-rank Approximation"></a>Low-rank Approximation</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111857863.png" alt=""></p>
-<h2 id="Architecture-Search"><a href="#Architecture-Search" class="headerlink" title="Architecture Search"></a>Architecture Search</h2><p>找到最优的神经网络模型</p>
-<h1 id="模型推理"><a href="#模型推理" class="headerlink" title="模型推理"></a>模型推理</h1><ul>
-<li>高显存占有</li>
-<li>高计算能力要求</li>
-</ul>
-<h1 id="大模型应用"><a href="#大模型应用" class="headerlink" title="大模型应用"></a>大模型应用</h1><h2 id="信息检索"><a href="#信息检索" class="headerlink" title="信息检索"></a>信息检索</h2><h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><ol>
-<li>定义一个query</li>
-<li>给定文档的集合</li>
-<li>IR系统计算相关性分数并根据分数进行排序</li>
-</ol>
-<h3 id="性能评测"><a href="#性能评测" class="headerlink" title="性能评测"></a>性能评测</h3><ul>
-<li><p>MRR：考虑每个查询排名最靠前的第一个相关文档的位置</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111939534.png" alt=""></p>
-</li>
-<li><p>MAP：一组查询的平均准确率均值</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111942704.png" alt=""></p>
-</li>
-<li><p>NDCG：归一化的折损累计增益</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111944309.png" alt=""></p>
-</li>
-</ul>
-<h2 id="机器问答"><a href="#机器问答" class="headerlink" title="机器问答"></a>机器问答</h2><h3 id="阅读理解"><a href="#阅读理解" class="headerlink" title="阅读理解"></a>阅读理解</h3><p>类型：Multiple choice、Cloze test、Extractive</p>
-<h3 id="开放域QA"><a href="#开放域QA" class="headerlink" title="开放域QA"></a>开放域QA</h3><p>类型：Task Definition、Generation-based Methods、Retrieval-based Methods</p>
-<h2 id="文本生成"><a href="#文本生成" class="headerlink" title="文本生成"></a>文本生成</h2><h3 id="文本生成任务"><a href="#文本生成任务" class="headerlink" title="文本生成任务"></a>文本生成任务</h3><ul>
-<li>Data-to-Text：图片、表格等生成文本</li>
-<li>Dialogue：根据用户输入生成一些满足需求的对话</li>
-<li>Machine Translation</li>
-<li>Poetry Generation</li>
-<li>Style Transfer</li>
-<li>Storytelling</li>
-<li>Summarization</li>
-</ul>
-<h2 id="生物医学"><a href="#生物医学" class="headerlink" title="生物医学"></a>生物医学</h2><ul>
-<li>domain corpus：Sci-BERT，BioBERT，clinical BERT</li>
-<li>special pretraining task：MC-BERT，KeBioLM</li>
-</ul>
-<h2 id="法律智能"><a href="#法律智能" class="headerlink" title="法律智能"></a>法律智能</h2><ul>
-<li>Legal Judgement Prediction</li>
-<li>Similar Cases Retrieval</li>
-<li>Legal Documents Generation</li>
-<li>Legal Information Recommendation</li>
-<li>Legal Documents Translation</li>
-<li>Legal Question Answering</li>
-<li>Court View Generation</li>
-<li>Risk Warming</li>
-<li>Legal Text Mining</li>
-<li>Compliance Review</li>
-</ul>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>机器学习</tag>
-        <tag>大语言模型</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>我的第一篇文章</title>
     <url>/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
     <content><![CDATA[<p>这是一篇测试文章，没有后续~~~</p>
@@ -1066,6 +858,373 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       </tags>
   </entry>
   <entry>
+    <title>大语言模型</title>
+    <url>/2024/04/09/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>了解一下大语言模型的相关内容。</p>
+<p>主要参考清华刘知远团队的课程。</p>
+<a id="more"></a>
+<h1 id="NLP基础"><a href="#NLP基础" class="headerlink" title="NLP基础"></a>NLP基础</h1><p>自然语言处理：让计算机理解人类所说的语言。</p>
+<p>相关综述：《Advances in Natural Language Processing》</p>
+<h2 id="基本任务"><a href="#基本任务" class="headerlink" title="基本任务"></a>基本任务</h2><ul>
+<li>词性标注：名词、动词、形容词的识别</li>
+<li>命名实体的识别：人名、地名、机构名、日期的识别</li>
+<li>共指消解：代词指向的是哪个实体</li>
+<li>依赖关系：句子中成分的句法关系</li>
+<li>中文的分词</li>
+</ul>
+<h2 id="词表示"><a href="#词表示" class="headerlink" title="词表示"></a>词表示</h2><h3 id="词表示的目标"><a href="#词表示的目标" class="headerlink" title="词表示的目标"></a>词表示的目标</h3><ul>
+<li>词之间的相似度计算</li>
+<li>词之间的语义关系</li>
+</ul>
+<h3 id="词表示的方法"><a href="#词表示的方法" class="headerlink" title="词表示的方法"></a>词表示的方法</h3><ul>
+<li>相关词表示法：近义词、反义词、上位词（细微差异难以区分、新词义难以处理、主观性、数据吸收、大量人工）</li>
+<li>独热表示法：每个词表示成独立的符号（表示词的时候假设不同的词之间是正交的）</li>
+<li>上下文表示法：词用上下文出现的频度表示（需要大量存储空间、对于不经常出现的词表示变得稀疏）</li>
+<li>词嵌入：将每个词学到低维稠密的向量空间当中</li>
+</ul>
+<h2 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h2><h3 id="语言模型的任务"><a href="#语言模型的任务" class="headerlink" title="语言模型的任务"></a>语言模型的任务</h3><ul>
+<li>计算一个词的序列成为一句合法的话的概率（Joint probability）</li>
+<li>根据前面的词预测后面的词（conditional probability）</li>
+</ul>
+<h3 id="N-gram-model"><a href="#N-gram-model" class="headerlink" title="N-gram model"></a>N-gram model</h3><p>考虑连续出现N个词的概率（马尔可夫假设）：例如 $P(w_{j}|nerver \ too \ late \ to)=\frac{count(too \ late \ to \ w_{j})}{count(too \ late \ to)}$</p>
+<h4 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h4><ul>
+<li>N-gram model在实际使用时很少考虑比较长的上下文，因为前文越长，统计结果会越稀疏</li>
+<li>N-gram model无法计算相似度</li>
+</ul>
+<h3 id="Neural-Language-Model"><a href="#Neural-Language-Model" class="headerlink" title="Neural Language Model"></a>Neural Language Model</h3><p>首先将上下文的每个词表示为低维的向量，然后将这些向量拼接成一个上下文向量，最后经过非线性变换预测下一个词。</p>
+<h1 id="Transformer和预训练语言模型"><a href="#Transformer和预训练语言模型" class="headerlink" title="Transformer和预训练语言模型"></a>Transformer和预训练语言模型</h1><h2 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h2><p>通过求注意力分数来进行加权求和，得到一个与隐向量维度相同的输出向量，该向量包含decoder需要的所有encoder的信息。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101742998.png" alt=""></p>
+<h3 id="注意力机制特点"><a href="#注意力机制特点" class="headerlink" title="注意力机制特点"></a>注意力机制特点</h3><ul>
+<li>解决信息瓶颈问题</li>
+<li>缓解梯度消失问题</li>
+<li>提供了可解释性</li>
+</ul>
+<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><ul>
+<li>RNN当中的顺序计算不利于GPU并行</li>
+<li>RNN需要注意力机制来解决信息瓶颈等问题</li>
+</ul>
+<h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101757934.png" alt=""></p>
+<h3 id="输入编码"><a href="#输入编码" class="headerlink" title="输入编码"></a>输入编码</h3><h4 id="Byte-Pair-Encoding-BPE"><a href="#Byte-Pair-Encoding-BPE" class="headerlink" title="Byte Pair Encoding(BPE)"></a>Byte Pair Encoding(BPE)</h4><p>具体实现过程：</p>
+<ol>
+<li><p>首先统计每个单词的出现的频率；</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101804232.png" alt=""></p>
+</li>
+<li><p>将语料库当中的单词按照字母切分构成最初的词典；</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101806486.png" alt=""></p>
+</li>
+<li><p>统计语料库中每个Byte gram（连续两个相邻位置拼到一起，如lo、ow）出现的数量，把出现频度最高的Byte gram（es）抽象成新的词加入词表；</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101809525.png" alt=""></p>
+</li>
+<li><p>去除不再出现的单词（s）；</p>
+</li>
+<li><p>重复上述步骤</p>
+</li>
+</ol>
+<h4 id="位置编码"><a href="#位置编码" class="headerlink" title="位置编码"></a>位置编码</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404101817772.png" alt=""></p>
+<h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><ul>
+<li>2个子层：多头注意力机制和前馈神经网络（2层的MLP）</li>
+<li>2个技巧：残差连接和Layer normalization</li>
+</ul>
+<h3 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h3><ul>
+<li>Masked self-attention：使得第i个位置不参考第i+1个位置的信息</li>
+<li>Encoder-decoder attention：k向量和v向量来自encoder最后一层的输出，q向量来自decoder（decoder的生成关注和整合encoder每个位置的信息）</li>
+</ul>
+<h3 id="Tricks"><a href="#Tricks" class="headerlink" title="Tricks"></a>Tricks</h3><ul>
+<li>Checkpoint averaging</li>
+<li>Adam optimizer</li>
+<li>Dropout</li>
+<li>Label smoothing</li>
+<li>Auto-regressive decoding</li>
+</ul>
+<h2 id="预训练语言模型-PLMs"><a href="#预训练语言模型-PLMs" class="headerlink" title="预训练语言模型(PLMs)"></a>预训练语言模型(PLMs)</h2><h3 id="两种主流方式"><a href="#两种主流方式" class="headerlink" title="两种主流方式"></a>两种主流方式</h3><ul>
+<li>Feature-based approaches：预训练语言模型的输出作为下游任务模型的输入</li>
+<li>Fine-tuning approaches：预训练好的模型作为下游任务的模型</li>
+</ul>
+<h3 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h3><p>只使用Transformer的Decoder进行文本的生成</p>
+<h3 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h3><p>基于Transformer的Encoder，关注的任务是Masked LM和Next Sentence Prediction</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404102043123.png" alt=""></p>
+<h3 id="MoE"><a href="#MoE" class="headerlink" title="MoE"></a>MoE</h3><p>MoE 应用于大模型，GPT-4并不是第一个。在2022年的时候，Google就提出了MoE大模型Switch Transformer，模型大小是1571B，Switch Transformer在预训练任务上显示出比 T5-XXL（11B）模型更高的样本效率。在相同的训练时间和计算资源下，Switch Transformer 能够达到更好的性能。</p>
+<ul>
+<li>稀疏MoE层：这些层代替了传统 Transformer 模型中的前馈网络 (FFN) 层。MoE 层包含若干“专家”(例如 8 个)，每个专家本身是一个独立的神经网络。在实际应用中，这些专家通常是前馈网络 (FFN)，但它们也可以是更复杂的网络结构。</li>
+<li>门控网络或路由：这个部分用于决定哪些 token 被发送到哪个专家。例如，在下图中，“More”这个 token 可能被发送到第二个专家，而“Parameters”这个 token 被发送到第一个专家。有时，一个 token 甚至可以被发送到多个专家。token 的路由方式是 MoE 使用中的一个关键点，因为路由器由学习的参数组成，并且与网络的其他部分一同进行预训练。</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404102105511.png" alt=""></p>
+<h3 id="Transformers工具"><a href="#Transformers工具" class="headerlink" title="Transformers工具"></a>Transformers工具</h3><h4 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h4><p>Transformers中的pipeline函数自动使用一个预训练好的模型来执行下游任务</p>
+<h4 id="Tokenization"><a href="#Tokenization" class="headerlink" title="Tokenization"></a>Tokenization</h4><p>不同预训练语言模型有不同的tokenization方式，Transformers中AutoTokenizer.from_pretrained函数可以自动进行tokenization</p>
+<h4 id="Pre-trained-Model"><a href="#Pre-trained-Model" class="headerlink" title="Pre-trained Model"></a>Pre-trained Model</h4><p>AutoModelForSequenceClassification.from_pretrained函数就调用了一个做序列分类的预训练模型，随后我们就可以在这个模型基础之上进行微调</p>
+<h1 id="Advanced-Adaptation"><a href="#Advanced-Adaptation" class="headerlink" title="Advanced Adaptation"></a>Advanced Adaptation</h1><h2 id="Prompt-learning"><a href="#Prompt-learning" class="headerlink" title="Prompt-learning"></a>Prompt-learning</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111510028.png" alt=""></p>
+<p>对于生成式模型而言，prompt需要mask的地方可能在句子最后</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111514918.png" alt=""></p>
+<p>而对于理解类的任务，prompt需要mask的地方可能在句子中间</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111516250.png" alt=""></p>
+<h3 id="Template"><a href="#Template" class="headerlink" title="Template"></a>Template</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111521912.png" alt=""></p>
+<h3 id="Verbalizer"><a href="#Verbalizer" class="headerlink" title="Verbalizer"></a>Verbalizer</h3><p>verbalizer的本质上是将回答映射到不固定的标签</p>
+<ul>
+<li>文本构建</li>
+<li>虚拟token构建</li>
+</ul>
+<h2 id="Delta-Tuning"><a href="#Delta-Tuning" class="headerlink" title="Delta Tuning"></a>Delta Tuning</h2><p>模型本身不变，优化其中一小部分的参数，从而驱动大模型</p>
+<ul>
+<li>Addition-based：引入额外可训练的神经模块</li>
+<li>Specification-based：指定模型中的某些参数是可训练的</li>
+<li>Reparameterization-based：假设模型的微调可以在一个低维子空间或者通过一个低秩的矩阵完成</li>
+</ul>
+<h3 id="Addition-based"><a href="#Addition-based" class="headerlink" title="Addition-based"></a>Addition-based</h3><h4 id="Adapter-Tuning"><a href="#Adapter-Tuning" class="headerlink" title="Adapter-Tuning"></a>Adapter-Tuning</h4><p>主要是在原有的attention当中加入了Adapter，并且只训练这些Adapter</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111645534.png" alt=""></p>
+<h4 id="Prefix-Tuning"><a href="#Prefix-Tuning" class="headerlink" title="Prefix-Tuning"></a>Prefix-Tuning</h4><p>在hidden state前面加入soft token，并且只训练这些soft token</p>
+<h3 id="Specification-based"><a href="#Specification-based" class="headerlink" title="Specification-based"></a>Specification-based</h3><h4 id="BitFit"><a href="#BitFit" class="headerlink" title="BitFit"></a>BitFit</h4><p>只微调所有的bias项</p>
+<h3 id="Reparameterization-based"><a href="#Reparameterization-based" class="headerlink" title="Reparameterization-based"></a>Reparameterization-based</h3><h4 id="Intrinstic-Prompt-Tuning"><a href="#Intrinstic-Prompt-Tuning" class="headerlink" title="Intrinstic Prompt Tuning"></a>Intrinstic Prompt Tuning</h4><p>模型的优化被映射到一个低维的子空间</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111650060.png" alt=""></p>
+<h4 id="LoRA"><a href="#LoRA" class="headerlink" title="LoRA"></a>LoRA</h4><p>不认为模型的优化是低维的，而是低秩的，因此将模型参数进行一个低秩分解</p>
+<h1 id="训练优化"><a href="#训练优化" class="headerlink" title="训练优化"></a>训练优化</h1><h2 id="Data-Parallel"><a href="#Data-Parallel" class="headerlink" title="Data Parallel"></a>Data Parallel</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111743187.png" alt=""></p>
+<h2 id="Model-Parallel"><a href="#Model-Parallel" class="headerlink" title="Model Parallel"></a>Model Parallel</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111749954.png" alt=""></p>
+<h2 id="ZeRO"><a href="#ZeRO" class="headerlink" title="ZeRO"></a>ZeRO</h2><ul>
+<li><p>Stage 1：每张卡只计算部分梯度</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111752088.png" alt=""></p>
+</li>
+<li><p>Stage 2：反向传播的过程中及时移除gradient</p>
+</li>
+<li><p>Stage 3：每张卡只保留部分模型参数</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111758180.png" alt=""></p>
+</li>
+</ul>
+<h2 id="Pipeline-Parallel"><a href="#Pipeline-Parallel" class="headerlink" title="Pipeline Parallel"></a>Pipeline Parallel</h2><p>模型的不同层分给不同的显卡</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111802035.png" alt=""></p>
+<h2 id="Tricks-1"><a href="#Tricks-1" class="headerlink" title="Tricks"></a>Tricks</h2><ul>
+<li>Mixed precision：混合精度训练</li>
+<li>Offloading：把optimizer的参数传给CPU进行计算</li>
+<li>Overlapping：提前获取参数</li>
+<li>Checkpointing：设置检查点</li>
+</ul>
+<h1 id="模型压缩"><a href="#模型压缩" class="headerlink" title="模型压缩"></a>模型压缩</h1><h2 id="Knowledge-Distillation"><a href="#Knowledge-Distillation" class="headerlink" title="Knowledge Distillation"></a>Knowledge Distillation</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111825707.png" alt=""></p>
+<p>让学生模型和教师模型层与层之间的hidden states尽可能接近</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111828103.png" alt=""></p>
+<h2 id="Model-Pruning"><a href="#Model-Pruning" class="headerlink" title="Model Pruning"></a>Model Pruning</h2><ul>
+<li>Weight pruning（unstructured）：随机丢弃参数</li>
+<li>Attention head pruning（structured）：丢弃某个head</li>
+<li>Layer pruning（structured）：丢弃神经网络的某一层</li>
+</ul>
+<h2 id="Model-Quantization"><a href="#Model-Quantization" class="headerlink" title="Model Quantization"></a>Model Quantization</h2><p>浮点计算位数多，将浮点的表示转换为定精度的表示，有一个系数，有一个int值，每次将系数和int值相乘还原成浮点型</p>
+<h2 id="Weight-Sharing"><a href="#Weight-Sharing" class="headerlink" title="Weight Sharing"></a>Weight Sharing</h2><p>不同层用同样的参数计算</p>
+<h2 id="Low-rank-Approximation"><a href="#Low-rank-Approximation" class="headerlink" title="Low-rank Approximation"></a>Low-rank Approximation</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111857863.png" alt=""></p>
+<h2 id="Architecture-Search"><a href="#Architecture-Search" class="headerlink" title="Architecture Search"></a>Architecture Search</h2><p>找到最优的神经网络模型</p>
+<h1 id="模型推理"><a href="#模型推理" class="headerlink" title="模型推理"></a>模型推理</h1><ul>
+<li>高显存占有</li>
+<li>高计算能力要求</li>
+</ul>
+<h1 id="大模型应用"><a href="#大模型应用" class="headerlink" title="大模型应用"></a>大模型应用</h1><h2 id="信息检索"><a href="#信息检索" class="headerlink" title="信息检索"></a>信息检索</h2><h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><ol>
+<li>定义一个query</li>
+<li>给定文档的集合</li>
+<li>IR系统计算相关性分数并根据分数进行排序</li>
+</ol>
+<h3 id="性能评测"><a href="#性能评测" class="headerlink" title="性能评测"></a>性能评测</h3><ul>
+<li><p>MRR：考虑每个查询排名最靠前的第一个相关文档的位置</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111939534.png" alt=""></p>
+</li>
+<li><p>MAP：一组查询的平均准确率均值</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111942704.png" alt=""></p>
+</li>
+<li><p>NDCG：归一化的折损累计增益</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404111944309.png" alt=""></p>
+</li>
+</ul>
+<h2 id="机器问答"><a href="#机器问答" class="headerlink" title="机器问答"></a>机器问答</h2><h3 id="阅读理解"><a href="#阅读理解" class="headerlink" title="阅读理解"></a>阅读理解</h3><p>类型：Multiple choice、Cloze test、Extractive</p>
+<h3 id="开放域QA"><a href="#开放域QA" class="headerlink" title="开放域QA"></a>开放域QA</h3><p>类型：Task Definition、Generation-based Methods、Retrieval-based Methods</p>
+<h2 id="文本生成"><a href="#文本生成" class="headerlink" title="文本生成"></a>文本生成</h2><h3 id="文本生成任务"><a href="#文本生成任务" class="headerlink" title="文本生成任务"></a>文本生成任务</h3><ul>
+<li>Data-to-Text：图片、表格等生成文本</li>
+<li>Dialogue：根据用户输入生成一些满足需求的对话</li>
+<li>Machine Translation</li>
+<li>Poetry Generation</li>
+<li>Style Transfer</li>
+<li>Storytelling</li>
+<li>Summarization</li>
+</ul>
+<h2 id="生物医学"><a href="#生物医学" class="headerlink" title="生物医学"></a>生物医学</h2><ul>
+<li>domain corpus：Sci-BERT，BioBERT，clinical BERT</li>
+<li>special pretraining task：MC-BERT，KeBioLM</li>
+</ul>
+<h2 id="法律智能"><a href="#法律智能" class="headerlink" title="法律智能"></a>法律智能</h2><ul>
+<li>Legal Judgement Prediction</li>
+<li>Similar Cases Retrieval</li>
+<li>Legal Documents Generation</li>
+<li>Legal Information Recommendation</li>
+<li>Legal Documents Translation</li>
+<li>Legal Question Answering</li>
+<li>Court View Generation</li>
+<li>Risk Warming</li>
+<li>Legal Text Mining</li>
+<li>Compliance Review</li>
+</ul>
+<h1 id="微调方式"><a href="#微调方式" class="headerlink" title="微调方式"></a>微调方式</h1><h2 id="Adapter-Tuning-1"><a href="#Adapter-Tuning-1" class="headerlink" title="Adapter Tuning"></a>Adapter Tuning</h2><p>2019年谷歌的研究人员首次在论文《Parameter-Efficient Transfer Learning for NLP》提出针对 BERT 的 PEFT微调方式，拉开了 PEFT 研究的序幕。他们指出，在面对特定的下游任务时，如果进行 Full-Fintuning（即预训练模型中的所有参数都进行微调），太过低效；而如果采用固定预训练模型的某些层，只微调接近下游任务的那几层参数，又难以达到较好的效果。</p>
+<p>于是他们设计了Adapter 结构，将其嵌入 Transformer 的结构里面，在训练时，固定住原来预训练模型的参数不变，只对新增的 Adapter 结构进行微调。同时为了保证训练的高效性（也就是尽可能少的引入更多参数），他们将 Adapter 设计为这样的结构：</p>
+<ul>
+<li>首先是一个 down-project 层将高维度特征映射到低维特征</li>
+<li>然后过一个非线形层之后，再用一个 up-project 结构将低维特征映射回原来的高维特征</li>
+<li>同时也设计了 skip-connection 结构，确保了在最差的情况下能够退化为identity（类似残差结构）</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404211636816.png" alt=""></p>
+<h2 id="Prefix-Tuning-1"><a href="#Prefix-Tuning-1" class="headerlink" title="Prefix Tuning"></a>Prefix Tuning</h2><p>2021年斯坦福的研究人员在论文《Prefix-Tuning: Optimizing Continuous Prompts for Generation》中提出了 Prefix Tuning 方法。与Full-finetuning 更新所有参数的方式不同，该方法是在输入 token 之前（所有层的Transformer的输出）构造一段任务相关的 virtual tokens 作为 Prefix，然后训练的时候只更新 Prefix 部分的参数，而 Transformer 中的其他部分参数固定。该方法其实和构造 Prompt 类似，只是 Prompt 是人为构造的“显式”的提示，并且无法更新参数，而Prefix 则是可以学习的“隐式”的提示。</p>
+<p>同时，为了防止直接更新 Prefix 的参数导致训练不稳定的情况，他们在 Prefix 层前面加了 MLP 结构(相当于将Prefix 分解为更小维度的 Input 与 MLP 的组合后输出的结果)，训练完成后，只保留 Prefix 的参数。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404211641993.png" alt=""></p>
+<h2 id="Prompt-Tuning"><a href="#Prompt-Tuning" class="headerlink" title="Prompt Tuning"></a>Prompt Tuning</h2><p>Prompt Tuning 是2021年谷歌在论文《The Power of Scale for Parameter-Efficient Prompt Tuning》中提出的微调方法。</p>
+<p>该方法可以看作是 Prefix Tuning 的简化版本，<strong>只在输入层加入 prompt tokens</strong>，并不需要加入 MLP 进行调整来解决难训练的问题，主要在 T5 预训练模型上做实验。似乎只要预训练模型足够强大，其他的一切都不是问题。作者也做实验说明随着预训练模型参数量的增加，Prompt Tuning的方法会逼近 Fine-tune 的结果。</p>
+<p>固定预训练参数，为每一个任务额外添加一个或多个 embedding，之后拼接 query 正常输入 LLM，并只训练这些 embedding。左图为单任务全参数微调，右图为 Prompt tuning。<br><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404211645462.png" alt=""></p>
+<h2 id="P-Tuning"><a href="#P-Tuning" class="headerlink" title="P-Tuning"></a>P-Tuning</h2><p>P-Tuning 方法的提出主要是为了解决这样一个问题：大模型的 Prompt 构造方式严重影响下游任务的效果。</p>
+<p>P-Tuning 提出将 Prompt 转换为可以学习的 Embedding 层，只是考虑到直接对 Embedding 参数进行优化会存在这样两个挑战：</p>
+<ul>
+<li>Discretenes： 对输入正常语料的 Embedding 层已经经过预训练，而如果直接对输入的 prompt embedding进行随机初始化训练，容易陷入局部最优。</li>
+<li>Association：没法捕捉到 prompt embedding 之间的相关关系。</li>
+</ul>
+<p>P-Tuning 和 Prefix-Tuning 差不多同时提出，做法其实也有一些相似之处，主要区别在：</p>
+<ul>
+<li>Prefix Tuning 是将额外的 embedding 加在开头，看起来更像是模仿 Instruction 指令；而 P-Tuning 的位置则不固定。</li>
+<li>Prefix Tuning 通过在每个 Attention 层都加入 Prefix Embedding 来增加额外的参数，通过 MLP 来初始化；而 P-Tuning 只是在输入的时候加入 Embedding，并通过 LSTM+MLP 来初始化。</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404211650387.png" alt=""></p>
+<h2 id="P-Tuning-v2"><a href="#P-Tuning-v2" class="headerlink" title="P-Tuning v2"></a>P-Tuning v2</h2><p>P-Tuning 的问题是在小参数量模型上表现差。于是就有了v2版本：《P-Tuning v2: Prompt Tuning Can Be Comparable to Fine-tuning Universally Across Scales and Tasks》。</p>
+<p>从标题就可以看出，P-Tuning v2 的目标就是要让 Prompt Tuning 能够在不同参数规模的预训练模型、针对不同下游任务的结果上都达到匹敌 Fine-tuning 的结果。</p>
+<p>那也就是说当前 Prompt Tuning 方法在这两个方面都存在局限性。</p>
+<ul>
+<li>不同模型规模：Prompt Tuning 和 P-tuning 这两种方法都是在预训练模型参数规模够足够大时，才能达到和Fine-tuning 类似的效果，而参数规模较小时效果则很差。</li>
+<li>不同任务类型：Prompt Tuning 和 P-tuning 这两种方法在 sequence tagging 任务上表现都很差。</li>
+</ul>
+<p>相比 Prompt Tuning 和 P-tuning 的方法， P-tuning v2 方法在多层加入了 Prompts tokens 作为输入，带来两个方面的好处：</p>
+<ul>
+<li>带来更多可学习的参数（从 P-tuning 和 Prompt Tuning 的0.1%增加到0.1%-3%），同时也足够 parameter-efficient。</li>
+<li>加入到更深层结构中的 Prompt 能给模型预测带来更直接的影响。</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404211651675.png" alt=""></p>
+<h2 id="LoRA-1"><a href="#LoRA-1" class="headerlink" title="LoRA"></a>LoRA</h2><p>LoRA，英文全称Low-RankAdaptation of Large Language Models，直译为大语言模型的低阶适应，是一种PEFT（Parameter-Efficient Tuning，简称PEFT），这是微软的研究人员为了解决大语言模型微调而开发的一项技术。</p>
+<p>LoRA的基本原理是冻结预训练好的模型权重参数，在冻结原模型参数的情况下，通过往模型中加入额外的网络层，并只训练这些新增的网络层参数。由于这些新增参数数量较少，这样不仅 finetune 的成本显著下降，还能获得和全模型微调类似的效果。<br><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404211653204.png" alt=""></p>
+<h2 id="QLoRA"><a href="#QLoRA" class="headerlink" title="QLoRA"></a>QLoRA</h2><p>QLoRA 是由 Tim Dettmers 等人提出的量化 LoRA 的缩写。QLoRA 是一种在微调过程中进一步减少内存占用的技术。在反向传播过程中，QLoRA 将预训练的权重量化为 4-bit，并使用分页优化器来处理内存峰值。</p>
+<p>使用LoRA时可以节省33%的GPU内存。然而，由于QLoRA中预训练模型权重的额外量化和去量化，训练时间增加了39%。</p>
+<p>首先分析下LoRA微调中的痛点：</p>
+<ul>
+<li>参数空间小：LoRA中参与训练的参数量较少，解空间较小，效果相比全量微调有一定的差距。</li>
+<li>微调大模型成本高：对于上百亿参数量的模型，LoRA微调的成本还是很高。</li>
+<li>精度损失：针对第二点，可以采用int8或int4量化，进一步对模型基座的参数进行压缩。但是又会引发精度损失的问题，降低模型性能。</li>
+</ul>
+<p>QLoRA优点：</p>
+<ul>
+<li>4-bit NormalFloat：提出一种理论最优的4-bit的量化数据类型，优于当前普遍使用的FP4与Int4。对于正态分布权重而言，一种信息理论上最优的新数据类型，该数据类型对正态分布数据产生比 4 bit整数和 4bit 浮点数更好的实证结果。QLORA包含一种低精度存储数据类型（通常为4-bit）和一种计算数据类型（通常为BFloat16）。在实践中，QLORA权重张量使用时，需要将将张量去量化为BFloat16，然后在16位计算精度下进行矩阵乘法运算。模型本身用4bit加载，训练时把数值反量化到bf16后进行训练。</li>
+<li>Double Quantization：对第一次量化后的那些常量再进行一次量化，减少存储空间。相比于当前的模型量化方法，更加节省显存空间。每个参数平均节省0.37bit，对于65B的LLaMA模型，大约能节省3GB显存空间。</li>
+<li>Paged Optimizers：使用NVIDIA统一内存特性，该特性可以在在GPU偶尔OOM的情况下，进行CPU和GPU之间自动分页到分页的传输，以实现无错误的 GPU 处理。该功能的工作方式类似于 CPU 内存和磁盘之间的常规内存分页。使用此功能为优化器状态（Optimizer）分配分页内存，然后在 GPU 内存不足时将其自动卸载到 CPU 内存，并在优化器更新步骤需要时将其加载回 GPU 内存。</li>
+<li>增加Adapter：4-bit的NormalFloat与Double Quantization，节省了很多空间，但带来了性能损失，作者通过插入更多adapter来弥补这种性能损失。在LoRA中，一般会选择在query和value的全连接层处插入adapter。而QLoRA则在所有全连接层处都插入了adapter，增加了训练参数，弥补精度带来的性能损失。</li>
+</ul>
+<h2 id="LoRA-MoE"><a href="#LoRA-MoE" class="headerlink" title="LoRA+MoE"></a>LoRA+MoE</h2><p>由于大模型全量微调时的显存占用过大，LoRA、Adapter、IA 3 这些参数高效微调方法便成为了资源有限的机构和研究者微调大模型的标配。PEFT方法的总体思路是冻结住大模型的主干参数，引入一小部分可训练的参数作为适配模块进行训练，以节省模型微调时的显存和参数存储开销。</p>
+<p>传统上，LoRA这类适配模块的参数和主干参数一样是稠密的，每个样本上的推理过程都需要用到所有的参数。近来，大模型研究者们为了克服稠密模型的参数效率瓶颈，开始关注以Mistral、DeepSeek MoE为代表的混合专家（Mixure of Experts，简称MoE）模型框架。在该框架下，模型的某个模块（如Transformer的某个FFN层）会存在多组形状相同的权重（称为专家），另外有一个路由模块（Router）接受原始输入、输出各专家的激活权重。<br><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404211655500.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>机器学习</tag>
+        <tag>大语言模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法Tricks</title>
+    <url>/2022/11/22/%E7%AE%97%E6%B3%95Tricks/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在刷题过程中遇到的一些常用的算法，便于后续复习。</p>
+<a id="more"></a>
+<h1 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h1><h2 id="短除法"><a href="#短除法" class="headerlink" title="短除法"></a>短除法</h2><p>思路：逐步找出两个数的所有公约数，再将这些公约数累乘起来，就能得到最大公约数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    t = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">while</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            t *= i</span><br><span class="line">            m /= i</span><br><span class="line">            n /= i</span><br><span class="line">    <span class="keyword">return</span> t</span><br></pre></td></tr></table></figure>
+<h2 id="欧几里得算法（辗转相除法）"><a href="#欧几里得算法（辗转相除法）" class="headerlink" title="欧几里得算法（辗转相除法）"></a>欧几里得算法（辗转相除法）</h2><p>思路：以除数和余数反复做除法运算，当余数为 $0$ 时，取当前算式除数为最大公约数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 非递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">while</span> n:</span><br><span class="line">        m, n = n, m % n</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> m</span><br><span class="line">    <span class="keyword">return</span> gcd(n, m % n)</span><br></pre></td></tr></table></figure>
+<h2 id="更相减损术"><a href="#更相减损术" class="headerlink" title="更相减损术"></a>更相减损术</h2><p>思路：任意给定两个正整数；判断它们是否都是偶数。若是，则用 $2$ 约简。以较大的数减较小的数，接着把所得的差与较小的数比较，并以大数减小数。继续这个操作，直到所得的减数和差相等为止。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        m //= <span class="number">2</span></span><br><span class="line">        n //= <span class="number">2</span></span><br><span class="line">    r = m-n</span><br><span class="line">    <span class="keyword">while</span> r != n:</span><br><span class="line">        m = <span class="built_in">max</span>(r, n)</span><br><span class="line">        n = <span class="built_in">min</span>(r, n)</span><br><span class="line">        r = m - n</span><br><span class="line">    <span class="keyword">return</span> n * <span class="number">2</span>**count</span><br></pre></td></tr></table></figure>
+<h2 id="穷举法"><a href="#穷举法" class="headerlink" title="穷举法"></a>穷举法</h2><p>思路：最大公约数肯定在 $1$ ~两者之间最小数之间，只需要从大到小穷举即可。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="Stein算法"><a href="#Stein算法" class="headerlink" title="Stein算法"></a>Stein算法</h2><p>思路：欧几里德算法是计算两个数最大公约数的传统算法，无论从理论还是从实际效率上都是很好的。但当出现大素数时，欧几里德法则存在较大的缺陷。计算 $\mbox{gcd}(m,n)=\mbox{gcd}(m−n,n)$ 的时候，实际上在描述的是 $\mbox{gcd}(2b,a+b)$ 。可以注意到它的第二参数本来就是一个奇数，因此按<code>Stein</code>算法可以提前将第一个参数里面的 $2$ 除掉变成 $\mbox{gcd}(b,a+b)$ 。再考虑第二参数比第一参数大，相减一下，立即就可以得到 $\mbox{gcd}(m,n)=\mbox{gcd}(a,b)=\mbox{gcd}(\frac{m+n}{2},\frac{m−n}{2})$ 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> a &lt; b:</span><br><span class="line">        a, b = b, a</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> == b:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * gcd(a//<span class="number">2</span>, b//<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a//<span class="number">2</span>, b)</span><br><span class="line">    <span class="keyword">if</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a, b//<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 传统Stein算法</span></span><br><span class="line">    <span class="keyword">return</span> gcd(a-b, b)</span><br><span class="line">    <span class="comment"># 改进Stein算法（某些情况下可以降低复杂度）</span></span><br><span class="line">    <span class="comment"># return gcd((a+b)//2, (a-b)//2)</span></span><br></pre></td></tr></table></figure>
+<h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><p> 并查集是一种树型的数据结构，用于处理一些不相交集合<code>(disjoint sets)</code>的合并及查询问题。并查集最常用的操作是查找和合并。</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>初始时，每个元素都位于一个单独的集合，表示为一棵只有根节点的树。方便起见，我们将根节点的父亲设为自己。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br></pre></td></tr></table></figure>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>我们需要沿着树向上移动，直至找到根节点。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x <span class="keyword">if</span> self.pa[x] == x <span class="keyword">else</span> self.find(self.pa[x])</span><br></pre></td></tr></table></figure>
+<h3 id="路径压缩"><a href="#路径压缩" class="headerlink" title="路径压缩"></a>路径压缩</h3><p>查找过程中经过的每个元素都属于该集合，我们可以将其直接连到根节点以加快后续查询。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> self.pa[x] != x:</span><br><span class="line">        self.pa[x] = self.find(self.pa[x])</span><br><span class="line">    <span class="keyword">return</span> self.pa[x]</span><br></pre></td></tr></table></figure>
+<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>要合并两棵树，我们只需要将一棵树的根节点连到另一棵树的根节点。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">    self.pa[self.find(x)] = self.find(y)</span><br></pre></td></tr></table></figure>
+<h3 id="启发式合并"><a href="#启发式合并" class="headerlink" title="启发式合并"></a>启发式合并</h3><p>合并时，选择哪棵树的根节点作为新树的根节点会影响未来操作的复杂度。我们可以将节点较少或深度较小的树连到另一棵，以免发生退化。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br><span class="line">        self.size = [<span class="number">1</span>] * size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">        x, y = self.find(x), self.find(y)</span><br><span class="line">        <span class="keyword">if</span> x == y:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> self.size[x] &lt; self.size[y]:</span><br><span class="line">            x, y = y, x</span><br><span class="line">        self.pa[y] = x</span><br><span class="line">        self.size[x] += self.size[y]</span><br></pre></td></tr></table></figure>
+<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><p>字符串<code>A</code>是否为字符串<code>B</code>的子串？如果是，出现在<code>B</code>的什么位置？这个问题就是字符串匹配问题。字符串<code>A</code>称为模式串，字符串<code>B</code>称为主串。</p>
+<h2 id="暴力匹配"><a href="#暴力匹配" class="headerlink" title="暴力匹配"></a>暴力匹配</h2><p>从主串的第一个字符开始与模式串的第一个字符比较，如果相同则模式串往后移动一个位置和主串的下一个位置再比较，如果不同，则主串移动到下一个字符，模式串移动到第一个字符，开始重新比较，以此类推。这种方法很简单，但效率很低，假设主串的长度为<code>m</code>，模式串的长度为<code>n</code>，最差的情况是主串移动<code>m-n+1</code>次才能匹配到，时间复杂度为<code>O(mn)</code>。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; m <span class="keyword">and</span> j &lt; n:</span><br><span class="line">        <span class="keyword">if</span> str1[i] == str2[j]:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = i - j + <span class="number">1</span></span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> j == n:</span><br><span class="line">        <span class="keyword">return</span> i - j</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="KMP算法-1"><a href="#KMP算法-1" class="headerlink" title="KMP算法"></a>KMP算法</h2><p><code>KMP</code>的核心思想是：某个位置匹配失败时，移动到这个位置之前的字符串的最长前缀的下一个字符继续匹配。简单来说，就是再已经匹配的模式串中找出最长的前缀和后缀相等的情况，然后将模式串从这个新位置开始匹配。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216211311.png" alt=""></p>
+<p>拿上图而言，目前能够匹配到的模式串为<code>ABCAB</code>，下次应该开始匹配的地方不是从头开始匹配，而是应该从<code>ABCAB</code>中的最长前后缀开始匹配。因为<code>ABCAB</code>的前缀和后缀（不包含字符串本身）分别为{<code>A</code>,<code>AB</code>,<code>ABC</code>,<code>ABCA</code>}和{<code>B</code>,<code>AB</code>,<code>CAB</code>,<code>BCAB</code>}，最长的前缀应该是<code>AB</code>。</p>
+<h3 id="next数组"><a href="#next数组" class="headerlink" title="next数组"></a>next数组</h3><p>接下来的问题就是如何计算这个最长前缀的长度。最朴素的方式就是从前往后和从后往前每次增加一个长度截取字符串，然后看前缀和后缀是否相同，但是计算量太大。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216215017.png" alt=""></p>
+<p>先看上图左边部分，箭头所指蓝色位置之前的字符串的最长前缀是<code>AB</code>，长度是<code>2</code>，我们对比这个最长前缀的下一个字符<code>A</code>和蓝色位置<code>A</code>相同，那么整个字符串的前后缀就变成了<code>ABA</code>，长度为<code>2+1=3</code>。仔细想想看：蓝色的<code>A</code>之前是最长后缀，白色的<code>A</code>之前是最长前缀，而这个最长前后缀是相同的，都是<code>AB</code>，那么如果第三个字符也相同，这三个字符连起来不是也相同吗？长度就是<code>2+1=3</code>！也就是说，如果要计算到某个位置字符串的最长前缀长度，我们只需要将这个字符和它之前字符串的最长前缀的下一个字符对比，如果相同，则它的最长前缀长度就是前面字符串的最长前缀长度+1。</p>
+<p>如果不相同呢？看上图右边部分，蓝色的<code>A</code>不等于最长前缀的下一个字符<code>C</code>，我们应该往前回溯，字符<code>C</code>前面的字符串<code>AB</code>的最长前缀长度是0（即后面代码里的<code>k=next[k]</code>），我们就用这个前缀的下一个字符，即第1个字符<code>A</code>和当前字符比较，如果相同，则整个字符串的最长前缀长度为0+1，如果不同，则继续往前回溯，直到第一个字符。也就是，不断往前回溯，用前面字符串的最长前缀的下一个字符和当前字符对比。</p>
+<p>注意：next数组保存的不是最长前缀的长度，而是对应的下标，也就是长度-1，如果长度是0，则保存-1。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_next</span>(<span class="params">p</span>):</span></span><br><span class="line">    n = <span class="built_in">len</span>(p)</span><br><span class="line">    <span class="built_in">next</span> = [<span class="number">0</span>] * n</span><br><span class="line">    <span class="built_in">next</span>[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">    k = -<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        <span class="comment"># 当前字符和最长前缀下一个字符不同，则往前回溯；因为next[k]就是用来记录子串的最长公共前后缀的尾坐标</span></span><br><span class="line">        <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> p[i] != p[k + <span class="number">1</span>]:</span><br><span class="line">            k = <span class="built_in">next</span>[k]</span><br><span class="line">        <span class="comment"># 当前字符和当前字符前面字符串的最长前缀的下一个字符相同，则 k + 1</span></span><br><span class="line">        <span class="keyword">if</span> p[i] == p[k + <span class="number">1</span>]:</span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">        <span class="built_in">next</span>[i] = k</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">next</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    index = -<span class="number">1</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    <span class="keyword">if</span> n &lt;= m:</span><br><span class="line">        <span class="built_in">next</span> = get_next(str2)</span><br><span class="line">        k = -<span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> str1[i] != str2[k + <span class="number">1</span>]:</span><br><span class="line">                k = <span class="built_in">next</span>[k]</span><br><span class="line">            <span class="keyword">if</span> str1[i] == str2[k + <span class="number">1</span>]:</span><br><span class="line">                k += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> k == n-<span class="number">1</span>:</span><br><span class="line">                    index = i - n + <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> index</span><br></pre></td></tr></table></figure>
+<h1 id="字典树（前缀树）"><a href="#字典树（前缀树）" class="headerlink" title="字典树（前缀树）"></a>字典树（前缀树）</h1><p>Trie，又称前缀树或字典树，是一棵有根树，其每个节点包含以下字段：</p>
+<ul>
+<li>指向子节点的数组 children 。</li>
+<li>布尔字段 isEnd，表示该节点是否为字符串的结尾。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize your data structure here.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.children = [<span class="literal">None</span>] * <span class="number">26</span></span><br><span class="line">        self.isEnd = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="插入字符串"><a href="#插入字符串" class="headerlink" title="插入字符串"></a>插入字符串</h2><p>我们从字典树的根开始，插入字符串。对于当前字符对应的子节点，有两种情况：</p>
+<ul>
+<li>子节点存在。沿着指针移动到子节点，继续处理下一个字符。</li>
+<li>子节点不存在。创建一个新的子节点，记录在 children 数组的对应位置上，然后沿着指针移动到子节点，继续搜索下一个字符。</li>
+</ul>
+<p>重复以上步骤，直到处理字符串的最后一个字符，然后将当前节点标记为字符串的结尾。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Inserts a word into the trie.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    node = self</span><br><span class="line">    <span class="keyword">for</span> ch <span class="keyword">in</span> word:</span><br><span class="line">        offset = <span class="built_in">ord</span>(ch) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> node.children[offset]:</span><br><span class="line">            node.children[offset] = Trie()</span><br><span class="line">        node = node.children[offset]</span><br><span class="line">    node.isEnd = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="查找前缀"><a href="#查找前缀" class="headerlink" title="查找前缀"></a>查找前缀</h2><p>我们从字典树的根开始，查找前缀。对于当前字符对应的子节点，有两种情况：</p>
+<ul>
+<li>子节点存在。沿着指针移动到子节点，继续搜索下一个字符。</li>
+<li>子节点不存在。说明字典树中不包含该前缀，返回空指针。</li>
+</ul>
+<p>重复以上步骤，直到返回空指针或搜索完前缀的最后一个字符。</p>
+<p>若搜索到了前缀的末尾，就说明字典树中存在该前缀。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">startsWith</span>(<span class="params">self, prefix: <span class="built_in">str</span></span>) -&gt; bool:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Returns if there is any word in the trie that starts with the given prefix.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    cur = self</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> prefix:</span><br><span class="line">        od = <span class="built_in">ord</span>(c) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> cur.<span class="built_in">next</span>[od] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        cur = cur.<span class="built_in">next</span>[od]</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="查找字符串"><a href="#查找字符串" class="headerlink" title="查找字符串"></a>查找字符串</h2><p>和查找前缀相同，多了一个判断 isEnd 的步骤，若前缀末尾对应节点的 isEnd 为真，则说明字典树中存在该字符串。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; bool:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Returns if the word is in the trie.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    cur = self</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> word:</span><br><span class="line">        od = <span class="built_in">ord</span>(c) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> cur.<span class="built_in">next</span>[od] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    	cur = cur.<span class="built_in">next</span>[od]</span><br><span class="line">    <span class="keyword">return</span> cur.isend == <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h1 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h1><p>线段树是算法竞赛中常用的用来维护<strong>区间信息</strong>的数据结构。线段树可以在<code>O(logN)</code>的时间复杂度内实现单点修改、区间修改、区间查询（区间求和，求区间最大值，求区间最小值）等操作。</p>
+<p>线段树将每个长度不为 $1$ 的区间划分成左右两个区间递归求解，把整个线段划分为一个树形结构，通过合并左右两区间信息来求得该区间的信息。这种数据结构可以方便的进行大部分的区间操作。</p>
+<p><strong>适合场景</strong>：</p>
+<ul>
+<li>满足区间加法：区间的和，区间的差。</li>
+<li>满足区间乘法：区间的乘积。</li>
+<li>满足区间最值：区间最大值，区间最小值</li>
+</ul>
+<p><strong>不适合场景</strong>：</p>
+<ul>
+<li>区间的众数</li>
+<li>区间最长连续问题</li>
+<li>最长不下降问题</li>
+</ul>
+<h2 id="定义节点类"><a href="#定义节点类" class="headerlink" title="定义节点类"></a>定义节点类</h2><p>首先，我们需要定义一个节点类来表示线段树中的节点。每个节点包含一个左右子节点、区间起始和结束位置以及一些其他信息（如区间和、区间最大值、最小值等）。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SegmentTreeNode</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, start, end</span>):</span></span><br><span class="line">        self.start = start  <span class="comment"># 区间起始位置</span></span><br><span class="line">        self.end = end  <span class="comment"># 区间结束位置</span></span><br><span class="line">        self.left = <span class="literal">None</span>  <span class="comment"># 左子节点</span></span><br><span class="line">        self.right = <span class="literal">None</span>  <span class="comment"># 右子节点</span></span><br><span class="line">        self.<span class="built_in">sum</span> = <span class="number">0</span>  <span class="comment"># 区间和</span></span><br><span class="line">        <span class="comment"># 其他信息（例如区间最大值、最小值等）可以根据需要添加</span></span><br></pre></td></tr></table></figure>
+<h2 id="构建线段树"><a href="#构建线段树" class="headerlink" title="构建线段树"></a>构建线段树</h2><p>构建线段树的过程可以使用递归的方式实现。首先，定义一个 build 函数，该函数接收一个数组以及区间起始和结束位置，返回构建好的线段树的根节点。在函数内部，首先创建一个新节点表示当前区间，然后递归构建左右子树，最后将左右子树的区间和相加作为当前节点的区间和。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span>(<span class="params">nums, start, end</span>):</span></span><br><span class="line">    <span class="keyword">if</span> start &gt; end:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    root = SegmentTreeNode(start, end)</span><br><span class="line">    <span class="keyword">if</span> start == end:</span><br><span class="line">        root.<span class="built_in">sum</span> = nums[start]</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    mid = (start + end) // <span class="number">2</span></span><br><span class="line">    root.left = build(nums, start, mid)</span><br><span class="line">    root.right = build(nums, mid + <span class="number">1</span>, end)</span><br><span class="line">    root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br><span class="line">    <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
+<h2 id="区间查询"><a href="#区间查询" class="headerlink" title="区间查询"></a>区间查询</h2><p>线段树最常见的用途就是区间查询。例如，查询一个区间的和、最大值、最小值等。函数接收一个根节点、区间起始和结束位置，返回区间和。如果当前节点的区间完全被包含在查询区间内，则直接返回当前节点的区间和；否则，将查询区间分别递归到左右子树中查询，并将左右子树的查询结果相加作为最终结果。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query</span>(<span class="params">root, start, end</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= root.start <span class="keyword">and</span> end &gt;= root.end:</span><br><span class="line">        <span class="keyword">return</span> root.<span class="built_in">sum</span></span><br><span class="line">    mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">    res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= mid:</span><br><span class="line">        res += query(root.left, start, end)</span><br><span class="line">    <span class="keyword">if</span> end &gt; mid:</span><br><span class="line">        res += query(root.right, start, end)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="单点修改"><a href="#单点修改" class="headerlink" title="单点修改"></a>单点修改</h2><p>更新某个位置的值时，需要对所有包含这个位置的结点的值重新计算。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_single</span>(<span class="params">root, k, val</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">if</span> root.start == k <span class="keyword">and</span> root.end == k:</span><br><span class="line">        root.<span class="built_in">sum</span> = val</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> k &lt;= mid:</span><br><span class="line">        update_single(root.left, k, val)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        update_single(root.right, k, val)</span><br><span class="line">    root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br></pre></td></tr></table></figure>
+<h2 id="区间修改"><a href="#区间修改" class="headerlink" title="区间修改"></a>区间修改</h2><p>除了区间查询之外，线段树还可以用来实现区间修改。例如，修改一个区间中的数值，或者给一个区间加上一个定值。对于区间修改而言，我们需要引入一个<code>lazy</code>标记，<code>lazy</code>标记的作用是：将此区间标记，表示这个区间的值已经更新，但是它的子区间却没有更新，更新的信息就是标记保存的值。具体步骤如下：</p>
+<ol>
+<li>如果要修改的区间完全覆盖当前区间，则直接更新这个区间，打上<code>lazy</code>标记；</li>
+<li>如果没有完全覆盖且当前节点不是叶子节点，如果当前区间有<code>lazy</code>标记，先下传<code>lazy</code>标记到子区间，再清除当前区间的<code>lazy</code>标记；</li>
+<li>如果修改区间和左孩子有交集，就搜索左孩子；</li>
+<li>如果修改区间和右孩子有交集，就搜索右孩子；</li>
+<li>最后将当前区间的值更新。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_some</span>(<span class="params">root, start, end, val</span>):</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= root.start <span class="keyword">and</span> end &gt;= root.end:</span><br><span class="line">        root.<span class="built_in">sum</span> += val * (root.end - root.start + <span class="number">1</span>)</span><br><span class="line">        root.flag = val</span><br><span class="line">    <span class="keyword">if</span> root.start != root.end:</span><br><span class="line">        <span class="keyword">if</span> root.flag:</span><br><span class="line">            root.left.flag = val</span><br><span class="line">            root.right.flag = val</span><br><span class="line">            root.flag = <span class="number">0</span></span><br><span class="line">        mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> start &lt;= mid &lt;= end:</span><br><span class="line">            update_some(root.left, start, end, val)</span><br><span class="line">        <span class="keyword">if</span> start &lt;= mid+<span class="number">1</span> &lt;= end:</span><br><span class="line">            update_some(root.right, start, end, val)</span><br><span class="line">        root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>刷题</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>机器学习总结</title>
     <url>/2021/04/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>小白上路啦！</p>
@@ -1349,107 +1508,6 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       <tags>
         <tag>总结</tag>
         <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法Tricks</title>
-    <url>/2022/11/22/%E7%AE%97%E6%B3%95Tricks/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在刷题过程中遇到的一些常用的算法，便于后续复习。</p>
-<a id="more"></a>
-<h1 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h1><h2 id="短除法"><a href="#短除法" class="headerlink" title="短除法"></a>短除法</h2><p>思路：逐步找出两个数的所有公约数，再将这些公约数累乘起来，就能得到最大公约数。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    t = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">while</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            t *= i</span><br><span class="line">            m /= i</span><br><span class="line">            n /= i</span><br><span class="line">    <span class="keyword">return</span> t</span><br></pre></td></tr></table></figure>
-<h2 id="欧几里得算法（辗转相除法）"><a href="#欧几里得算法（辗转相除法）" class="headerlink" title="欧几里得算法（辗转相除法）"></a>欧几里得算法（辗转相除法）</h2><p>思路：以除数和余数反复做除法运算，当余数为 $0$ 时，取当前算式除数为最大公约数。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 非递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">while</span> n:</span><br><span class="line">        m, n = n, m % n</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归形式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> m</span><br><span class="line">    <span class="keyword">return</span> gcd(n, m % n)</span><br></pre></td></tr></table></figure>
-<h2 id="更相减损术"><a href="#更相减损术" class="headerlink" title="更相减损术"></a>更相减损术</h2><p>思路：任意给定两个正整数；判断它们是否都是偶数。若是，则用 $2$ 约简。以较大的数减较小的数，接着把所得的差与较小的数比较，并以大数减小数。继续这个操作，直到所得的减数和差相等为止。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        m //= <span class="number">2</span></span><br><span class="line">        n //= <span class="number">2</span></span><br><span class="line">    r = m-n</span><br><span class="line">    <span class="keyword">while</span> r != n:</span><br><span class="line">        m = <span class="built_in">max</span>(r, n)</span><br><span class="line">        n = <span class="built_in">min</span>(r, n)</span><br><span class="line">        r = m - n</span><br><span class="line">    <span class="keyword">return</span> n * <span class="number">2</span>**count</span><br></pre></td></tr></table></figure>
-<h2 id="穷举法"><a href="#穷举法" class="headerlink" title="穷举法"></a>穷举法</h2><p>思路：最大公约数肯定在 $1$ ~两者之间最小数之间，只需要从大到小穷举即可。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    m, n = <span class="built_in">max</span>(a, b), <span class="built_in">min</span>(a, b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> m % i == <span class="number">0</span> <span class="keyword">and</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h2 id="Stein算法"><a href="#Stein算法" class="headerlink" title="Stein算法"></a>Stein算法</h2><p>思路：欧几里德算法是计算两个数最大公约数的传统算法，无论从理论还是从实际效率上都是很好的。但当出现大素数时，欧几里德法则存在较大的缺陷。计算 $\mbox{gcd}(m,n)=\mbox{gcd}(m−n,n)$ 的时候，实际上在描述的是 $\mbox{gcd}(2b,a+b)$ 。可以注意到它的第二参数本来就是一个奇数，因此按<code>Stein</code>算法可以提前将第一个参数里面的 $2$ 除掉变成 $\mbox{gcd}(b,a+b)$ 。再考虑第二参数比第一参数大，相减一下，立即就可以得到 $\mbox{gcd}(m,n)=\mbox{gcd}(a,b)=\mbox{gcd}(\frac{m+n}{2},\frac{m−n}{2})$ 。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> a &lt; b:</span><br><span class="line">        a, b = b, a</span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> == b:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * gcd(a//<span class="number">2</span>, b//<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> a % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a//<span class="number">2</span>, b)</span><br><span class="line">    <span class="keyword">if</span> b % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(a, b//<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 传统Stein算法</span></span><br><span class="line">    <span class="keyword">return</span> gcd(a-b, b)</span><br><span class="line">    <span class="comment"># 改进Stein算法（某些情况下可以降低复杂度）</span></span><br><span class="line">    <span class="comment"># return gcd((a+b)//2, (a-b)//2)</span></span><br></pre></td></tr></table></figure>
-<h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><p> 并查集是一种树型的数据结构，用于处理一些不相交集合<code>(disjoint sets)</code>的合并及查询问题。并查集最常用的操作是查找和合并。</p>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>初始时，每个元素都位于一个单独的集合，表示为一棵只有根节点的树。方便起见，我们将根节点的父亲设为自己。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br></pre></td></tr></table></figure>
-<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>我们需要沿着树向上移动，直至找到根节点。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x <span class="keyword">if</span> self.pa[x] == x <span class="keyword">else</span> self.find(self.pa[x])</span><br></pre></td></tr></table></figure>
-<h3 id="路径压缩"><a href="#路径压缩" class="headerlink" title="路径压缩"></a>路径压缩</h3><p>查找过程中经过的每个元素都属于该集合，我们可以将其直接连到根节点以加快后续查询。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> self.pa[x] != x:</span><br><span class="line">        self.pa[x] = self.find(self.pa[x])</span><br><span class="line">    <span class="keyword">return</span> self.pa[x]</span><br></pre></td></tr></table></figure>
-<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>要合并两棵树，我们只需要将一棵树的根节点连到另一棵树的根节点。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">    self.pa[self.find(x)] = self.find(y)</span><br></pre></td></tr></table></figure>
-<h3 id="启发式合并"><a href="#启发式合并" class="headerlink" title="启发式合并"></a>启发式合并</h3><p>合并时，选择哪棵树的根节点作为新树的根节点会影响未来操作的复杂度。我们可以将节点较少或深度较小的树连到另一棵，以免发生退化。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dsu</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size</span>):</span></span><br><span class="line">        self.pa = <span class="built_in">list</span>(<span class="built_in">range</span>(size))</span><br><span class="line">        self.size = [<span class="number">1</span>] * size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, x, y</span>):</span></span><br><span class="line">        x, y = self.find(x), self.find(y)</span><br><span class="line">        <span class="keyword">if</span> x == y:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> self.size[x] &lt; self.size[y]:</span><br><span class="line">            x, y = y, x</span><br><span class="line">        self.pa[y] = x</span><br><span class="line">        self.size[x] += self.size[y]</span><br></pre></td></tr></table></figure>
-<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><p>字符串<code>A</code>是否为字符串<code>B</code>的子串？如果是，出现在<code>B</code>的什么位置？这个问题就是字符串匹配问题。字符串<code>A</code>称为模式串，字符串<code>B</code>称为主串。</p>
-<h2 id="暴力匹配"><a href="#暴力匹配" class="headerlink" title="暴力匹配"></a>暴力匹配</h2><p>从主串的第一个字符开始与模式串的第一个字符比较，如果相同则模式串往后移动一个位置和主串的下一个位置再比较，如果不同，则主串移动到下一个字符，模式串移动到第一个字符，开始重新比较，以此类推。这种方法很简单，但效率很低，假设主串的长度为<code>m</code>，模式串的长度为<code>n</code>，最差的情况是主串移动<code>m-n+1</code>次才能匹配到，时间复杂度为<code>O(mn)</code>。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; m <span class="keyword">and</span> j &lt; n:</span><br><span class="line">        <span class="keyword">if</span> str1[i] == str2[j]:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = i - j + <span class="number">1</span></span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> j == n:</span><br><span class="line">        <span class="keyword">return</span> i - j</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h2 id="KMP算法-1"><a href="#KMP算法-1" class="headerlink" title="KMP算法"></a>KMP算法</h2><p><code>KMP</code>的核心思想是：某个位置匹配失败时，移动到这个位置之前的字符串的最长前缀的下一个字符继续匹配。简单来说，就是再已经匹配的模式串中找出最长的前缀和后缀相等的情况，然后将模式串从这个新位置开始匹配。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216211311.png" alt=""></p>
-<p>拿上图而言，目前能够匹配到的模式串为<code>ABCAB</code>，下次应该开始匹配的地方不是从头开始匹配，而是应该从<code>ABCAB</code>中的最长前后缀开始匹配。因为<code>ABCAB</code>的前缀和后缀（不包含字符串本身）分别为{<code>A</code>,<code>AB</code>,<code>ABC</code>,<code>ABCA</code>}和{<code>B</code>,<code>AB</code>,<code>CAB</code>,<code>BCAB</code>}，最长的前缀应该是<code>AB</code>。</p>
-<h3 id="next数组"><a href="#next数组" class="headerlink" title="next数组"></a>next数组</h3><p>接下来的问题就是如何计算这个最长前缀的长度。最朴素的方式就是从前往后和从后往前每次增加一个长度截取字符串，然后看前缀和后缀是否相同，但是计算量太大。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20221216215017.png" alt=""></p>
-<p>先看上图左边部分，箭头所指蓝色位置之前的字符串的最长前缀是<code>AB</code>，长度是<code>2</code>，我们对比这个最长前缀的下一个字符<code>A</code>和蓝色位置<code>A</code>相同，那么整个字符串的前后缀就变成了<code>ABA</code>，长度为<code>2+1=3</code>。仔细想想看：蓝色的<code>A</code>之前是最长后缀，白色的<code>A</code>之前是最长前缀，而这个最长前后缀是相同的，都是<code>AB</code>，那么如果第三个字符也相同，这三个字符连起来不是也相同吗？长度就是<code>2+1=3</code>！也就是说，如果要计算到某个位置字符串的最长前缀长度，我们只需要将这个字符和它之前字符串的最长前缀的下一个字符对比，如果相同，则它的最长前缀长度就是前面字符串的最长前缀长度+1。</p>
-<p>如果不相同呢？看上图右边部分，蓝色的<code>A</code>不等于最长前缀的下一个字符<code>C</code>，我们应该往前回溯，字符<code>C</code>前面的字符串<code>AB</code>的最长前缀长度是0（即后面代码里的<code>k=next[k]</code>），我们就用这个前缀的下一个字符，即第1个字符<code>A</code>和当前字符比较，如果相同，则整个字符串的最长前缀长度为0+1，如果不同，则继续往前回溯，直到第一个字符。也就是，不断往前回溯，用前面字符串的最长前缀的下一个字符和当前字符对比。</p>
-<p>注意：next数组保存的不是最长前缀的长度，而是对应的下标，也就是长度-1，如果长度是0，则保存-1。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_next</span>(<span class="params">p</span>):</span></span><br><span class="line">    n = <span class="built_in">len</span>(p)</span><br><span class="line">    <span class="built_in">next</span> = [<span class="number">0</span>] * n</span><br><span class="line">    <span class="built_in">next</span>[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">    k = -<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        <span class="comment"># 当前字符和最长前缀下一个字符不同，则往前回溯；因为next[k]就是用来记录子串的最长公共前后缀的尾坐标</span></span><br><span class="line">        <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> p[i] != p[k + <span class="number">1</span>]:</span><br><span class="line">            k = <span class="built_in">next</span>[k]</span><br><span class="line">        <span class="comment"># 当前字符和当前字符前面字符串的最长前缀的下一个字符相同，则 k + 1</span></span><br><span class="line">        <span class="keyword">if</span> p[i] == p[k + <span class="number">1</span>]:</span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">        <span class="built_in">next</span>[i] = k</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">next</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span>(<span class="params">str1, str2</span>):</span></span><br><span class="line">    index = -<span class="number">1</span></span><br><span class="line">    m = <span class="built_in">len</span>(str1)</span><br><span class="line">    n = <span class="built_in">len</span>(str2)</span><br><span class="line">    <span class="keyword">if</span> n &lt;= m:</span><br><span class="line">        <span class="built_in">next</span> = get_next(str2)</span><br><span class="line">        k = -<span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">while</span> k &gt; -<span class="number">1</span> <span class="keyword">and</span> str1[i] != str2[k + <span class="number">1</span>]:</span><br><span class="line">                k = <span class="built_in">next</span>[k]</span><br><span class="line">            <span class="keyword">if</span> str1[i] == str2[k + <span class="number">1</span>]:</span><br><span class="line">                k += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> k == n-<span class="number">1</span>:</span><br><span class="line">                    index = i - n + <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> index</span><br></pre></td></tr></table></figure>
-<h1 id="字典树（前缀树）"><a href="#字典树（前缀树）" class="headerlink" title="字典树（前缀树）"></a>字典树（前缀树）</h1><p>Trie，又称前缀树或字典树，是一棵有根树，其每个节点包含以下字段：</p>
-<ul>
-<li>指向子节点的数组 children 。</li>
-<li>布尔字段 isEnd，表示该节点是否为字符串的结尾。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize your data structure here.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.children = [<span class="literal">None</span>] * <span class="number">26</span></span><br><span class="line">        self.isEnd = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-<h2 id="插入字符串"><a href="#插入字符串" class="headerlink" title="插入字符串"></a>插入字符串</h2><p>我们从字典树的根开始，插入字符串。对于当前字符对应的子节点，有两种情况：</p>
-<ul>
-<li>子节点存在。沿着指针移动到子节点，继续处理下一个字符。</li>
-<li>子节点不存在。创建一个新的子节点，记录在 children 数组的对应位置上，然后沿着指针移动到子节点，继续搜索下一个字符。</li>
-</ul>
-<p>重复以上步骤，直到处理字符串的最后一个字符，然后将当前节点标记为字符串的结尾。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Inserts a word into the trie.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    node = self</span><br><span class="line">    <span class="keyword">for</span> ch <span class="keyword">in</span> word:</span><br><span class="line">        offset = <span class="built_in">ord</span>(ch) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> node.children[offset]:</span><br><span class="line">            node.children[offset] = Trie()</span><br><span class="line">        node = node.children[offset]</span><br><span class="line">    node.isEnd = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<h2 id="查找前缀"><a href="#查找前缀" class="headerlink" title="查找前缀"></a>查找前缀</h2><p>我们从字典树的根开始，查找前缀。对于当前字符对应的子节点，有两种情况：</p>
-<ul>
-<li>子节点存在。沿着指针移动到子节点，继续搜索下一个字符。</li>
-<li>子节点不存在。说明字典树中不包含该前缀，返回空指针。</li>
-</ul>
-<p>重复以上步骤，直到返回空指针或搜索完前缀的最后一个字符。</p>
-<p>若搜索到了前缀的末尾，就说明字典树中存在该前缀。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">startsWith</span>(<span class="params">self, prefix: <span class="built_in">str</span></span>) -&gt; bool:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Returns if there is any word in the trie that starts with the given prefix.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    cur = self</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> prefix:</span><br><span class="line">        od = <span class="built_in">ord</span>(c) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> cur.<span class="built_in">next</span>[od] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        cur = cur.<span class="built_in">next</span>[od]</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<h2 id="查找字符串"><a href="#查找字符串" class="headerlink" title="查找字符串"></a>查找字符串</h2><p>和查找前缀相同，多了一个判断 isEnd 的步骤，若前缀末尾对应节点的 isEnd 为真，则说明字典树中存在该字符串。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; bool:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Returns if the word is in the trie.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    cur = self</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> word:</span><br><span class="line">        od = <span class="built_in">ord</span>(c) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> cur.<span class="built_in">next</span>[od] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    	cur = cur.<span class="built_in">next</span>[od]</span><br><span class="line">    <span class="keyword">return</span> cur.isend == <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<h1 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h1><p>线段树是算法竞赛中常用的用来维护<strong>区间信息</strong>的数据结构。线段树可以在<code>O(logN)</code>的时间复杂度内实现单点修改、区间修改、区间查询（区间求和，求区间最大值，求区间最小值）等操作。</p>
-<p>线段树将每个长度不为 $1$ 的区间划分成左右两个区间递归求解，把整个线段划分为一个树形结构，通过合并左右两区间信息来求得该区间的信息。这种数据结构可以方便的进行大部分的区间操作。</p>
-<p><strong>适合场景</strong>：</p>
-<ul>
-<li>满足区间加法：区间的和，区间的差。</li>
-<li>满足区间乘法：区间的乘积。</li>
-<li>满足区间最值：区间最大值，区间最小值</li>
-</ul>
-<p><strong>不适合场景</strong>：</p>
-<ul>
-<li>区间的众数</li>
-<li>区间最长连续问题</li>
-<li>最长不下降问题</li>
-</ul>
-<h2 id="定义节点类"><a href="#定义节点类" class="headerlink" title="定义节点类"></a>定义节点类</h2><p>首先，我们需要定义一个节点类来表示线段树中的节点。每个节点包含一个左右子节点、区间起始和结束位置以及一些其他信息（如区间和、区间最大值、最小值等）。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SegmentTreeNode</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, start, end</span>):</span></span><br><span class="line">        self.start = start  <span class="comment"># 区间起始位置</span></span><br><span class="line">        self.end = end  <span class="comment"># 区间结束位置</span></span><br><span class="line">        self.left = <span class="literal">None</span>  <span class="comment"># 左子节点</span></span><br><span class="line">        self.right = <span class="literal">None</span>  <span class="comment"># 右子节点</span></span><br><span class="line">        self.<span class="built_in">sum</span> = <span class="number">0</span>  <span class="comment"># 区间和</span></span><br><span class="line">        <span class="comment"># 其他信息（例如区间最大值、最小值等）可以根据需要添加</span></span><br></pre></td></tr></table></figure>
-<h2 id="构建线段树"><a href="#构建线段树" class="headerlink" title="构建线段树"></a>构建线段树</h2><p>构建线段树的过程可以使用递归的方式实现。首先，定义一个 build 函数，该函数接收一个数组以及区间起始和结束位置，返回构建好的线段树的根节点。在函数内部，首先创建一个新节点表示当前区间，然后递归构建左右子树，最后将左右子树的区间和相加作为当前节点的区间和。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span>(<span class="params">nums, start, end</span>):</span></span><br><span class="line">    <span class="keyword">if</span> start &gt; end:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    root = SegmentTreeNode(start, end)</span><br><span class="line">    <span class="keyword">if</span> start == end:</span><br><span class="line">        root.<span class="built_in">sum</span> = nums[start]</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    mid = (start + end) // <span class="number">2</span></span><br><span class="line">    root.left = build(nums, start, mid)</span><br><span class="line">    root.right = build(nums, mid + <span class="number">1</span>, end)</span><br><span class="line">    root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br><span class="line">    <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
-<h2 id="区间查询"><a href="#区间查询" class="headerlink" title="区间查询"></a>区间查询</h2><p>线段树最常见的用途就是区间查询。例如，查询一个区间的和、最大值、最小值等。函数接收一个根节点、区间起始和结束位置，返回区间和。如果当前节点的区间完全被包含在查询区间内，则直接返回当前节点的区间和；否则，将查询区间分别递归到左右子树中查询，并将左右子树的查询结果相加作为最终结果。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query</span>(<span class="params">root, start, end</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= root.start <span class="keyword">and</span> end &gt;= root.end:</span><br><span class="line">        <span class="keyword">return</span> root.<span class="built_in">sum</span></span><br><span class="line">    mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">    res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= mid:</span><br><span class="line">        res += query(root.left, start, end)</span><br><span class="line">    <span class="keyword">if</span> end &gt; mid:</span><br><span class="line">        res += query(root.right, start, end)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-<h2 id="单点修改"><a href="#单点修改" class="headerlink" title="单点修改"></a>单点修改</h2><p>更新某个位置的值时，需要对所有包含这个位置的结点的值重新计算。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_single</span>(<span class="params">root, k, val</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">if</span> root.start == k <span class="keyword">and</span> root.end == k:</span><br><span class="line">        root.<span class="built_in">sum</span> = val</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> k &lt;= mid:</span><br><span class="line">        update_single(root.left, k, val)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        update_single(root.right, k, val)</span><br><span class="line">    root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br></pre></td></tr></table></figure>
-<h2 id="区间修改"><a href="#区间修改" class="headerlink" title="区间修改"></a>区间修改</h2><p>除了区间查询之外，线段树还可以用来实现区间修改。例如，修改一个区间中的数值，或者给一个区间加上一个定值。对于区间修改而言，我们需要引入一个<code>lazy</code>标记，<code>lazy</code>标记的作用是：将此区间标记，表示这个区间的值已经更新，但是它的子区间却没有更新，更新的信息就是标记保存的值。具体步骤如下：</p>
-<ol>
-<li>如果要修改的区间完全覆盖当前区间，则直接更新这个区间，打上<code>lazy</code>标记；</li>
-<li>如果没有完全覆盖且当前节点不是叶子节点，如果当前区间有<code>lazy</code>标记，先下传<code>lazy</code>标记到子区间，再清除当前区间的<code>lazy</code>标记；</li>
-<li>如果修改区间和左孩子有交集，就搜索左孩子；</li>
-<li>如果修改区间和右孩子有交集，就搜索右孩子；</li>
-<li>最后将当前区间的值更新。</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_some</span>(<span class="params">root, start, end, val</span>):</span></span><br><span class="line">    <span class="keyword">if</span> start &lt;= root.start <span class="keyword">and</span> end &gt;= root.end:</span><br><span class="line">        root.<span class="built_in">sum</span> += val * (root.end - root.start + <span class="number">1</span>)</span><br><span class="line">        root.flag = val</span><br><span class="line">    <span class="keyword">if</span> root.start != root.end:</span><br><span class="line">        <span class="keyword">if</span> root.flag:</span><br><span class="line">            root.left.flag = val</span><br><span class="line">            root.right.flag = val</span><br><span class="line">            root.flag = <span class="number">0</span></span><br><span class="line">        mid = (root.start + root.end) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> start &lt;= mid &lt;= end:</span><br><span class="line">            update_some(root.left, start, end, val)</span><br><span class="line">        <span class="keyword">if</span> start &lt;= mid+<span class="number">1</span> &lt;= end:</span><br><span class="line">            update_some(root.right, start, end, val)</span><br><span class="line">        root.<span class="built_in">sum</span> = root.left.<span class="built_in">sum</span> + root.right.<span class="built_in">sum</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>刷题</tag>
       </tags>
   </entry>
   <entry>
