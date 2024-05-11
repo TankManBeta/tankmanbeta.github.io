@@ -31,7 +31,7 @@
 <meta property="og:description" content="前言记录一下使用Linux系统过程中遇到的知识点">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-14T05:55:34.000Z">
-<meta property="article:modified_time" content="2023-11-21T01:53:03.869Z">
+<meta property="article:modified_time" content="2024-05-11T02:35:57.480Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="Linux">
@@ -187,7 +187,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">修改密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E8%A1%A5%E5%85%A8"><span class="nav-number">3.</span> <span class="nav-text">快捷补全</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E7%9B%AE%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">切换目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">6.</span> <span class="nav-text">查看工作目录下的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E7%9A%84%E5%AE%8C%E6%95%B4%E8%B7%AF%E5%BE%84"><span class="nav-number">7.</span> <span class="nav-text">获取当前目录的完整路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">8.</span> <span class="nav-text">获取文件的绝对路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8B%E5%A5%BD%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="nav-number">9.</span> <span class="nav-text">友好显示文件大小</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">10.</span> <span class="nav-text">拷贝文件&#x2F;文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">11.</span> <span class="nav-text">移动文件&#x2F;文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">12.</span> <span class="nav-text">重命名文件&#x2F;文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">13.</span> <span class="nav-text">删除文件&#x2F;文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%85%E5%B1%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">14.</span> <span class="nav-text">清屏命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7GPU%E5%91%BD%E4%BB%A4"><span class="nav-number">15.</span> <span class="nav-text">监控GPU命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%A8%E6%9C%9F%E6%80%A7%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">16.</span> <span class="nav-text">周期性执行命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%80%E6%AD%BB%E8%BF%9B%E7%A8%8B"><span class="nav-number">17.</span> <span class="nav-text">杀死进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%82%E8%B5%B7%E8%BF%9B%E7%A8%8B"><span class="nav-number">18.</span> <span class="nav-text">挂起进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E8%AF%A2python%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84"><span class="nav-number">19.</span> <span class="nav-text">如何查询python安装路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86"><span class="nav-number">20.</span> <span class="nav-text">虚拟环境管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#virtualenv"><span class="nav-number">20.1.</span> <span class="nav-text">virtualenv</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">20.1.1.</span> <span class="nav-text">创建虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">20.1.2.</span> <span class="nav-text">激活虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">20.1.3.</span> <span class="nav-text">退出虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">20.1.4.</span> <span class="nav-text">删除虚拟环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#miniconda"><span class="nav-number">20.2.</span> <span class="nav-text">miniconda</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDminiconda%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">20.2.1.</span> <span class="nav-text">下载miniconda安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85miniconda"><span class="nav-number">20.2.2.</span> <span class="nav-text">安装miniconda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">20.2.3.</span> <span class="nav-text">查看所有虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-1"><span class="nav-number">20.2.4.</span> <span class="nav-text">创建虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-1"><span class="nav-number">20.2.5.</span> <span class="nav-text">激活虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-1"><span class="nav-number">20.2.6.</span> <span class="nav-text">退出虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-1"><span class="nav-number">20.2.7.</span> <span class="nav-text">删除虚拟环境</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85GPU%E7%89%88%E6%9C%AC%E7%9A%84PyTorch"><span class="nav-number">21.</span> <span class="nav-text">安装GPU版本的PyTorch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">22.</span> <span class="nav-text">多个项目使用同一个数据集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E4%B8%AD%E6%96%AD%E7%9A%84%E6%81%A2%E5%A4%8D"><span class="nav-number">23.</span> <span class="nav-text">连接中断的恢复</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pycharm%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">24.</span> <span class="nav-text">Pycharm远程连接服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VIM%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">25.</span> <span class="nav-text">VIM编辑器使用</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">修改密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E8%A1%A5%E5%85%A8"><span class="nav-number">3.</span> <span class="nav-text">快捷补全</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E7%9B%AE%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">切换目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">6.</span> <span class="nav-text">查看工作目录下的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E7%9A%84%E5%AE%8C%E6%95%B4%E8%B7%AF%E5%BE%84"><span class="nav-number">7.</span> <span class="nav-text">获取当前目录的完整路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">8.</span> <span class="nav-text">获取文件的绝对路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8B%E5%A5%BD%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="nav-number">9.</span> <span class="nav-text">友好显示文件大小</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">10.</span> <span class="nav-text">拷贝文件&#x2F;文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">11.</span> <span class="nav-text">移动文件&#x2F;文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">12.</span> <span class="nav-text">重命名文件&#x2F;文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">13.</span> <span class="nav-text">删除文件&#x2F;文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90"><span class="nav-number">14.</span> <span class="nav-text">更改文件权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="nav-number">14.1.</span> <span class="nav-text">数字表示法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="nav-number">14.2.</span> <span class="nav-text">符号表示法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%85%E5%B1%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">15.</span> <span class="nav-text">清屏命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7GPU%E5%91%BD%E4%BB%A4"><span class="nav-number">16.</span> <span class="nav-text">监控GPU命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%80%E5%87%BA-END"><span class="nav-number">17.</span> <span class="nav-text">退出(END)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%A8%E6%9C%9F%E6%80%A7%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">18.</span> <span class="nav-text">周期性执行命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%80%E6%AD%BB%E8%BF%9B%E7%A8%8B"><span class="nav-number">19.</span> <span class="nav-text">杀死进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%82%E8%B5%B7%E8%BF%9B%E7%A8%8B"><span class="nav-number">20.</span> <span class="nav-text">挂起进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E8%AF%A2python%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84"><span class="nav-number">21.</span> <span class="nav-text">如何查询python安装路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86"><span class="nav-number">22.</span> <span class="nav-text">虚拟环境管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#virtualenv"><span class="nav-number">22.1.</span> <span class="nav-text">virtualenv</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">22.1.1.</span> <span class="nav-text">创建虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">22.1.2.</span> <span class="nav-text">激活虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">22.1.3.</span> <span class="nav-text">退出虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">22.1.4.</span> <span class="nav-text">删除虚拟环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#miniconda"><span class="nav-number">22.2.</span> <span class="nav-text">miniconda</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDminiconda%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">22.2.1.</span> <span class="nav-text">下载miniconda安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85miniconda"><span class="nav-number">22.2.2.</span> <span class="nav-text">安装miniconda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">22.2.3.</span> <span class="nav-text">查看所有虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-1"><span class="nav-number">22.2.4.</span> <span class="nav-text">创建虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-1"><span class="nav-number">22.2.5.</span> <span class="nav-text">激活虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-1"><span class="nav-number">22.2.6.</span> <span class="nav-text">退出虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-1"><span class="nav-number">22.2.7.</span> <span class="nav-text">删除虚拟环境</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85GPU%E7%89%88%E6%9C%AC%E7%9A%84PyTorch"><span class="nav-number">23.</span> <span class="nav-text">安装GPU版本的PyTorch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">24.</span> <span class="nav-text">多个项目使用同一个数据集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E4%B8%AD%E6%96%AD%E7%9A%84%E6%81%A2%E5%A4%8D"><span class="nav-number">25.</span> <span class="nav-text">连接中断的恢复</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PyCharm%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">26.</span> <span class="nav-text">PyCharm远程连接服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VIM%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">27.</span> <span class="nav-text">VIM编辑器使用</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -284,7 +284,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-11-21 09:53:03" itemprop="dateModified" datetime="2023-11-21T09:53:03+08:00">2023-11-21</time>
+        <time title="修改时间：2024-05-11 10:35:57" itemprop="dateModified" datetime="2024-05-11T10:35:57+08:00">2024-05-11</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -304,14 +304,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.7k</span>
+      <span>4.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -331,21 +331,21 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd xxx</span><br></pre></td></tr></table></figure>
 <h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><p>创建一个名为<code>Environment</code>的目录：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir Environment</span><br></pre></td></tr></table></figure>
-<h1 id="查看工作目录下的内容"><a href="#查看工作目录下的内容" class="headerlink" title="查看工作目录下的内容"></a>查看工作目录下的内容</h1><p>以长格式的形式查看当前目录下所有可见文件的详细属性（其中<code>rwx</code>、<code>r-x</code>、<code>r-x</code>各有功能）：</p>
+<h1 id="查看工作目录下的内容"><a href="#查看工作目录下的内容" class="headerlink" title="查看工作目录下的内容"></a>查看工作目录下的内容</h1><p>以长格式的形式查看当前目录下所有可见文件的详细属性：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
 <p>显示当前目录中的所有文件和目录（包括隐藏文件）：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -a</span><br></pre></td></tr></table></figure>
 <h1 id="获取当前目录的完整路径"><a href="#获取当前目录的完整路径" class="headerlink" title="获取当前目录的完整路径"></a>获取当前目录的完整路径</h1><p>获取当前目录的完整路径（绝对路径）</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br></pre></td></tr></table></figure>
-<h1 id="获取文件的绝对路径"><a href="#获取文件的绝对路径" class="headerlink" title="获取文件的绝对路径"></a>获取文件的绝对路径</h1><p>readlink 的最初用途是解析符号链接，不过我们可以用它来显示文件的完整路径，如下为其语法结构：</p>
+<h1 id="获取文件的绝对路径"><a href="#获取文件的绝对路径" class="headerlink" title="获取文件的绝对路径"></a>获取文件的绝对路径</h1><p><code>readlink</code>的最初用途是解析符号链接，不过我们可以用它来显示文件的完整路径，如下为其语法结构：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readlink -f sample.txt</span><br></pre></td></tr></table></figure>
-<p>realpath 原用于解析绝对文件名，在这里我们也可以用它来显示文件的完整路径，如果使用符号链接，它将显示原始文件的实际路径：</p>
+<p><code>realpath</code>原用于解析绝对文件名，在这里我们也可以用它来显示文件的完整路径，如果使用符号链接，它将显示原始文件的实际路径：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">realpath sample.txt</span><br></pre></td></tr></table></figure>
 <p>可以强制它不跟随符号链接（即显示当前文件的路径）：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">realpath -s sample.txt</span><br></pre></td></tr></table></figure>
 <h1 id="友好显示文件大小"><a href="#友好显示文件大小" class="headerlink" title="友好显示文件大小"></a>友好显示文件大小</h1><p>查看文件/目录的大小并且输出我们看得懂的单位（例如<code>K</code>，<code>M</code>，<code>G</code>），<code>-h</code>是<code>--human-readable</code>的意思：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll -h</span><br></pre></td></tr></table></figure>
-<h1 id="拷贝文件-文件夹"><a href="#拷贝文件-文件夹" class="headerlink" title="拷贝文件/文件夹"></a>拷贝文件/文件夹</h1><p>将<code>test-3ddata</code>目录拷贝到上层<code>Data</code>目录下，<code>-r</code>命令是递归：</p>
+<h1 id="拷贝文件-文件夹"><a href="#拷贝文件-文件夹" class="headerlink" title="拷贝文件/文件夹"></a>拷贝文件/文件夹</h1><p>将<code>test-3ddata</code>目录拷贝到上层<code>Data</code>目录下，<code>-r</code>选项是递归复制，用于目录的复制操作：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp test-3ddata/ ../Data -r</span><br></pre></td></tr></table></figure>
 <h1 id="移动文件-文件夹"><a href="#移动文件-文件夹" class="headerlink" title="移动文件/文件夹"></a>移动文件/文件夹</h1><p>将<code>test-3ddata</code>目录移动到上层<code>Data</code>目录下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv test-3ddata/ ../Data/</span><br></pre></td></tr></table></figure>
@@ -355,12 +355,39 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -f gtc-input-f6cab9.lua gtcv3-f6cab9.converted.npz</span><br></pre></td></tr></table></figure>
 <p>删除名为<code>aaa</code>的目录：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf aaa</span><br></pre></td></tr></table></figure>
+<h1 id="更改文件权限"><a href="#更改文件权限" class="headerlink" title="更改文件权限"></a>更改文件权限</h1><p>在<code>Linux</code>文件系统当中，每个文件都与一个特定的所有者相关联，并且对不同的用户具有访问权限。</p>
+<p>用户类别可以是：</p>
+<ul>
+<li>所有者</li>
+<li>小组成员</li>
+<li>其他人（其他所有人）</li>
+</ul>
+<p><code>Linux</code>中的文件权限是以下三种类型：</p>
+<ul>
+<li>阅读(<code>r-4</code>)</li>
+<li>写(<code>w-2</code>)</li>
+<li>执行(<code>x-1</code>)</li>
+</ul>
+<p><code>chmod</code>命令的基本语法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod &lt;options&gt; &lt;permissions&gt; &lt;file name&gt;</span><br></pre></td></tr></table></figure>
+<p>权限设定字串的格式为：<code>[ugoa...][[+-=][rwx]...][,...]</code>。所有者<code>User</code>，简称<code>u</code>；所属组<code>Group</code>，简称<code>g</code>；其他用户<code>Other</code>，简称<code>o</code>。</p>
+<h2 id="数字表示法"><a href="#数字表示法" class="headerlink" title="数字表示法"></a>数字表示法</h2><p>要给用户完全权限（读+写+执行），为组提供读和执行权限（<code>4+1=5</code>），为其他人提供只读权限（<code>4</code>），可以使用以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 754 file_name</span><br></pre></td></tr></table></figure>
+<p>递归修改目录及其子目录和文件的权限，可以使用<code>-R</code>选项，递归地给目录及其所有子目录和文件的用户完整权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 777 directory_name</span><br></pre></td></tr></table></figure>
+<h2 id="符号表示法"><a href="#符号表示法" class="headerlink" title="符号表示法"></a>符号表示法</h2><p>给用户添加执行权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod u+x file_name</span><br></pre></td></tr></table></figure>
+<p>移除组的写权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod g-w file_name</span><br></pre></td></tr></table></figure>
+<p>设置所有人的权限为读+写+执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+rwx file_name</span><br></pre></td></tr></table></figure>
 <h1 id="清屏命令"><a href="#清屏命令" class="headerlink" title="清屏命令"></a>清屏命令</h1><p>刷新屏幕（本质上只是让终端显示页向后翻了一页，如果向上滚动屏幕还可以看到之前的操作信息）：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clear</span><br></pre></td></tr></table></figure>
 <p>完全刷新终端屏幕（之前的终端输入操作信息将都会被清空，整个命令过程速度有点慢，使用较少）：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reset</span><br></pre></td></tr></table></figure>
 <h1 id="监控GPU命令"><a href="#监控GPU命令" class="headerlink" title="监控GPU命令"></a>监控GPU命令</h1><p>监控<code>GPU</code>的使用情况：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+<h1 id="退出-END"><a href="#退出-END" class="headerlink" title="退出(END)"></a>退出(END)</h1><p>终端翻阅到最后出现<code>退出(END)</code>，按<code>q</code>键即可退出</p>
 <h1 id="周期性执行命令"><a href="#周期性执行命令" class="headerlink" title="周期性执行命令"></a>周期性执行命令</h1><p>每隔<code>10</code>秒执行监控<code>GPU</code>的使用情况：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n 10 nvidia-smi</span><br></pre></td></tr></table></figure>
 <h1 id="杀死进程"><a href="#杀死进程" class="headerlink" title="杀死进程"></a>杀死进程</h1><p>杀死<code>pid</code>为<code>88888</code>的进程</p>
@@ -420,18 +447,18 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -R jeeby</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h1 id="Pycharm远程连接服务器"><a href="#Pycharm远程连接服务器" class="headerlink" title="Pycharm远程连接服务器"></a>Pycharm远程连接服务器</h1><ul>
-<li>确保自己的Pycharm版本为professional版本</li>
-<li>创建远程连接：Tools—&gt;Deployment—&gt;Configuration—&gt;SFTP协议—&gt;配置服务器的IP、端口、用户名、密码等相关信息</li>
-<li>进行本地项目与远程项目之间的文件夹路径映射：在刚才的SFTP协议中选择Mappings添加映射，例如我们将本地的D:\workspace\PycharmProjects\Code路径映射到远端的/home/jeeby/Code路径</li>
-<li>设置文件自动上传（可选）：Tools—&gt;Deployment—&gt;Automatic Upload，默认是有修改就自动上传，可以在Tools—&gt;Deployment—&gt;Options中设置按了ctrl+s上传</li>
-<li>验证是否连接成功：Tools—&gt;Deployment—&gt;Browse Remote Host，如果能打开服务器文件目录说明连接成功</li>
-<li>配置Python解释器<ul>
-<li>查询服务器中所使用的的Python解释器路径：which python命令，注意虚拟环境的话需要先进入虚拟环境再使用前述命令</li>
-<li>本地Pycharm中配置Python解释器：File—&gt;Settings—&gt;Project—&gt;Project Interpreter—&gt;右上角设置图标Add—&gt;SSH Interpreter—&gt;Existing server configuration—&gt;Move—&gt;配置Interpreter和Sync folders（和前面配置的文件夹路径映射一致即可）</li>
+<h1 id="PyCharm远程连接服务器"><a href="#PyCharm远程连接服务器" class="headerlink" title="PyCharm远程连接服务器"></a>PyCharm远程连接服务器</h1><ul>
+<li>确保自己的<code>PyCharm</code>版本为<code>professional</code>版本</li>
+<li>创建远程连接：<code>Tools</code>—&gt;<code>Deployment</code>—&gt;<code>Configuration</code>—&gt;<code>SFTP</code>协议—&gt;配置服务器的<code>IP</code>、端口、用户名、密码等相关信息</li>
+<li>进行本地项目与远程项目之间的文件夹路径映射：在刚才的<code>SFTP</code>协议中选择<code>Mappings</code>添加映射，例如我们将本地的<code>D:\workspace\PyCharmProjects\Code</code>路径映射到远端的<code>/home/jeeby/Code</code>路径</li>
+<li>设置文件自动上传（可选）：<code>Tools</code>—&gt;<code>Deployment</code>—&gt;<code>Automatic Upload</code>，默认是有修改就自动上传，可以在<code>Tools</code>—&gt;<code>Deployment</code>—&gt;<code>Options</code>中设置按了<code>ctrl+s</code>上传</li>
+<li>验证是否连接成功：<code>Tools</code>—&gt;<code>Deployment</code>—&gt;<code>Browse Remote Host</code>，如果能打开服务器文件目录说明连接成功</li>
+<li>配置<code>Python</code>解释器<ul>
+<li>查询服务器中所使用的<code>Python</code>解释器路径：<code>which python</code>命令，注意虚拟环境的话需要先进入虚拟环境再使用前述命令</li>
+<li>本地<code>PyCharm</code>中配置<code>Python</code>解释器：<code>File</code>—&gt;<code>Settings</code>—&gt;<code>Project</code>—&gt;<code>Project Interpreter</code>—&gt;右上角设置图标<code>Add</code>—&gt;<code>SSH Interpreter</code>—&gt;<code>Existing server configuration</code>—&gt;<code>Move</code>—&gt;配置<code>Interpreter</code>和<code>Sync folders</code>（和前面配置的文件夹路径映射一致即可）</li>
 </ul>
 </li>
-<li>本地启动服务器终端：Tools—&gt;Start SSH session</li>
+<li>本地启动服务器终端：<code>Tools</code>—&gt;<code>Start SSH session</code></li>
 </ul>
 <h1 id="VIM编辑器使用"><a href="#VIM编辑器使用" class="headerlink" title="VIM编辑器使用"></a>VIM编辑器使用</h1><ul>
 <li>使用<code>vim</code>命令进入编辑器，例如编辑<code>vim main.py</code>来编辑<code>main.py</code>文件</li>
@@ -443,7 +470,7 @@
 </ul>
 </li>
 </ul>
-<p>Tips：可以在按了<code>Esc</code>键之后，按<code>shift+zz</code>直接退出，这是最便捷的方式</p>
+<p><code>Tips</code>：可以在按了<code>Esc</code>键之后，按<code>shift+zz</code>直接退出，这是最便捷的方式</p>
 
     </div>
 
