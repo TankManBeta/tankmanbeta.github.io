@@ -200,6 +200,16 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod g-w file_name</span><br></pre></td></tr></table></figure>
 <p>设置所有人的权限为读+写+执行：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod a+rwx file_name</span><br></pre></td></tr></table></figure>
+<h1 id="解压文件"><a href="#解压文件" class="headerlink" title="解压文件"></a>解压文件</h1><p>对于<code>.zip</code>文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">unzip filename.zip</span><br></pre></td></tr></table></figure>
+<p>对于<code>.tar.gz</code>文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tar -xzf filename.tar.gz</span><br></pre></td></tr></table></figure>
+<p>对于<code>.tar.bz2</code>文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -xjf filename.tar.bz2</span><br></pre></td></tr></table></figure>
+<p>对于<code>.rar</code>文件（需要先安装<code>unrar</code>）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install unrar</span><br><span class="line">unrar x filename.rar</span><br></pre></td></tr></table></figure>
+<p>对于<code>.7z</code>文件（需要先安装<code>p7zip-full</code>）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install p7zip-full</span><br><span class="line">7z x filename.7z</span><br></pre></td></tr></table></figure>
 <h1 id="清屏命令"><a href="#清屏命令" class="headerlink" title="清屏命令"></a>清屏命令</h1><p>刷新屏幕（本质上只是让终端显示页向后翻了一页，如果向上滚动屏幕还可以看到之前的操作信息）：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">clear</span><br></pre></td></tr></table></figure>
 <p>完全刷新终端屏幕（之前的终端输入操作信息将都会被清空，整个命令过程速度有点慢，使用较少）：</p>
@@ -760,6 +770,148 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
       </tags>
   </entry>
   <entry>
+    <title>项目部署总结</title>
+    <url>/2021/10/09/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下毕设项目部署上线遇见的一些问题</p>
+<a id="more"></a>
+<h1 id="购买服务器"><a href="#购买服务器" class="headerlink" title="购买服务器"></a>购买服务器</h1><p>阿里云轻量应用服务器，装的是<code>CentOS7.3</code></p>
+<h1 id="设置服务器密码"><a href="#设置服务器密码" class="headerlink" title="设置服务器密码"></a>设置服务器密码</h1><h1 id="切换超级用户"><a href="#切换超级用户" class="headerlink" title="切换超级用户"></a>切换超级用户</h1><p>貌似需要使用<code>su -</code></p>
+<h1 id="系统升级"><a href="#系统升级" class="headerlink" title="系统升级"></a>系统升级</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum update</span><br></pre></td></tr></table></figure>
+<h1 id="下载python环境"><a href="#下载python环境" class="headerlink" title="下载python环境"></a>下载python环境</h1><ol>
+<li>下载：<code>wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz</code></li>
+<li>解压：<code>tar Jxvf  Python-3.7.0.tar.xz</code></li>
+<li>创建一个文件夹存放<code>python3.7.0</code>程序：<code>mkdir /usr/lib/Python3.7.0</code></li>
+<li>设置配置文件：<code>./configure --prefix=/usr/lib/python3.7.0</code></li>
+<li>编译安装：<code>make &amp;&amp; make install</code></li>
+<li>建立软连接，使用已安装的<code>python3.7.0</code>：<code>ln -sb /usr/lib/python3.7.0/bin/python3.7 /usr/bin/python3</code></li>
+</ol>
+<p>报错：<code>zipimport.ZipImportError: can’t decompress data; zlib not available make: *** [install] Error 1</code></p>
+<p>解决方案：<code>yum -y install zlib*</code></p>
+<p>报错：<code>ModuleNotFoundError: No module named &#39;_ctypes&#39;</code></p>
+<p>解决方案：<code>yum install libffi-devel</code></p>
+<h1 id="安装虚拟环境"><a href="#安装虚拟环境" class="headerlink" title="安装虚拟环境"></a>安装虚拟环境</h1><p><code>pip3 install virtualenv</code></p>
+<p>建立软连接：<code>ln -s /usr/local/python3/bin/virtualenv /usr/bin/virtualenv</code></p>
+<p>建立目录，管理各虚拟环境：<code>mkdir my_env</code></p>
+<p>建立虚拟环境：<code>virtualenv graduation</code></p>
+<p>切换到<code>bin</code>目录下激活虚拟环境：<code>source activate</code></p>
+<p>取消激活：<code>deactivate</code></p>
+<h1 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/pypa/pip/archive/9.0.1.tar.gz </span><br><span class="line">tar -zvxf 9.0.1.tar.gz  # 解压文件 </span><br><span class="line">cd pip-9.0.1</span><br><span class="line">python3 setup.py install # 使用 Python3 安装</span><br></pre></td></tr></table></figure>
+<p>创建链接</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ln -s /usr/local/python3/bin/pip /usr/bin/pip3</span><br></pre></td></tr></table></figure>
+<p>升级<code>pip</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install --upgrade pip</span><br></pre></td></tr></table></figure>
+<h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><p>下载<code>mysql</code>的<code>repo</code>源</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;repo.mysql.com&#x2F;mysql-community-release-el7-5.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p>安装<code>mysql-community-release-el7-5.noarch.rpm</code>包</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -ivh mysql-community-release-el7-5.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p>安装<code>MYSQL</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo yum install -y  mysql-server</span><br></pre></td></tr></table></figure>
+<p> 更改<code>MYSQL</code>用户权限：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo chown -R root:root &#x2F;var&#x2F;lib&#x2F;mysql</span><br></pre></td></tr></table></figure>
+<p>重启服务：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart mysql.service</span><br></pre></td></tr></table></figure>
+<p>登录，并修改密码：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -u root</span><br><span class="line">mysql &gt; use mysql;</span><br><span class="line">mysql &gt; update user set password=password(&#x27;123456&#x27;) where user=&#x27;root&#x27;;</span><br><span class="line">mysql &gt; flush privileges;</span><br><span class="line">mysql &gt; exit;</span><br></pre></td></tr></table></figure>
+<h1 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h1><p>下载对应当前系统版本的<code>nginx</code>包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p> 建立<code>nginx</code>的<code>yum</code>仓库（默认<code>yum</code>是没有<code>nginx</code>的）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -ivh nginx-release-centos-7-0.el7.ngx.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p>下载并安装<code>nginx</code></p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
+<p><code>nginx</code>启动</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl start nginx.service</span><br></pre></td></tr></table></figure>
+<p>配置<code>nginx</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">server</span> &#123;</span><br><span class="line">    <span class="string">listen</span>       <span class="number">80</span><span class="string">;</span></span><br><span class="line">    <span class="string">server_name</span> <span class="number">120.27</span><span class="number">.209</span><span class="number">.102</span><span class="string">;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#access_log  /var/log/nginx/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">location</span> <span class="string">/</span> &#123;</span><br><span class="line">        <span class="comment">#root   /home/admin/my_projects/graduation;</span></span><br><span class="line">        <span class="comment">#index  index.html index.htm;</span></span><br><span class="line">		<span class="string">proxy_pass</span> <span class="string">http://127.0.0.1:5000;</span> <span class="comment"># 这里是指向 gunicorn host 的服务地址</span></span><br><span class="line">        <span class="string">proxy_set_header</span> <span class="string">Host</span> <span class="string">$host;</span></span><br><span class="line">        <span class="string">proxy_set_header</span> <span class="string">X-Forwarded-For</span> <span class="string">$proxy_add_x_forwarded_for;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#error_page  404              /404.html;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="string">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  <span class="string">/50x.html;</span></span><br><span class="line">    <span class="string">location</span> <span class="string">=</span> <span class="string">/50x.html</span> &#123;</span><br><span class="line">        <span class="string">root</span>   <span class="string">/usr/share/nginx/html;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># proxy the PHP scripts to Apache listening on 127.0.0.1:80</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#location ~ \.php$ &#123;</span></span><br><span class="line">    <span class="comment">#    proxy_pass   http://127.0.0.1;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#location ~ \.php$ &#123;</span></span><br><span class="line">    <span class="comment">#    root           html;</span></span><br><span class="line">    <span class="comment">#    fastcgi_pass   127.0.0.1:9000;</span></span><br><span class="line">    <span class="comment">#    fastcgi_index  index.php;</span></span><br><span class="line">    <span class="comment">#    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span></span><br><span class="line">    <span class="comment">#    include        fastcgi_params;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># deny access to .htaccess files, if Apache&#x27;s document root</span></span><br><span class="line">    <span class="comment"># concurs with nginx&#x27;s one</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#location ~ /\.ht &#123;</span></span><br><span class="line">    <span class="comment">#    deny  all;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="上传本地flask项目"><a href="#上传本地flask项目" class="headerlink" title="上传本地flask项目"></a>上传本地flask项目</h1><p>我使用的是<code>Xftp 7</code>，一开始准备使用<code>git</code>直接在<code>GitHub</code>上下载，但是速度太慢</p>
+<h1 id="安装需要依赖的库"><a href="#安装需要依赖的库" class="headerlink" title="安装需要依赖的库"></a>安装需要依赖的库</h1><ol>
+<li><p>使用虚拟环境</p>
+</li>
+<li><p>切换到项目路径下</p>
+</li>
+<li><p>从<code>requirements.txt</code>安装</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br></pre></td></tr></table></figure>
+<h1 id="新建项目数据库"><a href="#新建项目数据库" class="headerlink" title="新建项目数据库"></a>新建项目数据库</h1></li>
+<li><p>登陆<code>mysql</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure></li>
+<li><p>创建与文件名相同的数据库</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">create database graduation;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>使用创建好的数据库</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> use graduation;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>导入数据库文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"><span class="built_in">source</span> ./graduation.sql;</span></span><br></pre></td></tr></table></figure>
+<h1 id="安装gunicorn"><a href="#安装gunicorn" class="headerlink" title="安装gunicorn"></a>安装gunicorn</h1></li>
+<li><p>安装<code>gunicorn</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip3 install gunicorn</span><br></pre></td></tr></table></figure></li>
+<li><p>启动</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gunicorn -w 4 -b 0.0.0.0:8080 yourpyfilename:yourappname --log-level DEBUG</span><br><span class="line">gunicorn -w 4 -b 127.0.0.1:5000 app:app --log-level DEBUG</span><br></pre></td></tr></table></figure></li>
+<li><p>获取<code>gunicorn</code>进程树</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pstree -ap|grep gunicorn</span><br></pre></td></tr></table></figure></li>
+<li><p>终止任务</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 pid</span><br></pre></td></tr></table></figure>
+<h1 id="selenium的使用"><a href="#selenium的使用" class="headerlink" title="selenium的使用"></a>selenium的使用</h1></li>
+<li><p>下载<code>chrome</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm</span><br></pre></td></tr></table></figure></li>
+<li><p>安装<code>chrome</code>依赖的包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install libX11 libXcursor libXdamage libXext libXcomposite libXi libXrandr gtk3 libappindicator-gtk3 xdg-utils libXScrnSaver liberation-fonts</span><br></pre></td></tr></table></figure></li>
+<li><p>安装<code>chrome</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -ivh google-chrome-stable_current_x86_64.rpm</span><br></pre></td></tr></table></figure></li>
+<li><p>查看<code>chrome</code>是否安装完成</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">google-chrome --version</span><br></pre></td></tr></table></figure></li>
+<li><p>下载<code>chrome</code>对应的<code>chromedriver</code>，下载地址<a href="http://npm.taobao.org/mirrors/chromedriver/">http://npm.taobao.org/mirrors/chromedriver/</a></p>
+</li>
+<li><p>安装完成之后上传至服务器</p>
+</li>
+</ol>
+<p>一些报错：</p>
+<ol>
+<li><p><code>WEBDRIVEREXCEPTION: MESSAGE: &#39;CHROMEDRIVER&#39; EXECUTABLE MAY HAVE WRONG PERMISSIONS.</code></p>
+<p>我的情况是没有执行权限，其他可能性见<a href="https://www.freesion.com/article/25041327554/">这里</a></p>
+<p>解决方案：</p>
+<ol>
+<li><p>在<code>chromedriver</code>所在的路径下查看执行权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure></li>
+<li><p>赋予执行权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod -R 777 chromedriver</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p><code>selenium WebDriverException: Message: unknown error: DevToolsActivePort file doesn&#39;t exist</code></p>
+</li>
+<li><p><code>WebDriverException: Message: chrome not reachable</code></p>
+</li>
+</ol>
+<h1 id="使用screen"><a href="#使用screen" class="headerlink" title="使用screen"></a>使用screen</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install screen</span><br><span class="line">screen -S graduation</span><br></pre></td></tr></table></figure>
+<p>恢复会话</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -r graduation</span><br></pre></td></tr></table></figure>
+<h1 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h1><ol>
+<li><p>首先去阿里云购买域名</p>
+</li>
+<li><p>工信部实名认证</p>
+</li>
+<li><p>域名解析</p>
+</li>
+<li><p>如果觉得域名后面带端口号不太美观，可以设置一下</p>
+<ol>
+<li><p>选择添加新记录</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220116122249.png" alt=""></p>
+</li>
+<li><p>记录类型选择隐性URL，主机记录就是想要设置的名字，记录值填写<a href="http://域名:端口号">http://域名:端口号</a></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220116122426.png" alt=""></p>
+</li>
+<li><p>浏览器中输入主机记录的值即可访问</p>
+</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>项目部署</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>大语言模型</title>
     <url>/2024/04/09/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>了解一下大语言模型的相关内容。</p>
@@ -1023,148 +1175,6 @@ file and the HEAD:</code>报错，则需要加上<code>-f</code>命令：</p>
         <tag>总结</tag>
         <tag>机器学习</tag>
         <tag>大语言模型</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>项目部署总结</title>
-    <url>/2021/10/09/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下毕设项目部署上线遇见的一些问题</p>
-<a id="more"></a>
-<h1 id="购买服务器"><a href="#购买服务器" class="headerlink" title="购买服务器"></a>购买服务器</h1><p>阿里云轻量应用服务器，装的是<code>CentOS7.3</code></p>
-<h1 id="设置服务器密码"><a href="#设置服务器密码" class="headerlink" title="设置服务器密码"></a>设置服务器密码</h1><h1 id="切换超级用户"><a href="#切换超级用户" class="headerlink" title="切换超级用户"></a>切换超级用户</h1><p>貌似需要使用<code>su -</code></p>
-<h1 id="系统升级"><a href="#系统升级" class="headerlink" title="系统升级"></a>系统升级</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum update</span><br></pre></td></tr></table></figure>
-<h1 id="下载python环境"><a href="#下载python环境" class="headerlink" title="下载python环境"></a>下载python环境</h1><ol>
-<li>下载：<code>wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz</code></li>
-<li>解压：<code>tar Jxvf  Python-3.7.0.tar.xz</code></li>
-<li>创建一个文件夹存放<code>python3.7.0</code>程序：<code>mkdir /usr/lib/Python3.7.0</code></li>
-<li>设置配置文件：<code>./configure --prefix=/usr/lib/python3.7.0</code></li>
-<li>编译安装：<code>make &amp;&amp; make install</code></li>
-<li>建立软连接，使用已安装的<code>python3.7.0</code>：<code>ln -sb /usr/lib/python3.7.0/bin/python3.7 /usr/bin/python3</code></li>
-</ol>
-<p>报错：<code>zipimport.ZipImportError: can’t decompress data; zlib not available make: *** [install] Error 1</code></p>
-<p>解决方案：<code>yum -y install zlib*</code></p>
-<p>报错：<code>ModuleNotFoundError: No module named &#39;_ctypes&#39;</code></p>
-<p>解决方案：<code>yum install libffi-devel</code></p>
-<h1 id="安装虚拟环境"><a href="#安装虚拟环境" class="headerlink" title="安装虚拟环境"></a>安装虚拟环境</h1><p><code>pip3 install virtualenv</code></p>
-<p>建立软连接：<code>ln -s /usr/local/python3/bin/virtualenv /usr/bin/virtualenv</code></p>
-<p>建立目录，管理各虚拟环境：<code>mkdir my_env</code></p>
-<p>建立虚拟环境：<code>virtualenv graduation</code></p>
-<p>切换到<code>bin</code>目录下激活虚拟环境：<code>source activate</code></p>
-<p>取消激活：<code>deactivate</code></p>
-<h1 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/pypa/pip/archive/9.0.1.tar.gz </span><br><span class="line">tar -zvxf 9.0.1.tar.gz  # 解压文件 </span><br><span class="line">cd pip-9.0.1</span><br><span class="line">python3 setup.py install # 使用 Python3 安装</span><br></pre></td></tr></table></figure>
-<p>创建链接</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ln -s /usr/local/python3/bin/pip /usr/bin/pip3</span><br></pre></td></tr></table></figure>
-<p>升级<code>pip</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install --upgrade pip</span><br></pre></td></tr></table></figure>
-<h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><p>下载<code>mysql</code>的<code>repo</code>源</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;repo.mysql.com&#x2F;mysql-community-release-el7-5.noarch.rpm</span><br></pre></td></tr></table></figure>
-<p>安装<code>mysql-community-release-el7-5.noarch.rpm</code>包</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -ivh mysql-community-release-el7-5.noarch.rpm</span><br></pre></td></tr></table></figure>
-<p>安装<code>MYSQL</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo yum install -y  mysql-server</span><br></pre></td></tr></table></figure>
-<p> 更改<code>MYSQL</code>用户权限：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo chown -R root:root &#x2F;var&#x2F;lib&#x2F;mysql</span><br></pre></td></tr></table></figure>
-<p>重启服务：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart mysql.service</span><br></pre></td></tr></table></figure>
-<p>登录，并修改密码：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -u root</span><br><span class="line">mysql &gt; use mysql;</span><br><span class="line">mysql &gt; update user set password=password(&#x27;123456&#x27;) where user=&#x27;root&#x27;;</span><br><span class="line">mysql &gt; flush privileges;</span><br><span class="line">mysql &gt; exit;</span><br></pre></td></tr></table></figure>
-<h1 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h1><p>下载对应当前系统版本的<code>nginx</code>包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm</span><br></pre></td></tr></table></figure>
-<p> 建立<code>nginx</code>的<code>yum</code>仓库（默认<code>yum</code>是没有<code>nginx</code>的）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -ivh nginx-release-centos-7-0.el7.ngx.noarch.rpm</span><br></pre></td></tr></table></figure>
-<p>下载并安装<code>nginx</code></p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
-<p><code>nginx</code>启动</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl start nginx.service</span><br></pre></td></tr></table></figure>
-<p>配置<code>nginx</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">server</span> &#123;</span><br><span class="line">    <span class="string">listen</span>       <span class="number">80</span><span class="string">;</span></span><br><span class="line">    <span class="string">server_name</span> <span class="number">120.27</span><span class="number">.209</span><span class="number">.102</span><span class="string">;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#access_log  /var/log/nginx/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">location</span> <span class="string">/</span> &#123;</span><br><span class="line">        <span class="comment">#root   /home/admin/my_projects/graduation;</span></span><br><span class="line">        <span class="comment">#index  index.html index.htm;</span></span><br><span class="line">		<span class="string">proxy_pass</span> <span class="string">http://127.0.0.1:5000;</span> <span class="comment"># 这里是指向 gunicorn host 的服务地址</span></span><br><span class="line">        <span class="string">proxy_set_header</span> <span class="string">Host</span> <span class="string">$host;</span></span><br><span class="line">        <span class="string">proxy_set_header</span> <span class="string">X-Forwarded-For</span> <span class="string">$proxy_add_x_forwarded_for;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#error_page  404              /404.html;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="string">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  <span class="string">/50x.html;</span></span><br><span class="line">    <span class="string">location</span> <span class="string">=</span> <span class="string">/50x.html</span> &#123;</span><br><span class="line">        <span class="string">root</span>   <span class="string">/usr/share/nginx/html;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># proxy the PHP scripts to Apache listening on 127.0.0.1:80</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#location ~ \.php$ &#123;</span></span><br><span class="line">    <span class="comment">#    proxy_pass   http://127.0.0.1;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#location ~ \.php$ &#123;</span></span><br><span class="line">    <span class="comment">#    root           html;</span></span><br><span class="line">    <span class="comment">#    fastcgi_pass   127.0.0.1:9000;</span></span><br><span class="line">    <span class="comment">#    fastcgi_index  index.php;</span></span><br><span class="line">    <span class="comment">#    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span></span><br><span class="line">    <span class="comment">#    include        fastcgi_params;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># deny access to .htaccess files, if Apache&#x27;s document root</span></span><br><span class="line">    <span class="comment"># concurs with nginx&#x27;s one</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#location ~ /\.ht &#123;</span></span><br><span class="line">    <span class="comment">#    deny  all;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="上传本地flask项目"><a href="#上传本地flask项目" class="headerlink" title="上传本地flask项目"></a>上传本地flask项目</h1><p>我使用的是<code>Xftp 7</code>，一开始准备使用<code>git</code>直接在<code>GitHub</code>上下载，但是速度太慢</p>
-<h1 id="安装需要依赖的库"><a href="#安装需要依赖的库" class="headerlink" title="安装需要依赖的库"></a>安装需要依赖的库</h1><ol>
-<li><p>使用虚拟环境</p>
-</li>
-<li><p>切换到项目路径下</p>
-</li>
-<li><p>从<code>requirements.txt</code>安装</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br></pre></td></tr></table></figure>
-<h1 id="新建项目数据库"><a href="#新建项目数据库" class="headerlink" title="新建项目数据库"></a>新建项目数据库</h1></li>
-<li><p>登陆<code>mysql</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure></li>
-<li><p>创建与文件名相同的数据库</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">create database graduation;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>使用创建好的数据库</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> use graduation;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>导入数据库文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"><span class="built_in">source</span> ./graduation.sql;</span></span><br></pre></td></tr></table></figure>
-<h1 id="安装gunicorn"><a href="#安装gunicorn" class="headerlink" title="安装gunicorn"></a>安装gunicorn</h1></li>
-<li><p>安装<code>gunicorn</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip3 install gunicorn</span><br></pre></td></tr></table></figure></li>
-<li><p>启动</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gunicorn -w 4 -b 0.0.0.0:8080 yourpyfilename:yourappname --log-level DEBUG</span><br><span class="line">gunicorn -w 4 -b 127.0.0.1:5000 app:app --log-level DEBUG</span><br></pre></td></tr></table></figure></li>
-<li><p>获取<code>gunicorn</code>进程树</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pstree -ap|grep gunicorn</span><br></pre></td></tr></table></figure></li>
-<li><p>终止任务</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 pid</span><br></pre></td></tr></table></figure>
-<h1 id="selenium的使用"><a href="#selenium的使用" class="headerlink" title="selenium的使用"></a>selenium的使用</h1></li>
-<li><p>下载<code>chrome</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm</span><br></pre></td></tr></table></figure></li>
-<li><p>安装<code>chrome</code>依赖的包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install libX11 libXcursor libXdamage libXext libXcomposite libXi libXrandr gtk3 libappindicator-gtk3 xdg-utils libXScrnSaver liberation-fonts</span><br></pre></td></tr></table></figure></li>
-<li><p>安装<code>chrome</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -ivh google-chrome-stable_current_x86_64.rpm</span><br></pre></td></tr></table></figure></li>
-<li><p>查看<code>chrome</code>是否安装完成</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">google-chrome --version</span><br></pre></td></tr></table></figure></li>
-<li><p>下载<code>chrome</code>对应的<code>chromedriver</code>，下载地址<a href="http://npm.taobao.org/mirrors/chromedriver/">http://npm.taobao.org/mirrors/chromedriver/</a></p>
-</li>
-<li><p>安装完成之后上传至服务器</p>
-</li>
-</ol>
-<p>一些报错：</p>
-<ol>
-<li><p><code>WEBDRIVEREXCEPTION: MESSAGE: &#39;CHROMEDRIVER&#39; EXECUTABLE MAY HAVE WRONG PERMISSIONS.</code></p>
-<p>我的情况是没有执行权限，其他可能性见<a href="https://www.freesion.com/article/25041327554/">这里</a></p>
-<p>解决方案：</p>
-<ol>
-<li><p>在<code>chromedriver</code>所在的路径下查看执行权限</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure></li>
-<li><p>赋予执行权限</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod -R 777 chromedriver</span><br></pre></td></tr></table></figure></li>
-</ol>
-</li>
-<li><p><code>selenium WebDriverException: Message: unknown error: DevToolsActivePort file doesn&#39;t exist</code></p>
-</li>
-<li><p><code>WebDriverException: Message: chrome not reachable</code></p>
-</li>
-</ol>
-<h1 id="使用screen"><a href="#使用screen" class="headerlink" title="使用screen"></a>使用screen</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install screen</span><br><span class="line">screen -S graduation</span><br></pre></td></tr></table></figure>
-<p>恢复会话</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">screen -r graduation</span><br></pre></td></tr></table></figure>
-<h1 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h1><ol>
-<li><p>首先去阿里云购买域名</p>
-</li>
-<li><p>工信部实名认证</p>
-</li>
-<li><p>域名解析</p>
-</li>
-<li><p>如果觉得域名后面带端口号不太美观，可以设置一下</p>
-<ol>
-<li><p>选择添加新记录</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220116122249.png" alt=""></p>
-</li>
-<li><p>记录类型选择隐性URL，主机记录就是想要设置的名字，记录值填写<a href="http://域名:端口号">http://域名:端口号</a></p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220116122426.png" alt=""></p>
-</li>
-<li><p>浏览器中输入主机记录的值即可访问</p>
-</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>项目部署</tag>
       </tags>
   </entry>
   <entry>
