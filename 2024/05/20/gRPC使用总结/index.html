@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//unpkg.com/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="前言记录一下gRPC的使用方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gRPC使用总结">
+<meta property="og:url" content="http://example.com/2024/05/20/gRPC%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="木霈玖的博客">
+<meta property="og:description" content="前言记录一下gRPC的使用方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-20T10:06:50.000Z">
+<meta property="article:modified_time" content="2024-05-22T15:25:41.345Z">
+<meta property="article:author" content="木霈玖">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="gRPC">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/05/20/gRPC%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>gRPC使用总结 | 木霈玖的博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">木霈玖的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Protobuf%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">Protobuf的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">定义消息类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">数值类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="nav-number">3.3.</span> <span class="nav-text">默认值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.</span> <span class="nav-text">嵌套类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Protobuf%E6%96%87%E4%BB%B6%E7%BC%96%E8%AF%91"><span class="nav-number">3.5.</span> <span class="nav-text">Protobuf文件编译</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gRPC%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">gRPC示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">4.1.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="nav-number">4.2.</span> <span class="nav-text">创建服务端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="nav-number">4.3.</span> <span class="nav-text">更新客户端代码</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">木霈玖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/20/gRPC%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="木霈玖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木霈玖的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          gRPC使用总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-20 18:06:50" itemprop="dateCreated datePublished" datetime="2024-05-20T18:06:50+08:00">2024-05-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2024-05-22 23:25:41" itemprop="dateModified" datetime="2024-05-22T23:25:41+08:00">2024-05-22</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">总结</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下<code>gRPC</code>的使用方法。</p>
+<a id="more"></a>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p><code>gRPC</code>基于以下理念：定义一个服务，指定其能够被远程调用的方法（包含参数和返回类型）。在服务端实现这个接口，并运行一个 <code>gRPC</code>服务器来处理客户端调用。在客户端拥有一个存根（<code>Stub</code>），提供与服务端相同的方法。<br>在<code>gRPC</code>里客户端应用可以像调用本地对象一样直接调用另一台不同的机器上服务端应用的方法，使得我们能够更容易地创建分布式应用和服务。</p>
+<p><code>gRPC</code>默认使用<code>protocol buffers</code>，这是<code>Google</code>开源的一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或<code>RPC</code>数据交换格式。</p>
+<h1 id="Protobuf的使用"><a href="#Protobuf的使用" class="headerlink" title="Protobuf的使用"></a>Protobuf的使用</h1><h2 id="定义消息类型"><a href="#定义消息类型" class="headerlink" title="定义消息类型"></a>定义消息类型</h2><p>假设你想定义一个“搜索请求”的消息格式，每一个请求含有一个查询字符串、你感兴趣的查询结果所在的页数，以及每一页多少条查询结果。可以采用如下的方式来定义消息类型的<code>.proto</code>文件：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;  <span class="comment">// 声明使用proto3语法</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">SearchRequest</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> query = <span class="number">1</span>;  <span class="comment">// 每个字段都要指定数据类型</span></span><br><span class="line">  <span class="built_in">int32</span> page_number = <span class="number">2</span>; <span class="comment">// 这里的数字2是标识符，最小的标识号可以从1开始，最大到2^29-1，不可以使用其中的[19000－19999]</span></span><br><span class="line">  <span class="built_in">int32</span> result_per_page = <span class="number">3</span>; <span class="comment">// 这里是注释，使用//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一行指定正在使用<code>proto3</code>语法：如果不指定，编译器会使用<code>proto2</code>。这个指定语法必须是文件的非空非注释的第一行。</li>
+<li><code>SearchRequest</code>消息格式有三个字段，在消息中承载的数据分别对应于每一个字段。其中每个字段都有一个名字和一种类型。向<code>.proto</code>文件添加注释，可以使用<code>C/C++/JAVA</code>风格的双斜杠语法格式。</li>
+<li>在消息体中，每个字段都有唯一的一个数字标识符。这些标识符用来在消息的二进制格式中识别各个字段，一旦开始使用就不能再改变。<ul>
+<li><code>[1,15]</code>之内的标识号在编码的时候会占用一个字节。<code>[16,2047]</code>之内的标识号则占用<code>2</code>个字节。所以应该为那些频繁出现的消息元素保留<code>[1,15]</code>之内的标识号。切记：要为将来有可能添加的、频繁出现的标识号预留一些标识号。</li>
+</ul>
+</li>
+</ul>
+<h2 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h2><p>一个标量消息字段可以含有一个如下的类型，该表格展示了定义于<code>.proto</code>文件中的类型，以及与之对应的、在自动生成的访问类中定义的类型：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">.proto Type</th>
+<th style="text-align:center">Notes</th>
+<th style="text-align:center">C++ Type</th>
+<th style="text-align:center">Java Type</th>
+<th style="text-align:center">Python Type[2]</th>
+<th style="text-align:center">Go Type</th>
+<th style="text-align:center">Ruby Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">float</td>
+<td style="text-align:center">float64</td>
+<td style="text-align:center">Float</td>
+</tr>
+<tr>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">使用变长编码，对于负值的效率很低，如果你的域有可能有负值，请使用sint64替代</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">使用变长编码</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">使用变长编码</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">Bignum</td>
+</tr>
+<tr>
+<td style="text-align:center">sint32</td>
+<td style="text-align:center">使用变长编码，这些编码在负值时比int32高效的多</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">sint64</td>
+<td style="text-align:center">使用变长编码，有符号的整型值，编码时比通常的int64高效</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">Bignum</td>
+</tr>
+<tr>
+<td style="text-align:center">fixed32</td>
+<td style="text-align:center">总是4个字节，如果数值总是大于228，这个类型会比uint32高效</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">fixed64</td>
+<td style="text-align:center">总是8个字节，如果数值总是大于256，这个类型会比uint64高效</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">Bignum</td>
+</tr>
+<tr>
+<td style="text-align:center">sfixed32</td>
+<td style="text-align:center">总是4个字节</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">sfixed64</td>
+<td style="text-align:center">总是8个字节</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">Bignum</td>
+</tr>
+<tr>
+<td style="text-align:center">bool</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">TrueClass/FalseClass</td>
+</tr>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center">一个字符串必须是UTF-8编码或者7-bit ASCII编码的文本</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">str/unicode</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">String(UTF-8)</td>
+</tr>
+<tr>
+<td style="text-align:center">bytes</td>
+<td style="text-align:center">可能包含任意顺序的字节数据</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">ByteString</td>
+<td style="text-align:center">str</td>
+<td style="text-align:center">[]byte</td>
+<td style="text-align:center">String(ASCII-8BIT)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h2><p>当一个消息被解析的时候，如果被编码的信息不包含一个特定的<code>singular</code>元素，被解析的对象锁对应的域被设置位一个默认值，对于不同类型指定如下：</p>
+<ul>
+<li>对于<code>strings</code>，默认是一个空<code>string</code></li>
+<li>对于<code>bytes</code>，默认是一个空的<code>bytes</code></li>
+<li>对于<code>bools</code>，默认是<code>false</code></li>
+<li>对于数值类型，默认是<code>0</code></li>
+<li>对于枚举，默认是第一个定义的枚举值，必须为<code>0</code></li>
+<li>对于消息类型（<code>message</code>），域没有被设置，确切的消息是根据语言确定的</li>
+<li>对于可重复域的默认值是空（通常情况下是对应语言中空列表）</li>
+</ul>
+<h2 id="嵌套类型"><a href="#嵌套类型" class="headerlink" title="嵌套类型"></a>嵌套类型</h2><p>你可以在其他消息类型中定义、使用消息类型，在下面的例子中，<code>Result</code>消息就定义在<code>SearchResponse</code>消息内，如：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">SearchResponse</span> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">message</span> <span class="title">Result</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> url = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">string</span> title = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">repeated</span> <span class="built_in">string</span> snippets = <span class="number">3</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">repeated</span> Result results = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>message SearchResponse</code>中，定义了嵌套消息<code>Result</code>，并用来定义<code>SearchResponse</code>消息中的<code>results</code>域。</p>
+<h2 id="Protobuf文件编译"><a href="#Protobuf文件编译" class="headerlink" title="Protobuf文件编译"></a>Protobuf文件编译</h2><p>当用<code>protocol buffer</code>编译器来运行<code>.proto</code>文件时，编译器将生成所选择语言的代码，这些代码可以操作在<code>.proto</code>文件中定义的消息类型，包括获取、设置字段值，将消息序列化到一个输出流中，以及从一个输入流中解析消息。</p>
+<ul>
+<li>对<code>C++</code>来说，编译器会为每个<code>.proto</code>文件生成一个<code>.h</code>文件和一个<code>.cc</code>文件，<code>.proto</code>文件中的每一个消息有一个对应的类。</li>
+<li>对<code>Java</code>来说，编译器为每一个消息类型生成一个<code>.java</code>文件，以及一个特殊的<code>Builder</code>类（该类是用来创建消息类接口的）。</li>
+<li>对<code>Python</code>来说，有点不太一样——<code>Python</code>编译器为<code>.proto</code>文件中的每个消息类型生成一个含有静态描述符的模块，该模块与一个元类（<code>metaclass</code>）在运行时（<code>runtime</code>）被用来创建所需的Python数据访问类。</li>
+<li>对<code>go</code>来说，编译器会为每个消息类型生成一个<code>.pd.go</code>文件。</li>
+<li>对<code>Ruby</code>来说，编译器会为每个消息类型生成一个<code>.rb</code>文件。</li>
+<li>对<code>javaNano</code>来说，编译器输出类似于<code>.java</code>的文件但是没有<code>Builder</code>类。</li>
+<li>对<code>Objective-C</code>来说，编译器会为每个消息类型生成一个<code>pbobjc.h</code>文件和<code>pbobjc.m</code>文件，<code>.proto</code>文件中的每一个消息有一个对应的类。</li>
+<li>对<code>C#</code>来说，编译器会为每个消息类型生成了一个<code>.cs</code>文件，<code>.proto</code>文件中的每一个消息有一个对应的类。</li>
+</ul>
+<h1 id="gRPC示例"><a href="#gRPC示例" class="headerlink" title="gRPC示例"></a>gRPC示例</h1><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>我们采用<code>Python</code>编译如下的<code>proto</code>文件：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文件名 hello.proto</span></span><br><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> hello;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The greeting service definition.</span></span><br><span class="line"><span class="class"><span class="keyword">service</span> <span class="title">Greeter</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Sends a greeting</span></span><br><span class="line">  <span class="function"><span class="keyword">rpc</span> SayHello (HelloRequest) <span class="keyword">returns</span> (HelloReply) </span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The request message containing the user&#x27;s name.</span></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">HelloRequest</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> name = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The response message containing the greetings</span></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">HelloReply</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> <span class="class"><span class="keyword">message</span> = 1;</span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>采取的命令为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m grpc_tools.protoc -I./ --python_out=. --grpc_python_out=. ./hello.proto</span><br></pre></td></tr></table></figure>
+<p>生成了两个文件：</p>
+<ul>
+<li><code>hello_pb2.py</code>：此文件包含生成的<code>request(HelloRequest)</code>和<code>response(HelloReply)</code>类。</li>
+<li><code>hello_pb2_grpc.py</code>：此文件包含生成的客户端<code>(GreeterStub)</code>和服务端<code>(GreeterServicer)</code>类。</li>
+</ul>
+<h2 id="创建服务端代码"><a href="#创建服务端代码" class="headerlink" title="创建服务端代码"></a>创建服务端代码</h2><p>创建和运行<code>Greeter</code>服务可以分为两个部分：</p>
+<ul>
+<li>实现我们服务定义的生成的服务接口：做我们的服务的实际的“工作”的函数。</li>
+<li>运行一个<code>gRPC</code>服务器，监听来自客户端的请求并传输服务的响应。</li>
+</ul>
+<p>在当前目录，打开文件<code>greeter_server.py</code>，实现一个新的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2024/5/22 23:01</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> concurrent <span class="keyword">import</span> futures</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> grpc</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hello_pb2</span><br><span class="line"><span class="keyword">import</span> hello_pb2_grpc</span><br><span class="line"></span><br><span class="line">_ONE_DAY_IN_SECONDS = <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span>(<span class="params">hello_pb2_grpc.GreeterServicer</span>):</span></span><br><span class="line">    <span class="comment"># 工作函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">SayHello</span>(<span class="params">self, request, context</span>):</span></span><br><span class="line">        <span class="keyword">return</span> hello_pb2.HelloReply(message=<span class="string">&#x27;Hello, %s!&#x27;</span> % request.name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">serve</span>():</span></span><br><span class="line">    <span class="comment"># gRPC 服务器</span></span><br><span class="line">    server = grpc.server(futures.ThreadPoolExecutor(max_workers=<span class="number">10</span>))</span><br><span class="line">    hello_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)</span><br><span class="line">    server.add_insecure_port(<span class="string">&#x27;[::]:50051&#x27;</span>)</span><br><span class="line">    server.start()  <span class="comment"># start() 不会阻塞，如果运行时你的代码没有其它的事情可做，你可能需要循环等待。</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            time.sleep(_ONE_DAY_IN_SECONDS)</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        server.stop(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    serve()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="更新客户端代码"><a href="#更新客户端代码" class="headerlink" title="更新客户端代码"></a>更新客户端代码</h2><p>在当前目录，打开文件<code>greeter_client.py</code>，实现一个新的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2024/5/22 23:01</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> grpc</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hello_pb2</span><br><span class="line"><span class="keyword">import</span> hello_pb2_grpc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>():</span></span><br><span class="line">    channel = grpc.insecure_channel(<span class="string">&#x27;localhost:50051&#x27;</span>)</span><br><span class="line">    stub = hello_pb2_grpc.GreeterStub(channel)</span><br><span class="line">    response = stub.SayHello(hello_pb2.HelloRequest(name=<span class="string">&#x27;goodspeed&#x27;</span>))</span><br><span class="line">    print(<span class="string">&quot;Greeter client received: &quot;</span> + response.message)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    run()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%80%BB%E7%BB%93/" rel="tag"># 总结</a>
+              <a href="/tags/gRPC/" rel="tag"># gRPC</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/05/11/Docker%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" rel="prev" title="Docker使用总结">
+                  <i class="fa fa-chevron-left"></i> Docker使用总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木霈玖</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//unpkg.com/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//unpkg.com/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</body>
+</html>
