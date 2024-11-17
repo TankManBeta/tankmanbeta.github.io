@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//unpkg.com/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="前言学习一下多智能体强化学习相关算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多智能体强化学习">
+<meta property="og:url" content="http://example.com/2024/11/17/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="木霈玖的博客">
+<meta property="og:description" content="前言学习一下多智能体强化学习相关算法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171915509.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172038329.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171918940.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171923497.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172041620.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172046802.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172048239.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172102666.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171817653.png">
+<meta property="article:published_time" content="2024-11-17T08:54:28.000Z">
+<meta property="article:modified_time" content="2024-11-17T13:25:16.980Z">
+<meta property="article:author" content="木霈玖">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="强化学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171915509.png">
+
+
+<link rel="canonical" href="http://example.com/2024/11/17/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>多智能体强化学习 | 木霈玖的博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">木霈玖的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VDN"><span class="nav-number">2.</span> <span class="nav-text">VDN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QMIX"><span class="nav-number">3.</span> <span class="nav-text">QMIX</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MAPPO"><span class="nav-number">4.</span> <span class="nav-text">MAPPO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.</span> <span class="nav-text">网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E5%92%8C%E6%9B%B4%E6%96%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">采样和更新方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%87%E6%A0%B7"><span class="nav-number">4.3.1.</span> <span class="nav-text">采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">4.3.2.</span> <span class="nav-text">更新</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">木霈玖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/17/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="木霈玖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木霈玖的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          多智能体强化学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-17 16:54:28 / 修改时间：21:25:16" itemprop="dateCreated datePublished" datetime="2024-11-17T16:54:28+08:00">2024-11-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">强化学习</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>学习一下多智能体强化学习相关算法。</p>
+<a id="more"></a>
+<h1 id="VDN"><a href="#VDN" class="headerlink" title="VDN"></a><code>VDN</code></h1><p><code>VDN</code>中提出一种通过反向传播将团队的奖励信号分解到各个智能体上的这样一种方式。其网络结构如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171915509.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172038329.png" alt=""></p>
+<p>先看上图中的图<code>1</code>，画的是两个独立的智能体，因为对每个智能体来说，观测都是部分可观测的，所以<code>Q</code>函数是被定义成基于观测历史数据所得到的$Q(h_{t},a_{t})$，实际操作的时候直接用<code>RNN</code>来做就可以。图<code>2</code>说的就是联合动作值函数由各个智能体的值函数累加得到的：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171918940.png" alt=""></p>
+<p>其中$d$表示$d$个智能体，$\tilde{Q}_{i}$由每个智能体的局部观测信息得到，$\tilde{Q}_{i}$是通过联合奖励信号反向传播到各个智能体的$\tilde{Q}_{i}$上进行更新的。这样各个智能体通过贪婪策略选取动作的话，也就会使得联合动作值函数最大。</p>
+<p>  总结来说：值分解网络旨在学习一个联合动作值函数$Q_{tot}(\tau,\mathbf{u})$，其中$\tau \in \mathbf{T} \equiv \mathcal{T}^{n}$是一个联合动作-观测的历史轨迹，$\mathbf{u}$是一个联合动作。它是由每个智能体$a$独立计算其值函数$Q_{a}\left(\tau^{a},u^{a};\theta^{a}\right)$，之后累加求和得到的。其关系如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171923497.png" alt=""></p>
+<h1 id="QMIX"><a href="#QMIX" class="headerlink" title="QMIX"></a><code>QMIX</code></h1><p>在之前的值分解网络中，拿到了联合动作的$Q$值之后，我们就可以直接取能够获取最大的$Q_{tot}(\tau, \mathbf{u})$所对应的联合动作。这种方式就能够实现集中式学习，但是得到分布式策略。并且对全局值函数做<code>argmax</code>与对单个智能体地值函数做<code>argmax</code>能够得到相同的结果：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172041620.png" alt=""></p>
+<p>这样的话，每个智能体$a$都可以基于$Q_{a}$以贪婪策略选择动作。由于每个子智能体都采用贪婪策略，因此这个算法必定会是<code>off-policy</code>的算法，这一点是很容易实现的，并且样本的利用率会比较高。在<code>VDN</code>中采用的是线性加权，因此上述等式会成立，而如果是采用一个神经网络来学习融合各个智能体的$Q$函数的话，上述等式就未必会成立了。</p>
+<p>在<code>QMIX</code>中也是需要一个联合动作值函数的，但是与值分解网络的不同之处在于，这个联合动作值函数并不是简单地由各个智能体的值函数线性相加得到的。为了保证值函数的单调性来使得上式能够成立，作者对联合动作值函数$Q_{tot}$和单个智能体动作值函数$Q_{a}$之间做了一个约束：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172046802.png" alt=""></p>
+<p>设计思想如上所示，具体的网络结构如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172048239.png" alt=""></p>
+<p>上述这个复杂的网络结构可以拆分为如下三部分：</p>
+<ul>
+<li><code>agent networks</code>：对于每个智能体都要学一个独立的值函数$Q_{a}\left(\tau^{a}, u^{a}\right)$，单个智能体的网络结构采用<code>DRQN</code>的网络结构，在每个时间步，接收当前的独立观测$O_{t}^{a}$和上一个动作$\mu_{t-1}^{a}$，如上图<code>(c)</code>所示。</li>
+<li><code>mixing network</code>：是一个全连接网络，接收每个智能体的输出$Q_{n}\left(\tau^{n}, u_{t}^{n}\right)$作为输入，输出联合动作值函数$Q_{t o t}(\boldsymbol{\tau}, \boldsymbol{u})$，对每个子智能体的动作值函数做非线性映射，并且要保证单调性约束。想要保证公式<code>(2)</code>的单调性约束的话，我们只需要保证<code>mixing network</code>的权重非负即可。</li>
+<li><code>hypernetworks</code>：<code>hypernetworks</code>网络去产生<code>mixing network</code>的权重，超参数网络输入状态$s$，输出<code>Mixing</code>网络的每一层的超参数向量，激活函数来使得输出非负，对于<code>Mixing</code>网络参数的偏置并没有非负的要求。</li>
+</ul>
+<p><code>QMIX</code>的训练方式是端到端的训练：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172102666.png" alt=""></p>
+<h1 id="MAPPO"><a href="#MAPPO" class="headerlink" title="MAPPO"></a><code>MAPPO</code></h1><h2 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h2><p>和单智能体<code>PPO</code>算法一样，<code>MAPPO</code>算法中每个智能体都有各自的<code>Actor</code>网络和<code>Critic</code>网络（如果所有智能体的状态空间和动作空间也相同，即同构，也可以所有智能体共享一套<code>Actor</code>和<code>Critic</code>网络）。与单智能体<code>PPO</code>不同的是，<code>MAPPO</code>的<code>Critic</code>网络可以接收有关全局状态的信息，这个全局状态可以是由所有智能体的观察拼接而成，也可以是环境直接提供。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171817653.png" alt=""></p>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>和单智能体<code>PPO</code>算法一样，损失函数由<code>Actor Loss</code>和<code>Critic Loss</code>组成：</p>
+<ul>
+<li><code>Actor Loss</code>为最小化负的智能体在当前策略下的预期累积奖励$-E[\frac{\pi(a|S_t;\theta)}{\pi(a|S_t;\theta_k)} A_t]$</li>
+<li><code>Critic Loss</code>为回报和状态价值函数的均方差$[(G_t-V(s,w))]^{2}$</li>
+</ul>
+<h2 id="采样和更新方式"><a href="#采样和更新方式" class="headerlink" title="采样和更新方式"></a>采样和更新方式</h2><h3 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h3><p>如智能体间不共享参数，即每个智能体有各自的<code>Actor</code>和<code>Critic</code>网络，则给每个智能体建立一个<code>replay buffer</code>，将该智能体交互中获得的$s_{t}, a_{t}, r，s_{t+1}$存入对应的<code>replay buffer</code>中。另在<code>replay buffer</code>中增加<code>mask</code>，记录每一时刻智能体是否存活，以便后续死亡的智能体后续数据不用于更新网络。一般情况下，不同智能体间不共享奖励。</p>
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><p>如果智能体间不共享参数，则针对每一个智能体分别从<code>replay buffer</code>中抽样，训练其网络，其更新函数与<code>PPO</code>更新函数整体一致，并且增加了<code>GAE</code>、<code>value normlization</code>等技巧。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%80%BB%E7%BB%93/" rel="tag"># 总结</a>
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag"># 强化学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/03/CloseAirCombat%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" rel="prev" title="CloseAirCombat使用总结">
+                  <i class="fa fa-chevron-left"></i> CloseAirCombat使用总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木霈玖</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//unpkg.com/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//unpkg.com/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</body>
+</html>
