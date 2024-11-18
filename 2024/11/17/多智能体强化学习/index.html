@@ -38,9 +38,18 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172046802.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172048239.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172102666.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182259010.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182302432.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182308208.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182329900.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182341968.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182351374.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411190001341.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411190007735.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411190011682.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171817653.png">
 <meta property="article:published_time" content="2024-11-17T08:54:28.000Z">
-<meta property="article:modified_time" content="2024-11-17T13:25:16.980Z">
+<meta property="article:modified_time" content="2024-11-18T16:44:27.417Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="强化学习">
@@ -197,7 +206,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VDN"><span class="nav-number">2.</span> <span class="nav-text">VDN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QMIX"><span class="nav-number">3.</span> <span class="nav-text">QMIX</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MAPPO"><span class="nav-number">4.</span> <span class="nav-text">MAPPO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.</span> <span class="nav-text">网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E5%92%8C%E6%9B%B4%E6%96%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">采样和更新方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%87%E6%A0%B7"><span class="nav-number">4.3.1.</span> <span class="nav-text">采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">4.3.2.</span> <span class="nav-text">更新</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VDN"><span class="nav-number">2.</span> <span class="nav-text">VDN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QMIX"><span class="nav-number">3.</span> <span class="nav-text">QMIX</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QTRAN"><span class="nav-number">4.</span> <span class="nav-text">QTRAN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#QTRAN%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="nav-number">4.1.</span> <span class="nav-text">QTRAN直观理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E5%88%86%E8%A7%A3%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E5%85%85%E5%88%86%E6%9D%A1%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">可分解值函数的充分条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E5%88%86%E8%A7%A3%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="nav-number">4.3.</span> <span class="nav-text">可分解值函数的必要条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">4.4.</span> <span class="nav-text">网络结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#COMA"><span class="nav-number">5.</span> <span class="nav-text">COMA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MAPPO"><span class="nav-number">6.</span> <span class="nav-text">MAPPO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84-1"><span class="nav-number">6.1.</span> <span class="nav-text">网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">6.2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E5%92%8C%E6%9B%B4%E6%96%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">6.3.</span> <span class="nav-text">采样和更新方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%87%E6%A0%B7"><span class="nav-number">6.3.1.</span> <span class="nav-text">采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">6.3.2.</span> <span class="nav-text">更新</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -286,10 +295,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-11-17 16:54:28 / 修改时间：21:25:16" itemprop="dateCreated datePublished" datetime="2024-11-17T16:54:28+08:00">2024-11-17</time>
+      <time title="创建时间：2024-11-17 16:54:28" itemprop="dateCreated datePublished" datetime="2024-11-17T16:54:28+08:00">2024-11-17</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2024-11-19 00:44:27" itemprop="dateModified" datetime="2024-11-19T00:44:27+08:00">2024-11-19</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -308,14 +323,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.2k</span>
+      <span>4.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -351,7 +366,36 @@
 </ul>
 <p><code>QMIX</code>的训练方式是端到端的训练：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172102666.png" alt=""></p>
-<h1 id="MAPPO"><a href="#MAPPO" class="headerlink" title="MAPPO"></a><code>MAPPO</code></h1><h2 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h2><p>和单智能体<code>PPO</code>算法一样，<code>MAPPO</code>算法中每个智能体都有各自的<code>Actor</code>网络和<code>Critic</code>网络（如果所有智能体的状态空间和动作空间也相同，即同构，也可以所有智能体共享一套<code>Actor</code>和<code>Critic</code>网络）。与单智能体<code>PPO</code>不同的是，<code>MAPPO</code>的<code>Critic</code>网络可以接收有关全局状态的信息，这个全局状态可以是由所有智能体的观察拼接而成，也可以是环境直接提供。</p>
+<h1 id="QTRAN"><a href="#QTRAN" class="headerlink" title="QTRAN"></a><code>QTRAN</code></h1><p>前面介绍的<code>VDN</code>，<code>QMIX</code>算法，都是基于值方法并且用于协作式<code>MARL</code>任务中。这些算法本质上都在找分布式最优策略，并且满足下式中描述的关系：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182259010.png" alt=""></p>
+<p>其中，$Q_{jt}$表示整体的联合$Q$函数；$Q_{i}$表示智能体$i$的值函数。在本文，作者将<code>(1)</code>式中描述的关系定义为<code>IGM(Individual-Global-Max)</code>条件。</p>
+<p><code>VDN</code>为了满足<code>IGM</code>条件，直接将值函数分解成“加和形式<code>(Additivity)</code>”：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182302432.png" alt=""></p>
+<p>从<code>(2)</code>式可以得出$\frac{\partial Q_{jt}(\tau,u)}{\partial Q_{i}(\tau_{i},u_{i})}\equiv1,\forall i\in\mathcal{N}$，可见只要满足<code>(2)</code>式就能满足<code>IGM</code>条件。</p>
+<p>但是<code>QMIX</code>觉得<code>VDN</code>这样做不至于，并且会导致很多复杂的函数无法很好地拟合出来，因此<code>QMIX</code>提出了更一般的<strong>“单调性条件<code>(Monotonicity)</code>”</strong>：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182308208.png" alt=""></p>
+<p><code>QMIX</code>认为只要满足<code>(3)</code>式，就能满足<code>IGM</code>条件。<code>(2)</code>式是<code>(3)</code>式的充分条件，但是同时，<code>(3)</code>式也是<code>(1)</code>式的充分条件。换句话说，<strong>它们对<code>IGM</code>条件来说，都不是必要的！</strong>因此，针对一些具有非单调收益的合作问题，<code>VDN</code>和<code>QMIX</code>的函数拟合能力就会受到限制。</p>
+<p>因此，基于这样的问题，作者提出<code>QTRAN</code>算法，并且声称该算法能够分解任何可分解的任务，而不需要受<code>(2)</code>式和<code>(3)</code>式的约束。</p>
+<h2 id="QTRAN直观理解"><a href="#QTRAN直观理解" class="headerlink" title="QTRAN直观理解"></a><code>QTRAN</code>直观理解</h2><p>在<code>VDN</code>和<code>QMIX</code>中是将$Q_{\mathrm{jt}}$通过累加求和和保证单调性的方式来分解的，作者这里提出一种更加鲁棒的分解方式，将原始的$Q_{\mathrm{jt}}$映射成$Q_{\mathrm{jt}}^{\prime}$，通过$Q_{\mathrm{jt}}^{\prime}$去分解值函数到各个子智能体上，来保证学到的$Q_{\mathrm{jt}}^{\prime}$与真实的动作值函数$Q^{*}$非常接近。这样在学习真实的动作值函数的时候，没有像<code>VDN</code>和<code>QMIX</code>那样对其加上一些累加求和和保证单调性的限制，所以它能学地更好。</p>
+<p>但是由于部分可观测地限制，这个$Q_{\mathrm{jt}}^{\prime}$是没有办法用来进行具体地决策的，所以我们需要去找到$Q_{\mathrm{jt}}$、$Q_{\mathrm{jt}}^{\prime}$和$\left[Q_{i}\right]$三者之间的关系。</p>
+<h2 id="可分解值函数的充分条件"><a href="#可分解值函数的充分条件" class="headerlink" title="可分解值函数的充分条件"></a>可分解值函数的充分条件</h2><p>由于不提供累加求和和单调性来保证可分解，<code>QTRAN</code>提出了一个满足<code>IGM</code>定义的充分条件：当动作值函数$Q_{\mathrm{jt}}(\boldsymbol{\tau}, \boldsymbol{u})$和$\left[Q_{i}\left(\tau_{i}, u_{i}\right)\right]$满足下面这个关系式时，我们认为它是可分解的，其中$V_{\mathrm{jt}}(\tau)=\max _{\boldsymbol{u}} Q_{\mathrm{jt}}(\boldsymbol{\tau}, \boldsymbol{u})-\sum_{i=1}^{N} Q_{i}\left(\tau_{i}, \bar{u}_{i}\right)$：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182329900.png" alt=""></p>
+<p>想要通过上述条件证明出满足<code>IGM</code>条件，也就是$\arg \max _{\boldsymbol{u}} Q_{\mathrm{jt}}(\boldsymbol{\tau}, \boldsymbol{u})=\overline{\boldsymbol{u}}$时（其中$\bar{u}_{i}=\arg \max _{u_{i}} Q_{i}\left(\tau_{i}, u_{i}\right)$）才能取到全局最大的动作值函数。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182341968.png" alt=""></p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182351374.png" alt=""></p>
+<h2 id="可分解值函数的必要条件"><a href="#可分解值函数的必要条件" class="headerlink" title="可分解值函数的必要条件"></a>可分解值函数的必要条件</h2><p>必要条件说的是，当满足<code>IGM</code>条件时，能够把充分条件给推出来。作者在论文中说到，存在一个仿射函数$\phi(\boldsymbol{Q})=A \cdot \boldsymbol{Q}+B$对$Q$进行一个映射，其中$\left[a_{i i}\right] \in \mathbb{R}_{+}^{N \times N}$为一个对角矩阵，并且$a_{i i}&gt;0$。相较<code>QMIX</code>还多一个$B$，$B=\left[b_{i}\right] \in \mathbb{R}^{N}$。作者将$Q_{i}$进行了一个缩放，$a_{i i} Q_{i}+b_{i}$。然后定义：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411190001341.png" alt=""></p>
+<h2 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411190007735.png" alt=""></p>
+<p>网络结构中主要有三部分：</p>
+<ul>
+<li>独立的动作值网络：$f_{\mathrm{q}}:\left(\tau_{i}, u_{i}\right) \mapsto Q_{i}$。对于每个动作值网络，输入是他自己的动作观测历史$\tau_{i}$，输出动作值函数$Q_{i}\left(\tau_{i}, \cdot\right)$。$Q_{\mathrm{jt}}^{\prime}$由各个子智能体的动作值函数累加得到。</li>
+<li>联合动作值网络：$f_{\mathrm{r}}:(\tau, \boldsymbol{u}) \mapsto Q_{\mathrm{jt}}$。如上图所示，网络的前面几层参数是共享的，用所有的独立智能体的动作值函数向量来采样样本，更新联合动作值函数。</li>
+<li>状态值网络：$f_{\mathrm{v}}: \tau \mapsto V_{\mathrm{jt}}$。状态值函数类似<code>dueling</code>网络，并且这里可以引入全局的状态信息，它是独立于动作轨迹的，但是可以用来辅助动作值函数的训练。</li>
+</ul>
+<p>此时损失函数可以表达成如下形式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411190011682.png" alt=""></p>
+<p>第一个$L_{\mathrm{td}}$可以无忧无虑地去近似最优的联合动作值函数，下面两个就是用来去满足可分解值函数地充分必要条件的，$Q^{\prime}_{jt}$是真实的，$Q_{jt}$是网络学习到的，用$V$去弥补两者之间的差异。</p>
+<h1 id="COMA"><a href="#COMA" class="headerlink" title="COMA"></a><code>COMA</code></h1><h1 id="MAPPO"><a href="#MAPPO" class="headerlink" title="MAPPO"></a><code>MAPPO</code></h1><h2 id="网络结构-1"><a href="#网络结构-1" class="headerlink" title="网络结构"></a>网络结构</h2><p>和单智能体<code>PPO</code>算法一样，<code>MAPPO</code>算法中每个智能体都有各自的<code>Actor</code>网络和<code>Critic</code>网络（如果所有智能体的状态空间和动作空间也相同，即同构，也可以所有智能体共享一套<code>Actor</code>和<code>Critic</code>网络）。与单智能体<code>PPO</code>不同的是，<code>MAPPO</code>的<code>Critic</code>网络可以接收有关全局状态的信息，这个全局状态可以是由所有智能体的观察拼接而成，也可以是环境直接提供。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171817653.png" alt=""></p>
 <h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>和单智能体<code>PPO</code>算法一样，损失函数由<code>Actor Loss</code>和<code>Critic Loss</code>组成：</p>
 <ul>
