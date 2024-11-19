@@ -210,7 +210,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404191235939.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404191237313.png">
 <meta property="article:published_time" content="2023-10-08T02:57:25.000Z">
-<meta property="article:modified_time" content="2024-11-17T08:48:52.865Z">
+<meta property="article:modified_time" content="2024-11-19T14:44:22.414Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="强化学习">
@@ -464,7 +464,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2024-11-17 16:48:52" itemprop="dateModified" datetime="2024-11-17T16:48:52+08:00">2024-11-17</time>
+        <time title="修改时间：2024-11-19 22:44:22" itemprop="dateModified" datetime="2024-11-19T22:44:22+08:00">2024-11-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -504,7 +504,7 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>开新坑啦，强化学习搞起。</p>
 <a id="more"></a>
-<h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><h2 id="强化学习概述"><a href="#强化学习概述" class="headerlink" title="强化学习概述"></a>强化学习概述</h2><p>强化学习（Reinforcement Learning，简称RL）是机器学习的一种重要方法，它通过智能体（agent）与环境（environment）的交互来实现自主学习和决策。在强化学习中，智能体会采取一系列的行动，环境会根据智能体的行动给出奖励或惩罚，智能体的目标是最大化累积奖励。强化学习在许多实际应用中都有着广泛的应用，例如自动驾驶、机器人控制、金融交易、游戏等。<strong>智能体的目的就是尽可能多地从环境中获取奖励。</strong></p>
+<h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><h2 id="强化学习概述"><a href="#强化学习概述" class="headerlink" title="强化学习概述"></a>强化学习概述</h2><p>强化学习<code>(Reinforcement Learning, RL)</code>是机器学习的一种重要方法，它通过智能体<code>(agent)</code>与环境<code>(environment)</code>的交互来实现自主学习和决策。在强化学习中，智能体会采取一系列的行动，环境会根据智能体的行动给出奖励或惩罚，智能体的目标是最大化累积奖励。强化学习在许多实际应用中都有着广泛的应用，例如自动驾驶、机器人控制、金融交易、游戏等。<strong>智能体的目的就是尽可能多地从环境中获取奖励。</strong></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310081106986.png" alt=""></p>
 <h3 id="强化学习与监督学习"><a href="#强化学习与监督学习" class="headerlink" title="强化学习与监督学习"></a>强化学习与监督学习</h3><p>监督学习：</p>
 <ul>
@@ -513,7 +513,7 @@
 </ul>
 <p>强化学习：</p>
 <ul>
-<li>观测（observation）不是独立同分布的</li>
+<li>观测<code>(observation)</code>不是独立同分布的</li>
 <li>并没有立刻获得反馈</li>
 </ul>
 <h3 id="强化学习的特征"><a href="#强化学习的特征" class="headerlink" title="强化学习的特征"></a>强化学习的特征</h3><ul>
@@ -523,28 +523,28 @@
 <li>智能体的动作会影响它随后得到的数据。</li>
 </ul>
 <h2 id="序列决策"><a href="#序列决策" class="headerlink" title="序列决策"></a>序列决策</h2><h3 id="智能体和环境"><a href="#智能体和环境" class="headerlink" title="智能体和环境"></a>智能体和环境</h3><p>强化学习研究的问题是智能体与环境交互的问题。智能体把它的动作输出给环境，环境取得这个动作后会进行下一步，把下一步的观测与这个动作带来的奖励返还给智能体。这样的交互会产生很多观测，智能体的目的是从这些观测之中学到能最大化奖励的策略。</p>
-<h3 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h3><p>奖励是由环境给的一种标量的反馈信号（scalar feedback signal），这种信号可显示智能体在某一步采取某个策略的表现如何。强化学习的目的就是最大化智能体可以获得的奖励，智能体在环境里面存在的目的就是最大化它的期望的累积奖励（expected cumulative reward）。</p>
+<h3 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h3><p>奖励是由环境给的一种标量的反馈信号<code>(scalar feedback signal)</code>，这种信号可显示智能体在某一步采取某个策略的表现如何。强化学习的目的就是最大化智能体可以获得的奖励，智能体在环境里面存在的目的就是最大化它的期望的累积奖励<code>(expected cumulative reward)</code>。</p>
 <h3 id="序列决策-1"><a href="#序列决策-1" class="headerlink" title="序列决策"></a>序列决策</h3><p>在一个强化学习环境里面，智能体的目的就是选取一系列的动作来最大化奖励，所以这些选取的动作必须有长期的影响。但在这个过程里面，智能体的奖励其实是被延迟了的，就是我们现在选取的某一步动作，可能要等到很久后才知道这一步到底产生了什么样的影响。</p>
 <p><strong>状态</strong>是对世界的完整描述，不会隐藏世界的信息。 <strong>观测</strong>是对状态的部分描述，可能会遗漏一些信息。</p>
-<p>当智能体的状态与环境的状态等价的时候，即当智能体能够观察到环境的所有状态时，我们称这个环境是<strong>完全可观测的（fully observed）</strong>。在这种情况下面，强化学习通常被建模成一个<strong>马尔可夫决策过程（Markov decision process，MDP）</strong>的问题。</p>
-<p>当智能体只能看到部分的观测，我们就称这个环境是<strong>部分可观测的（partially observed）</strong>。在这种情况下，强化学习通常被建模成<strong>部分可观测马尔可夫决策过程（partially observable Markov decision process, POMDP）</strong>的问题。</p>
-<h2 id="动作空间"><a href="#动作空间" class="headerlink" title="动作空间"></a>动作空间</h2><p>在给定的环境中，有效动作的集合经常被称为<strong>动作空间（action space）</strong>。像雅达利游戏和围棋（Go）这样的环境有<strong>离散动作空间（discrete action space）</strong>，在这个动作空间里，智能体的动作数量是有限的。在其他环境，比如在物理世界中控制一个智能体，在这个环境中就有<strong>连续动作空间（continuous action space）</strong>。在连续动作空间中，动作是实值的向量。</p>
+<p>当智能体的状态与环境的状态等价的时候，即当智能体能够观察到环境的所有状态时，我们称这个环境是<strong>完全可观测的<code>(fully observed)</code></strong>。在这种情况下面，强化学习通常被建模成一个<strong>马尔可夫决策过程<code>(Markov decision process, MDP)</code></strong>的问题。</p>
+<p>当智能体只能看到部分的观测，我们就称这个环境是<strong>部分可观测的<code>(partially observed)</code></strong>。在这种情况下，强化学习通常被建模成<strong>部分可观测马尔可夫决策过程<code>(partially observable Markov decision process, POMDP)</code></strong>的问题。</p>
+<h2 id="动作空间"><a href="#动作空间" class="headerlink" title="动作空间"></a>动作空间</h2><p>在给定的环境中，有效动作的集合经常被称为<strong>动作空间<code>(action space)</code></strong>。像雅达利游戏和围棋这样的环境有<strong>离散动作空间<code>(discrete action space)</code></strong>，在这个动作空间里，智能体的动作数量是有限的。在其他环境，比如在物理世界中控制一个智能体，在这个环境中就有<strong>连续动作空间<code>(continuous action space)</code></strong>。在连续动作空间中，动作是实值的向量。</p>
 <h2 id="强化学习智能体的组成成分和类型"><a href="#强化学习智能体的组成成分和类型" class="headerlink" title="强化学习智能体的组成成分和类型"></a>强化学习智能体的组成成分和类型</h2><ul>
-<li>策略（policy）：智能体会用策略来选取下一步的动作。</li>
-<li>价值函数（value function）：我们用价值函数来对当前状态进行评估。价值函数用于评估智能体进入某个状态后，可以对后面的奖励带来多大的影响。价值函数值越大，说明智能体进入这个状态越有利。</li>
-<li>模型（model）。模型表示智能体对环境的状态进行理解，它决定了环境中世界的运行方式。</li>
+<li>策略<code>(policy)</code>：智能体会用策略来选取下一步的动作。</li>
+<li>价值函数<code>(value function)</code>：我们用价值函数来对当前状态进行评估。价值函数用于评估智能体进入某个状态后，可以对后面的奖励带来多大的影响。价值函数值越大，说明智能体进入这个状态越有利。</li>
+<li>模型<code>(model)</code>：模型表示智能体对环境的状态进行理解，它决定了环境中世界的运行方式。</li>
 </ul>
-<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>策略是智能体的动作模型，它决定了智能体的动作。它其实是一个函数，用于把输入的状态变成动作。策略可分为两种：随机性策略和确定性策略。<br><strong>随机性策略（stochastic policy）</strong>就是 $\pi$ 函数，即 $\pi(a|s) = p (a_{t} = a|s_{t} = s)$ 。输入一个状态 $s$ ，输出一个概率。这个概率是智能体所有动作的概率，然后对这个概率分布进行采样，可得到智能体将采取的动作。比如可能是有 $0.7$ 的概率往左， $0.3$ 的概率往右，那么通过采样就可以得到智能体将采取的动作。<br><strong>确定性策略（deterministic policy）</strong>就是智能体直接采取最有可能的动作，即 $a^{\ast} = \mathop{\mathrm{argmax}}\limits_{a}{\pi(a | s)}$ 。  </p>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>策略是智能体的动作模型，它决定了智能体的动作。它其实是一个函数，用于把输入的状态变成动作。策略可分为两种：随机性策略和确定性策略。<br><strong>随机性策略<code>(stochastic policy)</code></strong>就是 $\pi$ 函数，即 $\pi(a|s) = p (a_{t} = a|s_{t} = s)$ 。输入一个状态 $s$ ，输出一个概率。这个概率是智能体所有动作的概率，然后对这个概率分布进行采样，可得到智能体将采取的动作。比如可能是有 $0.7$ 的概率往左， $0.3$ 的概率往右，那么通过采样就可以得到智能体将采取的动作。<br><strong>确定性策略<code>(deterministic policy)</code></strong>就是智能体直接采取最有可能的动作，即 $a^{\ast} = \mathop{\mathrm{argmax}}\limits_{a}{\pi(a | s)}$ 。  </p>
 <p>通常情况下，强化学习一般使用随机性策略，随机性策略有很多优点。</p>
 <ul>
 <li>在学习时可以通过引入一定的随机性来更好地探索环境；</li>
 <li>随机性策略的动作具有多样性，这一点在多个智能体博弈时非常重要；</li>
 <li>采用确定性策略的智能体总是对同样的状态采取相同的动作，这会导致它的策略很容易被对手预测。</li>
 </ul>
-<h3 id="价值函数"><a href="#价值函数" class="headerlink" title="价值函数"></a>价值函数</h3><p>价值函数的值是对未来奖励的预测，我们用它来评估状态的好坏。价值函数里面有一个折扣因子（discount factor），我们希望在尽可能短的时间里面得到尽可能多的奖励。</p>
+<h3 id="价值函数"><a href="#价值函数" class="headerlink" title="价值函数"></a>价值函数</h3><p>价值函数的值是对未来奖励的预测，我们用它来评估状态的好坏。价值函数里面有一个折扣因子<code>(discount factor)</code>，我们希望在尽可能短的时间里面得到尽可能多的奖励。</p>
 <p>因此，我们可以把折扣因子放到价值函数的定义里面，价值函数的定义为：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241533701.png" alt=""></p>
-<p>我们还有一种价值函数： Q 函数。 Q 函数里面包含两个变量：状态和动作。其定义为：</p>
+<p>我们还有一种价值函数： $Q$ 函数。 $Q$ 函数里面包含两个变量：状态和动作。其定义为：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241535831.png" alt=""></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404181459777.png" alt=""></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404181458188.png" alt=""></p>
@@ -552,22 +552,22 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241550023.png" alt=""></p>
 <p>奖励函数是指我们在当前状态采取了某个动作，可以得到多大的奖励，即：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310241551667.png" alt=""></p>
-<h3 id="强化学习智能体的类型"><a href="#强化学习智能体的类型" class="headerlink" title="强化学习智能体的类型"></a>强化学习智能体的类型</h3><h4 id="基于价值的智能体与基于策略的智能体"><a href="#基于价值的智能体与基于策略的智能体" class="headerlink" title="基于价值的智能体与基于策略的智能体"></a>基于价值的智能体与基于策略的智能体</h4><p><strong>基于价值的智能体（value-based agent）</strong>显式地学习价值函数，隐式地学习它的策略。策略是其从学到的价值函数里面推算出来的。<strong>基于策略的智能体（policy-based agent）</strong> 直接学习策略，我们给它一个状态，它就会输出对应动作的概率。基于策略的智能体并没有学习价值函数。把基于价值的智能体和基于策略的智能体结合起来就有了<strong>演员-评论员智能体（actor-critic agent）</strong>。这一类智能体把策略和价值函数都学习了，然后通过两者的交互得到最佳的动作。</p>
-<h4 id="有模型强化学习智能体与免模型强化学习智能体"><a href="#有模型强化学习智能体与免模型强化学习智能体" class="headerlink" title="有模型强化学习智能体与免模型强化学习智能体"></a>有模型强化学习智能体与免模型强化学习智能体</h4><p><strong>有模型（model-based）强化学习智能体</strong>通过学习状态的转移来采取动作。<strong>免模型（model-free）强化学习智能体</strong>没有去直接估计状态的转移，也没有得到环境的具体转移变量，它通过学习价值函数和策略函数进行决策。免模型强化学习智能体的模型里面没有环境转移的模型。</p>
+<h3 id="强化学习智能体的类型"><a href="#强化学习智能体的类型" class="headerlink" title="强化学习智能体的类型"></a>强化学习智能体的类型</h3><h4 id="基于价值的智能体与基于策略的智能体"><a href="#基于价值的智能体与基于策略的智能体" class="headerlink" title="基于价值的智能体与基于策略的智能体"></a>基于价值的智能体与基于策略的智能体</h4><p><strong>基于价值的智能体<code>(value-based agent)</code></strong>显式地学习价值函数，隐式地学习它的策略。策略是其从学到的价值函数里面推算出来的。<strong>基于策略的智能体<code>(policy-based agent)</code></strong> 直接学习策略，我们给它一个状态，它就会输出对应动作的概率。基于策略的智能体并没有学习价值函数。把基于价值的智能体和基于策略的智能体结合起来就有了<strong>演员-评论员智能体<code>(actor-critic agent)</code></strong>。这一类智能体把策略和价值函数都学习了，然后通过两者的交互得到最佳的动作。</p>
+<h4 id="有模型强化学习智能体与免模型强化学习智能体"><a href="#有模型强化学习智能体与免模型强化学习智能体" class="headerlink" title="有模型强化学习智能体与免模型强化学习智能体"></a>有模型强化学习智能体与免模型强化学习智能体</h4><p><strong>有模型<code>(model-based)</code>强化学习智能体</strong>通过学习状态的转移来采取动作。<strong>免模型<code>(model-free)</code>强化学习智能体</strong>没有去直接估计状态的转移，也没有得到环境的具体转移变量，它通过学习价值函数和策略函数进行决策。免模型强化学习智能体的模型里面没有环境转移的模型。</p>
 <h2 id="学习与规划"><a href="#学习与规划" class="headerlink" title="学习与规划"></a>学习与规划</h2><p>在规划中，环境是已知的，智能体被告知了整个环境的运作规则的详细信息。</p>
 <h2 id="探索和利用"><a href="#探索和利用" class="headerlink" title="探索和利用"></a>探索和利用</h2><p><strong>探索</strong>即我们去探索环境，通过尝试不同的动作来得到最佳的策略（带来最大奖励的策略）。<strong>利用</strong>即我们不去尝试新的动作，而是采取已知的可以带来很大奖励的动作。</p>
-<h1 id="马尔可夫决策过程"><a href="#马尔可夫决策过程" class="headerlink" title="马尔可夫决策过程"></a>马尔可夫决策过程</h1><h2 id="马尔可夫过程"><a href="#马尔可夫过程" class="headerlink" title="马尔可夫过程"></a>马尔可夫过程</h2><h3 id="马尔可夫性质"><a href="#马尔可夫性质" class="headerlink" title="马尔可夫性质"></a>马尔可夫性质</h3><p>在随机过程中， 马尔可夫性质（Markov property）是指一个随机过程在给定现在状态及所有过去状态情况下，其未来状态的条件概率分布仅依赖于当前状态。</p>
+<h1 id="马尔可夫决策过程"><a href="#马尔可夫决策过程" class="headerlink" title="马尔可夫决策过程"></a>马尔可夫决策过程</h1><h2 id="马尔可夫过程"><a href="#马尔可夫过程" class="headerlink" title="马尔可夫过程"></a>马尔可夫过程</h2><h3 id="马尔可夫性质"><a href="#马尔可夫性质" class="headerlink" title="马尔可夫性质"></a>马尔可夫性质</h3><p>在随机过程中， 马尔可夫性质<code>(Markov property)</code>是指一个随机过程在给定现在状态及所有过去状态情况下，其未来状态的条件概率分布仅依赖于当前状态。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310301135977.jpg" alt=""></p>
-<h3 id="马尔可夫链"><a href="#马尔可夫链" class="headerlink" title="马尔可夫链"></a>马尔可夫链</h3><p>离散时间的马尔可夫过程也称为马尔可夫链（Markov chain）。  </p>
-<h2 id="马尔可夫奖励过程"><a href="#马尔可夫奖励过程" class="headerlink" title="马尔可夫奖励过程"></a>马尔可夫奖励过程</h2><p>马尔可夫奖励过程（Markov reward process, MRP）是马尔可夫链加上奖励函数。</p>
-<h3 id="回报与价值函数"><a href="#回报与价值函数" class="headerlink" title="回报与价值函数"></a>回报与价值函数</h3><p>范围（horizon）是指一个回合的长度（每个回合最大的时间步数），它是由有限个步数决定的。</p>
-<p>回报（return） 可以定义为奖励的逐步叠加，假设时刻 $t$ 后的奖励序列为 $r_{t+1}, r_{t+2}, r_{t+3}, \cdots ，$ 则回报为：</p>
+<h3 id="马尔可夫链"><a href="#马尔可夫链" class="headerlink" title="马尔可夫链"></a>马尔可夫链</h3><p>离散时间的马尔可夫过程也称为马尔可夫链<code>(Markov chain)</code>。  </p>
+<h2 id="马尔可夫奖励过程"><a href="#马尔可夫奖励过程" class="headerlink" title="马尔可夫奖励过程"></a>马尔可夫奖励过程</h2><p>马尔可夫奖励过程<code>(Markov reward process, MRP)</code>是马尔可夫链加上奖励函数。</p>
+<h3 id="回报与价值函数"><a href="#回报与价值函数" class="headerlink" title="回报与价值函数"></a>回报与价值函数</h3><p>范围<code>(horizon)</code>是指一个回合的长度（每个回合最大的时间步数），它是由有限个步数决定的。</p>
+<p>回报<code>(return)</code> 可以定义为奖励的逐步叠加，假设时刻 $t$ 后的奖励序列为 $r_{t+1}, r_{t+2}, r_{t+3}, \cdots ，$ 则回报为：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310311129686.png" alt=""></p>
 <p>对于马尔可夫奖励过程，状态价值函数被定义成回报的期望：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202310311130831.png" alt=""></p>
 <h3 id="贝尔曼方程"><a href="#贝尔曼方程" class="headerlink" title="贝尔曼方程"></a>贝尔曼方程</h3><p>贝尔曼方程定义了当前状态与未来状态之间的关系。未来奖励的折扣总和加上即时奖励，就组成了贝尔曼方程。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061010578.png" alt=""></p>
-<h4 id="全期望公式"><a href="#全期望公式" class="headerlink" title="全期望公式"></a>全期望公式</h4><p>在推导贝尔曼方程之前，首先需要仿照全期望公式（law of total expectation） 的证明过程来证明：</p>
+<h4 id="全期望公式"><a href="#全期望公式" class="headerlink" title="全期望公式"></a>全期望公式</h4><p>在推导贝尔曼方程之前，首先需要仿照全期望公式<code>(law of total expectation)</code> 的证明过程来证明：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061026274.png" alt=""></p>
 <p>为了表达方便，我们令 $s = s_{t}$ ，$ g^{\prime} = G_{t+1}$ ， $s^{\prime} = s_{t+1}$ ，那么我们可以得到如下推导：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061027021.png" alt=""></p>
@@ -579,10 +579,10 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061045825.png" alt=""></p>
 <p>当我们把贝尔曼方程写成矩阵形式后，可以直接求解：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061045446.png" alt=""></p>
-<h3 id="计算马尔可夫奖励过程价值的迭代算法"><a href="#计算马尔可夫奖励过程价值的迭代算法" class="headerlink" title="计算马尔可夫奖励过程价值的迭代算法"></a>计算马尔可夫奖励过程价值的迭代算法</h3><p>我们可以将迭代的方法应用于状态非常多的马尔可夫奖励过程（large MRP），比如：动态规划的方法，蒙特卡洛的方法（通过采样的办法计算它），时序差分学习（temporal-difference learning， TD learning）的方法（时序差分学习是动态规划和蒙特卡洛方法的一个结合）。</p>
+<h3 id="计算马尔可夫奖励过程价值的迭代算法"><a href="#计算马尔可夫奖励过程价值的迭代算法" class="headerlink" title="计算马尔可夫奖励过程价值的迭代算法"></a>计算马尔可夫奖励过程价值的迭代算法</h3><p>我们可以将迭代的方法应用于状态非常多的马尔可夫奖励过程<code>(large MRP)</code>，比如：动态规划的方法，蒙特卡洛的方法（通过采样的办法计算它），时序差分学习<code>(temporal-difference learning， TD learning)</code>的方法（时序差分学习是动态规划和蒙特卡洛方法的一个结合）。</p>
 <p>蒙特卡洛方法就是当得到一个马尔可夫奖励过程后，我们可以从某个状态开始，把小船放到状态转移矩阵里面，让它“随波逐流”，这样就会产生一个轨迹。产生一个轨迹之后，就会得到一个奖励，那么直接把折扣的奖励即回报 $g$ 算出来。算出来之后将它积累起来，得到回报 $G_{t}$。当积累了一定数量的轨迹之后，我们直接用 $G_{t}$ 除以轨迹数量，就会得到某个状态的价值。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061059726.png" alt=""></p>
-<p>动态规划方法就是一直迭代贝尔曼方程，直到价值函数收敛，我们就可以得到某个状态的价值。我们通过自举（bootstrapping）的方法不停地迭代贝尔曼方程，当最后更新的状态与我们上一个状态的区别并不大的时候，更新就可以停止，我们就可以输出最新的 $V^{\prime}(s)$ 作为它当前的状态的价值。这里就是把贝尔曼方程变成一个贝尔曼更新（Bellman update），这样就可以得到状态的价值。</p>
+<p>动态规划方法就是一直迭代贝尔曼方程，直到价值函数收敛，我们就可以得到某个状态的价值。我们通过自举<code>(bootstrapping)</code>的方法不停地迭代贝尔曼方程，当最后更新的状态与我们上一个状态的区别并不大的时候，更新就可以停止，我们就可以输出最新的 $V^{\prime}(s)$ 作为它当前的状态的价值。这里就是把贝尔曼方程变成一个贝尔曼更新<code>(Bellman update)</code>，这样就可以得到状态的价值。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061103338.png" alt=""></p>
 <h2 id="马尔可夫决策过程-1"><a href="#马尔可夫决策过程-1" class="headerlink" title="马尔可夫决策过程"></a>马尔可夫决策过程</h2><p>相对于马尔可夫奖励过程，马尔可夫决策过程多了决策（决策是指动作），其他的定义与马尔可夫奖励过程的是类似的。此外，状态转移也多了一个条件，变成了 $p (s_{t+1}=s^{\prime}|s_{t}=s, a_{t}=a)$。未来的状态不仅依赖于当前的状态，也依赖于在当前状态智能体采取的动作。</p>
 <h3 id="马尔可夫决策过程中的策略"><a href="#马尔可夫决策过程中的策略" class="headerlink" title="马尔可夫决策过程中的策略"></a>马尔可夫决策过程中的策略</h3><p>策略定义了在某一个状态应该采取什么样的动作。知道当前状态后，我们可以把当前状态代入策略函数来得到一个概率，即</p>
@@ -593,13 +593,13 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061124112.png" alt=""></p>
 <h3 id="马尔可夫决策过程中的价值函数"><a href="#马尔可夫决策过程中的价值函数" class="headerlink" title="马尔可夫决策过程中的价值函数"></a>马尔可夫决策过程中的价值函数</h3><p>马尔可夫决策过程中的价值函数的定义如下，其中，期望基于我们采取的策略。当策略决定后，我们通过对策略进行采样来得到一个期望，计算出它的价值函数。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061151736.png" alt=""></p>
-<p>这里另外引入了一个 $Q$ 函数。 $Q$ 函数也被称为动作价值函数（action-value function）。 $Q$ 函数定义的是在某一个状态采取某一个动作，它有可能得到的回报的一个期望，即</p>
+<p>这里另外引入了一个 $Q$ 函数。 $Q$ 函数也被称为动作价值函数<code>(action-value function)</code>。 $Q$ 函数定义的是在某一个状态采取某一个动作，它有可能得到的回报的一个期望，即</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061344602.png" alt=""></p>
 <p>状态价值函数可以理解为在状态s的情况下，未采取动作之前期望的回报值，即所有可能动作的奖励之和。那么我们可以得到如下转化关系公式：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061423882.png" alt=""></p>
 <p>动作价值函数可以理解为在状态 $s$ 下，采取动作 $a$ 之后，转变到下一个状态 $s^{\prime}$ 产生的奖励与下一个状态的期望奖励 $v_{\pi}(s^{\prime})$ 之和。那么我们可以得到如下转化关系公式：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061426853.png" alt=""></p>
-<h3 id="贝尔曼期望方程"><a href="#贝尔曼期望方程" class="headerlink" title="贝尔曼期望方程"></a>贝尔曼期望方程</h3><p>我们可以把状态价值函数和 $Q$ 函数拆解成两个部分：即时奖励和后续状态的折扣价值（discounted value of successor state）。通过对状态价值函数进行分解，我们就可以得到一个类似于之前马尔可夫奖励过程的贝尔曼方程——贝尔曼期望方程（Bellman expectation equation）：</p>
+<h3 id="贝尔曼期望方程"><a href="#贝尔曼期望方程" class="headerlink" title="贝尔曼期望方程"></a>贝尔曼期望方程</h3><p>我们可以把状态价值函数和 $Q$ 函数拆解成两个部分：即时奖励和后续状态的折扣价值<code>(discounted value of successor state)</code>。通过对状态价值函数进行分解，我们就可以得到一个类似于之前马尔可夫奖励过程的贝尔曼方程——贝尔曼期望方程<code>(Bellman expectation equation)</code>：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061432650.png" alt=""></p>
 <p>对于 $Q$ 函数，我们也可以做类似的分解，得到 $Q$ 函数的贝尔曼期望方程：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061433344.png" alt=""></p>
@@ -614,10 +614,10 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061458839.png" alt=""></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061458666.png" alt=""></p>
 <h3 id="策略评估"><a href="#策略评估" class="headerlink" title="策略评估"></a>策略评估</h3><p>已知马尔可夫决策过程以及要采取的策略 $\pi$ ，计算价值函数 $V_{\pi}(s)$ 的过程就是策略评估。</p>
-<h3 id="预测与控制"><a href="#预测与控制" class="headerlink" title="预测与控制"></a>预测与控制</h3><p>预测（prediction）和控制（control）是马尔可夫决策过程里面的核心问题。<br>预测（评估一个给定的策略）的输入是马尔可夫决策过程 $&lt; S, A, P, R, \gamma &gt;$ 和策略 $\pi$，输出是价值函数 $V_{\pi}$。预测是指给定一个马尔可夫决策过程以及一个策略 $\pi$ ，计算它的价值函数，也就是计算每个状态的价值。<br>控制（搜索最佳策略）的输入是马尔可夫决策过程 $&lt; S, A, P, R, \gamma &gt;$，输出是最佳价值函数（optimalv alue function） $V^{\ast}$ 和最佳策略（optimal policy） $\pi^{\ast}$。控制就是我们去寻找一个最佳的策略，然后同时输出它的最佳价值函数以及最佳策略。</p>
-<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><p>动态规划（dynamic programming，DP）适合解决满足最优子结构（optimal substructure）和重叠子问题（overlapping subproblem）两个性质的问题。</p>
+<h3 id="预测与控制"><a href="#预测与控制" class="headerlink" title="预测与控制"></a>预测与控制</h3><p>预测<code>(prediction)</code>和控制<code>(control)</code>是马尔可夫决策过程里面的核心问题。<br>预测（评估一个给定的策略）的输入是马尔可夫决策过程 $&lt; S, A, P, R, \gamma &gt;$ 和策略 $\pi$，输出是价值函数 $V_{\pi}$。预测是指给定一个马尔可夫决策过程以及一个策略 $\pi$ ，计算它的价值函数，也就是计算每个状态的价值。<br>控制（搜索最佳策略）的输入是马尔可夫决策过程 $&lt; S, A, P, R, \gamma &gt;$，输出是最佳价值函数<code>(optimal value function)</code> $V^{\ast}$ 和最佳策略<code>(optimal policy)</code> $\pi^{\ast}$。控制就是我们去寻找一个最佳的策略，然后同时输出它的最佳价值函数以及最佳策略。</p>
+<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><p>动态规划<code>(dynamic programming，DP)</code>适合解决满足最优子结构<code>(optimal substructure)</code>和重叠子问题<code>(overlapping subproblem)</code>两个性质的问题。</p>
 <h3 id="马尔可夫决策过程中的策略评估"><a href="#马尔可夫决策过程中的策略评估" class="headerlink" title="马尔可夫决策过程中的策略评估"></a>马尔可夫决策过程中的策略评估</h3><p>  策略评估就是给定马尔可夫决策过程和策略，评估我们可以获得多少价值，即对于当前策略，我们可以得到多大的价值。</p>
-<h3 id="马尔可夫决策过程控制"><a href="#马尔可夫决策过程控制" class="headerlink" title="马尔可夫决策过程控制"></a>马尔可夫决策过程控制</h3><p>策略评估是指给定马尔可夫决策过程和策略，我们可以估算出价值函数的值。如果我们只有马尔可夫决策过程，那么应该如何寻找最佳的策略，从而得到最佳价值函数（optimal value function）呢？  </p>
+<h3 id="马尔可夫决策过程控制"><a href="#马尔可夫决策过程控制" class="headerlink" title="马尔可夫决策过程控制"></a>马尔可夫决策过程控制</h3><p>策略评估是指给定马尔可夫决策过程和策略，我们可以估算出价值函数的值。如果我们只有马尔可夫决策过程，那么应该如何寻找最佳的策略，从而得到最佳价值函数<code>(optimal value function)</code>呢？  </p>
 <p>最佳价值函数的定义为：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061546075.png" alt=""></p>
 <p>最佳价值函数是指，我们搜索一种策略 $\pi$ 让每个状态的价值最大。 $V^{\ast}$ 就是到达每一个状态，它的值的最大化情况。在这种最大化情况中，我们得到的策略就是最佳策略，即</p>
@@ -627,14 +627,14 @@
 <p>策略迭代由两个步骤组成：策略评估和策略改进。第一个步骤是策略评估，当前我们在优化策略 $\pi$，在优化过程中得到一个最新的策略。我们先保证这个策略不变，然后估计它的价值，即给定当前的策略函数来估计状态价值函数。第二个步骤是策略改进，得到状态价值函数后，我们可以进一步推算出它的 $Q$ 函数。得到 $Q$ 函数后，我们直接对 $Q$ 函数进行最大化，通过在 $Q$ 函数做一个贪心的搜索来进一步改进策略。这两个步骤一直在迭代进行。</p>
 <h4 id="贝尔曼最优方程"><a href="#贝尔曼最优方程" class="headerlink" title="贝尔曼最优方程"></a>贝尔曼最优方程</h4><p>当我们一直采取 $\arg \max$ 操作的时候，我们会得到一个单调的递增。通过采取这种贪心操作，我们就会得到更好的或者不变的策略，而不会使价值函数变差。所以当改进停止后，我们就会得到一个最佳策略。当改进停止后，我们取让 $Q$ 函数值最大化的动作， $Q$ 函数就会直接变成价值函数，即</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061626343.png" alt=""></p>
-<p>我们也就可以得到贝尔曼最优方程（Bellman optimality equation）。贝尔曼最优方程表明：最佳策略下的一个状态的价值必须等于在这个状态下采取最好动作得到的回报的期望。</p>
+<p>我们也就可以得到贝尔曼最优方程<code>(Bellman optimality equation)</code>。贝尔曼最优方程表明：最佳策略下的一个状态的价值必须等于在这个状态下采取最好动作得到的回报的期望。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061637403.png" alt=""></p>
 <h3 id="价值迭代"><a href="#价值迭代" class="headerlink" title="价值迭代"></a>价值迭代</h3><p>历程：迭代执行 $Q_{\pi} \rightarrow V_{\pi}$ ，最终得到 $\pi^{\ast}$</p>
-<h4 id="最优性原理"><a href="#最优性原理" class="headerlink" title="最优性原理"></a>最优性原理</h4><p>最优性原理定理（principle of optimality theorem）：一个策略 $\pi(a|s)$ 在状态 $s$ 达到了最优价值，也就是 $V_{\pi}(s) = V^{\ast}(s)$ 成立，当且仅当对于任何能够从 $s$ 到达的 $s^{\prime}$ ，都已经达到了最优价值。也就是对于所有的 $s^{\prime}$，$ V_{\pi}(s^{\prime}) = V^{\ast}(s^{\prime})$ 恒成立。</p>
+<h4 id="最优性原理"><a href="#最优性原理" class="headerlink" title="最优性原理"></a>最优性原理</h4><p>最优性原理定理<code>(principle of optimality theorem)</code>：一个策略 $\pi(a|s)$ 在状态 $s$ 达到了最优价值，也就是 $V_{\pi}(s) = V^{\ast}(s)$ 成立，当且仅当对于任何能够从 $s$ 到达的 $s^{\prime}$ ，都已经达到了最优价值。也就是对于所有的 $s^{\prime}$，$ V_{\pi}(s^{\prime}) = V^{\ast}(s^{\prime})$ 恒成立。</p>
 <h4 id="确认性价值迭代"><a href="#确认性价值迭代" class="headerlink" title="确认性价值迭代"></a>确认性价值迭代</h4><p>如果我们知道子问题 $V^{\ast}(s^{\prime})$ 的最优解，就可以通过价值迭代来得到最优的 $V^{\ast}(s)$ 的解。价值迭代就是把贝尔曼最优方程当成一个更新规则来进行，即</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311061736922.png" alt=""></p>
 <p>上式只有当整个马尔可夫决策过程已经达到最佳的状态时才满足。我们可以把它转换成一个备份的等式。备份的等式就是一个迭代的等式。我们不停地迭代贝尔曼最优方程，价值函数就能逐渐趋向于最佳的价值函数，这是价值迭代算法的精髓。</p>
-<h1 id="表格型方法"><a href="#表格型方法" class="headerlink" title="表格型方法"></a>表格型方法</h1><h2 id="马尔可夫决策过程-2"><a href="#马尔可夫决策过程-2" class="headerlink" title="马尔可夫决策过程"></a>马尔可夫决策过程</h2><p>状态转移概率是具有马尔可夫性质的（系统下一时刻的状态仅由当前时刻的状态决定，不依赖于以往任何状态）。状态、动作、状态转移概率和奖励 (S、 A、 P、 R)，这 4 个合集就构成了强化学习马尔可夫决策过程的四元组，后面也可能会再加上折扣因子构成五元组。</p>
+<h1 id="表格型方法"><a href="#表格型方法" class="headerlink" title="表格型方法"></a>表格型方法</h1><h2 id="马尔可夫决策过程-2"><a href="#马尔可夫决策过程-2" class="headerlink" title="马尔可夫决策过程"></a>马尔可夫决策过程</h2><p>状态转移概率是具有马尔可夫性质的（系统下一时刻的状态仅由当前时刻的状态决定，不依赖于以往任何状态）。状态、动作、状态转移概率和奖励，这 $4$ 个合集就构成了强化学习马尔可夫决策过程的四元组，后面也可能会再加上折扣因子构成五元组。</p>
 <h3 id="有模型"><a href="#有模型" class="headerlink" title="有模型"></a>有模型</h3><p>我们与环境交互时，只能走一条完整的通路，这里面产生了一系列决策的过程，我们与环境交互产生了经验。我们会使用概率函数 $P [s_{t+1}, r_{t} | s_{t}, a_{t}]$ 和奖励函数 $R [s_{t}, a_{t}]$ 来描述环境。概率函数就是状态转移的概率，它反映的是环境的随机性。</p>
 <h3 id="免模型"><a href="#免模型" class="headerlink" title="免模型"></a>免模型</h3><p>很多强化学习的经典算法都是免模型的，也就是环境是未知的。我们处在未知的环境里，也就是这一系列的决策的概率函数和奖励函数是未知的，这就是有模型与免模型的最大的区别。</p>
 <h2 id="Q-表格"><a href="#Q-表格" class="headerlink" title="Q 表格"></a>Q 表格</h2><p>$Q$ 表格里面 $Q$ 函数的意义就是我们选择了某个动作后，最后能不能成功，就需要我们去计算在某个状态下选择某个动作，后续能够获得多少总奖励。如果可以预估未来的总奖励的大小，我们就知道在当前的状态下选择哪个动作价值更高。我们选择某个动作是因为这样未来可以获得的价值会更高。所以强化学习的目标导向性很强，环境给出的奖励是非常重要的反馈，它根据环境的奖励来做选择。</p>
@@ -656,7 +656,7 @@
 <p>蒙特卡洛方法通过一个回合的经验平均回报（实际得到的奖励）来进行更新，即</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311081501924.png" alt=""></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311081501433.png" alt=""></p>
-<h3 id="时序差分"><a href="#时序差分" class="headerlink" title="时序差分"></a>时序差分</h3><p>时序差分方法的目的是对于某个给定的策略 $\pi$，在线（online）地算出它的价值函数 $V_{\pi}$，即一步一步地（step-by-step）算。最简单的算法是一步时序差分（one-step TD），即 <strong>TD(0)</strong>。每往前走一步，就做一步自举，用得到的估计回报 $r_{t+1}+ \gamma V (s_{t+1})$ 来更新上一时刻的值 $V (s_{t})$：</p>
+<h3 id="时序差分"><a href="#时序差分" class="headerlink" title="时序差分"></a>时序差分</h3><p>时序差分方法的目的是对于某个给定的策略 $\pi$，在线<code>(online)</code>地算出它的价值函数 $V_{\pi}$，即一步一步地<code>(step-by-step)</code>算。最简单的算法是一步时序差分<code>(one-step TD)</code>，即 <strong><code>TD(0)</code></strong>。每往前走一步，就做一步自举，用得到的估计回报 $r_{t+1}+ \gamma V (s_{t+1})$ 来更新上一时刻的值 $V (s_{t})$：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311081538081.png" alt=""></p>
 <p><strong>蒙特卡洛方法和时间差分方法的对比</strong></p>
 <ul>
@@ -668,20 +668,20 @@
 <h3 id="动态规划方法、蒙特卡洛方法以及时序差分方法的自举和采样"><a href="#动态规划方法、蒙特卡洛方法以及时序差分方法的自举和采样" class="headerlink" title="动态规划方法、蒙特卡洛方法以及时序差分方法的自举和采样"></a>动态规划方法、蒙特卡洛方法以及时序差分方法的自举和采样</h3><p>自举是指更新时使用了估计。蒙特卡洛方法没有使用自举，因为它根据实际的回报进行更新。动态规划方法和时序差分方法使用了自举。</p>
 <p>采样是指更新时通过采样得到一个期望。蒙特卡洛方法是纯采样的方法。动态规划方法没有使用采样，它是直接用贝尔曼期望方程来更新状态价值的。时序差分方法使用了采样。时序差分目标由两部分组成，一部分是采样，一部分是自举。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311081632154.png" alt=""></p>
-<h2 id="免模型控制"><a href="#免模型控制" class="headerlink" title="免模型控制"></a>免模型控制</h2><p>在我们不知道马尔可夫决策过程模型的情况下，如何优化价值函数，得到最佳的策略呢？我们可以把策略迭代进行广义的推广，使它能够兼容蒙特卡洛和时序差分的方法，即带有蒙特卡洛方法和时序差分方法的广义策略迭代（generalized policy iteration，GPI）。</p>
+<h2 id="免模型控制"><a href="#免模型控制" class="headerlink" title="免模型控制"></a>免模型控制</h2><p>在我们不知道马尔可夫决策过程模型的情况下，如何优化价值函数，得到最佳的策略呢？我们可以把策略迭代进行广义的推广，使它能够兼容蒙特卡洛和时序差分的方法，即带有蒙特卡洛方法和时序差分方法的广义策略迭代<code>(generalized policy iteration，GPI)</code>。</p>
 <p><strong>当我们不知道奖励函数和状态转移时，如何进行策略的优化？</strong></p>
 <p>针对上述情况，我们引入了广义的策略迭代的方法。我们对策略评估部分进行修改，使用蒙特卡洛的方法代替动态规划的方法估计 $Q$ 函数。我们首先进行策略评估，使用蒙特卡洛方法来估计策略 $Q = Q_{\pi}$，然后进行策略更新，即得到 $Q$ 函数后，我们就可以通过贪心的方法去改进它。</p>
-<p>一个保证策略迭代收敛的假设是回合有探索性开始（exploring start）。</p>
+<p>一个保证策略迭代收敛的假设是回合有探索性开始<code>(exploring start)</code>。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311091108609.png" alt=""></p>
-<p>为了确保蒙特卡洛方法能够有足够的探索，我们使用了 $\varepsilon$-贪心（$\varepsilon$-greedy）探索。</p>
+<p>为了确保蒙特卡洛方法能够有足够的探索，我们使用了 $\varepsilon$-贪心探索。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311091120042.png" alt=""></p>
-<h3 id="Sarsa：同策略时序差分控制"><a href="#Sarsa：同策略时序差分控制" class="headerlink" title="Sarsa：同策略时序差分控制"></a>Sarsa：同策略时序差分控制</h3><p>Sarsa 所做出的改变很简单，它将原本时序差分方法更新 V 的过程，变成了更新 Q，即</p>
+<h3 id="Sarsa：同策略时序差分控制"><a href="#Sarsa：同策略时序差分控制" class="headerlink" title="Sarsa：同策略时序差分控制"></a>Sarsa：同策略时序差分控制</h3><p><code>Sarsa</code>所做出的改变很简单，它将原本时序差分方法更新 $V$ 的过程，变成了更新 $Q$，即</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131348504.png" alt=""></p>
-<p>算法由于每次更新值函数时需要知道当前的状态（state）、当前的动作（action）、奖励（reward）、下一步的状态（state）、下一步的动作（action），即（$s_{t}$, $a_{t}$, $r_{t+1}$, $s_{t+1}$, $a_{t+1}$）这几个值，因此得名 Sarsa 算法。它走了一步之后，获取了（$s_{t}$, $a_{t}$, $r_{t+1}$, $s_{t+1}$, $a_{t+1}$）之后，就可以做一次更新。</p>
+<p>算法由于每次更新值函数时需要知道当前的状态<code>(state)</code>、当前的动作<code>(action)</code>、奖励<code>(reward)</code>、下一步的状态<code>(state)</code>、下一步的动作<code>(action)</code>，即 $(s_{t}, a_{t}, r_{t+1}, s_{t+1}, a_{t+1})$ 这几个值，因此得名<code>Sarsa</code>算法。它走了一步之后，获取了 $(s_{t}, a_{t}, r_{t+1}, s_{t+1}, a_{t+1})$ 之后，就可以做一次更新。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131355382.png" alt=""></p>
 <h4 id="Sarsa-lambda"><a href="#Sarsa-lambda" class="headerlink" title="Sarsa($\lambda$)"></a>Sarsa($\lambda$)</h4><p>$\lambda$ 是脚步衰变值，取值为 $[0, 1]$。通过设定 $\lambda$ 可以让离奖励较近的选择获得较大的奖赏，离奖励较远的选择获得较小的奖赏。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202404171543327.png" alt=""></p>
-<h3 id="Q学习：异策略时序差分控制"><a href="#Q学习：异策略时序差分控制" class="headerlink" title="Q学习：异策略时序差分控制"></a>Q学习：异策略时序差分控制</h3><p>Sarsa 是一种<strong>同策略（on-policy）</strong>算法，它优化的是它实际执行的策略，它直接用下一步会执行的动作去优化$Q$表格。同策略在学习的过程中，只存在一种策略，它用一种策略去做动作的选取，也用一种策略去做优化。Q 学习是一种<strong>异策略（off-policy）</strong>算法。异策略在学习的过程中，有两种不同的策略：<strong>目标策略（target policy）</strong>和<strong>行为策略（behavior policy）</strong>。</p>
+<h3 id="Q学习：异策略时序差分控制"><a href="#Q学习：异策略时序差分控制" class="headerlink" title="Q学习：异策略时序差分控制"></a>Q学习：异策略时序差分控制</h3><p><code>Sarsa</code>是一种<strong>同策略（on-policy）</strong>算法，它优化的是它实际执行的策略，它直接用下一步会执行的动作去优化$Q$表格。同策略在学习的过程中，只存在一种策略，它用一种策略去做动作的选取，也用一种策略去做优化。Q 学习是一种<strong>异策略（off-policy）</strong>算法。异策略在学习的过程中，有两种不同的策略：<strong>目标策略（target policy）</strong>和<strong>行为策略（behavior policy）</strong>。</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131452578.png" alt=""></p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202311131454910.png" alt=""></p>
 <h3 id="同策略与异策略的区别"><a href="#同策略与异策略的区别" class="headerlink" title="同策略与异策略的区别"></a>同策略与异策略的区别</h3><p>$Q$学习是一个非常激进的方法，它希望每一步都获得最大的利益；Sarsa则相对较为保守，它会选择一条相对安全的迭代路线。</p>
@@ -778,7 +778,7 @@
 <p>深度 $Q$ 网络（deep Q-network， DQN）是指基于深度学习的 $Q$ 学习算法，主要结合了价值函数近似与神经网络技术，并采用目标网络和经历回放的方法进行网络的训练。</p>
 <h2 id="状态价值函数"><a href="#状态价值函数" class="headerlink" title="状态价值函数"></a>状态价值函数</h2><p>深度 $Q$ 网络是基于价值的算法，在基于价值的算法里面，我们学习的不是策略，而是评论员（critic）。评论员的任务是评价现在的动作有多好或有多不好。假设有一个演员，其要学习一个策略来得到尽量高的回报。评论员就是评价演员的策略 $\pi$ 好还是不好，即策略评估。例如，有一种评论员称为状态价值函数 $V_{\pi}$。状态价值函数是指，假设演员的策略是 $\pi$，用 $\pi$ 与环境交互，假设 $\pi$ 看到了某一个状态 $s$，例如在玩雅达利游戏，状态 $s$ 是某一个画面， $\pi$ 看到某一个画面，接下来一直到游戏结束，期望的累积奖励有多大。</p>
 <p>怎么衡量状态价值函数 $V_{\pi}(s)$ 呢？有两种不同的方法：基于蒙特卡洛的方法和基于时序差分的方法。基于蒙特卡洛的方法就是让演员与环境交互，我们要看演员好不好，就让演员与环境交互，让评论员评价。基于时序差分的方法不需要玩到游戏结束，只需要在游戏的某一个状态 $s_{t}$ 的时候，采取动作 $a_{t}$ 得到奖励 $r_{t}$ ，接下来进入状态 $s_{t+1}$，就可以使用时序差分的方法。我们是这样训练的，我们把 $s_{t}$ 输入网络，因为把 $s_{t}$ 输入网络会得到 $V_{\pi}(s_{t})$，把 $s_{t+1}$ 输入网络会得到 $V_{\pi}(s_{t+1})$， $V_{\pi}(s_{t})$ 减 $V_{\pi}(s_{t+1})$ 的值应该是 $r_{t}$。我们希望它们相减的损失与 $r_{t}$ 接近，训练下去，更新 $V_{\pi}$ 的参数，我们就可以把 $V_{\pi}$ 函数学习出来。</p>
-<p>蒙特卡洛方法与时序差分方法有什么差别呢？蒙特卡洛方法最大的问题就是方差很大。<strong>（时序差分就是将自举估计的回报代替蒙特卡洛更新式中的回报，这样我们不需要经过一个完整的epoisode就可以估算出回报）</strong></p>
+<p>蒙特卡洛方法与时序差分方法有什么差别呢？蒙特卡洛方法最大的问题就是方差很大。<strong>（时序差分就是将自举估计的回报代替蒙特卡洛更新式中的回报，这样我们不需要经过一个完整的episode就可以估算出回报）</strong></p>
 <h2 id="动作价值函数"><a href="#动作价值函数" class="headerlink" title="动作价值函数"></a>动作价值函数</h2><p>状态价值函数的输入是一个状态，它根据状态计算出这个状态以后的期望的累积奖励是多少。动作价值函数的输入是一个状态-动作对，其指在某一个状态采取某一个动作，假设我们都使用策略 $\pi$ ，得到的累积奖励的期望值有多大。</p>
 <p>$Q$ 函数有两种写法：</p>
 <ul>
