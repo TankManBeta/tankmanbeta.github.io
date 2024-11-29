@@ -23,20 +23,22 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="这是一篇测试文章，没有后续~~~">
+<meta name="description" content="前言公司后续可能会做无人机相关业务，提前了解一下ROS相关内容。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的第一篇文章">
-<meta property="og:url" content="http://example.com/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/index.html">
+<meta property="og:title" content="ROS">
+<meta property="og:url" content="http://example.com/2024/11/29/ROS/index.html">
 <meta property="og:site_name" content="木霈玖的博客">
-<meta property="og:description" content="这是一篇测试文章，没有后续~~~">
+<meta property="og:description" content="前言公司后续可能会做无人机相关业务，提前了解一下ROS相关内容。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-01-31T08:24:31.000Z">
-<meta property="article:modified_time" content="2021-03-31T04:04:16.349Z">
+<meta property="article:published_time" content="2024-11-29T05:20:54.000Z">
+<meta property="article:modified_time" content="2024-11-29T05:26:43.795Z">
 <meta property="article:author" content="木霈玖">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">
+<link rel="canonical" href="http://example.com/2024/11/29/ROS/">
 
 
 <script class="page-configurations">
@@ -48,7 +50,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>我的第一篇文章 | 木霈玖的博客</title>
+<title>ROS | 木霈玖的博客</title>
   
 
 
@@ -172,7 +174,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -185,6 +187,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">Docker安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F"><span class="nav-number">2.2.</span> <span class="nav-text">拉取镜像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">运行示例</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -250,7 +253,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/29/ROS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -263,7 +266,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          我的第一篇文章
+          ROS
         </h1>
 
         <div class="post-meta-container">
@@ -273,16 +276,19 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-01-31 16:24:31" itemprop="dateCreated datePublished" datetime="2021-01-31T16:24:31+08:00">2021-01-31</time>
+      <time title="创建时间：2024-11-29 13:20:54 / 修改时间：13:26:43" itemprop="dateCreated datePublished" datetime="2024-11-29T13:20:54+08:00">2024-11-29</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-31 12:04:16" itemprop="dateModified" datetime="2021-03-31T12:04:16+08:00">2021-03-31</time>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
       </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
+        </span>
+    </span>
 
   
       </div>
@@ -292,7 +298,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>16</span>
+      <span>1.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -310,7 +316,45 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这是一篇测试文章，没有后续~~~</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>公司后续可能会做无人机相关业务，提前了解一下<code>ROS</code>相关内容。</p>
+<a id="more"></a>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a><code>Docker</code>安装</h2><p>基础设置，先跳过。</p>
+<h2 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h2><ul>
+<li><p>手动修改<code>Docker</code>的配置文件来添加镜像源：</p>
+<ul>
+<li><p>使用编辑器打开配置文件<code>/etc/docker/daemon.json</code>（如果没有该文件，则新建一个）。</p>
+</li>
+<li><p>粘贴以下内容。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line"><span class="string">&quot;https://docker.hpcloud.cloud&quot;</span>,</span><br><span class="line"><span class="string">&quot;https://docker.m.daocloud.io&quot;</span>,</span><br><span class="line"><span class="string">&quot;https://docker.unsee.tech&quot;</span>,</span><br><span class="line"><span class="string">&quot;https://docker.1panel.live&quot;</span>,</span><br><span class="line"><span class="string">&quot;http://mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line"><span class="string">&quot;https://docker.chenby.cn&quot;</span>,</span><br><span class="line"><span class="string">&quot;http://mirror.azure.cn&quot;</span>,</span><br><span class="line"><span class="string">&quot;https://dockerpull.org&quot;</span>,</span><br><span class="line"><span class="string">&quot;https://dockerhub.icu&quot;</span>,</span><br><span class="line"><span class="string">&quot;https://hub.rat.dev&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>保存文件后，通过以下命令重启<code>Docker</code>服务。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure></li>
+<li><p>通过以下命令验证配置是否生效。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker info | grep &quot;Registry Mirrors&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>通过以下命令拉取镜像。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker pull osrf/ros:melodic-desktop-full</span><br></pre></td></tr></table></figure>
+<h1 id="运行示例"><a href="#运行示例" class="headerlink" title="运行示例"></a>运行示例</h1></li>
+<li><p>使用以下命令修改<code>X server</code>的访问控制策略，允许本地机器上的用户或进程连接到<code>X server</code>，从而允许它们显示图形界面，来实现<code>Docker</code>容器与宿主机之间的图形界面共享。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xhost +local:</span><br></pre></td></tr></table></figure></li>
+<li><p>使用以下命令启动一个容器，<code>--volume=/tmp/.X11-unix:/tmp/.X11-unix</code>的作用是挂载卷，将宿主机的<code>/tmp/.X11-unix</code>目录挂载到容器的相同路径，这个目录包含了<code>X11</code>服务器的<code>UNIX</code>域套接字，用于图形界面的通信。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -d --volume=/tmp/.X11-unix:/tmp/.X11-unix --device=/dev/snd --env=&quot;DISPLAY=$DISPLAY&quot; --name=&lt;CONTAINER_NAME&gt; &lt;IMAGE_NAME&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用以下命令进入刚刚启动的容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it &lt;CONTAINER_ID&gt; /bin/bash</span><br></pre></td></tr></table></figure></li>
+<li><p>在容器内部执行以下命令配置<code>ROS</code>的环境变量。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ./ros_entrypoint.sh</span><br></pre></td></tr></table></figure></li>
+<li><p>在容器中运行以下命令启动<code>ROS</code>的主节点。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roscore</span><br></pre></td></tr></table></figure></li>
+<li><p>新建终端，按照前述步骤进入容器并配置<code>ROS</code>的环境变量。</p>
+</li>
+<li><p>在容器中运行以下命令启动<code>ROS</code>节点，其中<code>turtlesim</code>是包名，<code>turtlesim_node</code>是节点名。命令执行成功后乌龟能够正常的显示在桌面上。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun turtlesim turtlesim_node</span><br></pre></td></tr></table></figure></li>
+<li><p>新建终端，同样按照前述步骤进入容器并配置<code>ROS</code>的环境变量。</p>
+</li>
+<li><p>在容器中运行以下命令启动<code>ROS</code>节点。命令成功执行后可以通过键盘控制乌龟。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun turtlesim turtle_teleop_key</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
     </div>
 
@@ -319,16 +363,20 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%80%BB%E7%BB%93/" rel="tag"># 总结</a>
+              <a href="/tags/ROS/" rel="tag"># ROS</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2024/11/17/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="prev" title="多智能体强化学习">
+                  <i class="fa fa-chevron-left"></i> 多智能体强化学习
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/03/31/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" rel="next" title="搭建个人博客">
-                  搭建个人博客 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
