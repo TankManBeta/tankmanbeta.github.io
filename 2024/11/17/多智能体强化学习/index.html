@@ -57,7 +57,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411202320613.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411171817653.png">
 <meta property="article:published_time" content="2024-11-17T08:54:28.000Z">
-<meta property="article:modified_time" content="2025-03-14T11:22:34.839Z">
+<meta property="article:modified_time" content="2025-05-30T03:05:10.052Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="强化学习">
@@ -311,7 +311,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2025-03-14 19:22:34" itemprop="dateModified" datetime="2025-03-14T19:22:34+08:00">2025-03-14</time>
+        <time title="修改时间：2025-05-30 11:05:10" itemprop="dateModified" datetime="2025-05-30T11:05:10+08:00">2025-05-30</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -331,7 +331,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>7.5k</span>
+      <span>7.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -370,7 +370,7 @@
 <ul>
 <li><code>agent networks</code>：对于每个智能体都要学一个独立的值函数$Q_{a}\left(\tau^{a}, u^{a}\right)$，单个智能体的网络结构采用<code>DRQN</code>的网络结构，在每个时间步，接收当前的独立观测$O_{t}^{a}$和上一个动作$\mu_{t-1}^{a}$，如上图<code>(c)</code>所示。</li>
 <li><code>mixing network</code>：是一个全连接网络，接收每个智能体的输出$Q_{n}\left(\tau^{n}, u_{t}^{n}\right)$作为输入，输出联合动作值函数$Q_{t o t}(\boldsymbol{\tau}, \boldsymbol{u})$，对每个子智能体的动作值函数做非线性映射，并且要保证单调性约束。想要保证公式<code>(2)</code>的单调性约束的话，我们只需要保证<code>mixing network</code>的权重非负即可。</li>
-<li><code>hypernetworks</code>：<code>hypernetworks</code>网络去产生<code>mixing network</code>的权重，超参数网络输入状态$s$，输出<code>Mixing</code>网络的每一层的超参数向量，激活函数来使得输出非负，对于<code>Mixing</code>网络参数的偏置并没有非负的要求。</li>
+<li><code>hypernetworks</code>：<code>hypernetworks</code>网络去产生<code>mixing network</code>的权重，超参数网络输入状态$s$，输出<code>Mixing</code>网络的每一层的超参数向量，激活函数来使得输出非负，对于<code>Mixing</code>网络参数的偏置并没有非负的要求。<code>Hypernetworks</code>表示用于产生较大规模网络参数的小规模网络，在这一过程中，主网络的作用与其他任意神经网络一样，将输入样本映射到对应的目标值，而超网络的作用则是接收一系列包含主网络参数结构信息的值作为输入然后产生主网络某一层的参数。超网络的思想源于进化计算（evolutionary computing）：在一个包含成千上万参数的空间中搜索参数是十分困难的，一种更加高效的方式是用较小的网络产生较大网络的参数，这样搜索空间就会被限制在一个小得多的空间中，超网络的参数和主网络通过端到端的方式进行训练。</li>
 </ul>
 <p><code>QMIX</code>的训练方式是端到端的训练：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411172102666.png" alt=""></p>
