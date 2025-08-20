@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508201437992.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508201559070.png">
 <meta property="article:published_time" content="2025-08-20T03:14:36.000Z">
-<meta property="article:modified_time" content="2025-08-20T08:13:32.388Z">
+<meta property="article:modified_time" content="2025-08-20T10:02:37.178Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="HuggingFace">
@@ -192,7 +192,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E7%94%A8%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">具体用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">库的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%B0%83%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">模型调用</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E7%94%A8%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">具体用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">库的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%B0%83%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">模型调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">缓存路径设置</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -283,7 +283,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2025-08-20 11:14:36 / 修改时间：16:13:32" itemprop="dateCreated datePublished" datetime="2025-08-20T11:14:36+08:00">2025-08-20</time>
+      <time title="创建时间：2025-08-20 11:14:36 / 修改时间：18:02:37" itemprop="dateCreated datePublished" datetime="2025-08-20T11:14:36+08:00">2025-08-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -303,14 +303,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.4k</span>
+      <span>3.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -347,6 +347,63 @@
 <p>运行上述<code>py</code>文件后，会在当前路径下生成一张毕加索风格的松鼠图片，如下所示：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508201559070.png" alt=""></p>
 <p><strong>注意：运行时程序可能报错，module ‘torch.library’ has no attribute ‘custom_op’，原因是torch版本太低，升级即可。</strong></p>
+<h2 id="缓存路径设置"><a href="#缓存路径设置" class="headerlink" title="缓存路径设置"></a>缓存路径设置</h2><p><code>huggingface</code>的缓存路径默认为<code>~/.cache/huggingface/hub</code>，<code>Windows</code>下默认为<code>C:\Users\&lt;username&gt;\.cache\huggingface\hub</code>。如果需要修改，具体逻辑如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>作用范围</th>
+<th>优先级</th>
+<th>默认值 (Linux/macOS)</th>
+<th>默认值 (Windows)</th>
+<th>是否推荐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HF_HUB_CACHE</strong></td>
+<td>只影响 <strong>模型 / 数据集 / space 仓库缓存目录</strong></td>
+<td>最高</td>
+<td><code>$HF_HOME/hub</code></td>
+<td><code>%HF_HOME%\hub</code></td>
+<td>✅ 推荐（只改模型缓存时）</td>
+</tr>
+<tr>
+<td><strong>TRANSFORMERS_CACHE</strong></td>
+<td>同 <code>HF_HUB_CACHE</code>，历史遗留变量</td>
+<td>最高（和 HF_HUB_CACHE 等价）</td>
+<td><code>~/.cache/huggingface/hub</code></td>
+<td><code>C:\Users\&lt;USERNAME&gt;\.cache\huggingface\hub</code></td>
+<td>❌ 不推荐（兼容性用）</td>
+</tr>
+<tr>
+<td><strong>HF_HOME</strong></td>
+<td>整个 Hugging Face 根目录（hub / assets / xet / token）</td>
+<td>次高</td>
+<td><code>~/.cache/huggingface</code></td>
+<td><code>C:\Users\&lt;USERNAME&gt;\.cache\huggingface</code></td>
+<td>✅ 推荐（要整体迁移时）</td>
+</tr>
+<tr>
+<td><strong>XDG_CACHE_HOME</strong></td>
+<td>Linux/Unix 的缓存规范（只在 <strong>HF_HOME 未设置时</strong> 生效）</td>
+<td>较低</td>
+<td><code>$XDG_CACHE_HOME/huggingface</code></td>
+<td>⚠️ Windows 基本不用</td>
+<td>⚠️ 仅 Linux</td>
+</tr>
+<tr>
+<td><strong>默认目录</strong></td>
+<td>当上面都没设置时走默认路径</td>
+<td>最低</td>
+<td><code>~/.cache/huggingface/hub</code></td>
+<td><code>C:\Users\&lt;USERNAME&gt;\.cache\huggingface\hub</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</div>
 
     </div>
 
