@@ -1,6 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Docker使用总结</title>
+    <url>/2024/05/11/Docker%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Docker</code>过程中遇到的问题。</p>
+<a id="more"></a>
+<h1 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h1><p><code>Docker image</code>本质上是一个<code>read-only</code>只读文件， 这个文件包含了文件系统、源码、库文件、依赖、工具等一些运行<code>application</code>所必须的文件。因此，可以把<code>Docker image</code>理解成一个模板， 可以通过这个模板实例化出来很多容器。</p>
+<h2 id="容器-Container"><a href="#容器-Container" class="headerlink" title="容器(Container)"></a>容器(<code>Container</code>)</h2><ul>
+<li>容器是<code>Docker</code>的运行实例，它包含了所有的应用文件，环境变量，进程等。</li>
+<li>每个容器都是隔离的，运行在自己的命名空间内。</li>
+<li>容器可以启动、开始、停止、删除，每个容器都是静态的，除非你保存它的当前状态作为新的镜像。</li>
+</ul>
+<h2 id="镜像-Image"><a href="#镜像-Image" class="headerlink" title="镜像(Image)"></a>镜像(<code>Image</code>)</h2><ul>
+<li>镜像是一个只读的模板，用来创建<code>Docker</code>容器。</li>
+<li>镜像可以包含一些基本配置，例如环境变量、用户等。</li>
+<li>镜像是创建容器的模板，你不能在镜像上运行应用或者进程。</li>
+<li>镜像可以通过<code>Dockerfile</code>构建，也可以从<code>Docker Hub</code>或其他镜像仓库下载。</li>
+</ul>
+<h1 id="具体用法"><a href="#具体用法" class="headerlink" title="具体用法"></a>具体用法</h1><h2 id="查看镜像"><a href="#查看镜像" class="headerlink" title="查看镜像"></a>查看镜像</h2><ul>
+<li><code>docker images</code>：列出所有本地镜像。</li>
+</ul>
+<h2 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h2><ul>
+<li><code>docker rmi [IMAGE_ID]</code>：删除指定的镜像。</li>
+</ul>
+<h2 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h2><ul>
+<li><code>docker build -t IMAGE_NAME:IMAGE_TAG .</code>：基于<code>Dockerfile</code>创建镜像。</li>
+</ul>
+<h2 id="提交镜像"><a href="#提交镜像" class="headerlink" title="提交镜像"></a>提交镜像</h2><ul>
+<li><code>docker commit -a &quot;xxx&quot; -m &quot;xxx&quot; CONTAINER_ID NEW_IMAGE_NAME:NEW_IMAGE_TAG</code>命令根据<code>Docker</code>容器的更改创建一个新的镜像。</li>
+</ul>
+<h2 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h2><ul>
+<li><code>docker run -v &lt;HOST_PATH1&gt;:&lt;CONTAINER_PATH1&gt; -v &lt;HOST_PATH2&gt;:&lt;CONTAINER_PATH2&gt; IMAGE_NAME</code>命令运行一个容器，同时通过<code>-v</code>参数进行卷的挂载。</li>
+</ul>
+<h2 id="查看正在运行的容器"><a href="#查看正在运行的容器" class="headerlink" title="查看正在运行的容器"></a>查看正在运行的容器</h2><ul>
+<li><code>docker ps</code>：显示当前正在运行的容器。</li>
+</ul>
+<h2 id="查看所有状态的容器"><a href="#查看所有状态的容器" class="headerlink" title="查看所有状态的容器"></a>查看所有状态的容器</h2><ul>
+<li><code>docker ps -a</code>：显示所有状态的容器。容器的状态共有<code>7</code>种：<code>created|restarting|running|removing|paused|exited|dead</code>。</li>
+</ul>
+<h2 id="启动已经停止运行的容器"><a href="#启动已经停止运行的容器" class="headerlink" title="启动已经停止运行的容器"></a>启动已经停止运行的容器</h2><ul>
+<li><code>docker start [CONTAINER_ID]</code>：启动已经停止运行的容器。</li>
+</ul>
+<h2 id="重新启动容器"><a href="#重新启动容器" class="headerlink" title="重新启动容器"></a>重新启动容器</h2><ul>
+<li><code>docker restart [CONTAINER_ID]</code>：重启容器。</li>
+</ul>
+<h2 id="停止正在运行的容器"><a href="#停止正在运行的容器" class="headerlink" title="停止正在运行的容器"></a>停止正在运行的容器</h2><ul>
+<li><code>docker stop [CONTAINER_ID]</code>：停止正在运行的容器。</li>
+</ul>
+<h2 id="强制停止正在运行的容器"><a href="#强制停止正在运行的容器" class="headerlink" title="强制停止正在运行的容器"></a>强制停止正在运行的容器</h2><ul>
+<li><code>docker kill [CONTAINER_ID]</code>：强制停止正在运行的容器。</li>
+</ul>
+<h2 id="删除已经停止运行的容器"><a href="#删除已经停止运行的容器" class="headerlink" title="删除已经停止运行的容器"></a>删除已经停止运行的容器</h2><ul>
+<li><code>docker rm [CONTAINER_ID]</code>：删除已经停止运行的容器。</li>
+</ul>
+<h2 id="强制删除容器"><a href="#强制删除容器" class="headerlink" title="强制删除容器"></a>强制删除容器</h2><ul>
+<li><code>docker rm -f [CONTAINER_ID]</code>：强制删除容器。</li>
+</ul>
+<h2 id="删除多个容器"><a href="#删除多个容器" class="headerlink" title="删除多个容器"></a>删除多个容器</h2><ul>
+<li><code>docker rm -f $(docker ps -aq)</code>：一次性删除多个容器。</li>
+</ul>
+<h2 id="进入正在运行的容器并交互"><a href="#进入正在运行的容器并交互" class="headerlink" title="进入正在运行的容器并交互"></a>进入正在运行的容器并交互</h2><ul>
+<li><code>docker exec -it CONTAINER_ID/CONTAINER_NAME /bin/bash</code>：进入正在运行的容器内部，使用<code>exit</code>命令退出容器后，容器不会停止运行。</li>
+<li><code>docker attach CONTAINER_ID/CONTAINER_NAME</code>：进入正在运行的容器内部，使用<code>exit</code>命令退出容器后，容器停止运行。</li>
+</ul>
+<h2 id="数据拷贝"><a href="#数据拷贝" class="headerlink" title="数据拷贝"></a>数据拷贝</h2><ul>
+<li><code>docker cp SOURCE_PATH TARGET_PATH</code>：进行主机（容器）和容器（主机）之间的数据拷贝，其中容器的路径格式为<code>COTAINER_ID:/xxx</code>。</li>
+</ul>
+<h2 id="镜像归档"><a href="#镜像归档" class="headerlink" title="镜像归档"></a>镜像归档</h2><ul>
+<li><code>docker save -o FILE_PATH IMAGE1:TAG1 IMAGE2:TAG2</code>：将一个或多个镜像保存到一个<code>tar</code>归档文件中，以便在其他环境中分发或备份。</li>
+</ul>
+<h2 id="镜像加载"><a href="#镜像加载" class="headerlink" title="镜像加载"></a>镜像加载</h2><ul>
+<li><code>docker load -i myimage.tar</code>：从由<code>docker save</code>命令生成的<code>tar</code>文件中加载<code>Docker</code>镜像。它可以将存档中的镜像和所有层加载到<code>Docker</code>中，使其可以在新环境中使用。</li>
+</ul>
+<h2 id="查看容器在宿主机的id"><a href="#查看容器在宿主机的id" class="headerlink" title="查看容器在宿主机的id"></a>查看容器在宿主机的<code>id</code></h2><ul>
+<li><code>docker inspect -f &#39;&#123;&#123;.State.Pid&#125;&#125;&#39; CONTAINER_ID/CONTAINER_NAME</code>：以<code>json</code>格式得到容器的元数据，通过<code>-f</code>参数用<code>Go</code>模板语法获取<code>Pid</code>。</li>
+</ul>
+<h1 id="报错解决"><a href="#报错解决" class="headerlink" title="报错解决"></a>报错解决</h1><h2 id="删除镜像-1"><a href="#删除镜像-1" class="headerlink" title="删除镜像"></a>删除镜像</h2><p><strong>问题：</strong>想要删除某个不用的镜像，执行<code>docker rmi ubuntu:latest</code>后报错：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202405111428042.png" alt=""></p>
+<p><strong>解决思路：</strong>根据报错内容我们可以看到，是由于我们要删除的镜像正在被一个容器使用，解决办法是先把容器删了，然后再删除镜像。</p>
+<p>首先执行<code>docker ps –a</code>查看所有的容器</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202405111431575.png" alt=""></p>
+<p>接着执行<code>docker rm d8fd3c8642c8</code>删除该容器</p>
+<p>最后再执行<code>docker rmi ubuntu:latest</code>即可成功</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202405111434050.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CloseAirCombat使用总结</title>
     <url>/2024/11/03/CloseAirCombat%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>CloseAirCombat</code>为红蓝飞机游戏提供了一个竞技环境，包括单一控制设置、<code>1V1</code>设置和<code>2V2</code>设置。飞行动力学基于<code>JSBSIM</code>，导弹动力学基于我们实现的比例制导。 同时，<code>CloseAirCombat</code>还提供了<code>ppo</code>和<code>mappo</code>的实现，用于自博弈或基线对比训练。</p>
@@ -217,98 +309,6 @@
       <tags>
         <tag>总结</tag>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker使用总结</title>
-    <url>/2024/05/11/Docker%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Docker</code>过程中遇到的问题。</p>
-<a id="more"></a>
-<h1 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h1><p><code>Docker image</code>本质上是一个<code>read-only</code>只读文件， 这个文件包含了文件系统、源码、库文件、依赖、工具等一些运行<code>application</code>所必须的文件。因此，可以把<code>Docker image</code>理解成一个模板， 可以通过这个模板实例化出来很多容器。</p>
-<h2 id="容器-Container"><a href="#容器-Container" class="headerlink" title="容器(Container)"></a>容器(<code>Container</code>)</h2><ul>
-<li>容器是<code>Docker</code>的运行实例，它包含了所有的应用文件，环境变量，进程等。</li>
-<li>每个容器都是隔离的，运行在自己的命名空间内。</li>
-<li>容器可以启动、开始、停止、删除，每个容器都是静态的，除非你保存它的当前状态作为新的镜像。</li>
-</ul>
-<h2 id="镜像-Image"><a href="#镜像-Image" class="headerlink" title="镜像(Image)"></a>镜像(<code>Image</code>)</h2><ul>
-<li>镜像是一个只读的模板，用来创建<code>Docker</code>容器。</li>
-<li>镜像可以包含一些基本配置，例如环境变量、用户等。</li>
-<li>镜像是创建容器的模板，你不能在镜像上运行应用或者进程。</li>
-<li>镜像可以通过<code>Dockerfile</code>构建，也可以从<code>Docker Hub</code>或其他镜像仓库下载。</li>
-</ul>
-<h1 id="具体用法"><a href="#具体用法" class="headerlink" title="具体用法"></a>具体用法</h1><h2 id="查看镜像"><a href="#查看镜像" class="headerlink" title="查看镜像"></a>查看镜像</h2><ul>
-<li><code>docker images</code>：列出所有本地镜像。</li>
-</ul>
-<h2 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h2><ul>
-<li><code>docker rmi [IMAGE_ID]</code>：删除指定的镜像。</li>
-</ul>
-<h2 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h2><ul>
-<li><code>docker build -t IMAGE_NAME:IMAGE_TAG .</code>：基于<code>Dockerfile</code>创建镜像。</li>
-</ul>
-<h2 id="提交镜像"><a href="#提交镜像" class="headerlink" title="提交镜像"></a>提交镜像</h2><ul>
-<li><code>docker commit -a &quot;xxx&quot; -m &quot;xxx&quot; CONTAINER_ID NEW_IMAGE_NAME:NEW_IMAGE_TAG</code>命令根据<code>Docker</code>容器的更改创建一个新的镜像。</li>
-</ul>
-<h2 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h2><ul>
-<li><code>docker run -v &lt;HOST_PATH1&gt;:&lt;CONTAINER_PATH1&gt; -v &lt;HOST_PATH2&gt;:&lt;CONTAINER_PATH2&gt; IMAGE_NAME</code>命令运行一个容器，同时通过<code>-v</code>参数进行卷的挂载。</li>
-</ul>
-<h2 id="查看正在运行的容器"><a href="#查看正在运行的容器" class="headerlink" title="查看正在运行的容器"></a>查看正在运行的容器</h2><ul>
-<li><code>docker ps</code>：显示当前正在运行的容器。</li>
-</ul>
-<h2 id="查看所有状态的容器"><a href="#查看所有状态的容器" class="headerlink" title="查看所有状态的容器"></a>查看所有状态的容器</h2><ul>
-<li><code>docker ps -a</code>：显示所有状态的容器。容器的状态共有<code>7</code>种：<code>created|restarting|running|removing|paused|exited|dead</code>。</li>
-</ul>
-<h2 id="启动已经停止运行的容器"><a href="#启动已经停止运行的容器" class="headerlink" title="启动已经停止运行的容器"></a>启动已经停止运行的容器</h2><ul>
-<li><code>docker start [CONTAINER_ID]</code>：启动已经停止运行的容器。</li>
-</ul>
-<h2 id="重新启动容器"><a href="#重新启动容器" class="headerlink" title="重新启动容器"></a>重新启动容器</h2><ul>
-<li><code>docker restart [CONTAINER_ID]</code>：重启容器。</li>
-</ul>
-<h2 id="停止正在运行的容器"><a href="#停止正在运行的容器" class="headerlink" title="停止正在运行的容器"></a>停止正在运行的容器</h2><ul>
-<li><code>docker stop [CONTAINER_ID]</code>：停止正在运行的容器。</li>
-</ul>
-<h2 id="强制停止正在运行的容器"><a href="#强制停止正在运行的容器" class="headerlink" title="强制停止正在运行的容器"></a>强制停止正在运行的容器</h2><ul>
-<li><code>docker kill [CONTAINER_ID]</code>：强制停止正在运行的容器。</li>
-</ul>
-<h2 id="删除已经停止运行的容器"><a href="#删除已经停止运行的容器" class="headerlink" title="删除已经停止运行的容器"></a>删除已经停止运行的容器</h2><ul>
-<li><code>docker rm [CONTAINER_ID]</code>：删除已经停止运行的容器。</li>
-</ul>
-<h2 id="强制删除容器"><a href="#强制删除容器" class="headerlink" title="强制删除容器"></a>强制删除容器</h2><ul>
-<li><code>docker rm -f [CONTAINER_ID]</code>：强制删除容器。</li>
-</ul>
-<h2 id="删除多个容器"><a href="#删除多个容器" class="headerlink" title="删除多个容器"></a>删除多个容器</h2><ul>
-<li><code>docker rm -f $(docker ps -aq)</code>：一次性删除多个容器。</li>
-</ul>
-<h2 id="进入正在运行的容器并交互"><a href="#进入正在运行的容器并交互" class="headerlink" title="进入正在运行的容器并交互"></a>进入正在运行的容器并交互</h2><ul>
-<li><code>docker exec -it CONTAINER_ID/CONTAINER_NAME /bin/bash</code>：进入正在运行的容器内部，使用<code>exit</code>命令退出容器后，容器不会停止运行。</li>
-<li><code>docker attach CONTAINER_ID/CONTAINER_NAME</code>：进入正在运行的容器内部，使用<code>exit</code>命令退出容器后，容器停止运行。</li>
-</ul>
-<h2 id="数据拷贝"><a href="#数据拷贝" class="headerlink" title="数据拷贝"></a>数据拷贝</h2><ul>
-<li><code>docker cp SOURCE_PATH TARGET_PATH</code>：进行主机（容器）和容器（主机）之间的数据拷贝，其中容器的路径格式为<code>COTAINER_ID:/xxx</code>。</li>
-</ul>
-<h2 id="镜像归档"><a href="#镜像归档" class="headerlink" title="镜像归档"></a>镜像归档</h2><ul>
-<li><code>docker save -o FILE_PATH IMAGE1:TAG1 IMAGE2:TAG2</code>：将一个或多个镜像保存到一个<code>tar</code>归档文件中，以便在其他环境中分发或备份。</li>
-</ul>
-<h2 id="镜像加载"><a href="#镜像加载" class="headerlink" title="镜像加载"></a>镜像加载</h2><ul>
-<li><code>docker load -i myimage.tar</code>：从由<code>docker save</code>命令生成的<code>tar</code>文件中加载<code>Docker</code>镜像。它可以将存档中的镜像和所有层加载到<code>Docker</code>中，使其可以在新环境中使用。</li>
-</ul>
-<h2 id="查看容器在宿主机的id"><a href="#查看容器在宿主机的id" class="headerlink" title="查看容器在宿主机的id"></a>查看容器在宿主机的<code>id</code></h2><ul>
-<li><code>docker inspect -f &#39;&#123;&#123;.State.Pid&#125;&#125;&#39; CONTAINER_ID/CONTAINER_NAME</code>：以<code>json</code>格式得到容器的元数据，通过<code>-f</code>参数用<code>Go</code>模板语法获取<code>Pid</code>。</li>
-</ul>
-<h1 id="报错解决"><a href="#报错解决" class="headerlink" title="报错解决"></a>报错解决</h1><h2 id="删除镜像-1"><a href="#删除镜像-1" class="headerlink" title="删除镜像"></a>删除镜像</h2><p><strong>问题：</strong>想要删除某个不用的镜像，执行<code>docker rmi ubuntu:latest</code>后报错：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202405111428042.png" alt=""></p>
-<p><strong>解决思路：</strong>根据报错内容我们可以看到，是由于我们要删除的镜像正在被一个容器使用，解决办法是先把容器删了，然后再删除镜像。</p>
-<p>首先执行<code>docker ps –a</code>查看所有的容器</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202405111431575.png" alt=""></p>
-<p>接着执行<code>docker rm d8fd3c8642c8</code>删除该容器</p>
-<p>最后再执行<code>docker rmi ubuntu:latest</code>即可成功</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202405111434050.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -2672,6 +2672,209 @@
       </tags>
   </entry>
   <entry>
+    <title>gRPC使用总结</title>
+    <url>/2024/05/20/gRPC%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下<code>gRPC</code>的使用方法。</p>
+<a id="more"></a>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p><code>gRPC</code>基于以下理念：定义一个服务，指定其能够被远程调用的方法（包含参数和返回类型）。在服务端实现这个接口，并运行一个 <code>gRPC</code>服务器来处理客户端调用。在客户端拥有一个存根（<code>Stub</code>），提供与服务端相同的方法。<br>在<code>gRPC</code>里客户端应用可以像调用本地对象一样直接调用另一台不同的机器上服务端应用的方法，使得我们能够更容易地创建分布式应用和服务。</p>
+<p><code>gRPC</code>默认使用<code>protocol buffers</code>，这是<code>Google</code>开源的一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或<code>RPC</code>数据交换格式。</p>
+<h1 id="Protobuf的使用"><a href="#Protobuf的使用" class="headerlink" title="Protobuf的使用"></a>Protobuf的使用</h1><h2 id="定义消息类型"><a href="#定义消息类型" class="headerlink" title="定义消息类型"></a>定义消息类型</h2><p>假设你想定义一个“搜索请求”的消息格式，每一个请求含有一个查询字符串、你感兴趣的查询结果所在的页数，以及每一页多少条查询结果。可以采用如下的方式来定义消息类型的<code>.proto</code>文件：</p>
+<figure class="highlight protobuf"><table><tr><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;  <span class="comment">// 声明使用proto3语法</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">SearchRequest</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> query = <span class="number">1</span>;  <span class="comment">// 每个字段都要指定数据类型</span></span><br><span class="line">  <span class="built_in">int32</span> page_number = <span class="number">2</span>; <span class="comment">// 这里的数字2是标识符，最小的标识号可以从1开始，最大到2^29-1，不可以使用其中的[19000－19999]</span></span><br><span class="line">  <span class="built_in">int32</span> result_per_page = <span class="number">3</span>; <span class="comment">// 这里是注释，使用//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一行指定正在使用<code>proto3</code>语法：如果不指定，编译器会使用<code>proto2</code>。这个指定语法必须是文件的非空非注释的第一行。</li>
+<li><code>SearchRequest</code>消息格式有三个字段，在消息中承载的数据分别对应于每一个字段。其中每个字段都有一个名字和一种类型。向<code>.proto</code>文件添加注释，可以使用<code>C/C++/JAVA</code>风格的双斜杠语法格式。</li>
+<li>在消息体中，每个字段都有唯一的一个数字标识符。这些标识符用来在消息的二进制格式中识别各个字段，一旦开始使用就不能再改变。<ul>
+<li><code>[1,15]</code>之内的标识号在编码的时候会占用一个字节。<code>[16,2047]</code>之内的标识号则占用<code>2</code>个字节。所以应该为那些频繁出现的消息元素保留<code>[1,15]</code>之内的标识号。切记：要为将来有可能添加的、频繁出现的标识号预留一些标识号。</li>
+</ul>
+</li>
+</ul>
+<h2 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h2><p>一个标量消息字段可以含有一个如下的类型，该表格展示了定义于<code>.proto</code>文件中的类型，以及与之对应的、在自动生成的访问类中定义的类型：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">.proto Type</th>
+<th style="text-align:center">Notes</th>
+<th style="text-align:center">C++ Type</th>
+<th style="text-align:center">Java Type</th>
+<th style="text-align:center">Python Type[2]</th>
+<th style="text-align:center">Go Type</th>
+<th style="text-align:center">Ruby Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">float</td>
+<td style="text-align:center">float64</td>
+<td style="text-align:center">Float</td>
+</tr>
+<tr>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">使用变长编码，对于负值的效率很低，如果你的域有可能有负值，请使用sint64替代</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">使用变长编码</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">使用变长编码</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">Bignum</td>
+</tr>
+<tr>
+<td style="text-align:center">sint32</td>
+<td style="text-align:center">使用变长编码，这些编码在负值时比int32高效的多</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">sint64</td>
+<td style="text-align:center">使用变长编码，有符号的整型值，编码时比通常的int64高效</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">Bignum</td>
+</tr>
+<tr>
+<td style="text-align:center">fixed32</td>
+<td style="text-align:center">总是4个字节，如果数值总是大于228，这个类型会比uint32高效</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">fixed64</td>
+<td style="text-align:center">总是8个字节，如果数值总是大于256，这个类型会比uint64高效</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">Bignum</td>
+</tr>
+<tr>
+<td style="text-align:center">sfixed32</td>
+<td style="text-align:center">总是4个字节</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
+</tr>
+<tr>
+<td style="text-align:center">sfixed64</td>
+<td style="text-align:center">总是8个字节</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">Bignum</td>
+</tr>
+<tr>
+<td style="text-align:center">bool</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">TrueClass/FalseClass</td>
+</tr>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center">一个字符串必须是UTF-8编码或者7-bit ASCII编码的文本</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">str/unicode</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">String(UTF-8)</td>
+</tr>
+<tr>
+<td style="text-align:center">bytes</td>
+<td style="text-align:center">可能包含任意顺序的字节数据</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">ByteString</td>
+<td style="text-align:center">str</td>
+<td style="text-align:center">[]byte</td>
+<td style="text-align:center">String(ASCII-8BIT)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h2><p>当一个消息被解析的时候，如果被编码的信息不包含一个特定的<code>singular</code>元素，被解析的对象锁对应的域被设置位一个默认值，对于不同类型指定如下：</p>
+<ul>
+<li>对于<code>strings</code>，默认是一个空<code>string</code></li>
+<li>对于<code>bytes</code>，默认是一个空的<code>bytes</code></li>
+<li>对于<code>bools</code>，默认是<code>false</code></li>
+<li>对于数值类型，默认是<code>0</code></li>
+<li>对于枚举，默认是第一个定义的枚举值，必须为<code>0</code></li>
+<li>对于消息类型（<code>message</code>），域没有被设置，确切的消息是根据语言确定的</li>
+<li>对于可重复域的默认值是空（通常情况下是对应语言中空列表）</li>
+</ul>
+<h2 id="嵌套类型"><a href="#嵌套类型" class="headerlink" title="嵌套类型"></a>嵌套类型</h2><p>你可以在其他消息类型中定义、使用消息类型，在下面的例子中，<code>Result</code>消息就定义在<code>SearchResponse</code>消息内，如：</p>
+<figure class="highlight protobuf"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">SearchResponse</span> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">message</span> <span class="title">Result</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> url = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">string</span> title = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">repeated</span> <span class="built_in">string</span> snippets = <span class="number">3</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">repeated</span> Result results = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>message SearchResponse</code>中，定义了嵌套消息<code>Result</code>，并用来定义<code>SearchResponse</code>消息中的<code>results</code>域。</p>
+<h2 id="Protobuf文件编译"><a href="#Protobuf文件编译" class="headerlink" title="Protobuf文件编译"></a>Protobuf文件编译</h2><p>当用<code>protocol buffer</code>编译器来运行<code>.proto</code>文件时，编译器将生成所选择语言的代码，这些代码可以操作在<code>.proto</code>文件中定义的消息类型，包括获取、设置字段值，将消息序列化到一个输出流中，以及从一个输入流中解析消息。</p>
+<ul>
+<li>对<code>C++</code>来说，编译器会为每个<code>.proto</code>文件生成一个<code>.h</code>文件和一个<code>.cc</code>文件，<code>.proto</code>文件中的每一个消息有一个对应的类。</li>
+<li>对<code>Java</code>来说，编译器为每一个消息类型生成一个<code>.java</code>文件，以及一个特殊的<code>Builder</code>类（该类是用来创建消息类接口的）。</li>
+<li>对<code>Python</code>来说，有点不太一样——<code>Python</code>编译器为<code>.proto</code>文件中的每个消息类型生成一个含有静态描述符的模块，该模块与一个元类（<code>metaclass</code>）在运行时（<code>runtime</code>）被用来创建所需的Python数据访问类。</li>
+<li>对<code>go</code>来说，编译器会为每个消息类型生成一个<code>.pd.go</code>文件。</li>
+<li>对<code>Ruby</code>来说，编译器会为每个消息类型生成一个<code>.rb</code>文件。</li>
+<li>对<code>javaNano</code>来说，编译器输出类似于<code>.java</code>的文件但是没有<code>Builder</code>类。</li>
+<li>对<code>Objective-C</code>来说，编译器会为每个消息类型生成一个<code>pbobjc.h</code>文件和<code>pbobjc.m</code>文件，<code>.proto</code>文件中的每一个消息有一个对应的类。</li>
+<li>对<code>C#</code>来说，编译器会为每个消息类型生成了一个<code>.cs</code>文件，<code>.proto</code>文件中的每一个消息有一个对应的类。</li>
+</ul>
+<h1 id="gRPC示例"><a href="#gRPC示例" class="headerlink" title="gRPC示例"></a>gRPC示例</h1><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>我们采用<code>Python</code>编译如下的<code>proto</code>文件：</p>
+<figure class="highlight protobuf"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 文件名 hello.proto</span></span><br><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> hello;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The greeting service definition.</span></span><br><span class="line"><span class="class"><span class="keyword">service</span> <span class="title">Greeter</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Sends a greeting</span></span><br><span class="line">  <span class="function"><span class="keyword">rpc</span> SayHello (HelloRequest) <span class="keyword">returns</span> (HelloReply) </span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The request message containing the user&#x27;s name.</span></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">HelloRequest</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> name = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The response message containing the greetings</span></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">HelloReply</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> <span class="class"><span class="keyword">message</span> = 1;</span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>采取的命令为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python -m grpc_tools.protoc -I./ --python_out=. --grpc_python_out=. ./hello.proto</span><br></pre></td></tr></table></figure>
+<p>生成了两个文件：</p>
+<ul>
+<li><code>hello_pb2.py</code>：此文件包含生成的<code>request(HelloRequest)</code>和<code>response(HelloReply)</code>类。</li>
+<li><code>hello_pb2_grpc.py</code>：此文件包含生成的客户端<code>(GreeterStub)</code>和服务端<code>(GreeterServicer)</code>类。</li>
+</ul>
+<h2 id="创建服务端代码"><a href="#创建服务端代码" class="headerlink" title="创建服务端代码"></a>创建服务端代码</h2><p>创建和运行<code>Greeter</code>服务可以分为两个部分：</p>
+<ul>
+<li>实现我们服务定义的生成的服务接口：做我们的服务的实际的“工作”的函数。</li>
+<li>运行一个<code>gRPC</code>服务器，监听来自客户端的请求并传输服务的响应。</li>
+</ul>
+<p>在当前目录，打开文件<code>greeter_server.py</code>，实现一个新的函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2024/5/22 23:01</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> concurrent <span class="keyword">import</span> futures</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> grpc</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hello_pb2</span><br><span class="line"><span class="keyword">import</span> hello_pb2_grpc</span><br><span class="line"></span><br><span class="line">_ONE_DAY_IN_SECONDS = <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span>(<span class="params">hello_pb2_grpc.GreeterServicer</span>):</span></span><br><span class="line">    <span class="comment"># 工作函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">SayHello</span>(<span class="params">self, request, context</span>):</span></span><br><span class="line">        <span class="keyword">return</span> hello_pb2.HelloReply(message=<span class="string">&#x27;Hello, %s!&#x27;</span> % request.name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">serve</span>():</span></span><br><span class="line">    <span class="comment"># gRPC 服务器</span></span><br><span class="line">    server = grpc.server(futures.ThreadPoolExecutor(max_workers=<span class="number">10</span>))</span><br><span class="line">    hello_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)</span><br><span class="line">    server.add_insecure_port(<span class="string">&#x27;[::]:50051&#x27;</span>)</span><br><span class="line">    server.start()  <span class="comment"># start() 不会阻塞，如果运行时你的代码没有其它的事情可做，你可能需要循环等待。</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            time.sleep(_ONE_DAY_IN_SECONDS)</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        server.stop(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    serve()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="更新客户端代码"><a href="#更新客户端代码" class="headerlink" title="更新客户端代码"></a>更新客户端代码</h2><p>在当前目录，打开文件<code>greeter_client.py</code>，实现一个新的函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2024/5/22 23:01</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> grpc</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hello_pb2</span><br><span class="line"><span class="keyword">import</span> hello_pb2_grpc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>():</span></span><br><span class="line">    channel = grpc.insecure_channel(<span class="string">&#x27;localhost:50051&#x27;</span>)</span><br><span class="line">    stub = hello_pb2_grpc.GreeterStub(channel)</span><br><span class="line">    response = stub.SayHello(hello_pb2.HelloRequest(name=<span class="string">&#x27;goodspeed&#x27;</span>))</span><br><span class="line">    print(<span class="string">&quot;Greeter client received: &quot;</span> + response.message)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    run()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>gRPC</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>gRPC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue学习总结</title>
     <url>/2025/08/18/Vue%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近想学习一下<code>Vue</code>，记录一下相关学习内容。</p>
@@ -2880,209 +3083,6 @@
       </tags>
   </entry>
   <entry>
-    <title>gRPC使用总结</title>
-    <url>/2024/05/20/gRPC%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下<code>gRPC</code>的使用方法。</p>
-<a id="more"></a>
-<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p><code>gRPC</code>基于以下理念：定义一个服务，指定其能够被远程调用的方法（包含参数和返回类型）。在服务端实现这个接口，并运行一个 <code>gRPC</code>服务器来处理客户端调用。在客户端拥有一个存根（<code>Stub</code>），提供与服务端相同的方法。<br>在<code>gRPC</code>里客户端应用可以像调用本地对象一样直接调用另一台不同的机器上服务端应用的方法，使得我们能够更容易地创建分布式应用和服务。</p>
-<p><code>gRPC</code>默认使用<code>protocol buffers</code>，这是<code>Google</code>开源的一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或<code>RPC</code>数据交换格式。</p>
-<h1 id="Protobuf的使用"><a href="#Protobuf的使用" class="headerlink" title="Protobuf的使用"></a>Protobuf的使用</h1><h2 id="定义消息类型"><a href="#定义消息类型" class="headerlink" title="定义消息类型"></a>定义消息类型</h2><p>假设你想定义一个“搜索请求”的消息格式，每一个请求含有一个查询字符串、你感兴趣的查询结果所在的页数，以及每一页多少条查询结果。可以采用如下的方式来定义消息类型的<code>.proto</code>文件：</p>
-<figure class="highlight protobuf"><table><tr><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;  <span class="comment">// 声明使用proto3语法</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">SearchRequest</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> query = <span class="number">1</span>;  <span class="comment">// 每个字段都要指定数据类型</span></span><br><span class="line">  <span class="built_in">int32</span> page_number = <span class="number">2</span>; <span class="comment">// 这里的数字2是标识符，最小的标识号可以从1开始，最大到2^29-1，不可以使用其中的[19000－19999]</span></span><br><span class="line">  <span class="built_in">int32</span> result_per_page = <span class="number">3</span>; <span class="comment">// 这里是注释，使用//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>第一行指定正在使用<code>proto3</code>语法：如果不指定，编译器会使用<code>proto2</code>。这个指定语法必须是文件的非空非注释的第一行。</li>
-<li><code>SearchRequest</code>消息格式有三个字段，在消息中承载的数据分别对应于每一个字段。其中每个字段都有一个名字和一种类型。向<code>.proto</code>文件添加注释，可以使用<code>C/C++/JAVA</code>风格的双斜杠语法格式。</li>
-<li>在消息体中，每个字段都有唯一的一个数字标识符。这些标识符用来在消息的二进制格式中识别各个字段，一旦开始使用就不能再改变。<ul>
-<li><code>[1,15]</code>之内的标识号在编码的时候会占用一个字节。<code>[16,2047]</code>之内的标识号则占用<code>2</code>个字节。所以应该为那些频繁出现的消息元素保留<code>[1,15]</code>之内的标识号。切记：要为将来有可能添加的、频繁出现的标识号预留一些标识号。</li>
-</ul>
-</li>
-</ul>
-<h2 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h2><p>一个标量消息字段可以含有一个如下的类型，该表格展示了定义于<code>.proto</code>文件中的类型，以及与之对应的、在自动生成的访问类中定义的类型：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">.proto Type</th>
-<th style="text-align:center">Notes</th>
-<th style="text-align:center">C++ Type</th>
-<th style="text-align:center">Java Type</th>
-<th style="text-align:center">Python Type[2]</th>
-<th style="text-align:center">Go Type</th>
-<th style="text-align:center">Ruby Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">double</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">double</td>
-<td style="text-align:center">double</td>
-<td style="text-align:center">float</td>
-<td style="text-align:center">float64</td>
-<td style="text-align:center">Float</td>
-</tr>
-<tr>
-<td style="text-align:center">int32</td>
-<td style="text-align:center">使用变长编码，对于负值的效率很低，如果你的域有可能有负值，请使用sint64替代</td>
-<td style="text-align:center">int32</td>
-<td style="text-align:center">int</td>
-<td style="text-align:center">int</td>
-<td style="text-align:center">int32</td>
-<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
-</tr>
-<tr>
-<td style="text-align:center">uint32</td>
-<td style="text-align:center">使用变长编码</td>
-<td style="text-align:center">uint32</td>
-<td style="text-align:center">int</td>
-<td style="text-align:center">int/long</td>
-<td style="text-align:center">uint32</td>
-<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
-</tr>
-<tr>
-<td style="text-align:center">uint64</td>
-<td style="text-align:center">使用变长编码</td>
-<td style="text-align:center">uint64</td>
-<td style="text-align:center">long</td>
-<td style="text-align:center">int/long</td>
-<td style="text-align:center">uint64</td>
-<td style="text-align:center">Bignum</td>
-</tr>
-<tr>
-<td style="text-align:center">sint32</td>
-<td style="text-align:center">使用变长编码，这些编码在负值时比int32高效的多</td>
-<td style="text-align:center">int32</td>
-<td style="text-align:center">int</td>
-<td style="text-align:center">int</td>
-<td style="text-align:center">int32</td>
-<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
-</tr>
-<tr>
-<td style="text-align:center">sint64</td>
-<td style="text-align:center">使用变长编码，有符号的整型值，编码时比通常的int64高效</td>
-<td style="text-align:center">int64</td>
-<td style="text-align:center">long</td>
-<td style="text-align:center">int/long</td>
-<td style="text-align:center">int64</td>
-<td style="text-align:center">Bignum</td>
-</tr>
-<tr>
-<td style="text-align:center">fixed32</td>
-<td style="text-align:center">总是4个字节，如果数值总是大于228，这个类型会比uint32高效</td>
-<td style="text-align:center">uint32</td>
-<td style="text-align:center">int</td>
-<td style="text-align:center">int</td>
-<td style="text-align:center">uint32</td>
-<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
-</tr>
-<tr>
-<td style="text-align:center">fixed64</td>
-<td style="text-align:center">总是8个字节，如果数值总是大于256，这个类型会比uint64高效</td>
-<td style="text-align:center">uint64</td>
-<td style="text-align:center">long</td>
-<td style="text-align:center">int/long</td>
-<td style="text-align:center">uint64</td>
-<td style="text-align:center">Bignum</td>
-</tr>
-<tr>
-<td style="text-align:center">sfixed32</td>
-<td style="text-align:center">总是4个字节</td>
-<td style="text-align:center">int32</td>
-<td style="text-align:center">int</td>
-<td style="text-align:center">int</td>
-<td style="text-align:center">int32</td>
-<td style="text-align:center">Fixnum或者Bignum（根据需要）</td>
-</tr>
-<tr>
-<td style="text-align:center">sfixed64</td>
-<td style="text-align:center">总是8个字节</td>
-<td style="text-align:center">int64</td>
-<td style="text-align:center">long</td>
-<td style="text-align:center">int/long</td>
-<td style="text-align:center">int64</td>
-<td style="text-align:center">Bignum</td>
-</tr>
-<tr>
-<td style="text-align:center">bool</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">bool</td>
-<td style="text-align:center">boolean</td>
-<td style="text-align:center">bool</td>
-<td style="text-align:center">bool</td>
-<td style="text-align:center">TrueClass/FalseClass</td>
-</tr>
-<tr>
-<td style="text-align:center">string</td>
-<td style="text-align:center">一个字符串必须是UTF-8编码或者7-bit ASCII编码的文本</td>
-<td style="text-align:center">string</td>
-<td style="text-align:center">String</td>
-<td style="text-align:center">str/unicode</td>
-<td style="text-align:center">string</td>
-<td style="text-align:center">String(UTF-8)</td>
-</tr>
-<tr>
-<td style="text-align:center">bytes</td>
-<td style="text-align:center">可能包含任意顺序的字节数据</td>
-<td style="text-align:center">string</td>
-<td style="text-align:center">ByteString</td>
-<td style="text-align:center">str</td>
-<td style="text-align:center">[]byte</td>
-<td style="text-align:center">String(ASCII-8BIT)</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h2><p>当一个消息被解析的时候，如果被编码的信息不包含一个特定的<code>singular</code>元素，被解析的对象锁对应的域被设置位一个默认值，对于不同类型指定如下：</p>
-<ul>
-<li>对于<code>strings</code>，默认是一个空<code>string</code></li>
-<li>对于<code>bytes</code>，默认是一个空的<code>bytes</code></li>
-<li>对于<code>bools</code>，默认是<code>false</code></li>
-<li>对于数值类型，默认是<code>0</code></li>
-<li>对于枚举，默认是第一个定义的枚举值，必须为<code>0</code></li>
-<li>对于消息类型（<code>message</code>），域没有被设置，确切的消息是根据语言确定的</li>
-<li>对于可重复域的默认值是空（通常情况下是对应语言中空列表）</li>
-</ul>
-<h2 id="嵌套类型"><a href="#嵌套类型" class="headerlink" title="嵌套类型"></a>嵌套类型</h2><p>你可以在其他消息类型中定义、使用消息类型，在下面的例子中，<code>Result</code>消息就定义在<code>SearchResponse</code>消息内，如：</p>
-<figure class="highlight protobuf"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">SearchResponse</span> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">message</span> <span class="title">Result</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> url = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">string</span> title = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">repeated</span> <span class="built_in">string</span> snippets = <span class="number">3</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">repeated</span> Result results = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在<code>message SearchResponse</code>中，定义了嵌套消息<code>Result</code>，并用来定义<code>SearchResponse</code>消息中的<code>results</code>域。</p>
-<h2 id="Protobuf文件编译"><a href="#Protobuf文件编译" class="headerlink" title="Protobuf文件编译"></a>Protobuf文件编译</h2><p>当用<code>protocol buffer</code>编译器来运行<code>.proto</code>文件时，编译器将生成所选择语言的代码，这些代码可以操作在<code>.proto</code>文件中定义的消息类型，包括获取、设置字段值，将消息序列化到一个输出流中，以及从一个输入流中解析消息。</p>
-<ul>
-<li>对<code>C++</code>来说，编译器会为每个<code>.proto</code>文件生成一个<code>.h</code>文件和一个<code>.cc</code>文件，<code>.proto</code>文件中的每一个消息有一个对应的类。</li>
-<li>对<code>Java</code>来说，编译器为每一个消息类型生成一个<code>.java</code>文件，以及一个特殊的<code>Builder</code>类（该类是用来创建消息类接口的）。</li>
-<li>对<code>Python</code>来说，有点不太一样——<code>Python</code>编译器为<code>.proto</code>文件中的每个消息类型生成一个含有静态描述符的模块，该模块与一个元类（<code>metaclass</code>）在运行时（<code>runtime</code>）被用来创建所需的Python数据访问类。</li>
-<li>对<code>go</code>来说，编译器会为每个消息类型生成一个<code>.pd.go</code>文件。</li>
-<li>对<code>Ruby</code>来说，编译器会为每个消息类型生成一个<code>.rb</code>文件。</li>
-<li>对<code>javaNano</code>来说，编译器输出类似于<code>.java</code>的文件但是没有<code>Builder</code>类。</li>
-<li>对<code>Objective-C</code>来说，编译器会为每个消息类型生成一个<code>pbobjc.h</code>文件和<code>pbobjc.m</code>文件，<code>.proto</code>文件中的每一个消息有一个对应的类。</li>
-<li>对<code>C#</code>来说，编译器会为每个消息类型生成了一个<code>.cs</code>文件，<code>.proto</code>文件中的每一个消息有一个对应的类。</li>
-</ul>
-<h1 id="gRPC示例"><a href="#gRPC示例" class="headerlink" title="gRPC示例"></a>gRPC示例</h1><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>我们采用<code>Python</code>编译如下的<code>proto</code>文件：</p>
-<figure class="highlight protobuf"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 文件名 hello.proto</span></span><br><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> hello;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The greeting service definition.</span></span><br><span class="line"><span class="class"><span class="keyword">service</span> <span class="title">Greeter</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Sends a greeting</span></span><br><span class="line">  <span class="function"><span class="keyword">rpc</span> SayHello (HelloRequest) <span class="keyword">returns</span> (HelloReply) </span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The request message containing the user&#x27;s name.</span></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">HelloRequest</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> name = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The response message containing the greetings</span></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">HelloReply</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> <span class="class"><span class="keyword">message</span> = 1;</span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>采取的命令为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python -m grpc_tools.protoc -I./ --python_out=. --grpc_python_out=. ./hello.proto</span><br></pre></td></tr></table></figure>
-<p>生成了两个文件：</p>
-<ul>
-<li><code>hello_pb2.py</code>：此文件包含生成的<code>request(HelloRequest)</code>和<code>response(HelloReply)</code>类。</li>
-<li><code>hello_pb2_grpc.py</code>：此文件包含生成的客户端<code>(GreeterStub)</code>和服务端<code>(GreeterServicer)</code>类。</li>
-</ul>
-<h2 id="创建服务端代码"><a href="#创建服务端代码" class="headerlink" title="创建服务端代码"></a>创建服务端代码</h2><p>创建和运行<code>Greeter</code>服务可以分为两个部分：</p>
-<ul>
-<li>实现我们服务定义的生成的服务接口：做我们的服务的实际的“工作”的函数。</li>
-<li>运行一个<code>gRPC</code>服务器，监听来自客户端的请求并传输服务的响应。</li>
-</ul>
-<p>在当前目录，打开文件<code>greeter_server.py</code>，实现一个新的函数：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2024/5/22 23:01</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> concurrent <span class="keyword">import</span> futures</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> grpc</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hello_pb2</span><br><span class="line"><span class="keyword">import</span> hello_pb2_grpc</span><br><span class="line"></span><br><span class="line">_ONE_DAY_IN_SECONDS = <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span>(<span class="params">hello_pb2_grpc.GreeterServicer</span>):</span></span><br><span class="line">    <span class="comment"># 工作函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">SayHello</span>(<span class="params">self, request, context</span>):</span></span><br><span class="line">        <span class="keyword">return</span> hello_pb2.HelloReply(message=<span class="string">&#x27;Hello, %s!&#x27;</span> % request.name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">serve</span>():</span></span><br><span class="line">    <span class="comment"># gRPC 服务器</span></span><br><span class="line">    server = grpc.server(futures.ThreadPoolExecutor(max_workers=<span class="number">10</span>))</span><br><span class="line">    hello_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)</span><br><span class="line">    server.add_insecure_port(<span class="string">&#x27;[::]:50051&#x27;</span>)</span><br><span class="line">    server.start()  <span class="comment"># start() 不会阻塞，如果运行时你的代码没有其它的事情可做，你可能需要循环等待。</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            time.sleep(_ONE_DAY_IN_SECONDS)</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        server.stop(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    serve()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="更新客户端代码"><a href="#更新客户端代码" class="headerlink" title="更新客户端代码"></a>更新客户端代码</h2><p>在当前目录，打开文件<code>greeter_client.py</code>，实现一个新的函数：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @Author 坦克手贝塔</span></span><br><span class="line"><span class="string">    @Date 2024/5/22 23:01</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> grpc</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hello_pb2</span><br><span class="line"><span class="keyword">import</span> hello_pb2_grpc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>():</span></span><br><span class="line">    channel = grpc.insecure_channel(<span class="string">&#x27;localhost:50051&#x27;</span>)</span><br><span class="line">    stub = hello_pb2_grpc.GreeterStub(channel)</span><br><span class="line">    response = stub.SayHello(hello_pb2.HelloRequest(name=<span class="string">&#x27;goodspeed&#x27;</span>))</span><br><span class="line">    print(<span class="string">&quot;Greeter client received: &quot;</span> + response.message)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    run()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>gRPC</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>gRPC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>多智能体强化学习</title>
     <url>/2024/11/17/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>学习一下多智能体强化学习相关算法。</p>
@@ -3121,7 +3121,7 @@
 <p><code>QMIX</code>认为只要满足<code>(3)</code>式，就能满足<code>IGM</code>条件。<code>(2)</code>式是<code>(3)</code>式的充分条件，但是同时，<code>(3)</code>式也是<code>(1)</code>式的充分条件。换句话说，<strong>它们对<code>IGM</code>条件来说，都不是必要的！</strong>因此，针对一些具有非单调收益的合作问题，<code>VDN</code>和<code>QMIX</code>的函数拟合能力就会受到限制。</p>
 <p>因此，基于这样的问题，作者提出<code>QTRAN</code>算法，并且声称该算法能够分解任何可分解的任务，而不需要受<code>(2)</code>式和<code>(3)</code>式的约束。</p>
 <h2 id="QTRAN直观理解"><a href="#QTRAN直观理解" class="headerlink" title="QTRAN直观理解"></a><code>QTRAN</code>直观理解</h2><p>在<code>VDN</code>和<code>QMIX</code>中是将$Q_{\mathrm{jt}}$通过累加求和和保证单调性的方式来分解的，作者这里提出一种更加鲁棒的分解方式，将原始的$Q_{\mathrm{jt}}$映射成$Q_{\mathrm{jt}}^{\prime}$，通过$Q_{\mathrm{jt}}^{\prime}$去分解值函数到各个子智能体上，来保证学到的$Q_{\mathrm{jt}}^{\prime}$与真实的动作值函数$Q^{*}$非常接近。这样在学习真实的动作值函数的时候，没有像<code>VDN</code>和<code>QMIX</code>那样对其加上一些累加求和和保证单调性的限制，所以它能学地更好。</p>
-<p>但是由于部分可观测地限制，这个$Q_{\mathrm{jt}}^{\prime}$是没有办法用来进行具体地决策的，所以我们需要去找到$Q_{\mathrm{jt}}$、$Q_{\mathrm{jt}}^{\prime}$和$\left[Q_{i}\right]$三者之间的关系。</p>
+<p>但是由于部分可观测的限制，这个$Q_{\mathrm{jt}}^{\prime}$是没有办法用来进行具体地决策的，所以我们需要去找到$Q_{\mathrm{jt}}$、$Q_{\mathrm{jt}}^{\prime}$和$\left[Q_{i}\right]$三者之间的关系。</p>
 <h2 id="可分解值函数的充分条件"><a href="#可分解值函数的充分条件" class="headerlink" title="可分解值函数的充分条件"></a>可分解值函数的充分条件</h2><p>由于不提供累加求和和单调性来保证可分解，<code>QTRAN</code>提出了一个满足<code>IGM</code>定义的充分条件：当动作值函数$Q_{\mathrm{jt}}(\boldsymbol{\tau}, \boldsymbol{u})$和$\left[Q_{i}\left(\tau_{i}, u_{i}\right)\right]$满足下面这个关系式时，我们认为它是可分解的，其中$V_{\mathrm{jt}}(\tau)=\max _{\boldsymbol{u}} Q_{\mathrm{jt}}(\boldsymbol{\tau}, \boldsymbol{u})-\sum_{i=1}^{N} Q_{i}\left(\tau_{i}, \bar{u}_{i}\right)$：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411182329900.png" alt=""></p>
 <p>想要通过上述条件证明出满足<code>IGM</code>条件，也就是$\arg \max _{\boldsymbol{u}} Q_{\mathrm{jt}}(\boldsymbol{\tau}, \boldsymbol{u})=\overline{\boldsymbol{u}}$时（其中$\bar{u}_{i}=\arg \max _{u_{i}} Q_{i}\left(\tau_{i}, u_{i}\right)$）才能取到全局最大的动作值函数。</p>
@@ -3140,6 +3140,28 @@
 <p>此时损失函数可以表达成如下形式：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202411190011682.png" alt=""></p>
 <p>第一个$\mathcal{L}_{\mathrm{td}}$使用标准的<code>TD-error</code>来更新最优的联合动作值函数，$\mathcal{L}_{\mathrm{opt}}$和$\mathcal{L}_{\mathrm{nopt}}$是用来去满足可分解值函数地充分必要条件的，$\mathcal{L}_{\mathrm{opt}}$对应条件<code>(a)</code>，$\mathcal{L}_{\mathrm{nopt}}$对应条件<code>(b)</code>，$\hat{Q}_{\mathrm{total}}$表示将$Q_{\mathrm{total}}$固定，也就是说$\mathcal{L}_{\mathrm{opt}}$和$\mathcal{L}_{\mathrm{nopt}}$不更新$Q_{\mathrm{total}}$，$Q^{\prime}_{\mathrm{jt}}$是真实的，$Q_{\mathrm{jt}}$是网络学习到的，用$V$去弥补两者之间的差异。</p>
+<h1 id="Qatten"><a href="#Qatten" class="headerlink" title="Qatten"></a><code>Qatten</code></h1><p><code>Qatten</code>首次从理论上推导出了将联合$Q$值（$Q_{tot}$）分解为局部$Q$值（$Q^{i}$）的过程，提出了一种叫做<code>Qatten</code>的算法。<code>QMIX</code>和<code>VDN</code>等算法对联合$Q$值的分解没有理论支撑，而<code>Qatten</code>算法弥补了这一缺陷。<code>Qatten</code>算法引入了多头注意力机制来分解联合$Q$值，并给出了理论解释。</p>
+<p><code>Qatten</code>算法在不引入附加假设和约束条件的情况下，首次从理论上推导出任意数量的智能体的$Q_{tot}$和$Q^{i}$的广义形式化，提出了一种实用的基于多头注意力机制的$Q$值混合网络来近似联合$Q$值和分解单个$Q$值。<code>Qatten</code>利用<code>key</code>值存储操作度量每个<code>agent</code>对全局系统的重要程度，利用多头注意力机制来捕获分解时$Q_{tot}$对$Q^{i}$的不同高阶偏导数。此外，加权头$Q$值和非线性机制可以提高<code>Qatten</code>的逼近能力。算法在星际争霸<code>SMAC</code>环境中进行实验，取得了良好的效果。同时，注意力分析表明，<code>Qatten</code>抓住了每个<code>agent</code>对于近似$Q_{tot}$的重要性，并在一定程度上揭示了$Q^{i}$近似$Q_{tot}$的内部工作流程。</p>
+<h2 id="理论证明"><a href="#理论证明" class="headerlink" title="理论证明"></a>理论证明</h2><p>首先联合动作值函数$Q_{tot}(s, a)$，应用隐函数定理，也就将其看做了关于$Q^{i}$的函数。作者假设没有独立的<code>agent</code>与整个<code>group</code>不相关，因为独立的<code>agent</code>不应该是<code>group</code>的成员，应该当做独立的<code>agent</code>去优化其策略。也就是说$Q^{i}$变化会影响$Q_{tot}$，所以偏导不为$0$：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508272022809.png" alt=""></p>
+<p>作者分析接近动作空间中最大值点时，$Q_{tot}$和$Q^{i}$的局部行为，假设状态是固定的，由于最值点$a_{o}$处梯度会消失，所以：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508272022775.png" alt=""></p>
+<p>因此可以得到以下结论：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508272023962.png" alt=""></p>
+<p>然后进行泰勒二元展开：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508272023998.png" alt=""></p>
+<p>当联合$Q$值$Q_{tot}$在动作空间中的最大点附近时，$Q_{tot}$对单个$Q^{i}$的依赖性近似于线性。$Q_{tot}$与$Q^{i}$之间的函数关系在动作空间上呈线性，但包含了所有的非线性信息。线性系数的详细结构与$Q_{tot}$和$Q^{i}$的所有非线性依赖有关。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508272024417.png" alt=""></p>
+<p>证明如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508272024548.png" alt=""></p>
+<h2 id="为什么把乘积项能降阶为线性项"><a href="#为什么把乘积项能降阶为线性项" class="headerlink" title="为什么把乘积项能降阶为线性项"></a>为什么把乘积项能降阶为线性项</h2><ul>
+<li>关键点是我们是在 “近极值点” 做局部展开：在该点$Q_{i}$的第一阶项为$0$，主导变化为$(a_{i}-a_{i}^{0})^{2}$（即$Q_{i}-\alpha_{i}$的主要成分与二阶量相关）。因此任意两个$Q_{i}Q_{j}$的主要变化可以分解为常数 + 与单个$Q_{i}$（或$Q_{j}$）线性相关的主导项 + 更小的高阶残差。</li>
+<li>递归地对高阶乘积进行类似处理，可以把任意阶的乘积主导项“映射”为一组以单个$Q_{i}$为基的线性组合（加常数和小残差）。这就是为什么能用“线性加权的$Q_{i}$”去近似完整的非线性$Q_{tot}$。</li>
+</ul>
+<h2 id="算法结构"><a href="#算法结构" class="headerlink" title="算法结构"></a>算法结构</h2><p>$Q_{tot}$的分解公式可以表示如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508272024944.png" alt=""></p>
+<p>先用单注意力机制计算出联合$Q$值（这里称作$Q^{h}$），再将这个过程重复$H$次，把结果拼在一起（直接加和或者加权平均），得到真正的$Q_{tot}$。值得注意的是，为了增加$Q_{tot}$和$Q^{i}$的非线性关系，加入了一个自注意力模块，没有直接用$o_{i}$作为输入，而是用$(o_{i}, Q^{i})$作为输入。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202508272025725.png" alt=""></p>
 <h1 id="COMA"><a href="#COMA" class="headerlink" title="COMA"></a><code>COMA</code></h1><p><code>COMA</code>是一种<code>policy-based</code>的多智能体算法，其核心思想是在于“独立回报分配”。当多个智能体在执行任务时，获得的奖励分数是由所有智能体的行为共同决定的，那么怎么把一个奖励分数合理的分配给每一个智能体呢？这就是<code>COMA</code>算法要解决的关键问题。在网络结构上，<code>COMA</code>沿用了<code>Actor-Critic</code>架构，其中<code>Actor</code>使用基于<code>policy-based</code>的<code>RNN</code>网络。</p>
 <h2 id="算法背景和思想"><a href="#算法背景和思想" class="headerlink" title="算法背景和思想"></a>算法背景和思想</h2><p>在多智能体强化学习场景中，每个智能体在某一时刻只掌握局部的信息，无法全局观测环境状态。为了促进合作，各个智能体的动作对全局奖励有不同的贡献，因此需要一种有效的方法来分配奖励。<code>COMA</code>引入了“反事实基线”<code>(Counterfactual Baseline)</code>的概念，专门用于降低多智能体策略梯度方法中的方差。</p>
 <p><code>COMA</code>的核心思想是通过引入一个基线，该基线模拟在固定其他智能体动作的前提下，某个智能体选择不同动作时对全局奖励的影响，从而更精确地衡量当前动作的贡献，减少策略梯度更新中的方差。</p>
@@ -4314,200 +4336,6 @@
       </tags>
   </entry>
   <entry>
-    <title>数据库面试题总结</title>
-    <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
-<a id="more"></a>
-<h1 id="事务四大特性"><a href="#事务四大特性" class="headerlink" title="事务四大特性"></a>事务四大特性</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">原子性，要么执行，要么不执行  </span><br><span class="line">隔离性，所有操作全部执行完以前其它会话不能看到过程</span><br><span class="line">一致性，事务前后，数据总额一致</span><br><span class="line">持久性，一旦事务提交，对数据的改变就是永久的</span><br></pre></td></tr></table></figure>
-<h1 id="数据库隔离级别"><a href="#数据库隔离级别" class="headerlink" title="数据库隔离级别"></a>数据库隔离级别</h1><p>数据库事务的隔离级别有4个，由低到高依次为Read uncommitted、Read committed、Repeatable read、Serializable，这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">脏读</th>
-<th style="text-align:center">不可重复读</th>
-<th style="text-align:center">幻读</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Read uncommitted</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td style="text-align:center">Read committed（Sql Server，Oracle）</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td style="text-align:center">Repeatable read（Mysql）</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td style="text-align:center">Serializable</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>脏读：事务 B 去查询了事务 A 修改过的数据，但是此时事务 A 还没提交，所以事务 A 随时会回滚导致事务 B 再次查询就读不到刚才事务 A 修改的数据了，这就是脏读。</p>
-<p>不可重复读：假设一个前提是事务 A 只能在事务 B 提交之后读取到它修改的数据，所以此时必然是不会发生脏读的。事务A事先读取了数据，事务B紧接了更新了数据，并提交了事务，而事务A再次读取该数据时，数据已经发生了改变。</p>
-<p>不可重复读和脏读的区别是，脏读读取到的是一个未提交的数据，而不可重复读读取到的是前一个事务提交的数据。</p>
-<p>幻读：幻读就是你一个事务用一样的 SQL 多次查询，结果每次查询都会发现查到一些之前没看到过的数据。注意，幻读特指的是你查询到了之前查询没看到过的数据。此时说明你是幻读了。</p>
-<p>幻读和不可重复读所不同的是不可重复读查询的都是同一个数据项，而幻读针对的是一批数据整体（比如数据的个数）。</p>
-<h1 id="Mysql的存储引擎以及区别"><a href="#Mysql的存储引擎以及区别" class="headerlink" title="Mysql的存储引擎以及区别"></a>Mysql的存储引擎以及区别</h1><p>Mysql默认支持九种存储引擎（数据用各种不同的技术存储在文件或内存中。这些技术中的每一种技术都使用不同的存储机制、索引技巧、锁定水平并且最终提供广泛的不同的功能和能力。通过选择不同的技术，你能够获得额外的速度或者功能，从而改善你的应用的整体功能。）</p>
-<ol>
-<li>MyISAM：适合读密集的表<ol>
-<li>不支持行锁(MyISAM只有表锁)，读取时对需要读到的所有表加锁，写入时则对表加排他锁；MyISAM表进行读操作时，它不会阻塞其他用户对同一表的读请求，但会阻塞对同一表的写操作；而对MyISAM表的写操作，则会阻塞其他用户对同一表的读和写操作。</li>
-<li>不支持事务</li>
-<li>不支持外键</li>
-<li>不支持崩溃后的安全恢复</li>
-<li>在表有读取查询的同时，支持往表中插入新记录</li>
-<li>支持BLOB和TEXT的前500个字符索引，支持全文索引和空间索引</li>
-<li>支持延迟更新索引，极大地提升了写入性能</li>
-<li>对于不会进行修改的表，支持压缩表，极大地减少了磁盘空间的占用</li>
-<li>存储表的总行数，执行select count(*) from table时只要简单的读出保存好的行数即可</li>
-<li>采用非聚集索引，索引文件的数据域存储指向数据文件的指针。</li>
-</ol>
-</li>
-<li>InnoDB：InnoDB是MySQL的默认数据库引擎（5.5版之后），适合写密集的表<ol>
-<li>支持行锁，采用MVCC来支持高并发，有可能死锁</li>
-<li>支持事务</li>
-<li>支持外键</li>
-<li>支持崩溃后的安全恢复</li>
-<li>不支持全文索引</li>
-<li>不存储表的总行数，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行。注意的是，当count(*)语句包含 where条件时，两种表的操作是一样的</li>
-<li>主键索引采用聚集索引（索引的数据域存储数据文件本身），辅索引的数据域存储主键的值；因此从辅索引查找数据，需要先通过辅索引找到主键值，再访问主键索引；最好使用自增主键，防止插入数据时，为维持B+树结构，文件的大调整。</li>
-<li>DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除</li>
-<li>对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引更好和更快的auto_increment处理</li>
-</ol>
-</li>
-</ol>
-<h1 id="B-索引和hash索引"><a href="#B-索引和hash索引" class="headerlink" title="B+索引和hash索引"></a>B+索引和hash索引</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20181107184452575.png" alt=""></p>
-<p>在MySQL中，只有HEAP/MEMORY引擎表才能显式支持哈希索引（NDB也支持，但这个不常用），InnoDB引擎的自适应哈希索引（adaptive hash index）不在此列，因为这不是创建索引时可指定的。</p>
-<ul>
-<li>如果是等值查询，那么哈希索引明显有绝对优势，因为只需要经过一次算法即可找到相应的键值；当然了，这个前提是，键值都是唯一的。如果键值不是唯一的，就需要先找到该键所在位置，然后再根据链表往后扫描，直到找到相应的数据；</li>
-<li>如果是范围查询检索，这时候哈希索引就毫无用武之地了 ，因为原先是有序的键值，经过哈希算法后，有可能变成不连续的了，就没办法再利用索引完成范围查询检索；</li>
-<li>同理， 哈希索引也没办法利用索引完成排序，以及like ‘xxx%’ 这样的部分模糊查询（这种部分模糊查询，其实本质上也是范围查询）；</li>
-<li>哈希索引也不支持多列联合索引的最左匹配规则；</li>
-<li>B+树索引的关键字检索效率比较平均，不像B树那样波动幅度大， 在有大量重复键值情况下，哈希索引的效率也是极低的，因为存在所谓的哈希碰撞问题 。</li>
-</ul>
-<h1 id="索引的优缺点，什么时候使用索引，什么时候不能使用索引"><a href="#索引的优缺点，什么时候使用索引，什么时候不能使用索引" class="headerlink" title="索引的优缺点，什么时候使用索引，什么时候不能使用索引"></a>索引的优缺点，什么时候使用索引，什么时候不能使用索引</h1><ul>
-<li>索引最大的好处是提高查询速度</li>
-<li>缺点是更新数据时效率低，因为要同时更新索引</li>
-<li>对数据进行频繁查询进建立索引，如果要频繁更改数据不建议使用索引</li>
-</ul>
-<h1 id="InnoDB索引和MyISAM索引的区别"><a href="#InnoDB索引和MyISAM索引的区别" class="headerlink" title="InnoDB索引和MyISAM索引的区别"></a><strong>InnoDB索引</strong>和<strong>MyISAM索引</strong>的区别</h1><p>InnoDB的数据文件本身就是主索引文件。而MyISAM的主索引和数据是分开的。</p>
-<p>InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别。</p>
-<h1 id="索引的底层实现（B-树，为何不采用红黑树，B树）重点"><a href="#索引的底层实现（B-树，为何不采用红黑树，B树）重点" class="headerlink" title="索引的底层实现（B+树，为何不采用红黑树，B树）重点"></a>索引的底层实现（B+树，为何不采用红黑树，B树）重点</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">树</th>
-<th style="text-align:center">区别</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">红黑树</td>
-<td style="text-align:center">增加，删除，红黑树会进行频繁的调整，来保证红黑树的性质，浪费时间</td>
-</tr>
-<tr>
-<td style="text-align:center">B树也就是B-树</td>
-<td style="text-align:center">B树，查询性能不稳定，查询结果高度不致，每个结点保存指向真实数据的指针，相比B+树每一层每屋存储的元素更多，显得更高一点。</td>
-</tr>
-<tr>
-<td style="text-align:center">B+树</td>
-<td style="text-align:center">B+树相比较于另外两种树,显得更矮更宽，查询层次更浅</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h1 id="为什么使用B-树"><a href="#为什么使用B-树" class="headerlink" title="为什么使用B+树"></a>为什么使用B+树</h1><ol>
-<li>B+树是多路平衡查找树（B-Tree）的变种（Plus版本），多路绝对平衡查找树，他拥有B-树的优势</li>
-<li>B+树的扫库扫表能力更强。</li>
-<li>B+树的磁盘读写能力更强。</li>
-<li>B+树的排序能力更强。</li>
-<li>B+树的查询效率更加稳定（仁者见仁，智者见智）</li>
-</ol>
-<h1 id="Sql的优化"><a href="#Sql的优化" class="headerlink" title="Sql的优化"></a>Sql的优化</h1><ol>
-<li>sql尽量使用索引，而且查询要走索引</li>
-<li>对sql语句优化<ul>
-<li>子查询变成left join</li>
-<li>limit 分布优化，先利用ID定位，再分页</li>
-<li>or条件优化，多个or条件可以用union all对结果进行合并（union all结果可能重复）</li>
-<li>不必要的排序</li>
-<li>where代替having,having 检索完所有记录，才进行过滤</li>
-<li>避免嵌套查询</li>
-<li>对多个字段进行等值查询时，联合索引</li>
-</ul>
-</li>
-</ol>
-<h1 id="索引最左前缀问题"><a href="#索引最左前缀问题" class="headerlink" title="索引最左前缀问题"></a>索引最左前缀问题</h1><p>假设你在表的state、city和zip数据列上建立了复合索引。索引中的数据行按照state/city/zip次序排列，因此它们也会自动地按照state/city/zip次序排列。这意味着，即使你在查询中只指定了state值，或者指定state和city值，MySQL也可以使用这个索引。因此，这个索引可以被用于搜索如下所示的数据列组合：state/city/zip；state/city；state。</p>
-<p>MySQL不能利用这个索引来搜索没有包含在最左前缀的内容。例如，如果你按照city或zip来搜索，<br>就不会使用到这个索引。如果你搜索给定的state和具体的ZIP代码（索引的1和3列），该索引也是不能用于这种组合值的，尽管MySQL可以利用索引来查找匹配的state从而缩小搜索的范围。</p>
-<p>explain命令的结果需要考虑属性type：ref就是使用了索引，index是对所有索引树进行扫描，而all是对整个磁盘的数据进行全表扫描。</p>
-<h1 id="索引分类及索引失效条件"><a href="#索引分类及索引失效条件" class="headerlink" title="索引分类及索引失效条件"></a>索引分类及索引失效条件</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">索引类型</th>
-<th style="text-align:center">概念</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">普通索引</td>
-<td style="text-align:center">最基本的索引，没有任何限制</td>
-</tr>
-<tr>
-<td style="text-align:center">唯一索引</td>
-<td style="text-align:center">与”普通索引”类似，不同的就是：索引列的值必须唯一，但允许有空值。</td>
-</tr>
-<tr>
-<td style="text-align:center">主键索引</td>
-<td style="text-align:center">它是一种特殊的唯一索引，不允许有空值。</td>
-</tr>
-<tr>
-<td style="text-align:center">全文索引</td>
-<td style="text-align:center">针对较大的数据，生成全文索引很耗时间空间。</td>
-</tr>
-<tr>
-<td style="text-align:center">组合索引</td>
-<td style="text-align:center">为了更多的提高mysql效率可建立组合索引，遵循”最左前缀“原则</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>失效条件：</p>
-<ol>
-<li>如果条件中有or，即使其中有条件带索引也不会使用</li>
-<li>对于多列索引，不是使用的第一部分，则不会使用索引</li>
-<li>like查询是以%开头</li>
-<li>如果列类型是字符串，那一定要在条件中将数据使用引号引用起来,否则不使用索引</li>
-<li>如果mysql估计使用全表扫描要比使用索引快,则不使用索引</li>
-<li>where中索引列有运算</li>
-<li>where中索引列使用了函数（+，-，*，/，! ）</li>
-<li>当变量采用的是times变量，而表的字段采用的是date变量时</li>
-<li>隐式类型转换导致索引失效</li>
-</ol>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>机器学习Tricks</title>
     <url>/2022/10/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0Tricks/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一些自己在机器学习应用过程中遇到的一些问题，包括理论、代码实践等方面。</p>
@@ -4778,304 +4606,197 @@
       </tags>
   </entry>
   <entry>
-    <title>机器学习总结</title>
-    <url>/2021/04/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>小白上路啦！</p>
-<p>主要参考吴恩达的《机器学习》</p>
+    <title>数据库面试题总结</title>
+    <url>/2022/03/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>总结一下网上的数据库面试题</p>
 <a id="more"></a>
-<h1 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h1><h2 id="学习方式分类"><a href="#学习方式分类" class="headerlink" title="学习方式分类"></a>学习方式分类</h2><ul>
-<li>监督学习</li>
-<li>无监督学习</li>
-<li>半监督学习</li>
-<li>强化学习</li>
-</ul>
-<h2 id="学习结果分类"><a href="#学习结果分类" class="headerlink" title="学习结果分类"></a>学习结果分类</h2><ul>
-<li>回归</li>
-<li>分类</li>
-</ul>
-<h1 id="模型学习"><a href="#模型学习" class="headerlink" title="模型学习"></a>模型学习</h1><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><h3 id="线性回归模型特点"><a href="#线性回归模型特点" class="headerlink" title="线性回归模型特点"></a>线性回归模型特点</h3><ul>
-<li>线性回归时一种回归算法</li>
-<li>模型简单、计算量较小</li>
-<li>对误差敏感</li>
-<li>对数据预处理要求较高</li>
-</ul>
-<h3 id="线性回归模型主要思想"><a href="#线性回归模型主要思想" class="headerlink" title="线性回归模型主要思想"></a>线性回归模型主要思想</h3><p>通过运用该简单的线性函数，可模拟<code>x</code>和<code>y</code>之间的关系。关键在于该函数不仅与输入变量x成线性关系，而且与参数<code>a</code>、<code>b</code>成线性关系。当前目标是确定最符合训练数据的参数<code>a</code>和<code>b</code>的值。</p>
-<p>这可通过测量每个输入x的实际目标值<code>y</code>和模型<script type="math/tex">f(x)</script>之间的失配来实现，并将失配最小化。这种失配（最小值）被称为误差函数。</p>
-<p>有多种误差函数可供选择，但其中最简单的要数<code>RSS</code>，即每个数据点x对应的模型<script type="math/tex">f(x)</script>与目标值y的误差平方和。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_16.png" alt=""></p>
-<p>对于<code>w</code>,<code>b​</code>作为自变量，取何值时，<code>RSS</code>最小？转化为求极值问题，极值点偏导为0。</p>
-<p>避免过拟合，引入正则化技术（将参数作为项加入损失函数）</p>
-<p>L1正则化（LASSO回归）：具有稀疏作用</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_17.png" alt=""></p>
-<p>L2正则化（Ridge回归）：收敛更快</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_18.png" alt=""></p>
-<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><ul>
-<li>评估是否准确：查看在训练集上的准确率</li>
-<li>评估泛化性能：查看在测试集（<code>K</code>折）上的准确率</li>
-</ul>
-<h3 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h3><p>梯度：$\mbox{grad} \ f(x,y)=\nabla f(x,y)=f_{x}(x,y)\vec{i}+f_{y}(x,y)\vec{j}$ 和法向向量（是一个单位向量）$n$ 相乘后就是沿着边界外法线方向的导数值</p>
-<p>散度：用于表征空间各点矢量场发散的强弱程度，$\mbox{div} \ \mathbf{F}=\nabla\cdot\mathbf{F}=\frac{\partial F_{x}}{\partial x}+\frac{\partial F_{y}}{\partial y}+\frac{\partial F_{z}}{\partial z}$，其中$F_{x}, F_{y}, F_{z}$是三个轴的分量</p>
-<p>旋度：可以表示三维向量场对某一点附近的微元造成的旋转程度，$\nabla \ \times \ v = (\frac{\partial v_{z}}{\partial y}-\frac{\partial v_{y}}{\partial z})\hat{i}+(\frac{\partial v_{x}}{\partial z}-\frac{\partial v_{z}}{\partial x})\hat{j}+(\frac{\partial v_{y}}{\partial x}-\frac{\partial v_{x}}{\partial y})\hat{k}$</p>
-<p>拉普拉斯算子：定义为梯度的散度，$\Delta f=\nabla^{2}f=\nabla\cdot\nabla f$</p>
-<p>矢量拉普拉斯算子：简记为矢拉等于梯散减双旋。$\nabla^{2}\overline{A}=\nabla(\nabla\cdot\overline{A})-\nabla\times\nabla\times\overline{A}$</p>
-<ul>
-<li>更新规则（多个$\theta$同时更新）：</li>
-</ul>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_19.png" alt=""></p>
-<ul>
-<li><p>$\alpha$太小，$J(\theta)$收敛太慢；$\alpha$太大，$J(\theta)$也许每次迭代不会减少或者不会收敛</p>
-</li>
-<li><p>注意特征缩放，使得特征在相似的范围</p>
-</li>
-<li><p>梯度下降的方向与等高线的切线方向垂直 ⇒ 梯度下降方向与等高线的法线方向相同</p>
-</li>
-<li><p>对于一元函数来说：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/微信截图_20221116095053.png" alt=""></p>
-</li>
-<li><p>多元函数的梯度方向和法向量方向</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/微信截图_20221116162051.png" alt=""></p>
-<p>梯度方向是一个函数任一点处上升最快的方向。梯度的投影就是法向量，法向量需要做等高线才能求。$z=f(x,y)$ 是一个函数，$f(x,y)=C$ 则是一个等式。</p>
-</li>
-</ul>
-<h3 id="随机梯度下降法"><a href="#随机梯度下降法" class="headerlink" title="随机梯度下降法"></a>随机梯度下降法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_45.png" alt=""></p>
-<p>具体步骤：对参数进行细微的修改，使其对第一个数据拟合得非常好，以此类推</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_46.png" alt=""></p>
-<p>如何确定算法已经收敛：每次使用一个训练样本更新$\theta$之前计算$cost(\theta,(x^{(i)},y^{(i)}))$；每1000次迭代计算一下$cost(\theta,(x^{(i)},y^{(i)}))$的均值</p>
-<h3 id="Mini-batch-梯度下降法"><a href="#Mini-batch-梯度下降法" class="headerlink" title="Mini-batch 梯度下降法"></a>Mini-batch 梯度下降法</h3><p>主要思想：每次迭代使用b个样本（向量化的时候更好）</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_47.png" alt=""></p>
-<h3 id="正规方程法"><a href="#正规方程法" class="headerlink" title="正规方程法"></a>正规方程法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_20.png" alt=""></p>
-<h2 id="logistic回归模型"><a href="#logistic回归模型" class="headerlink" title="logistic回归模型"></a>logistic回归模型</h2><h3 id="logistic回归模型特点"><a href="#logistic回归模型特点" class="headerlink" title="logistic回归模型特点"></a>logistic回归模型特点</h3><ul>
-<li>logistic回归是一种分类算法</li>
-<li>模型简单、计算量较小</li>
-<li>对异常数据点并不敏感</li>
-<li>对数据预处理要求较高</li>
-</ul>
-<h3 id="logistic回归模型主要思想"><a href="#logistic回归模型主要思想" class="headerlink" title="logistic回归模型主要思想"></a>logistic回归模型主要思想</h3><h4 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h4><p>sigmoid函数的数学形式是：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_21.png" alt=""></p>
-<p>对应的函数曲线如下图：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/sigmoid.png" alt="sigmod.png"></p>
-<h4 id="决策函数"><a href="#决策函数" class="headerlink" title="决策函数"></a>决策函数</h4><p>一个机器学习的模型，实际上是把决策函数限定在某一组条件下，这组限定条件就决定了模型的假设空间。当然，我们还希望这组限定条件简单而合理。而逻辑回归模型所做的假设是：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_22.png" alt=""></p>
-<p>这里的 <script type="math/tex">g(h)</script> 是上边提到的<code>sigmoid</code>函数，相应的决策函数为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_23.png" alt=""></p>
-<p>选择<code>0.5</code>作为阈值是一个一般的做法，实际应用时特定的情况可以选择不同阈值，如果对正例的判别准确性要求高，可以选择阈值大一些，对正例的召回要求高，则可以选择阈值小一些。（根据<code>sigmod</code>函数，即$\theta^{T}x&gt;0$）</p>
-<h4 id="参数求解"><a href="#参数求解" class="headerlink" title="参数求解"></a>参数求解</h4><p>模型的数学形式确定后，剩下就是如何去求解模型中的参数。统计学中常用的一种方法是最大似然估计，即找到一组参数，使得在这组参数下，我们的数据的似然度（概率）越大。在逻辑回归模型中，似然度可表示为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_24.png" alt=""></p>
-<p>取对数可以得到对数似然度：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_25.png" alt=""></p>
-<h2 id="决策树算法"><a href="#决策树算法" class="headerlink" title="决策树算法"></a>决策树算法</h2><h3 id="决策树算法特点"><a href="#决策树算法特点" class="headerlink" title="决策树算法特点"></a>决策树算法特点</h3><ul>
-<li>决策树能用来做回归，也可以用来做分类，是一类算法的总称</li>
-<li>决策树是一种弱分类器</li>
-<li>决策树是一类具有可解释性、泛化性能较好的模型</li>
-<li>精度高、无需特征归一化，能够处理缺失值，共线性特征</li>
-<li>适合于低维稠密数据，不适合高维稀疏数据</li>
-<li>决策树类算法兼具特征选择能力</li>
-</ul>
-<h3 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h3><p>信息熵<code>S</code>表征了信息不确定性的程度，分类属性应当以最高熵减为标准进行：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_48.png" alt=""></p>
-<h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p><code>C4.5</code>算法过程跟<code>ID3</code>算法一样，只是选择特征的方法由信息增益改成信息增益比。</p>
-<p>特征<code>A</code>对训练数据集<code>D</code>的信息增益比<script type="math/tex">GainRatio(D,A)</script>定义为其信息增益<script type="math/tex">Gain(D,A)</script>与训练数据集D的经验熵<script type="math/tex">H(D)</script>之比</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_49.png" alt=""></p>
-<h2 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h2><h3 id="随机森林算法主要思想"><a href="#随机森林算法主要思想" class="headerlink" title="随机森林算法主要思想"></a>随机森林算法主要思想</h3><ol>
-<li><code>bootstrap</code>采样</li>
-<li>随机选择特征，选择最佳属性建立决策树</li>
-<li>形成随机森林，通过投票得到结果</li>
-</ol>
-<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><h3 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_26.png" alt=""></p>
-<h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><p>输入层、输出层、隐藏层、偏置单元</p>
-<p>如果第<code>i</code>层有$s_{i}$个，第<code>i+1</code>层有$s_{i+1}$个，则$\theta$规模为$s_{i+1}*(s_{i}+1)$</p>
-<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_27.png" alt=""></p>
-<h3 id="前向自动微分"><a href="#前向自动微分" class="headerlink" title="前向自动微分"></a>前向自动微分</h3><p>在计算 $y=f(t)$ 时并行地计算 $f’(t)$ 。例如，$f(x_{1},x_{2})=x_{1}\cdot \exp(x_{2})-x_{1}$，模拟前向微分过程。 $y_{1}=\exp(x_{2})$ ， $y_{2}=x_{1}\cdot y_{1}$ ， $y_{3}=y_{2}-x_{1}$ 。此时 $\frac{dy_{1}}{dx_{2}}=\exp(x_{2})$ ， $\frac{dy_{2}}{dx_{1}}=y_{1}=\exp(x_{2})$ ， $\frac{dy_{2}}{dx_{2}}=x_{1}\cdot\frac{dy_{1}}{dx_{2}}=x_{1}\cdot\exp(x_{2})$ ， $\frac{dy_{3}}{dx_{1}}=\frac{dy_{2}}{dx_{1}}-\frac{dx_{1}}{dx_{1}}=\exp(x_{2})-1$ ， $\frac{dy_{3}}{dx_{2}}=\frac{dy_{2}}{dx_{2}}=x_{1}\cdot\exp(x_{2})$ 。</p>
-<p>另一种理解是前向自动微分依赖于 dual number，形如 $a+b\epsilon,\ \epsilon^{2}=0,\ \epsilon\neq 0$，我们计算 $h(a+\epsilon)$的时候，可以一次给出 $h(a)$ 和 $h’(a)$。对于函数 $f(x,y)=x^{2}y+y+2$ 来说：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303061706927.png" alt=""></p>
-<p>缺点是每次穿过一次图，只能计算一个参数的偏导数，虽然结果精确，但是对于多个参数的时候，要穿过很多次图。</p>
-<h3 id="反向自动微分"><a href="#反向自动微分" class="headerlink" title="反向自动微分"></a>反向自动微分</h3><p>思路是正向穿过图来计算每个节点的值，然后二次反向穿过图，计算所有的偏导数。反向自动微分依赖于链式求导法则：$\frac{\partial{f}}{\partial{x}}=\frac{\partial{f}}{\partial{n_{i}}}\times \frac{\partial{n_{i}}}{\partial{x}}$ 。例如，$f(x_{1},x_{2})=x_{1}\cdot \exp(x_{2})-x_{1}$，模拟反向微分过程。$y_{1}=\exp(x_{2})$ ， $y_{2}=x_{1}\cdot y_{1}$ ， $y_{3}=y_{2}-x_{1}$ 。此时 $\frac{\partial{f}}{\partial{y_{3}}}=1$ ， $\frac{\partial{f}}{\partial{y_{2}}}=\frac{\partial{f}}{\partial{y_{3}}}\frac{\partial{y_{3}}}{\partial{y_{2}}}=1 \cdot 1=1$ ， $\frac{\partial{f}}{\partial{y_{1}}}=\frac{\partial{f}}{\partial{y_{2}}}\frac{\partial{y_{2}}}{\partial{y_{1}}}=1\cdot x_{1}=x_{1}$ ， $\frac{\partial{f}}{\partial{x_{2}}}=\frac{\partial{f}}{\partial{y_{1}}}\frac{\partial{y_{1}}}{\partial{x_{2}}}=x_{1}\cdot \exp(x_{2})$ ， $\frac{\partial{f}}{\partial{x_{1}}}=\frac{\partial{f}}{\partial{y_{2}}}\frac{\partial{y_{2}}}{x_{1}}+\frac{\partial{f}}{\partial{y_{3}}}\frac{\partial{y_{3}}}{\partial{x_{1}}}=1\cdot y_{1}+1\cdot (-1)=\exp(x_{2})-1$ 。对于函数 $f(x,y)=x^{2}y+y+2$ 来说：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303061757272.png" alt=""></p>
-<p>反向模式的优点：一次反向传播计算出所有的偏导数，中间的偏导数计算计算只需计算一次；减少重复的计算工作量，在多参数的时候反向自动微分的时间复杂度更低。反向模式的缺点：需要额外的数据结构记录正向过程的计算操作；带来了大量内存占用。</p>
-<h3 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_28.png" alt=""></p>
-<h4 id="检测方法"><a href="#检测方法" class="headerlink" title="检测方法"></a>检测方法</h4><p>双侧差分：$\frac{J(\theta+\varepsilon)-J(\theta-\varepsilon)}{2\varepsilon}\approx\frac{\partial}{\partial z_{j}^{l}}cost(i)$</p>
-<p>训练集（60%）、验证集（20%）、测试集（20%）</p>
-<p>$J_{train}(\theta)$和$J_{cv}(\theta)$都高时，欠拟合；$J_{train}(\theta)$低$J_{cv}(\theta)$高时，过拟合</p>
-<p>随多项式次数增长的关系</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_29.png" alt=""></p>
-<p>随$\lambda$增长的关系</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_30.png" alt=""></p>
-<p>bias：偏差（underfit）；variance：方差（overfit）</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_31.png" alt=""></p>
-<p>Precision：$\frac{true}{predicted}$ ；Recall：$\frac{true}{actual}$；F：$2\frac{PR}{P+R}$</p>
-<h2 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_32.png" alt=""></p>
-<p>$y^{(i)}=1$时，$\theta^{T}x\geq1$，即$p^{(i)}||\theta||\geq1$；$y^{(i)}=0$时，$\theta^{T}x\leq-1$，即$p^{(i)}||\theta||\leq-1$，$\theta$垂直于边界函数</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_33.png" alt=""></p>
-<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_34.png" alt=""></p>
-<p>$x\approx l^{(1)}:f_{1}\approx exp(-\frac{0^{2}}{2\sigma^{2}})\approx 1;else:f_{1}=exp(-\frac{large^{2}}{2\sigma^{2}})\approx 0$</p>
-<p>给定$(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),(x^{(3)},y^{(3)}),(x^{(4)},y^{(4)})$，</p>
-<p>选定$l^{(1)}=x^{(1)},l^{(2)}=x^{(2)},l^{(3)}=x^{(3)},l^{(4)}=x^{(4)}$；</p>
-<p>对于给定的训练集$(x^{(i)},y^{(i)})$：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_35.png" alt=""></p>
-<h2 id="高斯过程回归"><a href="#高斯过程回归" class="headerlink" title="高斯过程回归"></a>高斯过程回归</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>现有如下方程：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418193805.png" alt=""></p>
-<p>尝试用高斯过程回归解上述的微分方程。</p>
-<h3 id="先验知识"><a href="#先验知识" class="headerlink" title="先验知识"></a>先验知识</h3><h4 id="一维高斯分布"><a href="#一维高斯分布" class="headerlink" title="一维高斯分布"></a>一维高斯分布</h4><p>高斯分布又称正态分布，若随机变量 $X$ 服从一个位置参数为 $\mu$ 、尺度参数为 $\sigma$ 的概率分布，且其概率密度为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418193914.png" alt=""></p>
-<p>则这个随机变量就称为正态随机变量，正态随机变量服从的分布就称为正态分布，记作 $X \sim N(\mu,\sigma^{2})$</p>
-<h4 id="多维高斯分布"><a href="#多维高斯分布" class="headerlink" title="多维高斯分布"></a>多维高斯分布</h4><p>多维高斯分布其变量为 $n$ 维变量，每个变量之间可能会存在关系，为了描述这种关系，我们引入了协方差矩阵 $\Sigma$ ，其大小为 $n{\times}n$ ，其中每一个元素为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194006.png" alt=""></p>
-<p>当维度为2时，2维的高斯分布公式为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194048.png" alt=""></p>
-<p>当维度大于2时，$n$ 维的高斯分布公式为：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194122.png" alt=""></p>
-<h4 id="高斯过程"><a href="#高斯过程" class="headerlink" title="高斯过程"></a>高斯过程</h4><p>首先当随机变量是1维的时候，我们称之为一维高斯分布，概率密度函数 $p(x)=N(\mu,\sigma^{2})$，当随机变量的维度上升到有限的 $p$ 维的时候，就称之为高维高斯分布 $p(x)=N(\mu,\Sigma_{p \times p})$。而高斯过程则更进一步，他是一个定义在连续域上的无限多个高斯随机变量所组成的随机过程，换句话说，高斯过程是一个无限维的高斯分布。</p>
-<p>对于一个连续域 $T$ (假设是一个时间轴)，如果我们在连续域上任选个时刻：$t_{1},t_{2},t_{3},\dots,t_{n}\in T$，使得获得的一个 $n$ 维向量 ${\xi_{1},\xi_{2},\xi_{3},\dots,\xi_{n}}$ 都满足其是一个2维高斯分布，那么这个 ${\xi_{t}}$ 就是一个高斯过程。</p>
-<p>举一个实际的例子，直观地建立高斯过程的印象，下面的图中，横轴 $T$ 是一个关于时间的连续域，表示人的一生，而纵轴表示的是体能值，对于同一个人种的男性而言，在任意不同的时间点体能值都服从正态分布，但是不同时间点分布的均值和方差不同。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220301160123.png" alt=""></p>
-<p>图中，我们取出了 $t_{1},t_{2},t_{3},t_{4},t_{5}$ 五个时间点，分别代表同一个男性群体童年、少年、青年、中年、老年的具体时刻， $\xi_{1},\xi_{2},\xi_{3},\xi_{4},\xi_{5}$ 分别对应五个时刻的体能值，他们都服从高斯分布，只不过从图中可以看出，均值和方差都不同，那么概括起来：<br>对于任意 $t \in T$ ， $\xi_{t} \sim N(\mu_{t}, \sigma_{t}^{2})$ ，也就是对于一个确定的高斯过程而言，对于任意时刻 $t$ ，他的 $\mu_{t}$ 和 $\sigma_{t}$ 都已经确定了。而像上图中，我们对同一人种男性体能值在关键节点进行采样，然后平滑连接，也就是图中的两条虚线，就形成了这个高斯过程中的两个样本。</p>
-<p>$p$ 维高斯分布两个决定性的参数是均值 $\mu_{p}$ 和 $p \times p$ 的协方差矩阵 $\Sigma_{p \times p}$ ，定义在连续域 $T$ 上的高斯过程也一样，他是无限维的高斯分布。不一样的是他是在连续域上的，维数是无限的，因此均值该定义成一个关于时刻 $t$ 的函数： $m(t)$ 。协方差矩阵也是同理，无限维的情况下就定义为一个核函数 $k(s,t)$ ，其中 $s$ 和 $t$ 表示任意两个时刻，核函数也称协方差函数，核函数是一个高斯过程的核心，他决定了高斯过程的性质。其中最常见的一个核函数是径向核函数 $RBF$，其定义如下：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194246.png" alt=""></p>
-<p>高斯过程的两个核心要素：均值函数和核函数的定义我们就描述清楚了，按照高斯过程存在性定理，一旦这两个要素确定了，那么整个高斯过程就确定了： $\xi_{t} \sim GP(m(t), k(t,s))$</p>
-<h5 id="高斯过程求解偏微分方程"><a href="#高斯过程求解偏微分方程" class="headerlink" title="高斯过程求解偏微分方程"></a>高斯过程求解偏微分方程</h5><h6 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h6><p>高斯过程 $u$ 的后验均值为</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194526.png" alt=""></p>
-<p>后验方差为</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194601.png" alt=""></p>
-<p>其中</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194636.png" alt=""></p>
-<h6 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h6><ol>
-<li>在训练的内部和边界分别取 $n^{i}$ ， $n^{b}$ 个点作为训练点，计算 $f(x_{j}^{i})$ ， $g(x_{l}^b)$</li>
-<li>定义核函数 $c(x,x’)$ ，目前实现的是一维，取 $d=1$</li>
-</ol>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194806.png" alt=""></p>
+<h1 id="事务四大特性"><a href="#事务四大特性" class="headerlink" title="事务四大特性"></a>事务四大特性</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">原子性，要么执行，要么不执行  </span><br><span class="line">隔离性，所有操作全部执行完以前其它会话不能看到过程</span><br><span class="line">一致性，事务前后，数据总额一致</span><br><span class="line">持久性，一旦事务提交，对数据的改变就是永久的</span><br></pre></td></tr></table></figure>
+<h1 id="数据库隔离级别"><a href="#数据库隔离级别" class="headerlink" title="数据库隔离级别"></a>数据库隔离级别</h1><p>数据库事务的隔离级别有4个，由低到高依次为Read uncommitted、Read committed、Repeatable read、Serializable，这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">脏读</th>
+<th style="text-align:center">不可重复读</th>
+<th style="text-align:center">幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Read uncommitted</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td style="text-align:center">Read committed（Sql Server，Oracle）</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td style="text-align:center">Repeatable read（Mysql）</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td style="text-align:center">Serializable</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>脏读：事务 B 去查询了事务 A 修改过的数据，但是此时事务 A 还没提交，所以事务 A 随时会回滚导致事务 B 再次查询就读不到刚才事务 A 修改的数据了，这就是脏读。</p>
+<p>不可重复读：假设一个前提是事务 A 只能在事务 B 提交之后读取到它修改的数据，所以此时必然是不会发生脏读的。事务A事先读取了数据，事务B紧接了更新了数据，并提交了事务，而事务A再次读取该数据时，数据已经发生了改变。</p>
+<p>不可重复读和脏读的区别是，脏读读取到的是一个未提交的数据，而不可重复读读取到的是前一个事务提交的数据。</p>
+<p>幻读：幻读就是你一个事务用一样的 SQL 多次查询，结果每次查询都会发现查到一些之前没看到过的数据。注意，幻读特指的是你查询到了之前查询没看到过的数据。此时说明你是幻读了。</p>
+<p>幻读和不可重复读所不同的是不可重复读查询的都是同一个数据项，而幻读针对的是一批数据整体（比如数据的个数）。</p>
+<h1 id="Mysql的存储引擎以及区别"><a href="#Mysql的存储引擎以及区别" class="headerlink" title="Mysql的存储引擎以及区别"></a>Mysql的存储引擎以及区别</h1><p>Mysql默认支持九种存储引擎（数据用各种不同的技术存储在文件或内存中。这些技术中的每一种技术都使用不同的存储机制、索引技巧、锁定水平并且最终提供广泛的不同的功能和能力。通过选择不同的技术，你能够获得额外的速度或者功能，从而改善你的应用的整体功能。）</p>
 <ol>
-<li>计算 $\mathcal{L}c(x,x’)$ ， $\mathcal{B}c(x,x’)$ ， $\mathcal{L}’c(x,x’)$ ， $\mathcal{B}’c(x,x’)$ ， $\mathcal{L}\mathcal{L}’c(X^{i},X^{i})$ ， $\mathcal{L}\mathcal{B}’c(X^{i},X^{b})$ ， $\mathcal{B}\mathcal{B}’c(X^{b},X^{b})$ </li>
-<li>寻找最优化的 $\sigma,l_{1},\dots,l_{d}$ ，定义函数 $\mathcal{NLML}(\sigma,l_{1},\dots,l_{d})=\frac{1}{2}y^{T}K^{-1}y+\frac{1}{2}log|K|+\frac{n^{i}+n^{b}}{2}log(2\pi)$ ，求函数的最小值 $f(\sigma^{\star},l_{1}^{\star},\dots,l_{d}^{\star}) \leqslant \mathcal{NLML}(\sigma,l_{1},\dots,l_{d})$ </li>
-<li>使用找到的 $\sigma,l_{1},\dots,l_{d}$ 预测 $u(x)$ 在 $x^{\star}$ 的近似值：</li>
+<li>MyISAM：适合读密集的表<ol>
+<li>不支持行锁(MyISAM只有表锁)，读取时对需要读到的所有表加锁，写入时则对表加排他锁；MyISAM表进行读操作时，它不会阻塞其他用户对同一表的读请求，但会阻塞对同一表的写操作；而对MyISAM表的写操作，则会阻塞其他用户对同一表的读和写操作。</li>
+<li>不支持事务</li>
+<li>不支持外键</li>
+<li>不支持崩溃后的安全恢复</li>
+<li>在表有读取查询的同时，支持往表中插入新记录</li>
+<li>支持BLOB和TEXT的前500个字符索引，支持全文索引和空间索引</li>
+<li>支持延迟更新索引，极大地提升了写入性能</li>
+<li>对于不会进行修改的表，支持压缩表，极大地减少了磁盘空间的占用</li>
+<li>存储表的总行数，执行select count(*) from table时只要简单的读出保存好的行数即可</li>
+<li>采用非聚集索引，索引文件的数据域存储指向数据文件的指针。</li>
 </ol>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194906.png" alt=""></p>
-<h4 id="高斯过程回归-1"><a href="#高斯过程回归-1" class="headerlink" title="高斯过程回归"></a>高斯过程回归</h4><p>高斯过程回归是一个先验+观测值，然后推出后验的过程。</p>
-<p>我们先通过 $\mu (t)$ 和 $k(s,t)$ 定义一个高斯过程，但是因为此时并没有任何的观测值，所以是一个先验。获得了一组观测值之后，如何来修正这个高斯过程的均值函数和核函数，使之得到他的后验过程呢？</p>
-<p>高斯分布有一个很好的特性，那就是高斯分布的联合概率、边缘概率、条件概率仍然是满足高斯分布的，假设： $n$ 维随机变量满足高斯分布： $x \sim N(\mu, \Sigma_{n \times n})$ ，把这个 $n$ 维随机变量分成两部分： $p$ 维的 $x_{a}$ 和 $q$ 维的 $x_{b}$ ，满足 $n=p+q$ ，那么按照均值向量 $\mu$ 和协方差矩阵 $\Sigma$ 的分块规则，就可以写成：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418195017.png" alt=""></p>
-<p>那么根据高斯分布的性质，我们知道下列条件分布依然是一个高维的高斯分布：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418195055.png" alt=""></p>
-<p>也就是说，设置了高斯过程的先验参数，一旦我们拿到一些观测值，那么就可以对高斯过程的均值函数和核函数进行修正，得到一个修正后的后验高斯过程，而更新后验参数的信息就来自于观测值。</p>
-<p>将高斯过程和多维高斯分布进行类比，均值向量替换成均值函数，协方差矩阵替换成核函数，就能得到高斯过程基于观测值的后验过程的参数表达式。</p>
-<p>假设有一组观测值，他们的时刻对应一个向量 $X$ ，那么对应的值是另一个同纬度的向量的 $Y$ ，假设有4组观测值，即 ${(X[1],Y[1]),(X[2],Y[2]),(X[3],Y[3]),(X[4],Y[4])}$ ，那么余下的所有非观测点，在连续域上定义为 $X^{\star}$ ，值定义为 $f(X^{\star})$ 。</p>
-<p>首先，联合分布满足无限维高斯分布：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418195132.png" alt=""></p>
-<p>从这个联合分布所派生出来的条件概率 $f(X^{\star})|Y$ 同样也服从高斯分布： $f(X^{\star})|Y \sim N(\mu^{\star}, k^{\star})$ ，</p>
-<p>类比一下，将 $Y$ 看作 $x_{a}$ ， $f(X^{\star})$ 看作 $x_{b}$ ：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418195208.png" alt=""></p>
-<h2 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_36.png" alt=""></p>
+</li>
+<li>InnoDB：InnoDB是MySQL的默认数据库引擎（5.5版之后），适合写密集的表<ol>
+<li>支持行锁，采用MVCC来支持高并发，有可能死锁</li>
+<li>支持事务</li>
+<li>支持外键</li>
+<li>支持崩溃后的安全恢复</li>
+<li>不支持全文索引</li>
+<li>不存储表的总行数，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行。注意的是，当count(*)语句包含 where条件时，两种表的操作是一样的</li>
+<li>主键索引采用聚集索引（索引的数据域存储数据文件本身），辅索引的数据域存储主键的值；因此从辅索引查找数据，需要先通过辅索引找到主键值，再访问主键索引；最好使用自增主键，防止插入数据时，为维持B+树结构，文件的大调整。</li>
+<li>DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除</li>
+<li>对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引更好和更快的auto_increment处理</li>
+</ol>
+</li>
+</ol>
+<h1 id="B-索引和hash索引"><a href="#B-索引和hash索引" class="headerlink" title="B+索引和hash索引"></a>B+索引和hash索引</h1><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20181107184452575.png" alt=""></p>
+<p>在MySQL中，只有HEAP/MEMORY引擎表才能显式支持哈希索引（NDB也支持，但这个不常用），InnoDB引擎的自适应哈希索引（adaptive hash index）不在此列，因为这不是创建索引时可指定的。</p>
+<ul>
+<li>如果是等值查询，那么哈希索引明显有绝对优势，因为只需要经过一次算法即可找到相应的键值；当然了，这个前提是，键值都是唯一的。如果键值不是唯一的，就需要先找到该键所在位置，然后再根据链表往后扫描，直到找到相应的数据；</li>
+<li>如果是范围查询检索，这时候哈希索引就毫无用武之地了 ，因为原先是有序的键值，经过哈希算法后，有可能变成不连续的了，就没办法再利用索引完成范围查询检索；</li>
+<li>同理， 哈希索引也没办法利用索引完成排序，以及like ‘xxx%’ 这样的部分模糊查询（这种部分模糊查询，其实本质上也是范围查询）；</li>
+<li>哈希索引也不支持多列联合索引的最左匹配规则；</li>
+<li>B+树索引的关键字检索效率比较平均，不像B树那样波动幅度大， 在有大量重复键值情况下，哈希索引的效率也是极低的，因为存在所谓的哈希碰撞问题 。</li>
+</ul>
+<h1 id="索引的优缺点，什么时候使用索引，什么时候不能使用索引"><a href="#索引的优缺点，什么时候使用索引，什么时候不能使用索引" class="headerlink" title="索引的优缺点，什么时候使用索引，什么时候不能使用索引"></a>索引的优缺点，什么时候使用索引，什么时候不能使用索引</h1><ul>
+<li>索引最大的好处是提高查询速度</li>
+<li>缺点是更新数据时效率低，因为要同时更新索引</li>
+<li>对数据进行频繁查询进建立索引，如果要频繁更改数据不建议使用索引</li>
+</ul>
+<h1 id="InnoDB索引和MyISAM索引的区别"><a href="#InnoDB索引和MyISAM索引的区别" class="headerlink" title="InnoDB索引和MyISAM索引的区别"></a><strong>InnoDB索引</strong>和<strong>MyISAM索引</strong>的区别</h1><p>InnoDB的数据文件本身就是主索引文件。而MyISAM的主索引和数据是分开的。</p>
+<p>InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别。</p>
+<h1 id="索引的底层实现（B-树，为何不采用红黑树，B树）重点"><a href="#索引的底层实现（B-树，为何不采用红黑树，B树）重点" class="headerlink" title="索引的底层实现（B+树，为何不采用红黑树，B树）重点"></a>索引的底层实现（B+树，为何不采用红黑树，B树）重点</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">树</th>
+<th style="text-align:center">区别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">红黑树</td>
+<td style="text-align:center">增加，删除，红黑树会进行频繁的调整，来保证红黑树的性质，浪费时间</td>
+</tr>
+<tr>
+<td style="text-align:center">B树也就是B-树</td>
+<td style="text-align:center">B树，查询性能不稳定，查询结果高度不致，每个结点保存指向真实数据的指针，相比B+树每一层每屋存储的元素更多，显得更高一点。</td>
+</tr>
+<tr>
+<td style="text-align:center">B+树</td>
+<td style="text-align:center">B+树相比较于另外两种树,显得更矮更宽，查询层次更浅</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="为什么使用B-树"><a href="#为什么使用B-树" class="headerlink" title="为什么使用B+树"></a>为什么使用B+树</h1><ol>
+<li>B+树是多路平衡查找树（B-Tree）的变种（Plus版本），多路绝对平衡查找树，他拥有B-树的优势</li>
+<li>B+树的扫库扫表能力更强。</li>
+<li>B+树的磁盘读写能力更强。</li>
+<li>B+树的排序能力更强。</li>
+<li>B+树的查询效率更加稳定（仁者见仁，智者见智）</li>
+</ol>
+<h1 id="Sql的优化"><a href="#Sql的优化" class="headerlink" title="Sql的优化"></a>Sql的优化</h1><ol>
+<li>sql尽量使用索引，而且查询要走索引</li>
+<li>对sql语句优化<ul>
+<li>子查询变成left join</li>
+<li>limit 分布优化，先利用ID定位，再分页</li>
+<li>or条件优化，多个or条件可以用union all对结果进行合并（union all结果可能重复）</li>
+<li>不必要的排序</li>
+<li>where代替having,having 检索完所有记录，才进行过滤</li>
+<li>避免嵌套查询</li>
+<li>对多个字段进行等值查询时，联合索引</li>
+</ul>
+</li>
+</ol>
+<h1 id="索引最左前缀问题"><a href="#索引最左前缀问题" class="headerlink" title="索引最左前缀问题"></a>索引最左前缀问题</h1><p>假设你在表的state、city和zip数据列上建立了复合索引。索引中的数据行按照state/city/zip次序排列，因此它们也会自动地按照state/city/zip次序排列。这意味着，即使你在查询中只指定了state值，或者指定state和city值，MySQL也可以使用这个索引。因此，这个索引可以被用于搜索如下所示的数据列组合：state/city/zip；state/city；state。</p>
+<p>MySQL不能利用这个索引来搜索没有包含在最左前缀的内容。例如，如果你按照city或zip来搜索，<br>就不会使用到这个索引。如果你搜索给定的state和具体的ZIP代码（索引的1和3列），该索引也是不能用于这种组合值的，尽管MySQL可以利用索引来查找匹配的state从而缩小搜索的范围。</p>
+<p>explain命令的结果需要考虑属性type：ref就是使用了索引，index是对所有索引树进行扫描，而all是对整个磁盘的数据进行全表扫描。</p>
+<h1 id="索引分类及索引失效条件"><a href="#索引分类及索引失效条件" class="headerlink" title="索引分类及索引失效条件"></a>索引分类及索引失效条件</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">索引类型</th>
+<th style="text-align:center">概念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">普通索引</td>
+<td style="text-align:center">最基本的索引，没有任何限制</td>
+</tr>
+<tr>
+<td style="text-align:center">唯一索引</td>
+<td style="text-align:center">与”普通索引”类似，不同的就是：索引列的值必须唯一，但允许有空值。</td>
+</tr>
+<tr>
+<td style="text-align:center">主键索引</td>
+<td style="text-align:center">它是一种特殊的唯一索引，不允许有空值。</td>
+</tr>
+<tr>
+<td style="text-align:center">全文索引</td>
+<td style="text-align:center">针对较大的数据，生成全文索引很耗时间空间。</td>
+</tr>
+<tr>
+<td style="text-align:center">组合索引</td>
+<td style="text-align:center">为了更多的提高mysql效率可建立组合索引，遵循”最左前缀“原则</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>失效条件：</p>
 <ol>
-<li>初始化k个中心</li>
-<li>根据数据离中心的长短进行划分</li>
-<li>重新计算k个簇的中心</li>
-<li>继续迭代直到达到某个条件</li>
+<li>如果条件中有or，即使其中有条件带索引也不会使用</li>
+<li>对于多列索引，不是使用的第一部分，则不会使用索引</li>
+<li>like查询是以%开头</li>
+<li>如果列类型是字符串，那一定要在条件中将数据使用引号引用起来,否则不使用索引</li>
+<li>如果mysql估计使用全表扫描要比使用索引快,则不使用索引</li>
+<li>where中索引列有运算</li>
+<li>where中索引列使用了函数（+，-，*，/，! ）</li>
+<li>当变量采用的是times变量，而表的字段采用的是date变量时</li>
+<li>隐式类型转换导致索引失效</li>
 </ol>
-<h3 id="初始化K"><a href="#初始化K" class="headerlink" title="初始化K"></a>初始化K</h3><ol>
-<li>K&lt;m</li>
-<li>多次随机初始化</li>
-</ol>
-<h3 id="K聚类数量的选取"><a href="#K聚类数量的选取" class="headerlink" title="K聚类数量的选取"></a>K聚类数量的选取</h3><ol>
-<li>Elbow method：可以参考</li>
-<li>人工、手动、经验</li>
-</ol>
-<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><ol>
-<li>预处理：数据标准化$x_{j}^{(i)}=x_{j}-\mu_{j}$</li>
-<li>计算协方差矩阵$\Sigma=\frac{1}{m}\sum\limits_{i=1}^{n}(x^{(i)})(x^{(i)})^{T}$</li>
-<li>计算$\Sigma$的特征矩阵</li>
-<li>取前k列，计算出$(U_{reduce})^{T}x^{(i)}$，$k×n×n×1=k×1$</li>
-</ol>
-<h3 id="PCA维度的选取"><a href="#PCA维度的选取" class="headerlink" title="PCA维度的选取"></a>PCA维度的选取</h3><p>计算$U_{reduce},z^{(1)},z^{(2)},z^{(3)},\cdots,z^{(m),x_{approx}^{(1)},\cdots,x_{approx}^{(m)}}$，判断$\frac{\frac{1}{m}\sum\limits_{i=1}^{m}||x^{(i)}-x_{approx}^{(i)}||^{2}}{\frac{1}{m}\sum\limits_{i=1}^{m}||x^{(i)}||^{2}}\leq0.01?$</p>
-<p>简便方法：使用特征值矩阵，计算$1-\frac{\sum\limits_{i=1}^{k}S_{ii}}{\sum\limits_{i=1}^{n}S_{ii}}\leq0.01?$</p>
-<h3 id="PCA压缩重现"><a href="#PCA压缩重现" class="headerlink" title="PCA压缩重现"></a>PCA压缩重现</h3><p>$x_{approx}=U_{reduce}·z$</p>
-<h2 id="异常检测算法"><a href="#异常检测算法" class="headerlink" title="异常检测算法"></a>异常检测算法</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_37.png" alt=""></p>
-<h3 id="评估"><a href="#评估" class="headerlink" title="评估"></a>评估</h3><p>Precision/Recall；$F_{1}$-score</p>
-<h3 id="异常检测vs监督学习"><a href="#异常检测vs监督学习" class="headerlink" title="异常检测vs监督学习"></a>异常检测vs监督学习</h3><ol>
-<li>很少的正例</li>
-<li>大量负例</li>
-<li>多种异常</li>
-<li>未来可能以前没有的异常</li>
-</ol>
-<h3 id="如何选择特征"><a href="#如何选择特征" class="headerlink" title="如何选择特征"></a>如何选择特征</h3><p>如果数据没有呈现出高斯分布的形状，对数据进行一些处理，例如：$log(x),x^{\frac{1}{2}}$。</p>
-<p>选择既不特别大也不特别小的特征。</p>
-<h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><h3 id="基于内容的推荐算法"><a href="#基于内容的推荐算法" class="headerlink" title="基于内容的推荐算法"></a>基于内容的推荐算法</h3><p>特定用户：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_39.png" alt=""></p>
-<p>整体用户：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_40.png" alt=""></p>
-<h3 id="协同过滤算法"><a href="#协同过滤算法" class="headerlink" title="协同过滤算法"></a>协同过滤算法</h3><p>单部影片的特征：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_41.png" alt=""></p>
-<p>所有影片的特征：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_42.png" alt=""></p>
-<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_43.png" alt=""></p>
-<p>归一化：每一行减去均值$\mu_{i}$，预测变为$(\theta^{(i)})^{T}(x^{(i)})+\mu_{i}$</p>
-<h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_44.png" alt=""></p>
-<h1 id="性能度量指标"><a href="#性能度量指标" class="headerlink" title="性能度量指标"></a>性能度量指标</h1><h2 id="线性回归决定系数-R-2-（判定系数，拟合优度）"><a href="#线性回归决定系数-R-2-（判定系数，拟合优度）" class="headerlink" title="线性回归决定系数$R^{2}$ （判定系数，拟合优度）"></a>线性回归决定系数$R^{2}$ （判定系数，拟合优度）</h2><p>相关系数 $R$ 就是决定系数的开发</p>
-<p>决定系数 $R^{2}$ 是衡量回归的好坏，，也就是回归拟合的曲线的拟合优度，也就是得分。</p>
-<p>决定系数是表征回归方程在多大程度上解释了因变量的变化，或者说方程对观测值的拟合程度如何。</p>
-<p>计算公式为：</p>
-<p>设 $y$ 为待拟合数值，其均值为 $\overline{y}$ ，拟合值为 $\widehat{y}$ ，记：</p>
-<ul>
-<li>总平方和（$SST$）： $\sum\limits_{i=1}\limits^{N}(y_{i}-\overline{y})^{2}$</li>
-<li>回归平方和（$SSR$ ）：$\sum\limits_{i=1}\limits^{N}(\hat{y_{i}}-\overline{y})^{2}$</li>
-<li>残差平方和（$SSE$）：$\sum\limits_{i=1}\limits^{N}(y_{i}-\hat{y_{i}})^{2}$</li>
-</ul>
-<p>则有：$SST=SSR+SSE$</p>
-<p>决定系数：$R^{2}=\frac{SSR}{SST}=\frac{\sum\limits_{i=1}\limits^{N}(\hat{y_{i}}-\overline{y})^{2}}{\sum\limits_{i=1}\limits^{N}(y_{i}-\hat{y_{i}})^{2}}=1-\frac{SSE}{SST}$</p>
-<p>决定系数越大表明拟合优度越好！</p>
-<h2 id="分类问题中的评判标准"><a href="#分类问题中的评判标准" class="headerlink" title="分类问题中的评判标准"></a>分类问题中的评判标准</h2><p>以二分类为例，分类结果的混淆矩阵如下图所示：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_50.png" alt=""></p>
-<p>精确率、准确率：$accuracy=\frac{TP+TN}{TP+TN+FP+FN}$</p>
-<p>精准率、查准率：$precision=\frac{TP}{TP+FP}$</p>
-<p>召回率、查全率：$recall=\frac{TP}{TP+FN}$</p>
-<p>调和平均数：$F_{1}=2 \cdot \frac{precision \cdot recall}{precision+reacall}$</p>
-<h3 id="P-R​曲线"><a href="#P-R​曲线" class="headerlink" title="P-R​曲线"></a>P-R​曲线</h3><p>我们希望模型预测结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只预测出了一个正样本的结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_51.png" alt=""></p>
-<p>P-R图直观的显示出学习器在样本总体上的查全率和查准率，在进行比较时，若一个学习器的PR曲线被另一个学习器的PR曲线完全包住，则可以断言后者的性能优于前者（如图中A优于C）。如果两个学习器发生了交叉，则难以断言孰优孰劣，只能在具体的查准率或查全率条件下进行比较（如图中A和B）。如果一定要比较A和B孰优孰劣，一个合理的比较依据是比较PR曲线下面积的大小。在一定程度上表征了学习器在查准率和查全率上取得“双高”的比例，但这个值不太容易估算。所以设计了一些综合考虑查准率和查全率的性能度量。比如“平衡点”（Break-Even Point，BEP），是“查准率=查全率”时的取值。例如学习器C的BEP是0.64,，基于BEP比较，可认为学习器A优于B。</p>
-<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p>ROC的全称是Receiver Operating Characteristic Curve，中文名字叫“受试者工作特征曲线”，顾名思义，其主要的分析方法就是画这条特征曲线。如果在模型中我们没有定好阈值，而是将模型预测结果从高到低排序，将每次概率值依次作为阈值，那么就可以得到多个混淆矩阵。对于每个混淆矩阵，我们计算两个指标TPR和FPR，以FPR为x轴，TPR为y轴画图，就得到了ROC曲线。该曲线的横坐标为假阳性率（False Positive Rate, FPR），N是真实负样本的个数，FP是N个负样本中被分类器预测为正样本的个数。纵坐标为真阳性率（True Positive Rate, TPR），P是真实正样本的个数，TP是P个正样本中被分类器预测为正样本的个数。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_52.png" alt=""></p>
-<h4 id="为什么选择ROC曲线"><a href="#为什么选择ROC曲线" class="headerlink" title="为什么选择ROC曲线"></a>为什么选择ROC曲线</h4><p>既然已经这么多评价标准，为什么还要使用ROC曲线呢？因为ROC曲线有个很好的特性：当测试集中的正负样本的分布变化的时候，ROC曲线能够保持不变。在实际的数据集中经常会出现类不平衡（class imbalance）现象，即负样本比正样本多很多（或者相反），而且测试数据中的正负样本的分布也可能随着时间变化。下图是ROC曲线和Precision-Recall曲线的对比：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301522475.png" alt=""></p>
-<p>其中第一行ab均为原数据的图，左边为ROC曲线，右边为P-R曲线。第二行cd为负样本增大10倍后俩个曲线的图。可以看出，ROC曲线基本没有变化，但P-R曲线确剧烈震荡。因此，在面对正负样本数量不均衡的场景下，ROC曲线（AUC的值）会是一个更加稳定能反映模型好坏的指标。</p>
-<h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p>按照定义，AUC即ROC曲线下的面积，而ROC曲线的横轴是FPRate，纵轴是TPRate，当二者相等时，即y=x，表明分类器对于正例和负例毫无区分能力。而我们希望分类器达到的效果是：对于真实类别为1的样本，分类器预测为1的概率（即TPRate），要大于真实类别为0而预测类别为1的概率（即FPRate），即y＞x，因此大部分的ROC曲线长成下面这个样子：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_53.png" alt=""></p>
-<p>最理想的情况下，即没有真实类别为1而错分为0的样本（TPRate一直为1），也没有真实类别为0而错分为1的样本（FPRate一直为0），AUC为1，这便是AUC的极大值。</p>
-<h4 id="AUC曲线的物理意义"><a href="#AUC曲线的物理意义" class="headerlink" title="AUC曲线的物理意义"></a>AUC曲线的物理意义</h4><p>AUC的物理意义可以从两个角度来解释。首先，从物理学角度来看，AUC可以被认为是分类器对于正负样本的区分能力的一种物理量度。它被定义为ROC曲线下的面积，描述了分类器在所有可能的阈值下对正负样本的区分能力。</p>
-<p>其次，在机器学习领域中，AUC被广泛应用于二分类问题中，用于衡量分类器对正负样本的区分能力。AUC越大，表示分类器对于正负样本的区分能力越强，即分类器能够更好地将正样本和负样本分开。而AUC越小，则表示分类器对于正负样本的区分能力越弱，即分类器不能很好地将正样本和负样本分开。</p>
-<p>因此，AUC的物理意义可以被解释为一个物理系统中的能量积分，用于描述该系统的能量积分性能。在物理学中，能量积分是指对于一个物理系统中的所有可能状态，将每个状态的能量乘以该状态出现的概率，然后将所有状态的能量乘以概率的积分。这个积分值就是该物理系统的能量积分。在机器学习中，AUC也可以被解释为分类器对于正负样本的区分能力的一种物理量度。</p>
-<h4 id="AUC的计算公式"><a href="#AUC的计算公式" class="headerlink" title="AUC的计算公式"></a>AUC的计算公式</h4><h5 id="定义法"><a href="#定义法" class="headerlink" title="定义法"></a>定义法</h5><p>假设数据集中一共有<code>M</code>个正样本，<code>N</code>个负样本，共<code>MN</code>样本对。统计正样本预测概率大于负样本预测概率的个数。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301603622.png" alt=""></p>
-<p>其中：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301605941.png" alt=""></p>
-<p>假设有4条样本，2个正样本（D和C）+2个负样本（A和B），共4个样本对。分别为：(D+, B-), (D+, A-), (C+, B-), (C+,A-)。</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301607340.png" alt=""></p>
-<p>在(D, B)样本对中，正样本D预测概率大于负样本B预测概率（即D的得分比B高）记为1。同理，对于(C, B)。正样本C预测的概率小于负样本C预测概率记为0。整理如下：</p>
-<p>I(D+, B-) = 1、I(D+, A-) = 1、I(C+, B-) = 0、I(C+,A-) = 1</p>
-<p>共3对样本符合正样本得分高于负样本得分，故AUC为 (1 + 1 + 1 + 0) / 4 = 0.75</p>
-<p>假如出现得分一致时，例如：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301608063.png" alt=""></p>
-<p>同样本是4个样本对，对于样本对(C+, B-)，其 I 值为0.5。最后的AUC为 AUC = (1 + 1+ 1 + 0.5) / 4 = 0.875</p>
-<h5 id="公式法"><a href="#公式法" class="headerlink" title="公式法"></a>公式法</h5><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308261737231.jpg" alt=""></p>
-<ul>
-<li>对预测概率从高到低排序</li>
-<li>对每一个概率值设一个rank值（最高的概率的rank为n，第二高的为n-1）</li>
-<li>rank实际上代表了该score（预测概率）超过的样本的数目。为了求的组合中正样本的score值大于负样本，如果所有的正样本score值都是大于负样本的，那么第一位与任意的进行组合score值都要大，我们取它的rank值为n，但是n-1中有M-1是正样例和正样例的组合这种是不在统计范围内的（为计算方便我们取n组，相应的不符合的有M个），所以要减掉，那么同理排在第二位的n-1，会有M-1个是不满足的，依次类推，故得到后面的公式 $M\ast(M+1)/2$，我们可以验证在正样本score都大于负样本的假设下，AUC的值为1。<strong>如果排序的时候有概率相同的，原则就是相等得分的rank取平均值。</strong></li>
-<li>除以 $M \ast N$</li>
-</ul>
-<p>例子：</p>
-<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308261747231.png" alt=""></p>
-<ul>
-<li>对于正样本A，其rank值为7</li>
-<li>对于正样本B，其rank值为6</li>
-<li>对于正样本E，其rank值为（5+4+3+2）/ 4</li>
-<li>对于正样本F，其rank值为（5+4+3+2）/ 4</li>
-<li>最后的结果就为：$\frac{7+6+(5+4+3+2)/4+(5+4+3+2)/4-4 \ast 5/2}{4 \ast 3}=10/12$</li>
-</ul>
 ]]></content>
       <categories>
-        <category>机器学习</category>
+        <category>数据库</category>
       </categories>
       <tags>
         <tag>总结</tag>
-        <tag>机器学习</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -6452,6 +6173,307 @@
       <tags>
         <tag>总结</tag>
         <tag>推荐系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习总结</title>
+    <url>/2021/04/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>小白上路啦！</p>
+<p>主要参考吴恩达的《机器学习》</p>
+<a id="more"></a>
+<h1 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h1><h2 id="学习方式分类"><a href="#学习方式分类" class="headerlink" title="学习方式分类"></a>学习方式分类</h2><ul>
+<li>监督学习</li>
+<li>无监督学习</li>
+<li>半监督学习</li>
+<li>强化学习</li>
+</ul>
+<h2 id="学习结果分类"><a href="#学习结果分类" class="headerlink" title="学习结果分类"></a>学习结果分类</h2><ul>
+<li>回归</li>
+<li>分类</li>
+</ul>
+<h1 id="模型学习"><a href="#模型学习" class="headerlink" title="模型学习"></a>模型学习</h1><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><h3 id="线性回归模型特点"><a href="#线性回归模型特点" class="headerlink" title="线性回归模型特点"></a>线性回归模型特点</h3><ul>
+<li>线性回归时一种回归算法</li>
+<li>模型简单、计算量较小</li>
+<li>对误差敏感</li>
+<li>对数据预处理要求较高</li>
+</ul>
+<h3 id="线性回归模型主要思想"><a href="#线性回归模型主要思想" class="headerlink" title="线性回归模型主要思想"></a>线性回归模型主要思想</h3><p>通过运用该简单的线性函数，可模拟<code>x</code>和<code>y</code>之间的关系。关键在于该函数不仅与输入变量x成线性关系，而且与参数<code>a</code>、<code>b</code>成线性关系。当前目标是确定最符合训练数据的参数<code>a</code>和<code>b</code>的值。</p>
+<p>这可通过测量每个输入x的实际目标值<code>y</code>和模型<script type="math/tex">f(x)</script>之间的失配来实现，并将失配最小化。这种失配（最小值）被称为误差函数。</p>
+<p>有多种误差函数可供选择，但其中最简单的要数<code>RSS</code>，即每个数据点x对应的模型<script type="math/tex">f(x)</script>与目标值y的误差平方和。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_16.png" alt=""></p>
+<p>对于<code>w</code>,<code>b​</code>作为自变量，取何值时，<code>RSS</code>最小？转化为求极值问题，极值点偏导为0。</p>
+<p>避免过拟合，引入正则化技术（将参数作为项加入损失函数）</p>
+<p>L1正则化（LASSO回归）：具有稀疏作用</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_17.png" alt=""></p>
+<p>L2正则化（Ridge回归）：收敛更快</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_18.png" alt=""></p>
+<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><ul>
+<li>评估是否准确：查看在训练集上的准确率</li>
+<li>评估泛化性能：查看在测试集（<code>K</code>折）上的准确率</li>
+</ul>
+<h3 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h3><p>梯度：$\mbox{grad} \ f(x,y)=\nabla f(x,y)=f_{x}(x,y)\vec{i}+f_{y}(x,y)\vec{j}$ 和法向向量（是一个单位向量）$n$ 相乘后就是沿着边界外法线方向的导数值</p>
+<p>散度：用于表征空间各点矢量场发散的强弱程度，$\mbox{div} \ \mathbf{F}=\nabla\cdot\mathbf{F}=\frac{\partial F_{x}}{\partial x}+\frac{\partial F_{y}}{\partial y}+\frac{\partial F_{z}}{\partial z}$，其中$F_{x}, F_{y}, F_{z}$是三个轴的分量</p>
+<p>旋度：可以表示三维向量场对某一点附近的微元造成的旋转程度，$\nabla \ \times \ v = (\frac{\partial v_{z}}{\partial y}-\frac{\partial v_{y}}{\partial z})\hat{i}+(\frac{\partial v_{x}}{\partial z}-\frac{\partial v_{z}}{\partial x})\hat{j}+(\frac{\partial v_{y}}{\partial x}-\frac{\partial v_{x}}{\partial y})\hat{k}$</p>
+<p>拉普拉斯算子：定义为梯度的散度，$\Delta f=\nabla^{2}f=\nabla\cdot\nabla f$</p>
+<p>矢量拉普拉斯算子：简记为矢拉等于梯散减双旋。$\nabla^{2}\overline{A}=\nabla(\nabla\cdot\overline{A})-\nabla\times\nabla\times\overline{A}$</p>
+<ul>
+<li>更新规则（多个$\theta$同时更新）：</li>
+</ul>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_19.png" alt=""></p>
+<ul>
+<li><p>$\alpha$太小，$J(\theta)$收敛太慢；$\alpha$太大，$J(\theta)$也许每次迭代不会减少或者不会收敛</p>
+</li>
+<li><p>注意特征缩放，使得特征在相似的范围</p>
+</li>
+<li><p>梯度下降的方向与等高线的切线方向垂直 ⇒ 梯度下降方向与等高线的法线方向相同</p>
+</li>
+<li><p>对于一元函数来说：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/微信截图_20221116095053.png" alt=""></p>
+</li>
+<li><p>多元函数的梯度方向和法向量方向</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/微信截图_20221116162051.png" alt=""></p>
+<p>梯度方向是一个函数任一点处上升最快的方向。梯度的投影就是法向量，法向量需要做等高线才能求。$z=f(x,y)$ 是一个函数，$f(x,y)=C$ 则是一个等式。</p>
+</li>
+</ul>
+<h3 id="随机梯度下降法"><a href="#随机梯度下降法" class="headerlink" title="随机梯度下降法"></a>随机梯度下降法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_45.png" alt=""></p>
+<p>具体步骤：对参数进行细微的修改，使其对第一个数据拟合得非常好，以此类推</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_46.png" alt=""></p>
+<p>如何确定算法已经收敛：每次使用一个训练样本更新$\theta$之前计算$cost(\theta,(x^{(i)},y^{(i)}))$；每1000次迭代计算一下$cost(\theta,(x^{(i)},y^{(i)}))$的均值</p>
+<h3 id="Mini-batch-梯度下降法"><a href="#Mini-batch-梯度下降法" class="headerlink" title="Mini-batch 梯度下降法"></a>Mini-batch 梯度下降法</h3><p>主要思想：每次迭代使用b个样本（向量化的时候更好）</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_47.png" alt=""></p>
+<h3 id="正规方程法"><a href="#正规方程法" class="headerlink" title="正规方程法"></a>正规方程法</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_20.png" alt=""></p>
+<h2 id="logistic回归模型"><a href="#logistic回归模型" class="headerlink" title="logistic回归模型"></a>logistic回归模型</h2><h3 id="logistic回归模型特点"><a href="#logistic回归模型特点" class="headerlink" title="logistic回归模型特点"></a>logistic回归模型特点</h3><ul>
+<li>logistic回归是一种分类算法</li>
+<li>模型简单、计算量较小</li>
+<li>对异常数据点并不敏感</li>
+<li>对数据预处理要求较高</li>
+</ul>
+<h3 id="logistic回归模型主要思想"><a href="#logistic回归模型主要思想" class="headerlink" title="logistic回归模型主要思想"></a>logistic回归模型主要思想</h3><h4 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h4><p>sigmoid函数的数学形式是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_21.png" alt=""></p>
+<p>对应的函数曲线如下图：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/sigmoid.png" alt="sigmod.png"></p>
+<h4 id="决策函数"><a href="#决策函数" class="headerlink" title="决策函数"></a>决策函数</h4><p>一个机器学习的模型，实际上是把决策函数限定在某一组条件下，这组限定条件就决定了模型的假设空间。当然，我们还希望这组限定条件简单而合理。而逻辑回归模型所做的假设是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_22.png" alt=""></p>
+<p>这里的 <script type="math/tex">g(h)</script> 是上边提到的<code>sigmoid</code>函数，相应的决策函数为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_23.png" alt=""></p>
+<p>选择<code>0.5</code>作为阈值是一个一般的做法，实际应用时特定的情况可以选择不同阈值，如果对正例的判别准确性要求高，可以选择阈值大一些，对正例的召回要求高，则可以选择阈值小一些。（根据<code>sigmod</code>函数，即$\theta^{T}x&gt;0$）</p>
+<h4 id="参数求解"><a href="#参数求解" class="headerlink" title="参数求解"></a>参数求解</h4><p>模型的数学形式确定后，剩下就是如何去求解模型中的参数。统计学中常用的一种方法是最大似然估计，即找到一组参数，使得在这组参数下，我们的数据的似然度（概率）越大。在逻辑回归模型中，似然度可表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_24.png" alt=""></p>
+<p>取对数可以得到对数似然度：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_25.png" alt=""></p>
+<h2 id="决策树算法"><a href="#决策树算法" class="headerlink" title="决策树算法"></a>决策树算法</h2><h3 id="决策树算法特点"><a href="#决策树算法特点" class="headerlink" title="决策树算法特点"></a>决策树算法特点</h3><ul>
+<li>决策树能用来做回归，也可以用来做分类，是一类算法的总称</li>
+<li>决策树是一种弱分类器</li>
+<li>决策树是一类具有可解释性、泛化性能较好的模型</li>
+<li>精度高、无需特征归一化，能够处理缺失值，共线性特征</li>
+<li>适合于低维稠密数据，不适合高维稀疏数据</li>
+<li>决策树类算法兼具特征选择能力</li>
+</ul>
+<h3 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h3><p>信息熵<code>S</code>表征了信息不确定性的程度，分类属性应当以最高熵减为标准进行：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_48.png" alt=""></p>
+<h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p><code>C4.5</code>算法过程跟<code>ID3</code>算法一样，只是选择特征的方法由信息增益改成信息增益比。</p>
+<p>特征<code>A</code>对训练数据集<code>D</code>的信息增益比<script type="math/tex">GainRatio(D,A)</script>定义为其信息增益<script type="math/tex">Gain(D,A)</script>与训练数据集D的经验熵<script type="math/tex">H(D)</script>之比</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_49.png" alt=""></p>
+<h2 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h2><h3 id="随机森林算法主要思想"><a href="#随机森林算法主要思想" class="headerlink" title="随机森林算法主要思想"></a>随机森林算法主要思想</h3><ol>
+<li><code>bootstrap</code>采样</li>
+<li>随机选择特征，选择最佳属性建立决策树</li>
+<li>形成随机森林，通过投票得到结果</li>
+</ol>
+<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><h3 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_26.png" alt=""></p>
+<h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><p>输入层、输出层、隐藏层、偏置单元</p>
+<p>如果第<code>i</code>层有$s_{i}$个，第<code>i+1</code>层有$s_{i+1}$个，则$\theta$规模为$s_{i+1}*(s_{i}+1)$</p>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_27.png" alt=""></p>
+<h3 id="前向自动微分"><a href="#前向自动微分" class="headerlink" title="前向自动微分"></a>前向自动微分</h3><p>在计算 $y=f(t)$ 时并行地计算 $f’(t)$ 。例如，$f(x_{1},x_{2})=x_{1}\cdot \exp(x_{2})-x_{1}$，模拟前向微分过程。 $y_{1}=\exp(x_{2})$ ， $y_{2}=x_{1}\cdot y_{1}$ ， $y_{3}=y_{2}-x_{1}$ 。此时 $\frac{dy_{1}}{dx_{2}}=\exp(x_{2})$ ， $\frac{dy_{2}}{dx_{1}}=y_{1}=\exp(x_{2})$ ， $\frac{dy_{2}}{dx_{2}}=x_{1}\cdot\frac{dy_{1}}{dx_{2}}=x_{1}\cdot\exp(x_{2})$ ， $\frac{dy_{3}}{dx_{1}}=\frac{dy_{2}}{dx_{1}}-\frac{dx_{1}}{dx_{1}}=\exp(x_{2})-1$ ， $\frac{dy_{3}}{dx_{2}}=\frac{dy_{2}}{dx_{2}}=x_{1}\cdot\exp(x_{2})$ 。</p>
+<p>另一种理解是前向自动微分依赖于 dual number，形如 $a+b\epsilon,\ \epsilon^{2}=0,\ \epsilon\neq 0$，我们计算 $h(a+\epsilon)$的时候，可以一次给出 $h(a)$ 和 $h’(a)$。对于函数 $f(x,y)=x^{2}y+y+2$ 来说：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303061706927.png" alt=""></p>
+<p>缺点是每次穿过一次图，只能计算一个参数的偏导数，虽然结果精确，但是对于多个参数的时候，要穿过很多次图。</p>
+<h3 id="反向自动微分"><a href="#反向自动微分" class="headerlink" title="反向自动微分"></a>反向自动微分</h3><p>思路是正向穿过图来计算每个节点的值，然后二次反向穿过图，计算所有的偏导数。反向自动微分依赖于链式求导法则：$\frac{\partial{f}}{\partial{x}}=\frac{\partial{f}}{\partial{n_{i}}}\times \frac{\partial{n_{i}}}{\partial{x}}$ 。例如，$f(x_{1},x_{2})=x_{1}\cdot \exp(x_{2})-x_{1}$，模拟反向微分过程。$y_{1}=\exp(x_{2})$ ， $y_{2}=x_{1}\cdot y_{1}$ ， $y_{3}=y_{2}-x_{1}$ 。此时 $\frac{\partial{f}}{\partial{y_{3}}}=1$ ， $\frac{\partial{f}}{\partial{y_{2}}}=\frac{\partial{f}}{\partial{y_{3}}}\frac{\partial{y_{3}}}{\partial{y_{2}}}=1 \cdot 1=1$ ， $\frac{\partial{f}}{\partial{y_{1}}}=\frac{\partial{f}}{\partial{y_{2}}}\frac{\partial{y_{2}}}{\partial{y_{1}}}=1\cdot x_{1}=x_{1}$ ， $\frac{\partial{f}}{\partial{x_{2}}}=\frac{\partial{f}}{\partial{y_{1}}}\frac{\partial{y_{1}}}{\partial{x_{2}}}=x_{1}\cdot \exp(x_{2})$ ， $\frac{\partial{f}}{\partial{x_{1}}}=\frac{\partial{f}}{\partial{y_{2}}}\frac{\partial{y_{2}}}{x_{1}}+\frac{\partial{f}}{\partial{y_{3}}}\frac{\partial{y_{3}}}{\partial{x_{1}}}=1\cdot y_{1}+1\cdot (-1)=\exp(x_{2})-1$ 。对于函数 $f(x,y)=x^{2}y+y+2$ 来说：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202303061757272.png" alt=""></p>
+<p>反向模式的优点：一次反向传播计算出所有的偏导数，中间的偏导数计算计算只需计算一次；减少重复的计算工作量，在多参数的时候反向自动微分的时间复杂度更低。反向模式的缺点：需要额外的数据结构记录正向过程的计算操作；带来了大量内存占用。</p>
+<h3 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_28.png" alt=""></p>
+<h4 id="检测方法"><a href="#检测方法" class="headerlink" title="检测方法"></a>检测方法</h4><p>双侧差分：$\frac{J(\theta+\varepsilon)-J(\theta-\varepsilon)}{2\varepsilon}\approx\frac{\partial}{\partial z_{j}^{l}}cost(i)$</p>
+<p>训练集（60%）、验证集（20%）、测试集（20%）</p>
+<p>$J_{train}(\theta)$和$J_{cv}(\theta)$都高时，欠拟合；$J_{train}(\theta)$低$J_{cv}(\theta)$高时，过拟合</p>
+<p>随多项式次数增长的关系</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_29.png" alt=""></p>
+<p>随$\lambda$增长的关系</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_30.png" alt=""></p>
+<p>bias：偏差（underfit）；variance：方差（overfit）</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_31.png" alt=""></p>
+<p>Precision：$\frac{true}{predicted}$ ；Recall：$\frac{true}{actual}$；F：$2\frac{PR}{P+R}$</p>
+<h2 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_32.png" alt=""></p>
+<p>$y^{(i)}=1$时，$\theta^{T}x\geq1$，即$p^{(i)}||\theta||\geq1$；$y^{(i)}=0$时，$\theta^{T}x\leq-1$，即$p^{(i)}||\theta||\leq-1$，$\theta$垂直于边界函数</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_33.png" alt=""></p>
+<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_34.png" alt=""></p>
+<p>$x\approx l^{(1)}:f_{1}\approx exp(-\frac{0^{2}}{2\sigma^{2}})\approx 1;else:f_{1}=exp(-\frac{large^{2}}{2\sigma^{2}})\approx 0$</p>
+<p>给定$(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),(x^{(3)},y^{(3)}),(x^{(4)},y^{(4)})$，</p>
+<p>选定$l^{(1)}=x^{(1)},l^{(2)}=x^{(2)},l^{(3)}=x^{(3)},l^{(4)}=x^{(4)}$；</p>
+<p>对于给定的训练集$(x^{(i)},y^{(i)})$：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_35.png" alt=""></p>
+<h2 id="高斯过程回归"><a href="#高斯过程回归" class="headerlink" title="高斯过程回归"></a>高斯过程回归</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>现有如下方程：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418193805.png" alt=""></p>
+<p>尝试用高斯过程回归解上述的微分方程。</p>
+<h3 id="先验知识"><a href="#先验知识" class="headerlink" title="先验知识"></a>先验知识</h3><h4 id="一维高斯分布"><a href="#一维高斯分布" class="headerlink" title="一维高斯分布"></a>一维高斯分布</h4><p>高斯分布又称正态分布，若随机变量 $X$ 服从一个位置参数为 $\mu$ 、尺度参数为 $\sigma$ 的概率分布，且其概率密度为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418193914.png" alt=""></p>
+<p>则这个随机变量就称为正态随机变量，正态随机变量服从的分布就称为正态分布，记作 $X \sim N(\mu,\sigma^{2})$</p>
+<h4 id="多维高斯分布"><a href="#多维高斯分布" class="headerlink" title="多维高斯分布"></a>多维高斯分布</h4><p>多维高斯分布其变量为 $n$ 维变量，每个变量之间可能会存在关系，为了描述这种关系，我们引入了协方差矩阵 $\Sigma$ ，其大小为 $n{\times}n$ ，其中每一个元素为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194006.png" alt=""></p>
+<p>当维度为2时，2维的高斯分布公式为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194048.png" alt=""></p>
+<p>当维度大于2时，$n$ 维的高斯分布公式为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194122.png" alt=""></p>
+<h4 id="高斯过程"><a href="#高斯过程" class="headerlink" title="高斯过程"></a>高斯过程</h4><p>首先当随机变量是1维的时候，我们称之为一维高斯分布，概率密度函数 $p(x)=N(\mu,\sigma^{2})$，当随机变量的维度上升到有限的 $p$ 维的时候，就称之为高维高斯分布 $p(x)=N(\mu,\Sigma_{p \times p})$。而高斯过程则更进一步，他是一个定义在连续域上的无限多个高斯随机变量所组成的随机过程，换句话说，高斯过程是一个无限维的高斯分布。</p>
+<p>对于一个连续域 $T$ (假设是一个时间轴)，如果我们在连续域上任选个时刻：$t_{1},t_{2},t_{3},\dots,t_{n}\in T$，使得获得的一个 $n$ 维向量 ${\xi_{1},\xi_{2},\xi_{3},\dots,\xi_{n}}$ 都满足其是一个2维高斯分布，那么这个 ${\xi_{t}}$ 就是一个高斯过程。</p>
+<p>举一个实际的例子，直观地建立高斯过程的印象，下面的图中，横轴 $T$ 是一个关于时间的连续域，表示人的一生，而纵轴表示的是体能值，对于同一个人种的男性而言，在任意不同的时间点体能值都服从正态分布，但是不同时间点分布的均值和方差不同。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220301160123.png" alt=""></p>
+<p>图中，我们取出了 $t_{1},t_{2},t_{3},t_{4},t_{5}$ 五个时间点，分别代表同一个男性群体童年、少年、青年、中年、老年的具体时刻， $\xi_{1},\xi_{2},\xi_{3},\xi_{4},\xi_{5}$ 分别对应五个时刻的体能值，他们都服从高斯分布，只不过从图中可以看出，均值和方差都不同，那么概括起来：<br>对于任意 $t \in T$ ， $\xi_{t} \sim N(\mu_{t}, \sigma_{t}^{2})$ ，也就是对于一个确定的高斯过程而言，对于任意时刻 $t$ ，他的 $\mu_{t}$ 和 $\sigma_{t}$ 都已经确定了。而像上图中，我们对同一人种男性体能值在关键节点进行采样，然后平滑连接，也就是图中的两条虚线，就形成了这个高斯过程中的两个样本。</p>
+<p>$p$ 维高斯分布两个决定性的参数是均值 $\mu_{p}$ 和 $p \times p$ 的协方差矩阵 $\Sigma_{p \times p}$ ，定义在连续域 $T$ 上的高斯过程也一样，他是无限维的高斯分布。不一样的是他是在连续域上的，维数是无限的，因此均值该定义成一个关于时刻 $t$ 的函数： $m(t)$ 。协方差矩阵也是同理，无限维的情况下就定义为一个核函数 $k(s,t)$ ，其中 $s$ 和 $t$ 表示任意两个时刻，核函数也称协方差函数，核函数是一个高斯过程的核心，他决定了高斯过程的性质。其中最常见的一个核函数是径向核函数 $RBF$，其定义如下：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194246.png" alt=""></p>
+<p>高斯过程的两个核心要素：均值函数和核函数的定义我们就描述清楚了，按照高斯过程存在性定理，一旦这两个要素确定了，那么整个高斯过程就确定了： $\xi_{t} \sim GP(m(t), k(t,s))$</p>
+<h5 id="高斯过程求解偏微分方程"><a href="#高斯过程求解偏微分方程" class="headerlink" title="高斯过程求解偏微分方程"></a>高斯过程求解偏微分方程</h5><h6 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h6><p>高斯过程 $u$ 的后验均值为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194526.png" alt=""></p>
+<p>后验方差为</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194601.png" alt=""></p>
+<p>其中</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194636.png" alt=""></p>
+<h6 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h6><ol>
+<li>在训练的内部和边界分别取 $n^{i}$ ， $n^{b}$ 个点作为训练点，计算 $f(x_{j}^{i})$ ， $g(x_{l}^b)$</li>
+<li>定义核函数 $c(x,x’)$ ，目前实现的是一维，取 $d=1$</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194806.png" alt=""></p>
+<ol>
+<li>计算 $\mathcal{L}c(x,x’)$ ， $\mathcal{B}c(x,x’)$ ， $\mathcal{L}’c(x,x’)$ ， $\mathcal{B}’c(x,x’)$ ， $\mathcal{L}\mathcal{L}’c(X^{i},X^{i})$ ， $\mathcal{L}\mathcal{B}’c(X^{i},X^{b})$ ， $\mathcal{B}\mathcal{B}’c(X^{b},X^{b})$ </li>
+<li>寻找最优化的 $\sigma,l_{1},\dots,l_{d}$ ，定义函数 $\mathcal{NLML}(\sigma,l_{1},\dots,l_{d})=\frac{1}{2}y^{T}K^{-1}y+\frac{1}{2}log|K|+\frac{n^{i}+n^{b}}{2}log(2\pi)$ ，求函数的最小值 $f(\sigma^{\star},l_{1}^{\star},\dots,l_{d}^{\star}) \leqslant \mathcal{NLML}(\sigma,l_{1},\dots,l_{d})$ </li>
+<li>使用找到的 $\sigma,l_{1},\dots,l_{d}$ 预测 $u(x)$ 在 $x^{\star}$ 的近似值：</li>
+</ol>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418194906.png" alt=""></p>
+<h4 id="高斯过程回归-1"><a href="#高斯过程回归-1" class="headerlink" title="高斯过程回归"></a>高斯过程回归</h4><p>高斯过程回归是一个先验+观测值，然后推出后验的过程。</p>
+<p>我们先通过 $\mu (t)$ 和 $k(s,t)$ 定义一个高斯过程，但是因为此时并没有任何的观测值，所以是一个先验。获得了一组观测值之后，如何来修正这个高斯过程的均值函数和核函数，使之得到他的后验过程呢？</p>
+<p>高斯分布有一个很好的特性，那就是高斯分布的联合概率、边缘概率、条件概率仍然是满足高斯分布的，假设： $n$ 维随机变量满足高斯分布： $x \sim N(\mu, \Sigma_{n \times n})$ ，把这个 $n$ 维随机变量分成两部分： $p$ 维的 $x_{a}$ 和 $q$ 维的 $x_{b}$ ，满足 $n=p+q$ ，那么按照均值向量 $\mu$ 和协方差矩阵 $\Sigma$ 的分块规则，就可以写成：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418195017.png" alt=""></p>
+<p>那么根据高斯分布的性质，我们知道下列条件分布依然是一个高维的高斯分布：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418195055.png" alt=""></p>
+<p>也就是说，设置了高斯过程的先验参数，一旦我们拿到一些观测值，那么就可以对高斯过程的均值函数和核函数进行修正，得到一个修正后的后验高斯过程，而更新后验参数的信息就来自于观测值。</p>
+<p>将高斯过程和多维高斯分布进行类比，均值向量替换成均值函数，协方差矩阵替换成核函数，就能得到高斯过程基于观测值的后验过程的参数表达式。</p>
+<p>假设有一组观测值，他们的时刻对应一个向量 $X$ ，那么对应的值是另一个同纬度的向量的 $Y$ ，假设有4组观测值，即 ${(X[1],Y[1]),(X[2],Y[2]),(X[3],Y[3]),(X[4],Y[4])}$ ，那么余下的所有非观测点，在连续域上定义为 $X^{\star}$ ，值定义为 $f(X^{\star})$ 。</p>
+<p>首先，联合分布满足无限维高斯分布：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418195132.png" alt=""></p>
+<p>从这个联合分布所派生出来的条件概率 $f(X^{\star})|Y$ 同样也服从高斯分布： $f(X^{\star})|Y \sim N(\mu^{\star}, k^{\star})$ ，</p>
+<p>类比一下，将 $Y$ 看作 $x_{a}$ ， $f(X^{\star})$ 看作 $x_{b}$ ：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20220418195208.png" alt=""></p>
+<h2 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_36.png" alt=""></p>
+<ol>
+<li>初始化k个中心</li>
+<li>根据数据离中心的长短进行划分</li>
+<li>重新计算k个簇的中心</li>
+<li>继续迭代直到达到某个条件</li>
+</ol>
+<h3 id="初始化K"><a href="#初始化K" class="headerlink" title="初始化K"></a>初始化K</h3><ol>
+<li>K&lt;m</li>
+<li>多次随机初始化</li>
+</ol>
+<h3 id="K聚类数量的选取"><a href="#K聚类数量的选取" class="headerlink" title="K聚类数量的选取"></a>K聚类数量的选取</h3><ol>
+<li>Elbow method：可以参考</li>
+<li>人工、手动、经验</li>
+</ol>
+<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><ol>
+<li>预处理：数据标准化$x_{j}^{(i)}=x_{j}-\mu_{j}$</li>
+<li>计算协方差矩阵$\Sigma=\frac{1}{m}\sum\limits_{i=1}^{n}(x^{(i)})(x^{(i)})^{T}$</li>
+<li>计算$\Sigma$的特征矩阵</li>
+<li>取前k列，计算出$(U_{reduce})^{T}x^{(i)}$，$k×n×n×1=k×1$</li>
+</ol>
+<h3 id="PCA维度的选取"><a href="#PCA维度的选取" class="headerlink" title="PCA维度的选取"></a>PCA维度的选取</h3><p>计算$U_{reduce},z^{(1)},z^{(2)},z^{(3)},\cdots,z^{(m),x_{approx}^{(1)},\cdots,x_{approx}^{(m)}}$，判断$\frac{\frac{1}{m}\sum\limits_{i=1}^{m}||x^{(i)}-x_{approx}^{(i)}||^{2}}{\frac{1}{m}\sum\limits_{i=1}^{m}||x^{(i)}||^{2}}\leq0.01?$</p>
+<p>简便方法：使用特征值矩阵，计算$1-\frac{\sum\limits_{i=1}^{k}S_{ii}}{\sum\limits_{i=1}^{n}S_{ii}}\leq0.01?$</p>
+<h3 id="PCA压缩重现"><a href="#PCA压缩重现" class="headerlink" title="PCA压缩重现"></a>PCA压缩重现</h3><p>$x_{approx}=U_{reduce}·z$</p>
+<h2 id="异常检测算法"><a href="#异常检测算法" class="headerlink" title="异常检测算法"></a>异常检测算法</h2><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_37.png" alt=""></p>
+<h3 id="评估"><a href="#评估" class="headerlink" title="评估"></a>评估</h3><p>Precision/Recall；$F_{1}$-score</p>
+<h3 id="异常检测vs监督学习"><a href="#异常检测vs监督学习" class="headerlink" title="异常检测vs监督学习"></a>异常检测vs监督学习</h3><ol>
+<li>很少的正例</li>
+<li>大量负例</li>
+<li>多种异常</li>
+<li>未来可能以前没有的异常</li>
+</ol>
+<h3 id="如何选择特征"><a href="#如何选择特征" class="headerlink" title="如何选择特征"></a>如何选择特征</h3><p>如果数据没有呈现出高斯分布的形状，对数据进行一些处理，例如：$log(x),x^{\frac{1}{2}}$。</p>
+<p>选择既不特别大也不特别小的特征。</p>
+<h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><h3 id="基于内容的推荐算法"><a href="#基于内容的推荐算法" class="headerlink" title="基于内容的推荐算法"></a>基于内容的推荐算法</h3><p>特定用户：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_39.png" alt=""></p>
+<p>整体用户：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_40.png" alt=""></p>
+<h3 id="协同过滤算法"><a href="#协同过滤算法" class="headerlink" title="协同过滤算法"></a>协同过滤算法</h3><p>单部影片的特征：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_41.png" alt=""></p>
+<p>所有影片的特征：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_42.png" alt=""></p>
+<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_43.png" alt=""></p>
+<p>归一化：每一行减去均值$\mu_{i}$，预测变为$(\theta^{(i)})^{T}(x^{(i)})+\mu_{i}$</p>
+<h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_44.png" alt=""></p>
+<h1 id="性能度量指标"><a href="#性能度量指标" class="headerlink" title="性能度量指标"></a>性能度量指标</h1><h2 id="线性回归决定系数-R-2-（判定系数，拟合优度）"><a href="#线性回归决定系数-R-2-（判定系数，拟合优度）" class="headerlink" title="线性回归决定系数$R^{2}$ （判定系数，拟合优度）"></a>线性回归决定系数$R^{2}$ （判定系数，拟合优度）</h2><p>相关系数 $R$ 就是决定系数的开发</p>
+<p>决定系数 $R^{2}$ 是衡量回归的好坏，，也就是回归拟合的曲线的拟合优度，也就是得分。</p>
+<p>决定系数是表征回归方程在多大程度上解释了因变量的变化，或者说方程对观测值的拟合程度如何。</p>
+<p>计算公式为：</p>
+<p>设 $y$ 为待拟合数值，其均值为 $\overline{y}$ ，拟合值为 $\widehat{y}$ ，记：</p>
+<ul>
+<li>总平方和（$SST$）： $\sum\limits_{i=1}\limits^{N}(y_{i}-\overline{y})^{2}$</li>
+<li>回归平方和（$SSR$ ）：$\sum\limits_{i=1}\limits^{N}(\hat{y_{i}}-\overline{y})^{2}$</li>
+<li>残差平方和（$SSE$）：$\sum\limits_{i=1}\limits^{N}(y_{i}-\hat{y_{i}})^{2}$</li>
+</ul>
+<p>则有：$SST=SSR+SSE$</p>
+<p>决定系数：$R^{2}=\frac{SSR}{SST}=\frac{\sum\limits_{i=1}\limits^{N}(\hat{y_{i}}-\overline{y})^{2}}{\sum\limits_{i=1}\limits^{N}(y_{i}-\hat{y_{i}})^{2}}=1-\frac{SSE}{SST}$</p>
+<p>决定系数越大表明拟合优度越好！</p>
+<h2 id="分类问题中的评判标准"><a href="#分类问题中的评判标准" class="headerlink" title="分类问题中的评判标准"></a>分类问题中的评判标准</h2><p>以二分类为例，分类结果的混淆矩阵如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_50.png" alt=""></p>
+<p>精确率、准确率：$accuracy=\frac{TP+TN}{TP+TN+FP+FN}$</p>
+<p>精准率、查准率：$precision=\frac{TP}{TP+FP}$</p>
+<p>召回率、查全率：$recall=\frac{TP}{TP+FN}$</p>
+<p>调和平均数：$F_{1}=2 \cdot \frac{precision \cdot recall}{precision+reacall}$</p>
+<h3 id="P-R​曲线"><a href="#P-R​曲线" class="headerlink" title="P-R​曲线"></a>P-R​曲线</h3><p>我们希望模型预测结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只预测出了一个正样本的结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_51.png" alt=""></p>
+<p>P-R图直观的显示出学习器在样本总体上的查全率和查准率，在进行比较时，若一个学习器的PR曲线被另一个学习器的PR曲线完全包住，则可以断言后者的性能优于前者（如图中A优于C）。如果两个学习器发生了交叉，则难以断言孰优孰劣，只能在具体的查准率或查全率条件下进行比较（如图中A和B）。如果一定要比较A和B孰优孰劣，一个合理的比较依据是比较PR曲线下面积的大小。在一定程度上表征了学习器在查准率和查全率上取得“双高”的比例，但这个值不太容易估算。所以设计了一些综合考虑查准率和查全率的性能度量。比如“平衡点”（Break-Even Point，BEP），是“查准率=查全率”时的取值。例如学习器C的BEP是0.64,，基于BEP比较，可认为学习器A优于B。</p>
+<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p>ROC的全称是Receiver Operating Characteristic Curve，中文名字叫“受试者工作特征曲线”，顾名思义，其主要的分析方法就是画这条特征曲线。如果在模型中我们没有定好阈值，而是将模型预测结果从高到低排序，将每次概率值依次作为阈值，那么就可以得到多个混淆矩阵。对于每个混淆矩阵，我们计算两个指标TPR和FPR，以FPR为x轴，TPR为y轴画图，就得到了ROC曲线。该曲线的横坐标为假阳性率（False Positive Rate, FPR），N是真实负样本的个数，FP是N个负样本中被分类器预测为正样本的个数。纵坐标为真阳性率（True Positive Rate, TPR），P是真实正样本的个数，TP是P个正样本中被分类器预测为正样本的个数。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_52.png" alt=""></p>
+<h4 id="为什么选择ROC曲线"><a href="#为什么选择ROC曲线" class="headerlink" title="为什么选择ROC曲线"></a>为什么选择ROC曲线</h4><p>既然已经这么多评价标准，为什么还要使用ROC曲线呢？因为ROC曲线有个很好的特性：当测试集中的正负样本的分布变化的时候，ROC曲线能够保持不变。在实际的数据集中经常会出现类不平衡（class imbalance）现象，即负样本比正样本多很多（或者相反），而且测试数据中的正负样本的分布也可能随着时间变化。下图是ROC曲线和Precision-Recall曲线的对比：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301522475.png" alt=""></p>
+<p>其中第一行ab均为原数据的图，左边为ROC曲线，右边为P-R曲线。第二行cd为负样本增大10倍后俩个曲线的图。可以看出，ROC曲线基本没有变化，但P-R曲线确剧烈震荡。因此，在面对正负样本数量不均衡的场景下，ROC曲线（AUC的值）会是一个更加稳定能反映模型好坏的指标。</p>
+<h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p>按照定义，AUC即ROC曲线下的面积，而ROC曲线的横轴是FPRate，纵轴是TPRate，当二者相等时，即y=x，表明分类器对于正例和负例毫无区分能力。而我们希望分类器达到的效果是：对于真实类别为1的样本，分类器预测为1的概率（即TPRate），要大于真实类别为0而预测类别为1的概率（即FPRate），即y＞x，因此大部分的ROC曲线长成下面这个样子：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/pic_53.png" alt=""></p>
+<p>最理想的情况下，即没有真实类别为1而错分为0的样本（TPRate一直为1），也没有真实类别为0而错分为1的样本（FPRate一直为0），AUC为1，这便是AUC的极大值。</p>
+<h4 id="AUC曲线的物理意义"><a href="#AUC曲线的物理意义" class="headerlink" title="AUC曲线的物理意义"></a>AUC曲线的物理意义</h4><p>AUC的物理意义可以从两个角度来解释。首先，从物理学角度来看，AUC可以被认为是分类器对于正负样本的区分能力的一种物理量度。它被定义为ROC曲线下的面积，描述了分类器在所有可能的阈值下对正负样本的区分能力。</p>
+<p>其次，在机器学习领域中，AUC被广泛应用于二分类问题中，用于衡量分类器对正负样本的区分能力。AUC越大，表示分类器对于正负样本的区分能力越强，即分类器能够更好地将正样本和负样本分开。而AUC越小，则表示分类器对于正负样本的区分能力越弱，即分类器不能很好地将正样本和负样本分开。</p>
+<p>因此，AUC的物理意义可以被解释为一个物理系统中的能量积分，用于描述该系统的能量积分性能。在物理学中，能量积分是指对于一个物理系统中的所有可能状态，将每个状态的能量乘以该状态出现的概率，然后将所有状态的能量乘以概率的积分。这个积分值就是该物理系统的能量积分。在机器学习中，AUC也可以被解释为分类器对于正负样本的区分能力的一种物理量度。</p>
+<h4 id="AUC的计算公式"><a href="#AUC的计算公式" class="headerlink" title="AUC的计算公式"></a>AUC的计算公式</h4><h5 id="定义法"><a href="#定义法" class="headerlink" title="定义法"></a>定义法</h5><p>假设数据集中一共有<code>M</code>个正样本，<code>N</code>个负样本，共<code>MN</code>样本对。统计正样本预测概率大于负样本预测概率的个数。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301603622.png" alt=""></p>
+<p>其中：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301605941.png" alt=""></p>
+<p>假设有4条样本，2个正样本（D和C）+2个负样本（A和B），共4个样本对。分别为：(D+, B-), (D+, A-), (C+, B-), (C+,A-)。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301607340.png" alt=""></p>
+<p>在(D, B)样本对中，正样本D预测概率大于负样本B预测概率（即D的得分比B高）记为1。同理，对于(C, B)。正样本C预测的概率小于负样本C预测概率记为0。整理如下：</p>
+<p>I(D+, B-) = 1、I(D+, A-) = 1、I(C+, B-) = 0、I(C+,A-) = 1</p>
+<p>共3对样本符合正样本得分高于负样本得分，故AUC为 (1 + 1 + 1 + 0) / 4 = 0.75</p>
+<p>假如出现得分一致时，例如：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202505301608063.png" alt=""></p>
+<p>同样本是4个样本对，对于样本对(C+, B-)，其 I 值为0.5。最后的AUC为 AUC = (1 + 1+ 1 + 0.5) / 4 = 0.875</p>
+<h5 id="公式法"><a href="#公式法" class="headerlink" title="公式法"></a>公式法</h5><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308261737231.jpg" alt=""></p>
+<ul>
+<li>对预测概率从高到低排序</li>
+<li>对每一个概率值设一个rank值（最高的概率的rank为n，第二高的为n-1）</li>
+<li>rank实际上代表了该score（预测概率）超过的样本的数目。为了求的组合中正样本的score值大于负样本，如果所有的正样本score值都是大于负样本的，那么第一位与任意的进行组合score值都要大，我们取它的rank值为n，但是n-1中有M-1是正样例和正样例的组合这种是不在统计范围内的（为计算方便我们取n组，相应的不符合的有M个），所以要减掉，那么同理排在第二位的n-1，会有M-1个是不满足的，依次类推，故得到后面的公式 $M\ast(M+1)/2$，我们可以验证在正样本score都大于负样本的假设下，AUC的值为1。<strong>如果排序的时候有概率相同的，原则就是相等得分的rank取平均值。</strong></li>
+<li>除以 $M \ast N$</li>
+</ul>
+<p>例子：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/202308261747231.png" alt=""></p>
+<ul>
+<li>对于正样本A，其rank值为7</li>
+<li>对于正样本B，其rank值为6</li>
+<li>对于正样本E，其rank值为（5+4+3+2）/ 4</li>
+<li>对于正样本F，其rank值为（5+4+3+2）/ 4</li>
+<li>最后的结果就为：$\frac{7+6+(5+4+3+2)/4+(5+4+3+2)/4-4 \ast 5/2}{4 \ast 3}=10/12$</li>
+</ul>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
