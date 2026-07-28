@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -236,6 +236,154 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/06/30/%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="木霈玖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木霈玖的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/06/30/%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">常用算法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-06-30 13:46:46" itemprop="dateCreated datePublished" datetime="2026-06-30T13:46:46+08:00">2026-06-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2026-07-28 14:39:55" itemprop="dateModified" datetime="2026-07-28T14:39:55+08:00">2026-07-28</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="卡尔曼滤波"><a href="#卡尔曼滤波" class="headerlink" title="卡尔曼滤波"></a>卡尔曼滤波</h1><p><code>Kalman Filter</code>算法，是一种递推预测滤波算法，算法中涉及到滤波，也涉及到对下一时刻数据的预测。<code>Kalman Filter</code>由一系列递归数学公式描述。它提供了一种高效可计算的方法来估计过程的状态，并使估计均方误差最小。卡尔曼滤波器应用广泛且功能强大：它可以估计信号的过去和当前状态，甚至能估计将来的状态，即使并不知道模型的确切性质。</p>
+<p><code>Kalman Filter</code>也可以被认为是一种数据融合算法（<code>Data fusion algorithm</code>），是当今使用最重要和最常见的数据融合算法之一。<code>Kalman Filter</code>的巨大成功归功于其小的计算需求，优雅的递归属性以及作为具有高斯误差统计的一维线性系统的最优估计器的状态。</p>
+<p><code>Kalman Filter</code>只能减小均值为$0$的测量噪声带来的影响。只要噪声期望为$0$，那么不管方差多大，只要迭代次数足够多，那效果都很好。反之，噪声期望不为$0$，那么估计值就还是与实际值有偏差。</p>
+<h2 id="状态预测"><a href="#状态预测" class="headerlink" title="状态预测"></a>状态预测</h2><h3 id="矩阵表示"><a href="#矩阵表示" class="headerlink" title="矩阵表示"></a>矩阵表示</h3><p>我们把状态建模成高斯分布，我们需要求解/估计在时间时刻的两个信息：1. 最优估计$\hat{\mathbf{x}}_{\mathbf{k}}$以及它的协方差矩阵$\mathbf{P}_{\mathbf{k}}$，我们可以写成下面矩阵形式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260630141850052.png" alt=""></p>
+<p>接下来，我们需要某种方式来查看当前状态（$k-1$时刻）并预测在时刻$k$处的状态。请记住，我们不知道哪个状态是“真实”状态，但是这里提到的预测（<code>prediction</code>）并不在乎这些。我们可以用一个矩阵$\mathbf{F}_{\mathbf{k}}$来表示这个预测过程，这个矩阵$\mathbf{F}_{\mathbf{k}}$将原始估计中的每个点移动到新的预测位置。为了阐述这个过程，我们使用了一个非常基础的运动学公式进行描述：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703105808730.png" alt=""></p>
+<p>写成矩阵形式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703105852181.png" alt=""></p>
+<p>现在我们有了一个预测矩阵或者叫做状态转移矩阵，该矩阵可以帮助我们计算下一个时刻的状态。但我们仍然不知道如何更新状态的协方差矩阵，其实过程也是很简单，如果我们将分布中的每个点乘以矩阵$A$，那么其协方差矩阵$\Sigma$会发生什么？</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703110032096.png" alt=""></p>
+<p>因此，我们可以得到：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703110738278.png" alt=""></p>
+<h3 id="External-influence"><a href="#External-influence" class="headerlink" title="External influence"></a>External influence</h3><p>不过我们并没有考虑到所有的影响因素。可能有一些与状态本身无关的变化——如外界因素可能正在影响系统。例如，我们用状态对列车的运动进行建模，如果列车长加大油门，火车就加速。同样，在我们的机器人示例中，导航系统软件可能会发出使车轮转动或停止的命令。如果我们很明确地知道这些因素，我们可以将其放在一起构成一个向量$\vec{\mathbf{u}}_k$，我们可以对这个量进行某些“处理”，然后将其添加到我们的预测中对状态进行更正。</p>
+<p>假设我们知道由于油门设置或控制命令而产生的预期加速度$a$。根据基本运动学原理，我们可以得到下式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703111311291.png" alt=""></p>
+<p>将其写成矩阵形式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703111906983.png" alt=""></p>
+<p>其中$\mathbf{B}_{k}$被称为<strong>控制矩阵</strong>，$\vec{\mathbf{u}}_k$被称为<strong>控制向量</strong>。（注意：对于没有外部影响的简单系统，可以忽略这个控制项）。</p>
+<h3 id="External-uncertainty"><a href="#External-uncertainty" class="headerlink" title="External uncertainty"></a>External uncertainty</h3><p>如果状态仅仅依赖其自身的属性进行演进，那一切都会很好。如果状态受到外部因素进行演进，我们只要知道这些外部因素是什么，那么一切仍然很好。</p>
+<p>但在实际使用中，我们有时不知道的这些外部因素到底是如何被建模的。例如，我们要跟踪四轴飞行器，它可能会随风摇晃；如果我们跟踪的是轮式机器人，则车轮可能会打滑，或者因地面颠簸导致其减速。我们无法跟踪这些外部因素，如果发生任何这些情况，我们的预测可能会出错，因为我们并没有考虑这些因素。</p>
+<p>通过在每个预测步骤之后添加一些新的不确定性，我们可以对与“世界”相关的不确定性进行建模（如我们无法跟踪的事物）：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703112357986.png" alt=""></p>
+<p>这样一来，由于新增的不确定性原始估计中的每个状态都可能迁移到多个状态。因为我们非常喜欢用高斯分布进行建模，此处也不例外。我们可以说$\mathbf{\hat{x}}_{k-1}$的每个点都移动到具有协方差$\mathbf{Q}_k$的高斯分布内的某个位置，如下图所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703114851016.png" alt=""></p>
+<p>我们在状态量的协方差中增加额外的协方差$\mathbf{Q}_k$，所以<strong>预测阶段</strong>完整的状态转移方程为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703132045836.png" alt=""></p>
+<p>换句话说：新的最佳估计是根据先前的最佳估计做出的预测，再加上对已知外部影响的校正。新的不确定度是根据先前的不确定度做出的预测，再加上来自环境额外的不确定度。</p>
+<h2 id="状态更新"><a href="#状态更新" class="headerlink" title="状态更新"></a>状态更新</h2><h3 id="利用测量进一步修正状态"><a href="#利用测量进一步修正状态" class="headerlink" title="利用测量进一步修正状态"></a>利用测量进一步修正状态</h3><p>假设我们有几个传感器，这些传感器可以向我们提供有关系统状态的信息。就目前而言，测量什么量都无关紧要，也许一个读取位置，另一个读取速度。每个传感器都告诉我们有关状态的一些间接信息（换句话说，传感器在状态下运作并产生一组测量读数）。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728142141248.png" alt=""></p>
+<p>测量的单位可能与状态量的单位不同。我们使用矩阵$\mathbf{H}_{k}$对传感器的测量进行建模。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728142313960.png" alt=""></p>
+<p>所以我们期望传感器的度数可以被建模成如下形式：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728142355972.png" alt=""></p>
+<p>根据传感器的读数，我们会猜测系统正处于某个特定状态。但是由于不确定性的存在，某些状态比其他状态更可能产生我们看到的读数：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728142527120.png" alt=""></p>
+<p>我们将这种不确定性（如传感器噪声）的协方差表示为$\mathbf{R}_k$，读数的分布均值等于我们观察到传感器的读数，我们将其表示为$\vec{\mathbf{z}_k}$。这样一来，我们有了两个高斯分布：一个围绕通过状态转移预测的平均值，另一个围绕实际传感器读数。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728142644499.png" alt=""></p>
+<h3 id="合并两个高斯分布"><a href="#合并两个高斯分布" class="headerlink" title="合并两个高斯分布"></a>合并两个高斯分布</h3><p>首先考虑一维高斯情况：一个均值为$\mu$，方差为$\sigma^{2}$的高斯分布的形式为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728142807481.png" alt=""></p>
+<p>将两个高斯曲线相乘，我们可以得到新的高斯分布的均值和方差如下所示：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728142928025.png" alt=""></p>
+<p>我们将其中的一小部分重写为$k$：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143011570.png" alt=""></p>
+<p>上式的矩阵形式可表示为：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143051791.png" alt=""></p>
+<p>其中$\Sigma$表示新高斯分布的协方差矩阵，是$\vec{\mu}$每个维度的均值，$K$就是大名鼎鼎的“卡尔曼增益”（<code>Kalman gain</code>）。</p>
+<h3 id="公式汇总"><a href="#公式汇总" class="headerlink" title="公式汇总"></a>公式汇总</h3><p>我们有两个高斯分布，一个是我们预测的观测$(\mu_0,\Sigma_0)=(\mathbf{H}_k\mathbf{\hat{x}}_k,\mathbf{H}_k\mathbf{P}_k\mathbf{H}_k^T)$，另外一个是实际的观测(传感器读数)$(\mu_1,\Sigma_1)=(\vec{\mathbf{z}_k},\mathbf{R}_k)$，我们将这两个高斯分布带入就可以得到二者的重叠区域：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143347086.png" alt=""></p>
+<p>卡尔曼增益是：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143456554.png" alt=""></p>
+<p>然后我们将公式中的$\mathbf{H}_{k}$去除，同时将$\mathbf{P}_k^{\prime}$后面的$\mathbf{H}_{k}^{T}$去除，我们可以得到最终的化简形式的更新方程：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143951340.png" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1136,109 +1284,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/05/20/gRPC%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/11/Docker%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="木霈玖">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="木霈玖的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/05/11/Docker%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Docker使用总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-05-11 14:02:56" itemprop="dateCreated datePublished" datetime="2024-05-11T14:02:56+08:00">2024-05-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2024-11-17 16:45:35" itemprop="dateModified" datetime="2024-11-17T16:45:35+08:00">2024-11-17</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-        </span>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.9k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下使用<code>Docker</code>过程中遇到的问题。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/05/11/Docker%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
