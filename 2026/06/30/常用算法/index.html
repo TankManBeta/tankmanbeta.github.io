@@ -23,12 +23,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="卡尔曼滤波Kalman Filter算法，是一种递推预测滤波算法，算法中涉及到滤波，也涉及到对下一时刻数据的预测。Kalman Filter由一系列递归数学公式描述。它提供了一种高效可计算的方法来估计过程的状态，并使估计均方误差最小。卡尔曼滤波器应用广泛且功能强大：它可以估计信号的过去和当前状态，甚至能估计将来的状态，即使并不知道模型的确切性质。 Kalman Filter也可以被认为是一种数据融">
+<meta name="description" content="前言积累一些比较常用的算法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常用算法">
 <meta property="og:url" content="http://example.com/2026/06/30/%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="木霈玖的博客">
-<meta property="og:description" content="卡尔曼滤波Kalman Filter算法，是一种递推预测滤波算法，算法中涉及到滤波，也涉及到对下一时刻数据的预测。Kalman Filter由一系列递归数学公式描述。它提供了一种高效可计算的方法来估计过程的状态，并使估计均方误差最小。卡尔曼滤波器应用广泛且功能强大：它可以估计信号的过去和当前状态，甚至能估计将来的状态，即使并不知道模型的确切性质。 Kalman Filter也可以被认为是一种数据融">
+<meta property="og:description" content="前言积累一些比较常用的算法。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260630141850052.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260703105808730.png">
@@ -52,8 +52,13 @@
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143347086.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143456554.png">
 <meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143951340.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015130902017.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015131322410.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015131409597.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015131529810.png">
+<meta property="og:image" content="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015131916603.png">
 <meta property="article:published_time" content="2026-06-30T05:46:46.000Z">
-<meta property="article:modified_time" content="2026-07-28T06:39:55.000Z">
+<meta property="article:modified_time" content="2026-11-13T01:25:21.000Z">
 <meta property="article:author" content="木霈玖">
 <meta property="article:tag" content="总结">
 <meta property="article:tag" content="算法">
@@ -210,7 +215,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%A1%E5%B0%94%E6%9B%BC%E6%BB%A4%E6%B3%A2"><span class="nav-number">1.</span> <span class="nav-text">卡尔曼滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E9%A2%84%E6%B5%8B"><span class="nav-number">1.1.</span> <span class="nav-text">状态预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">矩阵表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#External-influence"><span class="nav-number">1.1.2.</span> <span class="nav-text">External influence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#External-uncertainty"><span class="nav-number">1.1.3.</span> <span class="nav-text">External uncertainty</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9B%B4%E6%96%B0"><span class="nav-number">1.2.</span> <span class="nav-text">状态更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E6%B5%8B%E9%87%8F%E8%BF%9B%E4%B8%80%E6%AD%A5%E4%BF%AE%E6%AD%A3%E7%8A%B6%E6%80%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">利用测量进一步修正状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83"><span class="nav-number">1.2.2.</span> <span class="nav-text">合并两个高斯分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%E6%B1%87%E6%80%BB"><span class="nav-number">1.2.3.</span> <span class="nav-text">公式汇总</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%A1%E5%B0%94%E6%9B%BC%E6%BB%A4%E6%B3%A2"><span class="nav-number">2.</span> <span class="nav-text">卡尔曼滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E9%A2%84%E6%B5%8B"><span class="nav-number">2.1.</span> <span class="nav-text">状态预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.1.1.</span> <span class="nav-text">矩阵表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#External-influence"><span class="nav-number">2.1.2.</span> <span class="nav-text">External influence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#External-uncertainty"><span class="nav-number">2.1.3.</span> <span class="nav-text">External uncertainty</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9B%B4%E6%96%B0"><span class="nav-number">2.2.</span> <span class="nav-text">状态更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E6%B5%8B%E9%87%8F%E8%BF%9B%E4%B8%80%E6%AD%A5%E4%BF%AE%E6%AD%A3%E7%8A%B6%E6%80%81"><span class="nav-number">2.2.1.</span> <span class="nav-text">利用测量进一步修正状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83"><span class="nav-number">2.2.2.</span> <span class="nav-text">合并两个高斯分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%E6%B1%87%E6%80%BB"><span class="nav-number">2.2.3.</span> <span class="nav-text">公式汇总</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PID%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">PID算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PID%E7%AE%97%E6%B3%95%E7%9A%84%E6%A0%B8%E5%BF%83%E6%9C%AC%E8%B4%A8%E4%B8%8E%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">PID算法的核心本质与数学模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E5%9E%8BPID%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%8F%EF%BC%88%E7%90%86%E6%83%B3%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="nav-number">3.1.1.</span> <span class="nav-text">连续型PID算法公式（理想数学模型）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E5%9E%8BPID%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%8F"><span class="nav-number">3.1.2.</span> <span class="nav-text">离散型PID算法公式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PID%E4%B8%89%E4%B8%AA%E7%8E%AF%E8%8A%82%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">PID三个环节的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E4%BE%8B%E5%9B%A0%E5%AD%90"><span class="nav-number">3.2.1.</span> <span class="nav-text">比例因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%AF%E5%88%86%E5%9B%A0%E5%AD%90"><span class="nav-number">3.2.2.</span> <span class="nav-text">积分因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E5%88%86%E5%9B%A0%E5%AD%90"><span class="nav-number">3.2.3.</span> <span class="nav-text">微分因子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PID%E4%B8%AD%E7%9A%84%E7%89%A9%E7%90%86%E9%87%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.3.</span> <span class="nav-text">PID中的物理量设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PID%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.4.</span> <span class="nav-text">PID使用示例</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -307,7 +312,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2026-07-28 14:39:55" itemprop="dateModified" datetime="2026-07-28T14:39:55+08:00">2026-07-28</time>
+        <time title="修改时间：2026-11-13 09:25:21" itemprop="dateModified" datetime="2026-11-13T09:25:21+08:00">2026-11-13</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -327,14 +332,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.7k</span>
+      <span>4.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -345,7 +350,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="卡尔曼滤波"><a href="#卡尔曼滤波" class="headerlink" title="卡尔曼滤波"></a>卡尔曼滤波</h1><p><code>Kalman Filter</code>算法，是一种递推预测滤波算法，算法中涉及到滤波，也涉及到对下一时刻数据的预测。<code>Kalman Filter</code>由一系列递归数学公式描述。它提供了一种高效可计算的方法来估计过程的状态，并使估计均方误差最小。卡尔曼滤波器应用广泛且功能强大：它可以估计信号的过去和当前状态，甚至能估计将来的状态，即使并不知道模型的确切性质。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>积累一些比较常用的算法。</p>
+<a id="more"></a>
+<h1 id="卡尔曼滤波"><a href="#卡尔曼滤波" class="headerlink" title="卡尔曼滤波"></a>卡尔曼滤波</h1><p><code>Kalman Filter</code>算法，是一种递推预测滤波算法，算法中涉及到滤波，也涉及到对下一时刻数据的预测。<code>Kalman Filter</code>由一系列递归数学公式描述。它提供了一种高效可计算的方法来估计过程的状态，并使估计均方误差最小。卡尔曼滤波器应用广泛且功能强大：它可以估计信号的过去和当前状态，甚至能估计将来的状态，即使并不知道模型的确切性质。</p>
 <p><code>Kalman Filter</code>也可以被认为是一种数据融合算法（<code>Data fusion algorithm</code>），是当今使用最重要和最常见的数据融合算法之一。<code>Kalman Filter</code>的巨大成功归功于其小的计算需求，优雅的递归属性以及作为具有高斯误差统计的一维线性系统的最优估计器的状态。</p>
 <p><code>Kalman Filter</code>只能减小均值为$0$的测量噪声带来的影响。只要噪声期望为$0$，那么不管方差多大，只要迭代次数足够多，那效果都很好。反之，噪声期望不为$0$，那么估计值就还是与实际值有偏差。</p>
 <h2 id="状态预测"><a href="#状态预测" class="headerlink" title="状态预测"></a>状态预测</h2><h3 id="矩阵表示"><a href="#矩阵表示" class="headerlink" title="矩阵表示"></a>矩阵表示</h3><p>我们把状态建模成高斯分布，我们需要求解/估计在时间时刻的两个信息：1. 最优估计$\hat{\mathbf{x}}_{\mathbf{k}}$以及它的协方差矩阵$\mathbf{P}_{\mathbf{k}}$，我们可以写成下面矩阵形式：</p>
@@ -398,7 +405,63 @@
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143456554.png" alt=""></p>
 <p>然后我们将公式中的$\mathbf{H}_{k}$去除，同时将$\mathbf{P}_k^{\prime}$后面的$\mathbf{H}_{k}^{T}$去除，我们可以得到最终的化简形式的更新方程：</p>
 <p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20260728143951340.png" alt=""></p>
-
+<h1 id="PID算法"><a href="#PID算法" class="headerlink" title="PID算法"></a>PID算法</h1><p>在自动化控制领域，<code>PID</code>算法是应用最广的经典算法。无论是工厂的机器手臂，还是现代数据中心里的服务器上的温控和功耗封顶，背后都有<code>PID</code>的身影。</p>
+<h2 id="PID算法的核心本质与数学模型"><a href="#PID算法的核心本质与数学模型" class="headerlink" title="PID算法的核心本质与数学模型"></a>PID算法的核心本质与数学模型</h2><p><code>PID</code>是比例(<code>Proportional</code>)、积分(<code>Integral</code>)、微分(<code>Derivative</code>)的缩写。其核心思想是：利用当前误差<code>error</code>来修正未来的行为，让系统的当前值(<code>current_value</code>)无限接近你的目标值(<code>target_value</code>)。</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015130902017.png" alt=""></p>
+<p>在每一个采样周期，算法首先计算目标值(<code>target_value</code>)与当前值(<code>current_value</code>)的差值，也就是误差(<code>error</code>)：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015131322410.png" alt=""></p>
+<h3 id="连续型PID算法公式（理想数学模型）"><a href="#连续型PID算法公式（理想数学模型）" class="headerlink" title="连续型PID算法公式（理想数学模型）"></a>连续型PID算法公式（理想数学模型）</h3><p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015131409597.png" alt=""></p>
+<h3 id="离散型PID算法公式"><a href="#离散型PID算法公式" class="headerlink" title="离散型PID算法公式"></a>离散型PID算法公式</h3><p>在嵌入式系统（如服务器<code>BMC</code>固件）中，数字信号是离散的。我们需要将连续的积分与微分转换成周期性采样的求和与差分，其中$k$为当前采样时刻，$\Delta t$为采样周期：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015131529810.png" alt=""></p>
+<p>若将$\delta t$融合进系数中，令$K_{i}^{\prime}=K_{i} \cdot \Delta t$，$K_{d}^{\prime}=K_{d}/\Delta t$，公式可简化为不带时间项的经典位置式离散<code>PID</code>：</p>
+<p><img src="https://my-pic-storage-1305445540.cos.ap-nanjing.myqcloud.com/20261015131916603.png" alt=""></p>
+<h2 id="PID三个环节的作用"><a href="#PID三个环节的作用" class="headerlink" title="PID三个环节的作用"></a>PID三个环节的作用</h2><h3 id="比例因子"><a href="#比例因子" class="headerlink" title="比例因子"></a>比例因子</h3><ul>
+<li>存在的意义：比例因子是系统的主驱动力。根据当前误差的大小，成比例地产生控制输出。有错立刻就改，误差越大，调节幅度越大，是系统走向目标的基本保障。</li>
+<li><p>致命缺点：静态误差</p>
+<ul>
+<li>现象：系统稳定后，当前值永远差目标值一点点，无法精准重合（假设误差为$2$米，$K_{p}$为$0.5$，外界风导致无人机同一周期向下$1$米，则会导致误差保持在$2 \ast 0.5 + 1 = 2$米，这就叫静态误差/稳态误差）。</li>
+<li>底层成因：因为物理系统普遍存在固有阻力或环境消耗（如散热片自然冷却、服务器静默功耗）。当当前值极度接近目标值时，<code>error</code>趋近于$0$。此时$P=K_{p} \cdot error$产生的控制力极小，刚好与系统的自然消耗抵消。控制力无法克服阻力继续前进，系统便卡在半路。</li>
+</ul>
+</li>
+<li><p>参数边界的系统表现：</p>
+<ul>
+<li>过大：系统反应极快，但会产生严重的超调（冲过头），导致当前值在目标值两侧剧烈震荡，甚至系统发散崩溃。</li>
+<li>过小：控制力不足。系统动作迟缓，面对突发负载反应太慢，且稳态误差非常大。</li>
+</ul>
+</li>
+</ul>
+<h3 id="积分因子"><a href="#积分因子" class="headerlink" title="积分因子"></a>积分因子</h3><ul>
+<li>存在的意义：它是系统的历史清算器。只要有误差存在（无论多小），它就会随着时间不断累加，直到把输出推上去。它的核心使命就是专门消除比例因子留下的稳态误差，确保系统最终百分之百达到目标。</li>
+<li>致命缺点：积分饱和(<code>Integral Windup</code>)与时间滞后<ul>
+<li>现象：系统在达到目标后，控制输出依然停在高位，导致当前值疯狂冲过头（超调）。</li>
+<li>底层成因：执行机构的物理极限与系统的热/电惯性。当系统受到大信号触发（如服务器突然打满负载导致温度暴增），控制端即使全力压制也需要几秒钟（时间滞后）才能看到当前值发生改变。在这段延时内，<code>error</code>一直存在，积分项盲目地疯狂累加。当当前值终于降到目标值时，积分项已经变成了一个“巨无霸”，即使此刻<code>error</code>为$0$，巨大的积分残留依然逼迫控制输出保持在高位，导致当前值过度偏离目标（如温度被过度压低）。此时，积分项控制就非常重要。</li>
+</ul>
+</li>
+<li>参数边界的系统表现：<ul>
+<li>过大：消除静差速度极快，见效迅猛，但代价是超调量巨大。系统会像秋千一样长时间来回摆动（低频震荡），收敛极慢。</li>
+<li>过小：消除稳态误差的速度极慢。系统可能要花好几分钟甚至几小时，才能把那最后的误差抹平。</li>
+</ul>
+</li>
+</ul>
+<h3 id="微分因子"><a href="#微分因子" class="headerlink" title="微分因子"></a>微分因子</h3><ul>
+<li>存在的意义：它是系统的刹车片。它不看误差有多大，只看误差变化得有多快（即误差的斜率/导数）。它能预测未来趋势，在当前值快要冲过头之前提前施加反向阻力，抑制超调，让系统平稳落地。</li>
+<li>致命缺点：放大高频噪声<ul>
+<li>现象：系统输出莫名其妙地出现高频、剧烈的抖动，导致执行机构跟着噪声一起发疯。</li>
+<li>底层成因：微分算法对变化率极度敏感的数学特性。 传感器的读数永远伴随着随机的微小电信号噪声（如由于电流干扰，温度计读数在$70.0$和$70.1$之间疯狂闪烁）。虽然误差本身变化极小，本应该忽略，但由于这种闪烁发生在一瞬间（时间$\Delta t$极小），导致斜率$\frac{d_{error}}{d_{t}}$变成了一个极大的绝对值。微分项误把这种噪声当成了“系统正在暴走”，产生巨大的控制输出去纠正，引起执行机构高频震荡。</li>
+</ul>
+</li>
+<li>参数边界的系统表现：<ul>
+<li>过大：刹车过猛。系统变得极度神经质，任何风吹草动都会引起控制量的剧烈抖动（高频震荡），甚至导致硬件因频繁微调而损坏。</li>
+<li>过小：起不到预测和制动的作用，系统依然会出现由于比例因子和积分因子导致的超调和摆动。</li>
+</ul>
+</li>
+</ul>
+<h2 id="PID中的物理量设计"><a href="#PID中的物理量设计" class="headerlink" title="PID中的物理量设计"></a>PID中的物理量设计</h2><p>我们在设计<code>PID</code>时主要关注三个量：目标值、反馈值、输出值。<code>PID</code>会根据目标值和反馈值计算输出值。需要强调的是，<code>PID</code>并不知道被控对象是什么，它仅负责进行数值计算，而我们——作为控制系统的设计者，就需要为<code>PID</code>指定这三个量所对应的实际物理量，这在不同的控制系统中是不一样的。</p>
+<ul>
+<li>目标值和反馈值：通常为同种物理量，就是你需要控制的物理量。</li>
+<li>输出值：通常是直接驱动被控对象的控制量。输出量作用在被控对象上需要经过时间积累才会产生反馈量的变化，换言之，输出值通常为反馈值对于时间的低阶物理量。例如：目标值和反馈值为位置，则输出值可以为速度或加速度。</li>
+</ul>
+<h2 id="PID使用示例"><a href="#PID使用示例" class="headerlink" title="PID使用示例"></a>PID使用示例</h2>
     </div>
 
     
